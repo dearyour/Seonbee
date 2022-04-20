@@ -2,7 +2,6 @@ package com.seonbi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiKey;
@@ -21,14 +20,14 @@ import static com.google.common.collect.Lists.newArrayList;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig extends WebMvcConfigurationSupport {
+public class SwaggerConfig {
 
     public static final String SECURITY_SCHEMA_NAME = "JWT";
     public static final String AUTHORIZATION_SCOPE_GLOBAL = "global";
     public static final String AUTHORIZATION_SCOPE_GLOBAL_DESC = "accessEverything";
 
     @Bean
-    public Docket api(){
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors.any())
@@ -49,19 +48,14 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     }
 
     private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope=new AuthorizationScope(AUTHORIZATION_SCOPE_GLOBAL, AUTHORIZATION_SCOPE_GLOBAL_DESC);
-        AuthorizationScope[] authorizationScopes=new AuthorizationScope[1];
-        authorizationScopes[0]=authorizationScope;
+        AuthorizationScope authorizationScope = new AuthorizationScope(AUTHORIZATION_SCOPE_GLOBAL, AUTHORIZATION_SCOPE_GLOBAL_DESC);
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
         return newArrayList(new SecurityReference(SECURITY_SCHEMA_NAME, authorizationScopes));
     }
 
-    @Bean
-    UiConfiguration uiConfiguration(){
-        return UiConfigurationBuilder.builder().build();
-    }
-
-//    @Override public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/swagger-ui/**").addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/"); registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
+//    @Bean
+//    UiConfiguration uiConfig() {
+//        return UiConfigurationBuilder.builder().build();
 //    }
-
 }
