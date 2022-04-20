@@ -4,10 +4,10 @@ import urllib
 client_id="mlfKASqUh16HyqLwcOJt"
 client_secret="zMezMl3SPr"
 
-query = "옷"
+query = "케이크"
 query = urllib.parse.quote(query)
 
-display = "20"
+display = "100"
 
 url = "https://openapi.naver.com/v1/search/shop?query=" + query + "&display=" + display
 # url = "https://openapi.naver.com/v1/search/shop"
