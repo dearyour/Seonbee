@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
+import member from 'store/slice/member'
 
 
 // 루트 리듀서
@@ -10,7 +11,7 @@ const rootReducer = (state: any, action: any) => {
       ...action.payload,
     };
   }
-  return combineReducers({})(
+  return combineReducers({ member })(
     state,
     action
   );

@@ -7,33 +7,27 @@ const Asd: NextPage = () => {
     color: blue;
     margin: 10px;
   `
+  class fruit {
+    name: string
+    id: number
+
+    constructor(data: any | Array<any>) {
+      // console.log(typeof data)
+      this.name = data.name || ''
+      this.id = data.id || 0
+    }
+  }
+  const data = [{ name: '사과', id: null }, { name: '바나나', id: 2 }]
+  let f = new Array(new fruit(data))
+  let fruits = data.map((now) => {
+    return new fruit(now)
+  })
+
+  console.log(f)
 
   return (
-    <div>
-      <Test>asdasd</Test>
-      <img src='https://picsum.photos/250/250'></img>
-      <Button variant="contained" disableElevation>
-        Disable elevation
-      </Button>
-      <div>asdasd</div>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="Age"
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
-      <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-
-        <Slider aria-label="Volume" />
-
-      </Stack>
-      <Slider disabled defaultValue={30} aria-label="Disabled slider" />
+    <div className='m-5'>
+      asdasdasdaasdasd
     </div>
   )
 }
