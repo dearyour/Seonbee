@@ -33,16 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .httpBasic().disable()  // swagger에서 로그인 과정 없이 들어오도록 아니면 httpBasic을 안쓰기
-//                .csrf().disable()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 사용 하지않음
-//                .and()
-//                .addFilter(new JwtAuthenticationFilter(authenticationManager(), userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
-//                .authorizeRequests()
-//                .antMatchers("/api/v1/users/me").authenticated()       //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
-//                .anyRequest().permitAll()
-//                .and().cors()
-//                ;
+        http.csrf().disable()// token 사용을 위해
+        http.httpBasic().disable();     // http는 암호화가 안됨 -> bearer token으로 사용
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 토큰 기반 인증이므로 세션 사용 하지않음
+        http.authorizeRequests()    // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정
+                .antMatchers("/api/member/auth").authenticated()    // 인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
+                .anyRequest().permitAll();
+//        http.addFilter(new JwtAuthenticationFilter(authenticationManager(), userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
+//                .and().cors();
     }
 }

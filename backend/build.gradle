@@ -45,30 +45,30 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = '11'
 
 //set build time and inject value to application.properties
-//def buildTime() {
-//    def date = new Date()
-//    def formattedDate = date.format('yyyyMMdd_HHmm')
-//    return formattedDate
-//}
-//
-//project.ext.set("build.date", buildTime())
-//
-//processResources {
-//    with copySpec {
-//        from "src/main/resources"
-//        include "**/application*.yml"
-//        include "**/application*.yaml"
-//        include "**/application*.properties"
-//        project.properties.findAll().each {
-//            prop ->
-//                if (prop.value != null) {
-//                    filter(ReplaceTokens, tokens: [ (prop.key): String.valueOf(prop.value)])
-//                    filter(ReplaceTokens, tokens: [ ('project.' + prop.key): String.valueOf(prop.value)])
-//                    filter(ReplaceTokens, tokens: [ ('project.ext.' + prop.key): String.valueOf(prop.value)])
-//                }
-//        }
-//    }
-//}
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd_HHmm')
+    return formattedDate
+}
+
+project.ext.set("build.date", buildTime())
+
+processResources {
+    with copySpec {
+        from "src/main/resources"
+        include "**/application*.yml"
+        include "**/application*.yaml"
+        include "**/application*.properties"
+        project.properties.findAll().each {
+            prop ->
+                if (prop.value != null) {
+                    filter(ReplaceTokens, tokens: [ (prop.key): String.valueOf(prop.value)])
+                    filter(ReplaceTokens, tokens: [ ('project.' + prop.key): String.valueOf(prop.value)])
+                    filter(ReplaceTokens, tokens: [ ('project.ext.' + prop.key): String.valueOf(prop.value)])
+                }
+        }
+    }
+}
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -126,12 +126,12 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.20")
 
 //    testCompile('org.springframework.boot:spring-boot-starter-test')
-    // file
+//    file
     implementation("commons-io:commons-io:2.6")
-    // String -> JsonArray
+//    String -> JsonArray
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
 //    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.3")
-    // https://mvnrepository.com/artifact/javax.mail/mail
+//    https://mvnrepository.com/artifact/javax.mail/mail
     implementation ('javax.mail:mail:1.4.7')
 //    compile group: 'org.springframework', name: 'spring-context-support', version: '5.1.0.RELEASE'
 
