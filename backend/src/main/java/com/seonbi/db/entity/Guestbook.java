@@ -17,6 +17,6 @@ public class Guestbook extends BaseEntity{
     private Long scheduleId;
     private String content;
     private Integer position=1;
-//    private String image;
+    private Integer imageNo=1;
 
 }
