@@ -2,6 +2,9 @@ html,
 body {
   padding: 0;
   margin: 0;
+  background-image: url('../public/2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
@@ -35,4 +38,16 @@ a {
 
 .rainbow {
   font-family: 'GilbeotRainbow';
+}
+
+.background-image-1 {
+  background-image: url('../public/2.jpg');
+}
+
+.background-image-2 {
+  background-image: url('../public/1.jpg');
+}
+
+.background-image-3 {
+  background-image: url('../public/3.jpg');
 }
