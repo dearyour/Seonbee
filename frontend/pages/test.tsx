@@ -26,7 +26,7 @@ const Asd: NextPage = () => {
   console.log(f)
 
   return (
-    <div className='m-5 kdg'>
+    <div className='m-5 rainbow'>
       가나다라마바사
     </div>
   )
