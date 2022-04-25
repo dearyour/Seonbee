@@ -11,8 +11,14 @@ const Signup = (props: Props) => {
         <input type="text" name="" placeholder="그대의 이름" />
         <input type="password" name="" placeholder="비밀번호" />
         <input type="password" name="" placeholder="비밀번호 확인" />
+        <input type="password" name="" placeholder="비밀번호" />
+        <input type="password" name="" placeholder="비밀번호 확인" />
         <input type="submit" name="" value="Register" />
       </form>
+      <div className="toggle-promotion">추가정보 입력</div>
+      <div className="promotion"></div>
+      <input type="password" name="" placeholder="비밀번호" />
+      <input type="password" name="" placeholder="비밀번호 확인" />
     </div>
   );
 };

@@ -20,7 +20,7 @@
 .container {
   position: relative;
   width: 800px;
-  height: 500px;
+  height: 700px;
   margin: 20px;
 }
 .container .blueBg {
@@ -116,7 +116,7 @@
 }
 .formBx form input {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   padding: 10px 10px;
   outline: none;
   font-size: 16px;
@@ -143,6 +143,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: -200px;
   }
   .container .blueBg {
     top: 0;
@@ -158,6 +159,7 @@
   .formBx.active {
     left: 0;
     top: 150px;
+    height: 750px;
   }
   .container .blueBg {
     height: 650px;
