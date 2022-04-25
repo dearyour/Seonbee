@@ -22,6 +22,11 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 # 패치 노트
 
+## 04/25
+
+* social 페이지 기본 구조 작성
+* react-calendar 추가
+
 ## 04/21
 
 * bootstrap 추가

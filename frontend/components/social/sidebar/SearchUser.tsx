@@ -5,8 +5,22 @@ import { InputAdornment, TextField } from '@mui/material';
 import { BsSearch } from "react-icons/bs";
 
 type Props = {}
+class SearchedMember {
+  friendId: number
+  nickname: string
+  imageString: string
+  isFriend: boolean
+
+  constructor(data: any) {
+    this.friendId = data.friendId || 0
+    this.nickname = data.nickname || ''
+    this.imageString = data.imageString || ''
+    this.isFriend = data.isFriend || false
+  }
+}
 
 const SearchUser = (props: Props) => {
+  const [members, setMembers] = useState<SearchedMember[]>([])
   const [keyword, setKeyword] = useState<string>('');
   const handleChange: React.ChangeEventHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     // console.log(event.target.value)
@@ -16,18 +30,26 @@ const SearchUser = (props: Props) => {
   return (
     <Card className='background-image-1'>
       <CardContent>
-        <TextField id="outlined-basic"
-          // value={keyword}
-          onChange={handleChange}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <BsSearch />
-              </InputAdornment>
-            ),
-          }}
-          variant="standard"
-        />
+        <>
+          <TextField id="outlined-basic"
+            // value={keyword}
+            onChange={handleChange}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <BsSearch />
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
+          />
+          {members.map((member, index) => {
+            <div key={index}>
+
+            </div>
+          })}
+          asd
+        </>
       </CardContent>
     </Card>
   )
