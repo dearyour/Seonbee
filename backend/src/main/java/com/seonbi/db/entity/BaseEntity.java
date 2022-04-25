@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass   // 상속을 위해
 @EntityListeners(AuditingEntityListener.class)  // @CreatedDate, @LastModifiedDate 어노테이션을 이용
 public class BaseEntity {
+
     @CreatedDate
     @Column(updatable = false)
     LocalDateTime createdDate;  // 생성 날짜

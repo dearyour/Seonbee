@@ -1,5 +1,7 @@
 package com.seonbi.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +18,8 @@ public class Member extends BaseEntity{
     private String nickname;
     private Boolean isAdmin;
     private Boolean isKakao;
-    private Integer age=27;
+    private String birthday;    // 1997-04-10
+    @JsonIgnore
     private String password;
     private String gender;
     private String mbti;
