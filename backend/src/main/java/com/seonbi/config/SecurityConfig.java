@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()// token 사용을 위해
+        http.csrf().disable(); // token 사용을 위해
         http.httpBasic().disable();     // http는 암호화가 안됨 -> bearer token으로 사용
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 토큰 기반 인증이므로 세션 사용 하지않음
         http.authorizeRequests()    // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정
