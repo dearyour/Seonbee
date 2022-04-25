@@ -3,6 +3,7 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 const Join: any = () => {
   const [Bxactive, setBxActive] = useState("");
+  // const [promotion, setPromotion] = useState(false);
   // const [bodyactive, setBodyActive] = useState("");
   const __signUpBtn = () => {
     setBxActive("active");
@@ -10,6 +11,11 @@ const Join: any = () => {
   const __signInBtn = () => {
     setBxActive("");
   };
+
+  // const __promotion = () => {
+  //   setPromotion((promotion) => !promotion);
+  // };
+
   // console.log(
   //   Bxactive.length !== 0 ? ["account", Bxactive].join(" ") : "account"
   // );
