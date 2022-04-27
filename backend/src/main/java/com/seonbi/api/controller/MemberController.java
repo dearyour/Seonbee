@@ -4,6 +4,7 @@ package com.seonbi.api.controller;
 import com.seonbi.api.model.MemberDto;
 import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.api.response.BaseResponseBody;
+import com.seonbi.api.response.MemberGetRes;
 import com.seonbi.api.response.MemberLoginRes;
 import com.seonbi.api.service.MemberService;
 import com.seonbi.auth.SeonbiUserDetail;
@@ -17,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/member")
@@ -117,6 +120,15 @@ public class MemberController {
         String token = JwtTokenProvider.getToken(memberLoginReq.getEmail());
         return ResponseEntity.status(200).body(MemberLoginRes.of(200, "Success", token));
 
+    }
+
+    @GetMapping("{memberId}")
+    public ResponseEntity<? extends BaseResponseBody> getMemberByMemberId(@PathVariable("memberId") Long memberId) {
+        MemberDto memberDto=memberService.getMemberByMemberId(memberId);
+        if (memberDto==null){
+            return ResponseEntity.status(200).body(MemberGetRes.of(401, "존재하지 않는 회원입니다.", null));
+        }
+        return ResponseEntity.status(200).body(MemberGetRes.of(200, "Success", memberDto));
     }
 
 }

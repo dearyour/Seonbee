@@ -13,5 +13,5 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     Member findByNicknameAndIsDeleted(String nickname, boolean isDeleted);   // member table에서 nickname이라는 컬럼에 맞는 애를 return 해줌
     Member findByNicknameAndMemberIdAndIsDeleted(String nickname, Long memberId, boolean isDeleted);
     boolean existsByNicknameAndIsDeleted(String nickname, boolean isDeleted);
-
+    Member findByMemberIdAndIsDeleted(Long memberId, boolean isDeleted);
 }

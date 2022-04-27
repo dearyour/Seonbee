@@ -34,17 +34,29 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDto getMemberByNickname(String nickname) {
-        return modelMapper.map(memberRepository.findByNicknameAndIsDeleted(nickname, false), MemberDto.class);
+        Member member=memberRepository.findByNicknameAndIsDeleted(nickname, false);
+        if (member==null){
+            return null;
+        }
+        return modelMapper.map(member, MemberDto.class);
     }
 
     @Override
     public MemberDto getMemberByEmail(String email) {
-        return modelMapper.map(memberRepository.findByEmailAndIsDeleted(email, false), MemberDto.class);
+        Member member=memberRepository.findByEmailAndIsDeleted(email, false);
+        if (member==null){
+            return null;
+        }
+        return modelMapper.map(member, MemberDto.class);
     }
 
     @Override
     public MemberDto getMemberByMemberId(Long memberId) {
-        return null;
+        Member member=memberRepository.findByMemberIdAndIsDeleted(memberId, false);
+        if (member==null){
+            return null;
+        }
+        return modelMapper.map(member, MemberDto.class);
     }
 
     @Override
