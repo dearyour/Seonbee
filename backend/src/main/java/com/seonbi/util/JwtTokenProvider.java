@@ -1,4 +1,4 @@
-package com.util;
+package com.seonbi.util;
 
 
 import com.auth0.jwt.JWT;

@@ -1,10 +1,15 @@
 package com.seonbi.api.service;
 
 
+import com.seonbi.api.model.MemberDto;
 import com.seonbi.db.entity.Member;
 import com.seonbi.db.repository.MemberRepository;
+import com.seonbi.db.repository.MemberRepositorySupport;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -12,21 +17,46 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    MemberRepositorySupport memberRepositorySupport;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
-    public Member getMemberByMemberNickname(String nickname) {
-        return memberRepository.findByNickname(nickname);
+    public MemberDto getMemberByNickname(String nickname) {
+        return modelMapper.map(memberRepository.findByNicknameAndIsDeleted(nickname, false), MemberDto.class);
     }
 
     @Override
-    public Member getMemberByEmail(String email) {
-        return memberRepository.findByEmail(email);
+    public MemberDto getMemberByEmail(String email) {
+        return modelMapper.map(memberRepository.findByEmailAndIsDeleted(email, false), MemberDto.class);
     }
 
     @Override
-    public void register(Member member) {
+    public MemberDto getMemberByMemberId(Long memberId) {
+        return null;
+    }
 
-        System.out.println("등록 서비스");
-        memberRepository.save(member);
+    @Override
+    public List<MemberDto> getMemberList() {
+        return null;
+    }
+
+    @Override
+    public Member create(Member member) {
+        return memberRepository.save(member);
+    }
+
+//    @Override
+//    public MemberDto memberEntityToDto(Member member) {
+//        MemberDto memberDto=new MemberDto();
+//
+//        return null;
+//    }
+
+    @Override
+    public Member update(Member member) {
+        return null;
     }
 }

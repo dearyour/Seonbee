@@ -28,7 +28,7 @@ public class SeonbiUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Member member=memberService.getMemberByMemberNickname(username);
+        Member member=memberService.getMemberByNickname(username);
 
 
         // 해당 닉네임을 가진 유저가 db에 존재한다면?
