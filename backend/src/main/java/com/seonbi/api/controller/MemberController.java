@@ -1,9 +1,11 @@
 
 package com.seonbi.api.controller;
 
+import com.seonbi.api.model.MemberAuthDto;
 import com.seonbi.api.model.MemberDto;
 import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.api.response.BaseResponseBody;
+import com.seonbi.api.response.MemberAuthRes;
 import com.seonbi.api.response.MemberGetRes;
 import com.seonbi.api.response.MemberLoginRes;
 import com.seonbi.api.service.MemberService;
@@ -35,12 +37,16 @@ public class MemberController {
     //로그인 후 필요한 요청
     @GetMapping("/auth")
 
-    public ResponseEntity<String> authorize(@ApiIgnore Authentication authentication) {
-
+    public ResponseEntity<? extends BaseResponseBody> authorize(@ApiIgnore Authentication authentication) {
+        /**
+         * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
+         * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
+         */
         SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
-        details.getUsername();
+        Member member=details.getMember();
+        MemberAuthDto memberAuthDto=new MemberAuthDto(member.getMemberId(), member.getNickname(), member.getImageId());
 
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.status(200).body(MemberAuthRes.of(200, "Success", memberAuthDto));
     }
 
 
@@ -130,5 +136,15 @@ public class MemberController {
         }
         return ResponseEntity.status(200).body(MemberGetRes.of(200, "Success", memberDto));
     }
+
+//    @GetMapping("check/{nickname}")
+//    public ResponseEntity<? extends BaseResponseBody> nicknameCheck(@ApiIgnore Authentication authentication, @PathVariable("nickname") String nickname) {
+//        SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
+//        MemberDto memberDto=memberService.getMemberByMemberId(memberId);
+//        if (memberDto==null){
+//            return ResponseEntity.status(200).body(MemberGetRes.of(401, "존재하지 않는 회원입니다.", null));
+//        }
+//        return ResponseEntity.status(200).body(MemberGetRes.of(200, "Success", memberDto));
+//    }
 
 }

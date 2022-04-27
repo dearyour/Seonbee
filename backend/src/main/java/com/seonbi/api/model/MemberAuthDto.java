@@ -13,6 +13,11 @@ public class MemberAuthDto{
 
     private Long memberId=0l;
     private String nickname;
-    private String imageString;
+    private Long imageId=0l;
 
+    public MemberAuthDto(Long memberId, String nickname, Long imageId) {
+        this.memberId = memberId;
+        this.nickname = nickname;
+        this.imageId = imageId;
+    }
 }

@@ -35,12 +35,12 @@ public class JwtTokenProvider {
     }
 
 
-    public static String getToken(String userId) {
+    public static String getToken(String userEmail) {
         Date expires = JwtTokenProvider.getTokenExpiration(expirationTime);
 
         return JWT.create()
 //                .withClaim("role", role)  //payload에 추가하기
-                .withSubject(userId)  //기본키 ( 이메일 )  중복이 안되니까..?
+                .withSubject(userEmail)  //기본키 ( 이메일 )  중복이 안되니까..?
                 .withExpiresAt(expires)  // 만료 시간
                 .withIssuer(ISSUER) // 발행자
                 .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())) // 발행 시간
