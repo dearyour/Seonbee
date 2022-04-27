@@ -2,7 +2,9 @@
 package com.seonbi.api.controller;
 
 import com.seonbi.api.model.MemberDto;
+import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.api.response.BaseResponseBody;
+import com.seonbi.api.response.MemberLoginRes;
 import com.seonbi.api.service.MemberService;
 import com.seonbi.auth.SeonbiUserDetail;
 import com.seonbi.db.entity.Member;
@@ -103,29 +105,18 @@ public class MemberController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Member member) {
+    public ResponseEntity<? extends BaseResponseBody> login(@RequestBody MemberLoginReq memberLoginReq) {
 
-        String email=member.getEmail();
-        String password=member.getPassword();
+        int loginCode=memberService.loginCheck(memberLoginReq);
+        if (loginCode==401){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401, "존재하지 않는 계정입니다."));
+        } else if (loginCode==402) {
+            return ResponseEntity.status(200).body(BaseResponseBody.of(402, "비밀번호가 일치하지 않습니다."));
+        }
 
-        MemberDto memberDto=memberService.getMemberByEmail(email);
+        String token = JwtTokenProvider.getToken(memberLoginReq.getEmail());
+        return ResponseEntity.status(200).body(MemberLoginRes.of(200, "Success", token));
 
-//        if(member1==null)
-//        {
-//            return ResponseEntity.status(404).body("존재하지 않는 계정");
-//        }
-//
-//        if(passwordEncoder.matches(password,member1.getPassword()))
-//        {
-//            String token = JwtTokenProvider.getToken(email, "user");
-//
-//            return ResponseEntity.status(200).body(token);
-//
-//        }
-
-
-
-        return ResponseEntity.status(404).body("비밀번호가 일치하지 않습니다");
     }
 
 }

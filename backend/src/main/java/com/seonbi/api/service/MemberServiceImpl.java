@@ -2,11 +2,15 @@ package com.seonbi.api.service;
 
 
 import com.seonbi.api.model.MemberDto;
+import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.db.entity.Member;
 import com.seonbi.db.repository.MemberRepository;
 import com.seonbi.db.repository.MemberRepositorySupport;
+import com.seonbi.util.JwtTokenProvider;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +28,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public MemberDto getMemberByNickname(String nickname) {
@@ -94,5 +101,20 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean nicknameCheck(String nickname) {
         return memberRepository.existsByNicknameAndIsDeleted(nickname, false);
+    }
+
+    @Override
+    public int loginCheck(MemberLoginReq memberLoginReq) {
+        String email = memberLoginReq.getEmail();
+        String password = memberLoginReq.getPassword();
+        Member member=memberRepository.findByEmailAndIsDeleted(email, false);
+        if (member==null) {
+            return 401;
+        }
+
+        if (passwordEncoder.matches(password,member.getPassword())) {
+            return 200;
+        }
+        return 402;
     }
 }
