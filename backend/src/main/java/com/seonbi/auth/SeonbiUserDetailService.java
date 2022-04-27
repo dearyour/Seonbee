@@ -2,6 +2,7 @@ package com.seonbi.auth;
 
 import com.seonbi.api.service.MemberService;
 import com.seonbi.db.entity.Member;
+import com.seonbi.db.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,23 +21,15 @@ loadUserByUsername이 있다
 @Component
 public class SeonbiUserDetailService implements UserDetailsService {
 
-
-    MemberService memberService;
-
-
+    MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        Member member=memberService.getMemberByNickname(username);
-
-
+    public UserDetails loadUserByUsername(String nickname) throws UsernameNotFoundException {
+        Member member=memberRepository.findByNicknameAndIsDeleted(nickname, false);
         // 해당 닉네임을 가진 유저가 db에 존재한다면?
-        if(member!=null)
-        {
+        if (member!=null) {
             return new SeonbiUserDetail(member);
         }
-
         return null;
     }
 }

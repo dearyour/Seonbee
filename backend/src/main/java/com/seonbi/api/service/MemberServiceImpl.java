@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -58,5 +60,39 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member update(Member member) {
         return null;
+    }
+
+    @Override
+    public int emailCheck(String email) {
+        if(email==null)
+            return 401;
+        Pattern emailPattern = Pattern.compile("^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\\.[a-zA-Z]{2,6}$");
+        Matcher emailMatcher = emailPattern.matcher(email);
+        if(!emailMatcher.find()){        // 유효성 검사
+            return 402;
+        }
+        if (memberRepository.findByEmailAndIsDeleted(email, false)!=null) {      // 중복 검사
+            return 403;
+        }
+
+        return 200;
+    }
+
+    @Override
+    public int passwordCheck(String password) {
+        if(password == null)
+            return 401;
+        // 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
+        Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d).{8,16}$");
+        Matcher passMatcher = passPattern.matcher(password);
+        if(!passMatcher.find()){
+            return 402;
+        }
+        return 200;
+    }
+
+    @Override
+    public boolean nicknameCheck(String nickname) {
+        return memberRepository.existsByNicknameAndIsDeleted(nickname, false);
     }
 }

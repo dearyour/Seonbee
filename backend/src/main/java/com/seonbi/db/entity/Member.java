@@ -20,8 +20,8 @@ public class Member extends BaseEntity{
     private Long memberId;
     private String email;
     private String nickname;
-    private Boolean isAdmin;
-    private Boolean isKakao;
+    private Boolean isAdmin=false;
+    private Boolean isKakao=false;
     private String birthday;    // 1997-04-10
     @JsonIgnore
     private String password;
@@ -32,5 +32,6 @@ public class Member extends BaseEntity{
     private String likelist;
     private String banlist;
     private Long imageId=0l;    // default는 기본 이미지
+    private String verse;
 
 }

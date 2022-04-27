@@ -15,5 +15,8 @@ public interface MemberService {
     Member create(Member member);
 //    MemberDto memberEntityToDto(Member member);
     Member update(Member member);
+    int emailCheck(String email);
+    int passwordCheck(String password);
+    boolean nicknameCheck(String nickname);
 
 }

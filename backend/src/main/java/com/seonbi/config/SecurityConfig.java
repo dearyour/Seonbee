@@ -2,6 +2,7 @@ package com.seonbi.config;
 
 import com.seonbi.api.service.MemberService;
 import com.seonbi.auth.JwtAuthenticationFilter;
+import com.seonbi.db.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,12 +23,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-
-
-
     @Autowired
-    public MemberService memberService;
+    public MemberRepository memberRepository;
 
 
     // Password 인코딩 방식에 BCrypt 암호화 방식 사용
@@ -61,10 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 사용 하지않음
         .and()
-        .addFilter(new JwtAuthenticationFilter(authenticationManager(), memberService))//HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
+        .addFilter(new JwtAuthenticationFilter(authenticationManager(), memberRepository))//HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
             .authorizeRequests()    // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정
-//                .antMatchers("/api/member/auth").authenticated()    // 인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
-                .antMatchers("/api/member/auth").hasAnyAuthority("ROLE_USER")   // 인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
+                .antMatchers("/api/member/auth").authenticated()    // 인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
+//                .antMatchers("/api/member/auth").hasAnyAuthority("ROLE_USER")   // 인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
                 .anyRequest().permitAll(); //이외의 다른 요청들을 다 허용
 
 //                .and().cors();

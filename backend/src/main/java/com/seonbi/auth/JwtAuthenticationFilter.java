@@ -4,6 +4,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.seonbi.api.service.MemberService;
 import com.seonbi.db.entity.Member;
+import com.seonbi.db.repository.MemberRepository;
 import com.seonbi.util.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,22 +35,18 @@ import java.util.Arrays;
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
 
-    private MemberService memberService;
-
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, MemberService memberService) {
+    private MemberRepository memberRepository;
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, MemberRepository memberRepository) {
         super(authenticationManager);
-        this.memberService = memberService;
+        this.memberRepository = memberRepository;
     }
-
 
     // 인증이나 권한이 필요한 주소요청이 있을때 해당 필터를 타게 될것
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         // super.doFilterInternal(request, response, chain);
-
         //Request의 Header에서 token값을 가져온다
         String token = request.getHeader("Authorization");
-
 
         System.out.println("token=" + token);
         // 비어있거나  Bearer로 시작하지 않는다면?
@@ -73,19 +70,17 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
         if (email != null) {
             System.out.println("토큰의 이메일  저장되어 있다");
-
             Member member = null;
-            String role = "ROLE_USER"; // 필요한가?
+//            String role = "ROLE_USER"; // 필요한가?
 
-
-            member = memberService.getMemberByEmail(email); // 해당 이메일을 가진 유저가 db에 존재하는지 조회
+            member = memberRepository.findByEmailAndIsDeleted(email, false); // 해당 이메일을 가진 유저가 db에 존재하는지 조회
 
 
             // db에 존재한다면?
             if (member != null) {
                 System.out.println("이메일이 db에 저장되어 있다");
                 SeonbiUserDetail seonbiUserDetail = new SeonbiUserDetail(member);
-                seonbiUserDetail.setAuthorities((Arrays.asList(new SimpleGrantedAuthority(role))));
+//                seonbiUserDetail.setAuthorities((Arrays.asList(new SimpleGrantedAuthority(role))));
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(seonbiUserDetail, null, seonbiUserDetail.getAuthorities());
 
