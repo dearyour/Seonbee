@@ -1,4 +1,4 @@
-import org.apache.tools.ant.filters.ReplaceTokens
+//import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript{
     ext {
@@ -11,7 +11,7 @@ buildscript{
     }
     repositories {
         mavenCentral()
-        jcenter()
+//        jcenter()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVer}"
@@ -33,11 +33,11 @@ apply plugin: 'io.spring.dependency-management'
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/snapshot' }
-    maven { url 'https://repo.spring.io/milestone' }
-    maven { url "https://repo.spring.io/libs-release" }
-    maven { url "https://repo.maven.apache.org/maven2" }
-    maven { url "https://build.shibboleth.net/nexus/content/repositories/releases" }
+//    maven { url 'https://repo.spring.io/snapshot' }
+//    maven { url 'https://repo.spring.io/milestone' }
+//    maven { url "https://repo.spring.io/libs-release" }
+//    maven { url "https://repo.maven.apache.org/maven2" }
+//    maven { url "https://build.shibboleth.net/nexus/content/repositories/releases" }
 }
 
 group 'com'
@@ -45,30 +45,30 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = '11'
 
 //set build time and inject value to application.properties
-def buildTime() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMdd_HHmm')
-    return formattedDate
-}
+//def buildTime() {
+//    def date = new Date()
+//    def formattedDate = date.format('yyyyMMdd_HHmm')
+//    return formattedDate
+//}
 
-project.ext.set("build.date", buildTime())
-
-processResources {
-    with copySpec {
-        from "src/main/resources"
-        include "**/application*.yml"
-        include "**/application*.yaml"
-        include "**/application*.properties"
-        project.properties.findAll().each {
-            prop ->
-                if (prop.value != null) {
-                    filter(ReplaceTokens, tokens: [ (prop.key): String.valueOf(prop.value)])
-                    filter(ReplaceTokens, tokens: [ ('project.' + prop.key): String.valueOf(prop.value)])
-                    filter(ReplaceTokens, tokens: [ ('project.ext.' + prop.key): String.valueOf(prop.value)])
-                }
-        }
-    }
-}
+//project.ext.set("build.date", buildTime())
+//
+//processResources {
+//    with copySpec {
+//        from "src/main/resources"
+//        include "**/application*.yml"
+//        include "**/application*.yaml"
+//        include "**/application*.properties"
+//        project.properties.findAll().each {
+//            prop ->
+//                if (prop.value != null) {
+//                    filter(ReplaceTokens, tokens: [ (prop.key): String.valueOf(prop.value)])
+//                    filter(ReplaceTokens, tokens: [ ('project.' + prop.key): String.valueOf(prop.value)])
+//                    filter(ReplaceTokens, tokens: [ ('project.ext.' + prop.key): String.valueOf(prop.value)])
+//                }
+//        }
+//    }
+//}
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -124,6 +124,9 @@ dependencies {
 
     implementation("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
+
+//    entity -> dto mapper
+    implementation("org.modelmapper:modelmapper:2.3.8")
 
 //    testCompile('org.springframework.boot:spring-boot-starter-test')
 //    file
