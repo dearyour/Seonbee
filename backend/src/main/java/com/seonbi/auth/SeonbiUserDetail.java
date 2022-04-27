@@ -1,6 +1,8 @@
 package com.seonbi.auth;
 
 import com.seonbi.db.entity.Member;
+import lombok.Getter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,8 +23,8 @@ seonbiUserDetail는    UserDetails 를 구현하므로   Authentication 안에 �
 
  */
 
-
-
+@Getter
+@ToString
 public class SeonbiUserDetail implements UserDetails {
 
     private Member member;
@@ -33,14 +35,11 @@ public class SeonbiUserDetail implements UserDetails {
         this.member = member;
     }
 
-
-
     // 해당 유저의 권한 목록을 리턴
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles;
     }
-
 
     // 계정의 비밀번호를 리턴
     @Override
@@ -48,13 +47,11 @@ public class SeonbiUserDetail implements UserDetails {
         return member.getPassword();
     }
 
-
     // 계정의 고유한 값을 리턴 ( ex : DB PK값 , 닉네임도 중복이 안되는데 괜찮은가?)
     @Override
     public String getUsername() {
         return member.getEmail();
     }
-
 
     // 계정의 만료 여부 리턴   = true (만료 안됨)
     @Override
@@ -62,13 +59,11 @@ public class SeonbiUserDetail implements UserDetails {
         return true;
     }
 
-
     // 계정의 잠김 여부 리턴  = true (잠기지 않음)
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
 
     // 비밀번호 만료 여부 리턴  =true (만료 안됨)
     @Override
@@ -83,7 +78,7 @@ public class SeonbiUserDetail implements UserDetails {
         return false;
     }
 
-    public void setAuthorities(List<GrantedAuthority> roles) {
-        this.roles = roles;
-    }
+//    public void setAuthorities(List<GrantedAuthority> roles) {
+//        this.roles = roles;
+//    }
 }
