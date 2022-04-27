@@ -1,16 +1,18 @@
 
 package com.seonbi.api.controller;
 
+import com.seonbi.api.model.MemberDto;
 import com.seonbi.api.service.MemberService;
 import com.seonbi.auth.SeonbiUserDetail;
 import com.seonbi.db.entity.Member;
-import com.util.JwtTokenProvider;
+import com.seonbi.util.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
@@ -38,16 +40,33 @@ public class MemberController {
 
 
     //회원가입
-    @PostMapping("/join")
-    public ResponseEntity<String> join(@RequestBody Member member) {
+    @PostMapping()
+    public ResponseEntity<String> create(
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            @RequestParam("nickname") String nickname,
+            @RequestParam(required = false, value="gender") String gender,
+            @RequestParam(required = false, value="birthday") String birthday,
+            @RequestParam(required = false, value="mbti") String mbti,
+            @RequestParam(required = false, value="interest") String interest,
+            @RequestParam(required = false, value="likelist") String likelist,
+            @RequestParam(required = false, value="banlist") String banlist,
+            @RequestParam(required = false, value="verse") String verse,
+            @RequestParam(required = false, value="image") MultipartFile image
+    ) {
 
-        System.out.println("--------컨트롤러 내부---------------");
-        System.out.println(member.getEmail());
-        System.out.println(member.getPassword());
-
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
-
-        memberService.register(member);
+        Member member=new Member();
+        member.setEmail(email);
+        member.setPassword(passwordEncoder.encode(password));
+        member.setNickname(nickname);
+        member.setGender(gender);
+        member.setBirthday(birthday);
+        member.setMbti(mbti);
+        member.setInterest(interest);
+        member.setLikelist(likelist);
+        member.setBanlist(banlist);
+//        member.setImageId();
+        memberService.create(member);
 
         System.out.println("----------------------------------");
         return ResponseEntity.ok("ok");
@@ -63,20 +82,20 @@ public class MemberController {
         String email=member.getEmail();
         String password=member.getPassword();
 
-        Member member1 = memberService.getMemberByEmail(email);
+        MemberDto memberDto=memberService.getMemberByEmail(email);
 
-        if(member1==null)
-        {
-            return ResponseEntity.status(404).body("존재하지 않는 계정");
-        }
-
-        if(passwordEncoder.matches(password,member1.getPassword()))
-        {
-            String token = JwtTokenProvider.getToken(email, "user");
-
-            return ResponseEntity.status(200).body(token);
-
-        }
+//        if(member1==null)
+//        {
+//            return ResponseEntity.status(404).body("존재하지 않는 계정");
+//        }
+//
+//        if(passwordEncoder.matches(password,member1.getPassword()))
+//        {
+//            String token = JwtTokenProvider.getToken(email, "user");
+//
+//            return ResponseEntity.status(200).body(token);
+//
+//        }
 
 
 

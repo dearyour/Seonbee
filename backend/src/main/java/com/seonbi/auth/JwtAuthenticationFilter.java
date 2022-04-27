@@ -4,7 +4,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.seonbi.api.service.MemberService;
 import com.seonbi.db.entity.Member;
-import com.util.JwtTokenProvider;
+import com.seonbi.util.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -56,7 +56,8 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         if (token == null || !token.startsWith("Bearer ")) {
 
             System.out.println("비어있거나 Bearer로 시작하지 않는다");
-            //   return;
+            chain.doFilter(request, response);
+            return;
         }
 
         JWTVerifier verifier = JwtTokenProvider.getVerifier();
