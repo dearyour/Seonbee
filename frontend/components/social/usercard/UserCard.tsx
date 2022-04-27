@@ -1,10 +1,18 @@
 import React from 'react'
+import { Card } from '@mui/material'
+import CardContent from '@mui/material/CardContent';
+import CardMember from 'store/interface/social/cardmember'
+import Btn from 'components/commons/Btn';
 
-type Props = {}
 
-const UserCard = (props: Props) => {
+const UserCard = (props: CardMember) => {
   return (
-    <div>UserCard</div>
+    <Card className=''>
+      <CardContent>
+        <div>{props.nickname}</div>
+        <Btn type="gray" >asd</Btn>
+      </CardContent>
+    </Card>
   )
 }
 

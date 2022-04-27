@@ -11,7 +11,7 @@ const Blue = styled.span`
 `
 const SideBar = (props: Props) => {
   return (
-    <div className='background-image-2 p-1'>
+    <div className='p-1 border border-primary border-2' >
       <div className='p-1 mb-1'>나의 벗 맺기 <Blue>전보</Blue></div>
       <Alarm></Alarm>
       <div className='p-1 mb-1'><Blue>벗</Blue>의 연동회</div>
