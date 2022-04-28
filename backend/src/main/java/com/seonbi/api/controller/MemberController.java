@@ -13,6 +13,7 @@ import com.seonbi.api.service.MemberService;
 import com.seonbi.auth.SeonbiUserDetail;
 import com.seonbi.db.entity.Member;
 import com.seonbi.util.JwtTokenProvider;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api/member")
@@ -153,8 +155,11 @@ public class MemberController {
 //    }
 
     @GetMapping("/image/{imageId}")
-    public ResponseEntity<byte[]> getImage(@PathVariable("imageId") Long imageId){
+    public ResponseEntity<String> getImage(@PathVariable("imageId") Long imageId){
         byte[] imageByteArray=imageService.getImage(imageId);
-        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+        System.out.println(Arrays.toString(imageByteArray));
+        String imageString = new String(Base64.encodeBase64(imageByteArray));
+        System.out.println(imageString);
+        return new ResponseEntity<String>(imageString, HttpStatus.OK);
     }
 }
