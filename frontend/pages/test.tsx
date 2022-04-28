@@ -1,8 +1,29 @@
 import type { NextPage } from 'next'
 import { Button, FormControl, InputLabel, Select, MenuItem, Stack, Slider } from '@mui/material'
 import styled from '@emotion/styled'
-
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import baseurl from 'baseurl'
 const Asd: NextPage = () => {
+  const [imgtest, setImageUrl] = useState<string>('')
+
+  const image = () => {
+    axios({
+      method: 'get',
+      url: baseurl + 'member/image/0',
+    })
+      .then((res) => {
+        const byteimg = base64ToArrayBuffer(res.data)
+        setImageUrl("data:image/png;base64," + btoa(String.fromCharCode.apply(null, Array.from(new Uint8Array(byteimg)))))
+      })
+  }
+  function base64ToArrayBuffer(base64: any) {
+    console.log(base64)
+    const binaryString = window.atob(base64); // Comment this if not using base64
+    const bytes = new Uint8Array(binaryString.length);
+    return bytes.map((byte, i) => binaryString.charCodeAt(i));
+  }
+
   const Test = styled.div`
     color: blue;
     margin: 10px;
@@ -25,9 +46,14 @@ const Asd: NextPage = () => {
 
   console.log(f)
 
+
+
+
   return (
     <div className='m-5 rainbow'>
       가나다라마바사
+      <button onClick={image}>image</button>
+      <img src={imgtest}></img>
     </div>
   )
 }

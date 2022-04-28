@@ -39,7 +39,7 @@ const Join: any = () => {
             </button>
           </div>
           <div className="box signup">
-            <h2>Don't Have an Account ?</h2>
+            <h2>Don_t Have an Account ?</h2>
             <button
               className="signupBtn"
               onClick={() => {
