@@ -47,26 +47,12 @@ public class MemberController {
     @GetMapping("/kakao")
         public ResponseEntity<String> kakao(@RequestParam String code) //카카오 로그인 요청
         {
-
             System.out.println("프론트로부터 넘겨받은 인가코드"+code);
-
             String accessToken=memberService.kakaoToken(code); //카카오 access 토큰 발급
-
-
             //발급받은 토큰으로 사용자 정보 조회 , 서비스 회원 정보 확인 또는 가입 처리
             memberService.getKakaoUserInfo(accessToken);
-
-
-
-
-
             return ResponseEntity.ok("ok");
         }
-
-
-
-
-
 
 
     //로그인 후 필요한 요청
@@ -133,7 +119,7 @@ public class MemberController {
         member.setLikelist(likelist);
         member.setBanlist(banlist);
 
-        Long imageId= imageService.saveImage(image);
+        Long imageId=imageService.saveImage(image);
         member.setImageId(imageId);
         System.out.println("imageId: "+imageId);
 
@@ -187,5 +173,19 @@ public class MemberController {
         byte[] imageByteArray=imageService.getImage(imageId);
         String imageString = new String(Base64.encodeBase64(imageByteArray));
         return new ResponseEntity<String>(imageString, HttpStatus.OK);
+    }
+
+    @PostMapping("/image/test")
+    public ResponseEntity<? extends BaseResponseBody> imageUploadTest(
+            @RequestParam("name") String name,
+            @RequestParam(required = false, value="gender") String gender,
+            @RequestParam(required = false, value="image") MultipartFile image
+    ) throws IOException {
+
+        System.out.println(name+" "+gender);
+        Long imageId=imageService.saveImage(image);
+        System.out.println("imageId: "+imageId);
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 }
