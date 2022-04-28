@@ -8,11 +8,13 @@ import com.seonbi.api.response.BaseResponseBody;
 import com.seonbi.api.response.MemberAuthRes;
 import com.seonbi.api.response.MemberGetRes;
 import com.seonbi.api.response.MemberLoginRes;
+import com.seonbi.api.service.ImageService;
 import com.seonbi.api.service.MemberService;
 import com.seonbi.auth.SeonbiUserDetail;
 import com.seonbi.db.entity.Member;
 import com.seonbi.util.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.Authentication;
@@ -33,6 +35,9 @@ public class MemberController {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    ImageService imageService;
 
     //로그인 후 필요한 요청
     @GetMapping("/auth")
@@ -63,7 +68,7 @@ public class MemberController {
             @RequestParam(required = false, value="banlist") String banlist,
             @RequestParam(required = false, value="verse") String verse,
             @RequestParam(required = false, value="image") MultipartFile image
-    ) {
+    ) throws IOException {
 
         // 이메일 유효성 검사
         int emailCode=memberService.emailCheck(email);
@@ -97,11 +102,11 @@ public class MemberController {
         member.setInterest(interest);
         member.setLikelist(likelist);
         member.setBanlist(banlist);
-        if (image!=null){
-//            이미지 처리
-//            member.setImageId();
-            System.out.println("image set");
-        }
+
+        Long imageId= imageService.saveImage(image);
+        member.setImageId(imageId);
+        System.out.println("imageId: "+imageId);
+
         member.setVerse(verse);
 
         memberService.create(member);
@@ -147,4 +152,9 @@ public class MemberController {
 //        return ResponseEntity.status(200).body(MemberGetRes.of(200, "Success", memberDto));
 //    }
 
+    @GetMapping("/image/{imageId}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("imageId") Long imageId){
+        byte[] imageByteArray=imageService.getImage(imageId);
+        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+    }
 }
