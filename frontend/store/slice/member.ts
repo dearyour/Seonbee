@@ -13,6 +13,7 @@ export const memberSlice = createSlice({
   },
 });
 
+
 const { actions, reducer } = memberSlice;
 export const userActions = actions;
 export default reducer;
