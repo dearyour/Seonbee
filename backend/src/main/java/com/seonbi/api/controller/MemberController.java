@@ -41,6 +41,34 @@ public class MemberController {
     @Autowired
     ImageService imageService;
 
+
+
+    // 카카오 로그인 요청
+    @GetMapping("/kakao")
+        public ResponseEntity<String> kakao(@RequestParam String code) //카카오 로그인 요청
+        {
+
+            System.out.println("프론트로부터 넘겨받은 인가코드"+code);
+
+            String accessToken=memberService.kakaoToken(code); //카카오 access 토큰 발급
+
+
+            //발급받은 토큰으로 사용자 정보 조회 , 서비스 회원 정보 확인 또는 가입 처리
+            memberService.getKakaoUserInfo(accessToken);
+
+
+
+
+
+            return ResponseEntity.ok("ok");
+        }
+
+
+
+
+
+
+
     //로그인 후 필요한 요청
     @GetMapping("/auth")
 
@@ -157,9 +185,7 @@ public class MemberController {
     @GetMapping("/image/{imageId}")
     public ResponseEntity<String> getImage(@PathVariable("imageId") Long imageId){
         byte[] imageByteArray=imageService.getImage(imageId);
-        System.out.println(Arrays.toString(imageByteArray));
         String imageString = new String(Base64.encodeBase64(imageByteArray));
-        System.out.println(imageString);
         return new ResponseEntity<String>(imageString, HttpStatus.OK);
     }
 }
