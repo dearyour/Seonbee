@@ -20,7 +20,8 @@ public interface MemberService {
     Member update(Member member);
     int emailCheck(String email);
     int passwordCheck(String password);
-    boolean nicknameCheck(String nickname);
+    int nicknameCheck(String nickname);
 
     int loginCheck(MemberLoginReq memberLoginReq);
+    int nicknameCheckExceptMe(String nickname, String curNickname);
 }
