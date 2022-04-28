@@ -23,6 +23,5 @@ public interface MemberService {
     int nicknameCheck(String nickname);
 
     int loginCheck(MemberLoginReq memberLoginReq);
-
-    MemberDto getMemberByNicknameExceptMe(String nickname, String curNickname);
+    int nicknameCheckExceptMe(String nickname, String curNickname);
 }

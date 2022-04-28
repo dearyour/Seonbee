@@ -89,7 +89,7 @@ public class MemberController {
         // 이메일 유효성 검사
         int emailCode=memberService.emailCheck(email);
         if (emailCode == 401)
-            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"이메일을 입력해주세요"));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"이메일을 입력해주세요."));
         else if (emailCode == 402)
             return ResponseEntity.status(200).body(BaseResponseBody.of(402,"올바른 이메일 형식으로 입력해주세요."));
         else if (emailCode == 403)
@@ -98,7 +98,7 @@ public class MemberController {
         // 닉네임 중복 검사
         int nicknameCode=memberService.nicknameCheck(nickname);
         if (nicknameCode==401)
-            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"2자 이상 12자 미만으로 입력해주세요"));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"2자 이상 12자 미만으로 입력해주세요."));
         if (nicknameCode==403)
             return ResponseEntity.status(200).body(BaseResponseBody.of(403,"닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
 
@@ -106,7 +106,7 @@ public class MemberController {
         // 비밀번호 유효성 검사
         int passwordCode=memberService.passwordCheck(password);
         if(passwordCode == 401)
-            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"비밀번호를 입력해주세요"));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"비밀번호를 입력해주세요."));
         else if(passwordCode == 402)
             return ResponseEntity.status(200).body(BaseResponseBody.of(402,"비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
 
@@ -156,23 +156,27 @@ public class MemberController {
 
     @GetMapping("check/{nickname}")
     public ResponseEntity<? extends BaseResponseBody> nicknameCheck(@PathVariable("nickname") String nickname) {
-        MemberDto memberDto=memberService.getMemberByNickname(nickname);
-        if (memberDto==null){
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
+        int nicknameCode=memberService.nicknameCheck(nickname);
+        if (nicknameCode==401){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
+        } else if (nicknameCode==403){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(403, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
         }
-        return ResponseEntity.status(200).body(MemberGetRes.of(401, "이미 사용중인 닉네임입니다.", memberDto));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
     }
 
-    @GetMapping("check/update/{nickname}")
+    @GetMapping("update/check/{nickname}")
     public ResponseEntity<? extends BaseResponseBody> updateNicknameCheck(
             @ApiIgnore Authentication authentication, @PathVariable("nickname") String nickname) {
         SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
         String curNickname=details.getMember().getNickname();
-        MemberDto memberDto=memberService.getMemberByNicknameExceptMe(nickname, curNickname);
-        if (memberDto==null){
-            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
+        int nicknameCode=memberService.nicknameCheckExceptMe(nickname, curNickname);
+        if (nicknameCode==401){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
+        } else if (nicknameCode==403){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(403, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
         }
-        return ResponseEntity.status(200).body(MemberGetRes.of(401, "이미 사용중인 닉네임입니다.", memberDto));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
     }
 
     @GetMapping("/image/{imageId}")

@@ -128,9 +128,9 @@ public class MemberServiceImpl implements MemberService {
             return 401;
         }
         if (memberRepository.existsByNicknameAndIsDeleted(nickname, false)){
-            return 200;
+            return 403;
         }
-        return 403;
+        return 200;
     }
 
     @Override
@@ -149,12 +149,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDto getMemberByNicknameExceptMe(String nickname, String curNickname) {
+    public int nicknameCheckExceptMe(String nickname, String curNickname) {
+        if (nickname.length()<2 || nickname.length()>12){
+            return 401;
+        }
+
         Member member=memberRepository.findByNicknameAndIsDeleted(nickname, false);
         if (member==null || curNickname.equals(member.getNickname())){      // 닉네임 중복이 없거나 본인인 경우
-            return null;
+            return 200;
         }
-        return modelMapper.map(member, MemberDto.class);
+        return 403;
     }
 
     @Override
