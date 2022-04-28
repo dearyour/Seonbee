@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    BACK: process.env.BACK,
+    NEXT_PUBLIC_BACK: process.env.NEXT_PUBLIC_BACK,
   },
 }
 

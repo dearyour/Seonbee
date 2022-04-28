@@ -13,6 +13,7 @@ import com.seonbi.api.service.MemberService;
 import com.seonbi.auth.SeonbiUserDetail;
 import com.seonbi.db.entity.Member;
 import com.seonbi.util.JwtTokenProvider;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api/member")
@@ -38,6 +40,34 @@ public class MemberController {
 
     @Autowired
     ImageService imageService;
+
+
+
+    // 카카오 로그인 요청
+    @GetMapping("/kakao")
+        public ResponseEntity<String> kakao(@RequestParam String code) //카카오 로그인 요청
+        {
+
+            System.out.println("프론트로부터 넘겨받은 인가코드"+code);
+
+            String accessToken=memberService.kakaoToken(code); //카카오 access 토큰 발급
+
+
+            //발급받은 토큰으로 사용자 정보 조회 , 서비스 회원 정보 확인 또는 가입 처리
+            memberService.getKakaoUserInfo(accessToken);
+
+
+
+
+
+            return ResponseEntity.ok("ok");
+        }
+
+
+
+
+
+
 
     //로그인 후 필요한 요청
     @GetMapping("/auth")
@@ -153,8 +183,9 @@ public class MemberController {
 //    }
 
     @GetMapping("/image/{imageId}")
-    public ResponseEntity<byte[]> getImage(@PathVariable("imageId") Long imageId){
+    public ResponseEntity<String> getImage(@PathVariable("imageId") Long imageId){
         byte[] imageByteArray=imageService.getImage(imageId);
-        return new ResponseEntity<byte[]>(imageByteArray, HttpStatus.OK);
+        String imageString = new String(Base64.encodeBase64(imageByteArray));
+        return new ResponseEntity<String>(imageString, HttpStatus.OK);
     }
 }

@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), memberRepository))  //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
                 .authorizeRequests()    // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정
+//                .antMatchers("api/image/**").permitAll()
                 .antMatchers("/api/member/auth").authenticated()    // 인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
 //                .antMatchers("/api/member/auth").hasAnyAuthority("ROLE_USER")   // 인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
                 .anyRequest().permitAll(); //이외의 다른 요청들을 다 허용
@@ -64,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration=new CorsConfiguration();
 
-        configuration.addAllowedOrigin("*"); // 허용할 url
+        configuration.addAllowedOrigin("http://localhost:8080"); // 허용할 url   왜 * 로 하면 에러..?
         configuration.addAllowedHeader("*"); // 허용할 Header
         configuration.addAllowedMethod("*"); // 허용할 http Method;
         configuration.setAllowCredentials(true); //뭔지 모르겠다...
