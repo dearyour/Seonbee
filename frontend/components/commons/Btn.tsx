@@ -16,18 +16,23 @@ const temp = () => {
 const Btn = ({ type = 'blank', size = '', clickEvent = temp, children }: Props) => {
   let fontColor = ''
   let backColor = ''
+  let border = ''
   if (type === 'navy') {
     backColor = 'navy'
     fontColor = 'white'
-
   } else if (type === 'gray') {
     backColor = 'gray'
     fontColor = 'white'
+  } else {
+    border = '1px solid #BAA68B'
+    fontColor = '#BAA68B'
+
   }
   const BtnStyle = {
     width: size,
     backgroundColor: backColor,
-    color: fontColor
+    color: fontColor,
+    border: border
   }
 
 

@@ -34,7 +34,7 @@ const FriendList = (props: Props) => {
       {members.map((member, index) => {
         return (
           <ImgWrap className='col-2' key={index}>
-            <FrineImg src={member.imageString} alt="" />
+            <FriendImg src={member.imageString} alt="" />
             <Content>{member.dday}</Content>
             <Dday>{member.content}</Dday>
 
@@ -48,7 +48,7 @@ const ImgWrap = styled.div`
   overflow: hidden;
   position: relative;
   `
-const FrineImg = styled.img`
+const FriendImg = styled.img`
   border-radius: 10px;
   object-fit:cover;
   width: 100%;

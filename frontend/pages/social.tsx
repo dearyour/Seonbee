@@ -37,7 +37,7 @@ const Social = (props: Props) => {
             {members.map((now: any, index: any) => {
               return (
 
-                <div className='col-6' key="index">
+                <div className='col-6 mt-2' key="index">
                   <UserCard {...now}></UserCard>
                 </div>
               )
