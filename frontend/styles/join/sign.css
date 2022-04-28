@@ -170,6 +170,11 @@
   margin-top: 10px;
   margin-bottom: 20px;
 }
+.text-red-500 {
+  margin-top: -20px;
+  margin-bottom: 10px;
+  color: red;
+}
 
 @media (max-width: 991px) {
   .container {
