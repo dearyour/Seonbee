@@ -56,7 +56,8 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         if (token == null || !token.startsWith("Bearer ")) {
 
             System.out.println("비어있거나 Bearer로 시작하지 않는다");
-            //   return;
+            chain.doFilter(request, response);
+            return;
         }
 
         JWTVerifier verifier = JwtTokenProvider.getVerifier();
@@ -86,14 +87,14 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                 SeonbiUserDetail seonbiUserDetail = new SeonbiUserDetail(member);
                 seonbiUserDetail.setAuthorities((Arrays.asList(new SimpleGrantedAuthority(role))));
 
-                Authentication authentication = new UsernamePasswordAuthenticationToken(seonbiUserDetail, null, seonbiUserDetail.getAuthorities());
-
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(seonbiUserDetail, null, seonbiUserDetail.getAuthorities());
+                authentication.setDetails(seonbiUserDetail);
                 // 시큐리티 세션에 접근하여 Authentication 객체를 저장
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
                 System.out.println("시큐리티 세션에 접근하여 저장");
                 chain.doFilter(request, response);
-
+                return;
             }
 
 

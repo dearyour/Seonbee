@@ -25,13 +25,44 @@ public class MemberController {
     MemberService memberService;
 
 
+
+
+    // 카카오 로그인 요청
+    @GetMapping("/kakao")
+        public ResponseEntity<String> kakao(@RequestParam String code) //카카오 로그인 요청
+        {
+
+            System.out.println("프론트로부터 넘겨받은 인가코드"+code);
+
+            String accessToken=memberService.kakaoToken(code); //카카오 access 토큰 발급
+
+
+            //발급받은 토큰으로 사용자 정보 조회 , 서비스 회원 정보 확인 또는 가입 처리
+            memberService.getKakaoUserInfo(accessToken);
+
+
+
+
+
+            return ResponseEntity.ok("ok");
+        }
+
+
+
+
+
+
+
     //로그인 후 필요한 요청
     @GetMapping("/auth")
 
     public ResponseEntity<String> authorize(@ApiIgnore Authentication authentication) {
 
-//        SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
-//        details.getUsername();
+        System.out.println("----------컨트롤러---------------");
+        System.out.println("authentication="+authentication);
+       SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
+        System.out.println("details="+details);
+        details.getUsername();
 
         return ResponseEntity.ok("ok");
     }
