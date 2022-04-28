@@ -123,8 +123,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean nicknameCheck(String nickname) {
-        return memberRepository.existsByNicknameAndIsDeleted(nickname, false);
+    public int nicknameCheck(String nickname) {
+        if (nickname.length()<2 || nickname.length()>12){
+            return 401;
+        }
+        if (memberRepository.existsByNicknameAndIsDeleted(nickname, false)){
+            return 403;
+        }
+        return 200;
     }
 
     @Override
@@ -140,6 +146,19 @@ public class MemberServiceImpl implements MemberService {
             return 200;
         }
         return 402;
+    }
+
+    @Override
+    public int nicknameCheckExceptMe(String nickname, String curNickname) {
+        if (nickname.length()<2 || nickname.length()>12){
+            return 401;
+        }
+
+        Member member=memberRepository.findByNicknameAndIsDeleted(nickname, false);
+        if (member==null || curNickname.equals(member.getNickname())){      // 닉네임 중복이 없거나 본인인 경우
+            return 200;
+        }
+        return 403;
     }
 
     @Override

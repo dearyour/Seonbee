@@ -47,26 +47,12 @@ public class MemberController {
     @GetMapping("/kakao")
         public ResponseEntity<String> kakao(@RequestParam String code) //카카오 로그인 요청
         {
-
             System.out.println("프론트로부터 넘겨받은 인가코드"+code);
-
             String accessToken=memberService.kakaoToken(code); //카카오 access 토큰 발급
-
-
             //발급받은 토큰으로 사용자 정보 조회 , 서비스 회원 정보 확인 또는 가입 처리
             memberService.getKakaoUserInfo(accessToken);
-
-
-
-
-
             return ResponseEntity.ok("ok");
         }
-
-
-
-
-
 
 
     //로그인 후 필요한 요청
@@ -103,24 +89,26 @@ public class MemberController {
         // 이메일 유효성 검사
         int emailCode=memberService.emailCheck(email);
         if (emailCode == 401)
-            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"이메일을 입력해주세요"));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"이메일을 입력해주세요."));
         else if (emailCode == 402)
             return ResponseEntity.status(200).body(BaseResponseBody.of(402,"올바른 이메일 형식으로 입력해주세요."));
         else if (emailCode == 403)
             return ResponseEntity.status(200).body(BaseResponseBody.of(403,"이메일이 중복됩니다. 다른 이메일로 가입해주세요."));
 
         // 닉네임 중복 검사
-        if (memberService.nicknameCheck(nickname)){
+        int nicknameCode=memberService.nicknameCheck(nickname);
+        if (nicknameCode==401)
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"2자 이상 12자 미만으로 입력해주세요."));
+        if (nicknameCode==403)
             return ResponseEntity.status(200).body(BaseResponseBody.of(403,"닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
-        }
+
 
         // 비밀번호 유효성 검사
         int passwordCode=memberService.passwordCheck(password);
         if(passwordCode == 401)
-            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"비밀번호를 입력해주세요"));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"비밀번호를 입력해주세요."));
         else if(passwordCode == 402)
             return ResponseEntity.status(200).body(BaseResponseBody.of(402,"비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
-
 
         Member member=new Member();
         member.setEmail(email);
@@ -133,21 +121,15 @@ public class MemberController {
         member.setLikelist(likelist);
         member.setBanlist(banlist);
 
-        Long imageId= imageService.saveImage(image);
+        Long imageId=imageService.saveImage(image);
         member.setImageId(imageId);
-        System.out.println("imageId: "+imageId);
 
         member.setVerse(verse);
-
         memberService.create(member);
-
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-
 
     }
 
-
-    //로그인
     @PostMapping("/login")
     public ResponseEntity<? extends BaseResponseBody> login(@RequestBody MemberLoginReq memberLoginReq) {
 
@@ -172,15 +154,30 @@ public class MemberController {
         return ResponseEntity.status(200).body(MemberGetRes.of(200, "Success", memberDto));
     }
 
-//    @GetMapping("check/{nickname}")
-//    public ResponseEntity<? extends BaseResponseBody> nicknameCheck(@ApiIgnore Authentication authentication, @PathVariable("nickname") String nickname) {
-//        SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
-//        MemberDto memberDto=memberService.getMemberByMemberId(memberId);
-//        if (memberDto==null){
-//            return ResponseEntity.status(200).body(MemberGetRes.of(401, "존재하지 않는 회원입니다.", null));
-//        }
-//        return ResponseEntity.status(200).body(MemberGetRes.of(200, "Success", memberDto));
-//    }
+    @GetMapping("check/{nickname}")
+    public ResponseEntity<? extends BaseResponseBody> nicknameCheck(@PathVariable("nickname") String nickname) {
+        int nicknameCode=memberService.nicknameCheck(nickname);
+        if (nicknameCode==401){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
+        } else if (nicknameCode==403){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(403, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
+    }
+
+    @GetMapping("update/check/{nickname}")
+    public ResponseEntity<? extends BaseResponseBody> updateNicknameCheck(
+            @ApiIgnore Authentication authentication, @PathVariable("nickname") String nickname) {
+        SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
+        String curNickname=details.getMember().getNickname();
+        int nicknameCode=memberService.nicknameCheckExceptMe(nickname, curNickname);
+        if (nicknameCode==401){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
+        } else if (nicknameCode==403){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(403, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
+    }
 
     @GetMapping("/image/{imageId}")
     public ResponseEntity<String> getImage(@PathVariable("imageId") Long imageId){
@@ -188,4 +185,18 @@ public class MemberController {
         String imageString = new String(Base64.encodeBase64(imageByteArray));
         return new ResponseEntity<String>(imageString, HttpStatus.OK);
     }
+
+//    @PostMapping("/image/test")
+//    public ResponseEntity<? extends BaseResponseBody> imageUploadTest(
+//            @RequestParam("name") String name,
+//            @RequestParam(required = false, value="gender") String gender,
+//            @RequestParam(required = false, value="image") MultipartFile image
+//    ) throws IOException {
+//
+//        System.out.println(name+" "+gender);
+//        Long imageId=imageService.saveImage(image);
+//        System.out.println("imageId: "+imageId);
+//
+//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+//    }
 }
