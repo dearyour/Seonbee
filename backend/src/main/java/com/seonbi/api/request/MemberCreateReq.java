@@ -21,5 +21,6 @@ public class MemberCreateReq {
     private String likelist;
     private String banlist;
     private String verse;
+    private String job;
 
 }

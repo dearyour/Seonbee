@@ -12,7 +12,6 @@ import com.seonbi.api.response.MemberLoginRes;
 import com.seonbi.api.service.ImageService;
 import com.seonbi.api.service.MemberAuthService;
 import com.seonbi.api.service.MemberService;
-import com.seonbi.auth.SeonbiUserDetail;
 import com.seonbi.db.entity.Member;
 import com.seonbi.util.JwtTokenProvider;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -66,9 +65,8 @@ public class MemberController {
          * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
          * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
          */
-//        SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
+
         Member member=memberAuthService.memberAuthorize(authentication);
-//        MemberAuthDto memberAuthDto=memberService.memberAuthorize(authentication);
         if (member==null){
             return ResponseEntity.status(403).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
         }
@@ -115,6 +113,7 @@ public class MemberController {
         member.setLikelist(memberCreateReq.getLikelist());
         member.setBanlist(memberCreateReq.getBanlist());
         member.setVerse(memberCreateReq.getVerse());
+        member.setJob(memberCreateReq.getJob());
         memberService.createMember(member);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
@@ -132,11 +131,10 @@ public class MemberController {
             @RequestParam(required = false, value="likelist") String likelist,
             @RequestParam(required = false, value="banlist") String banlist,
             @RequestParam(required = false, value="verse") String verse,
+            @RequestParam(required = false, value="job") String job,
             @RequestParam(required = false, value="image") MultipartFile image
     ) throws IOException {
 
-//        SeonbiUserDetail seonbiUserDetail=(SeonbiUserDetail) authentication.getDetails();
-//        Member curMember = seonbiUserDetail.getMember();
         Member curMember=memberAuthService.memberAuthorize(authentication);
         if (curMember==null || !curMember.getMemberId().equals(memberId)){
             return ResponseEntity.status(403).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
@@ -168,6 +166,7 @@ public class MemberController {
         member.setLikelist(likelist);
         member.setBanlist(banlist);
         member.setVerse(verse);
+        member.setJob(job);
 
         Long imageId=imageService.saveImage(image);
         member.setImageId(imageId);
@@ -182,10 +181,8 @@ public class MemberController {
             @PathVariable("memberId") Long memberId,
             @ApiIgnore Authentication authentication
     ){
-//        SeonbiUserDetail seonbiUserDetail=(SeonbiUserDetail) authentication.getDetails();
-//        Long tokenId=seonbiUserDetail.getMember().getMemberId();
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (!member.getMemberId().equals(memberId)){
+        if (member==null || !member.getMemberId().equals(memberId)){
             return ResponseEntity.status(403).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
         }
 
@@ -231,9 +228,11 @@ public class MemberController {
     @GetMapping("update/check/{nickname}")
     public ResponseEntity<? extends BaseResponseBody> updateNicknameCheck(
             @ApiIgnore Authentication authentication, @PathVariable("nickname") String nickname) {
-        SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
-        String curNickname=details.getMember().getNickname();
-        int nicknameCode=memberService.nicknameCheckExceptMe(nickname, curNickname);
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
+        }
+        int nicknameCode=memberService.nicknameCheckExceptMe(nickname, member.getNickname());
         if (nicknameCode==401){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
         } else if (nicknameCode==402){
