@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -6,6 +7,7 @@
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
 }
+
 .account {
   display: flex;
   justify-content: center;
@@ -14,16 +16,19 @@
   /* background: #03a9f4; */
   transition: 0.5s;
 }
+
 .account.active {
   /* background: #f43648; */
 }
-.container {
+
+.containers {
   position: relative;
   width: 800px;
   height: 700px;
   margin: 20px;
 }
-.container .blueBg {
+
+.containers .blueBg {
   position: absolute;
   top: 40px;
   width: 100%;
@@ -35,7 +40,8 @@
   align-items: center;
   box-shadow: 0 5px 45px rgba(0, 0, 0, 0.15);
 }
-.container .box {
+
+.containers .box {
   position: relative;
   width: 50%;
   height: 100%;
@@ -46,13 +52,15 @@
   flex-direction: column;
   padding: 40px;
 }
-.container .box h2 {
+
+.containers .box h2 {
   color: #fff;
   font-size: 1.2em;
   font-weight: 500;
   margin-bottom: 10px;
 }
-.container .box button {
+
+.containers .box button {
   cursor: pointer;
   padding: 10px 20px;
   /* background: #fff; */
@@ -63,6 +71,7 @@
   border-radius: 10%;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
+
 .formBx {
   position: absolute;
   top: 0;
@@ -79,6 +88,7 @@
   transition: 0.5s ease-in-out;
   overflow: hidden;
 }
+
 .formBx.active {
   left: 50%;
 }
@@ -90,32 +100,39 @@
   padding: 50px;
   transition: 0.5s;
 }
+
 .formBx .signinForm {
   transition-delay: 0.25s;
 }
+
 .formBx.active .signinForm {
   left: -100%;
   transition-delay: 0s;
 }
+
 .formBx .signupForm {
   left: 100%;
   transition-delay: 0s;
 }
+
 .formBx.active .signupForm {
   left: 0;
   transition-delay: 0.25s;
 }
+
 .formBx form {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
+
 .formBx form h3 {
   font-size: 1.5em;
   color: #333;
   margin-bottom: 20px;
   font-weight: 500;
 }
+
 .formBx form input {
   width: 100%;
   margin-bottom: 30px;
@@ -124,6 +141,7 @@
   font-size: 16px;
   border: 1px solid #333;
 }
+
 .formBx form input[type="submit"] {
   background: #03a9f4;
   border: none;
@@ -131,16 +149,20 @@
   max-width: 100px;
   cursor: pointer;
 }
+
 .formBx .signupForm form input[type="submit"] {
   background: #f43648;
 }
+
 .formBx form a {
   color: #333;
 }
+
 .signupForm {
   height: 105%;
   /* transition-delay: 0.4s; */
 }
+
 /* .signupForm.action {
   transition-delay: 0.4s;
 } */
@@ -158,6 +180,7 @@
   font-size: 14px;
   border: 1px solid #333;
 }
+
 .toggle-promotion {
   background: #03a9f4;
   border: none;
@@ -172,7 +195,7 @@
 }
 
 @media (max-width: 991px) {
-  .container {
+  .containers {
     max-width: 400px;
     height: 650px;
     display: flex;
@@ -180,32 +203,38 @@
     align-items: center;
     margin-top: -200px;
   }
-  .container .blueBg {
+
+  .containers .blueBg {
     top: 0;
     height: 100%;
     height: 500px;
   }
+
   .formBx {
     width: 100%;
     height: 500px;
     top: 0;
     box-shadow: none;
   }
+
   .formBx.active {
     left: 0;
     top: 150px;
     height: 750px;
   }
-  .container .blueBg {
+
+  .containers .blueBg {
     height: 650px;
   }
-  .container .box {
+
+  .containers .box {
     position: absolute;
     width: 100%;
     height: 150px;
     bottom: 0;
   }
-  .container .box.signin {
+
+  .containers .box.signin {
     top: 0;
   }
 }

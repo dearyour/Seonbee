@@ -160,4 +160,18 @@ public class MemberController {
         String imageString = new String(Base64.encodeBase64(imageByteArray));
         return new ResponseEntity<String>(imageString, HttpStatus.OK);
     }
+
+    @PostMapping("/image/test")
+    public ResponseEntity<? extends BaseResponseBody> imageUploadTest(
+            @RequestParam("name") String name,
+            @RequestParam(required = false, value="gender") String gender,
+            @RequestParam(required = false, value="image") MultipartFile image
+    ) throws IOException {
+
+        System.out.println(name+" "+gender);
+        Long imageId=imageService.saveImage(image);
+        System.out.println("imageId: "+imageId);
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
 }

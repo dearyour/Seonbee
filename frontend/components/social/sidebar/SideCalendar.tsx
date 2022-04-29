@@ -9,7 +9,8 @@ const SideCalendar = (props: Props) => {
   const [value, onChange] = useState<Date>(new Date());
   const [days, setDays] = useState<string[]>([]);
 
-  const [mounted, setMounted] = useState(false);
+
+  const [mounted, setMounted] = useState<boolean>(false);
   useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
