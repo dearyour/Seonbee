@@ -15,12 +15,14 @@ public interface MemberService {
     MemberDto getMemberByEmail(String email);
     MemberDto getMemberByMemberId(Long memberId);
     List<MemberDto> getMemberList();
-    Member create(Member member);
+    Member createMember(Member member);
 //    MemberDto memberEntityToDto(Member member);
-    Member update(Member member);
+    void updateMember(Member member);
     int emailCheck(String email);
     int passwordCheck(String password);
-    boolean nicknameCheck(String nickname);
+    int nicknameCheck(String nickname);
 
     int loginCheck(MemberLoginReq memberLoginReq);
+    int nicknameCheckExceptMe(String nickname, String curNickname);
+    void deleteMember(Long memberId);
 }

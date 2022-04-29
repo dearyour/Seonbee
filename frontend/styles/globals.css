@@ -38,13 +38,13 @@ a {
 }
 
 .background-image-1 {
-  background-image: url('../public/2.jpg');
+  background-image: url('../public/images/2.jpg');
 }
 
 .background-image-2 {
-  background-image: url('../public/1.jpg');
+  background-image: url('../public/images/1.jpg');
 }
 
 .background-image-3 {
-  background-image: url('../public/3.jpg');
+  background-image: url('../public/images/3.jpg');
 }
