@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface FriendService {
 
-//    List<Mem>
+    int friendFollowSend(Long friendId);
+
 
 }
