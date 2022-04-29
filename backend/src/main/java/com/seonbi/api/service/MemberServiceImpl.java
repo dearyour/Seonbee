@@ -224,11 +224,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Map<String, String> getKakaoUserInfo(String accessToken) {
+    public String getKakaoUserInfo(String accessToken) {
 
         String requestURL="https://kapi.kakao.com/v2/user/me";
         Map<String, String> response = new HashMap<>();
-
+        String email=null;
+        String token=null;
         try {
             URL url=new URL(requestURL);
 
@@ -258,7 +259,7 @@ public class MemberServiceImpl implements MemberService {
             JSONObject kakao_account = (JSONObject) element.get("kakao_account");
 
             boolean hasEmail = (boolean) kakao_account.get("has_email");
-            String email="";
+
 
             if(hasEmail) {
                 email = kakao_account.get("email").toString();
@@ -276,7 +277,35 @@ public class MemberServiceImpl implements MemberService {
             e.printStackTrace();
         }
 
-        return response;
+
+        if(email!=null) //카카오 유저정보로 이메일을 받아옴
+        {
+            //이미 가입된 회원인지 확인
+            Member member = memberRepository.findByEmailAndIsDeletedAndIsKakao(email, false, true);
+
+            if(member==null) // 처음 온 유저라면 db에 저장
+            {
+
+                member= new Member();
+                member.setEmail(email);
+                member.setIsKakao(true);
+                memberRepository.save(member);
+
+
+                System.out.println("----------기본키-------");
+                System.out.println(member.getMemberId());
+            }
+
+           token=  JwtTokenProvider.getToken(email);
+            System.out.println("access token="+token);
+
+
+
+
+        }
+
+
+      return token;
     }
 
 

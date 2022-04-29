@@ -48,13 +48,18 @@ public class MemberController {
 
     // 카카오 로그인 요청
     @GetMapping("/kakao")
-        public ResponseEntity<String> kakao(@RequestParam String code) //카카오 로그인 요청
+        public ResponseEntity<? extends BaseResponseBody> kakao(@RequestParam String code) //카카오 로그인 요청
         {
             System.out.println("프론트로부터 넘겨받은 인가코드"+code);
             String accessToken=memberService.kakaoToken(code); //카카오 access 토큰 발급
             //발급받은 토큰으로 사용자 정보 조회 , 서비스 회원 정보 확인 또는 가입 처리
-            memberService.getKakaoUserInfo(accessToken);
-            return ResponseEntity.ok("ok");
+            String token=memberService.getKakaoUserInfo(accessToken);
+
+
+
+
+
+            return ResponseEntity.status(200).body(MemberLoginRes.of(200, "Success", token));
         }
 
 
