@@ -25,7 +25,7 @@ const Join: any = () => {
         Bxactive.length !== 0 ? ["account", Bxactive].join(" ") : "account"
       }
     >
-      <div className="container">
+      <div className="containers">
         <div className="blueBg">
           <div className="box signin">
             <h2>Already Have an Account ?</h2>
