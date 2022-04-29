@@ -14,8 +14,6 @@ public class MemberAuthServiceImpl implements MemberAuthService{
         if (details==null){
             return null;
         }
-
-//        if (details.get)
-        return null;
+        return details.getMember();
     }
 }
