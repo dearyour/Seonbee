@@ -12,9 +12,9 @@ public class MemberGetAllRes extends BaseResponseBody{
 
     private List<MemberDto> members;
 
-    public static MemberGetAllRes of(Integer statusCode, String message, List<MemberDto> members) {
+    public static MemberGetAllRes of(Integer status, String message, List<MemberDto> members) {
         MemberGetAllRes res = new MemberGetAllRes();
-        res.setStatusCode(statusCode);
+        res.setStatus(status);
         res.setMessage(message);
         res.setMembers(members);
 

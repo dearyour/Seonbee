@@ -19,7 +19,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private static String secretKey = "seonbi";  //시크릿 키
+    private static String secretKey = "c2VvbmJp7J206rOgIOyLtuyngOunjCBzZW9uYmVl6rCAIOuPvOuyhOuguOuEpOyalOOFoOOFoA==";  //시크릿 키
     private static Integer expirationTime = 30 * 60 * 1000;  // access 유효시간 (30분)
 
     public static final String TOKEN_PREFIX = "Bearer ";
