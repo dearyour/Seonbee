@@ -12,23 +12,23 @@ import lombok.Setter;
 @Setter
 public class BaseResponseBody {
 	String message = null;
-	Integer statusCode = null;
+	Integer status = null;
 	
 	public BaseResponseBody() {}
 	
-	public BaseResponseBody(Integer statusCode){
-		this.statusCode = statusCode;
+	public BaseResponseBody(Integer status){
+		this.status = status;
 	}
 	
-	public BaseResponseBody(Integer statusCode, String message){
-		this.statusCode = statusCode;
+	public BaseResponseBody(Integer status, String message){
+		this.status = status;
 		this.message = message;
 	}
 	
-	public static BaseResponseBody of(Integer statusCode, String message) {
+	public static BaseResponseBody of(Integer status, String message) {
 		BaseResponseBody body = new BaseResponseBody();
 		body.message = message;
-		body.statusCode = statusCode;
+		body.status = status;
 		return body;
 	}
 }

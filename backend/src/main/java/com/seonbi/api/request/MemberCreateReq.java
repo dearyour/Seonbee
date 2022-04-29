@@ -1,4 +1,4 @@
-package com.seonbi.api.model;
+package com.seonbi.api.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +9,10 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class MemberDto {
+public class MemberCreateReq {
 
-    private Long memberId=0l;
     private String email;
+    private String password;
     private String nickname;
     private String birthday;
     private String gender;
@@ -20,10 +20,7 @@ public class MemberDto {
     private String interest;
     private String likelist;
     private String banlist;
-    private String imageString;
     private String verse;
     private String job;
-    private boolean isAdmin=false;
-    private boolean isKakao=false;
 
 }
