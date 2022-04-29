@@ -9,6 +9,7 @@ import com.seonbi.api.response.MemberAuthRes;
 import com.seonbi.api.response.MemberGetRes;
 import com.seonbi.api.response.MemberLoginRes;
 import com.seonbi.api.service.ImageService;
+import com.seonbi.api.service.MemberAuthService;
 import com.seonbi.api.service.MemberService;
 import com.seonbi.auth.SeonbiUserDetail;
 import com.seonbi.db.entity.Member;
@@ -25,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api/member")
@@ -40,6 +40,9 @@ public class MemberController {
 
     @Autowired
     ImageService imageService;
+
+    @Autowired
+    MemberAuthService memberAuthService;
 
 
 
@@ -57,14 +60,17 @@ public class MemberController {
 
     //로그인 후 필요한 요청
     @GetMapping("/auth")
-
     public ResponseEntity<? extends BaseResponseBody> authorize(@ApiIgnore Authentication authentication) {
         /**
          * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
          * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
          */
-        SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
-        Member member=details.getMember();
+//        SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
+        Member member=memberAuthService.memberAuthorize(authentication);
+//        MemberAuthDto memberAuthDto=memberService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
+        }
         MemberAuthDto memberAuthDto=new MemberAuthDto(member.getMemberId(), member.getNickname(), member.getImageId());
 
         return ResponseEntity.status(200).body(MemberAuthRes.of(200, "Success", memberAuthDto));
