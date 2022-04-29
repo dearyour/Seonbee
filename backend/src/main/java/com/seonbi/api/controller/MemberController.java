@@ -3,6 +3,7 @@ package com.seonbi.api.controller;
 
 import com.seonbi.api.model.MemberAuthDto;
 import com.seonbi.api.model.MemberDto;
+import com.seonbi.api.request.MemberCreateReq;
 import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.api.response.BaseResponseBody;
 import com.seonbi.api.response.MemberAuthRes;
@@ -76,10 +77,52 @@ public class MemberController {
         return ResponseEntity.status(200).body(MemberAuthRes.of(200, "Success", memberAuthDto));
     }
 
-
     @PostMapping()
-    public ResponseEntity<? extends BaseResponseBody> create(
-            @RequestParam("email") String email,
+    public ResponseEntity<? extends BaseResponseBody> createMember(MemberCreateReq memberCreateReq){
+        // 이메일 유효성 검사
+
+        String email=memberCreateReq.getEmail();
+        String nickname=memberCreateReq.getNickname();
+        String password=memberCreateReq.getPassword();
+
+        int emailCode=memberService.emailCheck(email);
+        if (emailCode == 401)
+            return ResponseEntity.status(200).body(BaseResponseBody.of(402,"올바른 이메일 형식으로 입력해주세요."));
+        else if (emailCode == 402)
+            return ResponseEntity.status(200).body(BaseResponseBody.of(403,"이메일이 중복됩니다. 다른 이메일로 가입해주세요."));
+
+        // 닉네임 중복 검사
+        int nicknameCode=memberService.nicknameCheck(nickname);
+        if (nicknameCode==401)
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"2자 이상 12자 미만으로 입력해주세요."));
+        if (nicknameCode==402)
+            return ResponseEntity.status(200).body(BaseResponseBody.of(402,"닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
+
+
+        // 비밀번호 유효성 검사
+        int passwordCode=memberService.passwordCheck(password);
+        if(passwordCode == 401)
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
+
+        Member member=new Member();
+        member.setEmail(email);
+        member.setPassword(passwordEncoder.encode(password));
+        member.setNickname(nickname);
+        member.setGender(memberCreateReq.getGender());
+        member.setBirthday(memberCreateReq.getBirthday());
+        member.setMbti(memberCreateReq.getMbti());
+        member.setInterest(memberCreateReq.getInterest());
+        member.setLikelist(memberCreateReq.getLikelist());
+        member.setBanlist(memberCreateReq.getBanlist());
+        member.setVerse(memberCreateReq.getVerse());
+        memberService.createMember(member);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<? extends BaseResponseBody> updateMember(
+            @ApiIgnore Authentication authentication,
+            @RequestParam("memberId") Long memberId,
             @RequestParam("password") String password,
             @RequestParam("nickname") String nickname,
             @RequestParam(required = false, value="gender") String gender,
@@ -92,21 +135,17 @@ public class MemberController {
             @RequestParam(required = false, value="image") MultipartFile image
     ) throws IOException {
 
-        // 이메일 유효성 검사
-        int emailCode=memberService.emailCheck(email);
-        if (emailCode == 401)
-            return ResponseEntity.status(200).body(BaseResponseBody.of(401,"이메일을 입력해주세요."));
-        else if (emailCode == 402)
-            return ResponseEntity.status(200).body(BaseResponseBody.of(402,"올바른 이메일 형식으로 입력해주세요."));
-        else if (emailCode == 403)
-            return ResponseEntity.status(200).body(BaseResponseBody.of(403,"이메일이 중복됩니다. 다른 이메일로 가입해주세요."));
-
+        SeonbiUserDetail seonbiUserDetail=(SeonbiUserDetail) authentication.getDetails();
+        Member curMember = seonbiUserDetail.getMember();
+        if (!curMember.getMemberId().equals(memberId)){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
+        }
         // 닉네임 중복 검사
-        int nicknameCode=memberService.nicknameCheck(nickname);
+        int nicknameCode=memberService.nicknameCheckExceptMe(nickname, curMember.getNickname());
         if (nicknameCode==401)
             return ResponseEntity.status(200).body(BaseResponseBody.of(401,"2자 이상 12자 미만으로 입력해주세요."));
-        if (nicknameCode==403)
-            return ResponseEntity.status(200).body(BaseResponseBody.of(403,"닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
+        if (nicknameCode==402)
+            return ResponseEntity.status(200).body(BaseResponseBody.of(402,"닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
 
 
         // 비밀번호 유효성 검사
@@ -117,7 +156,8 @@ public class MemberController {
             return ResponseEntity.status(200).body(BaseResponseBody.of(402,"비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
 
         Member member=new Member();
-        member.setEmail(email);
+        member.setMemberId(memberId);
+        member.setEmail(curMember.getEmail());
         member.setPassword(passwordEncoder.encode(password));
         member.setNickname(nickname);
         member.setGender(gender);
@@ -126,14 +166,29 @@ public class MemberController {
         member.setInterest(interest);
         member.setLikelist(likelist);
         member.setBanlist(banlist);
+        member.setVerse(verse);
 
         Long imageId=imageService.saveImage(image);
         member.setImageId(imageId);
 
-        member.setVerse(verse);
-        memberService.create(member);
+        memberService.updateMember(member);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 
+    }
+
+    @GetMapping("/delete/{memberId}")
+    public ResponseEntity<? extends BaseResponseBody> deleteMember(
+            @PathVariable("memberId") Long memberId,
+            @ApiIgnore Authentication authentication
+    ){
+        SeonbiUserDetail seonbiUserDetail=(SeonbiUserDetail) authentication.getDetails();
+        Long tokenId=seonbiUserDetail.getMember().getMemberId();
+        if (!tokenId.equals(memberId)){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
+        }
+
+        memberService.deleteMember(memberId);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
     @PostMapping("/login")
@@ -165,8 +220,8 @@ public class MemberController {
         int nicknameCode=memberService.nicknameCheck(nickname);
         if (nicknameCode==401){
             return ResponseEntity.status(200).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
-        } else if (nicknameCode==403){
-            return ResponseEntity.status(200).body(BaseResponseBody.of(403, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
+        } else if (nicknameCode==402){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(402, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
     }
@@ -179,8 +234,8 @@ public class MemberController {
         int nicknameCode=memberService.nicknameCheckExceptMe(nickname, curNickname);
         if (nicknameCode==401){
             return ResponseEntity.status(200).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
-        } else if (nicknameCode==403){
-            return ResponseEntity.status(200).body(BaseResponseBody.of(403, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
+        } else if (nicknameCode==402){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(402, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
     }
