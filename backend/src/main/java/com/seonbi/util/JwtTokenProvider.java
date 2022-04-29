@@ -72,7 +72,7 @@ public class JwtTokenProvider {
             throw ex;
         } catch (SignatureVerificationException ex) {
             throw ex;
-        } catch (TokenExpiredException ex) {
+        } catch (TokenExpiredException ex) {  //
             throw ex;
         } catch (JWTCreationException ex) {
             throw ex;

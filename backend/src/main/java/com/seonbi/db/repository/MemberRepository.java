@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member,Long> {
-
+    Member findByEmailAndIsDeletedAndIsKakao(String email, boolean isDeleted,boolean isKakao);
     Member findByEmailAndIsDeleted(String email, boolean isDeleted);
     Member findByNicknameAndIsDeleted(String nickname, boolean isDeleted);   // member table에서 nickname이라는 컬럼에 맞는 애를 return 해줌
     Member findByNicknameAndMemberIdAndIsDeleted(String nickname, Long memberId, boolean isDeleted);
