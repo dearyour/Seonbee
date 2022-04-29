@@ -246,12 +246,17 @@ public class MemberController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
     }
 
-    @GetMapping("/image/{imageId}")
-    public ResponseEntity<String> getImage(@PathVariable("imageId") Long imageId){
-        byte[] imageByteArray=imageService.getImage(imageId);
-        String imageString = new String(Base64.encodeBase64(imageByteArray));
-        return new ResponseEntity<String>(imageString, HttpStatus.OK);
-    }
+
+
+
+//    @GetMapping("/image/{imageId}")
+//    public ResponseEntity<String> getImage(@PathVariable("imageId") Long imageId){
+//        byte[] imageByteArray=imageService.getImage(imageId);
+//        String imageString = new String(Base64.encodeBase64(imageByteArray));
+//        return new ResponseEntity<String>(imageString, HttpStatus.OK);
+//    }
+
+
 
 //    @PostMapping("/image/test")
 //    public ResponseEntity<? extends BaseResponseBody> imageUploadTest(
