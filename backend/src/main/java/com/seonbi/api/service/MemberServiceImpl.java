@@ -1,12 +1,13 @@
 package com.seonbi.api.service;
 
+import com.seonbi.db.repository.ImageRepositorySupport;
+import com.seonbi.db.repository.MemberRepositorySupport;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import com.seonbi.api.model.MemberDto;
 import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.db.entity.Member;
 import com.seonbi.db.repository.MemberRepository;
-import com.seonbi.db.repository.MemberRepositorySupport;
 import com.seonbi.util.JwtTokenProvider;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +77,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member create(Member member) {
+    public Member createMember(Member member) {
         return memberRepository.save(member);
     }
 
@@ -89,8 +89,8 @@ public class MemberServiceImpl implements MemberService {
 //    }
 
     @Override
-    public Member update(Member member) {
-        return null;
+    public void updateMember(Member member) {
+        memberRepository.save(member);
     }
 
     @Override
@@ -100,10 +100,10 @@ public class MemberServiceImpl implements MemberService {
         Pattern emailPattern = Pattern.compile("^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\\.[a-zA-Z]{2,6}$");
         Matcher emailMatcher = emailPattern.matcher(email);
         if(!emailMatcher.find()){        // 유효성 검사
-            return 402;
+            return 401;
         }
         if (memberRepository.findByEmailAndIsDeleted(email, false)!=null) {      // 중복 검사
-            return 403;
+            return 402;
         }
 
         return 200;
@@ -123,8 +123,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean nicknameCheck(String nickname) {
-        return memberRepository.existsByNicknameAndIsDeleted(nickname, false);
+    public int nicknameCheck(String nickname) {
+        if (nickname.length()<2 || nickname.length()>12){
+            return 401;
+        }
+        if (memberRepository.existsByNicknameAndIsDeleted(nickname, false)){
+            return 402;
+        }
+        return 200;
     }
 
     @Override
@@ -140,6 +146,25 @@ public class MemberServiceImpl implements MemberService {
             return 200;
         }
         return 402;
+    }
+
+    @Override
+    public int nicknameCheckExceptMe(String nickname, String curNickname) {
+        if (nickname.length()<2 || nickname.length()>12){
+            return 401;
+        }
+
+        Member member=memberRepository.findByNicknameAndIsDeleted(nickname, false);
+        System.out.println(curNickname+" "+member.getNickname());
+        if (member==null || curNickname.equals(member.getNickname())){      // 닉네임 중복이 없거나 본인인 경우
+            return 200;
+        }
+        return 402;
+    }
+
+    @Override
+    public void deleteMember(Long memberId) {
+        memberRepositorySupport.deleteMember(memberId);
     }
 
     @Override
@@ -199,11 +224,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Map<String, String> getKakaoUserInfo(String accessToken) {
+    public String getKakaoUserInfo(String accessToken) {
 
         String requestURL="https://kapi.kakao.com/v2/user/me";
         Map<String, String> response = new HashMap<>();
-
+        String email=null;
+        String token=null;
         try {
             URL url=new URL(requestURL);
 
@@ -233,7 +259,7 @@ public class MemberServiceImpl implements MemberService {
             JSONObject kakao_account = (JSONObject) element.get("kakao_account");
 
             boolean hasEmail = (boolean) kakao_account.get("has_email");
-            String email="";
+
 
             if(hasEmail) {
                 email = kakao_account.get("email").toString();
@@ -251,7 +277,35 @@ public class MemberServiceImpl implements MemberService {
             e.printStackTrace();
         }
 
-        return response;
+
+        if(email!=null) //카카오 유저정보로 이메일을 받아옴
+        {
+            //이미 가입된 회원인지 확인
+            Member member = memberRepository.findByEmailAndIsDeletedAndIsKakao(email, false, true);
+
+            if(member==null) // 처음 온 유저라면 db에 저장
+            {
+
+                member= new Member();
+                member.setEmail(email);
+                member.setIsKakao(true);
+                memberRepository.save(member);
+
+
+                System.out.println("----------기본키-------");
+                System.out.println(member.getMemberId());
+            }
+
+           token=  JwtTokenProvider.getToken(email);
+            System.out.println("access token="+token);
+
+
+
+
+        }
+
+
+      return token;
     }
 
 

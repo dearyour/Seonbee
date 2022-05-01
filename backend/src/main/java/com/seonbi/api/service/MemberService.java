@@ -9,18 +9,20 @@ import java.util.Map;
 import java.util.List;
 
 public interface MemberService {
- String kakaoToken(String code); // 프론트로부터 넘겨받은 인가코드로 토큰 발급
-    Map<String,String> getKakaoUserInfo(String accessToken); // access토큰으로 카카오 사용자 정보를 가져온다
+ String kakaoToken(String code); // 프론트로부터 넘겨받은 인가코드로 카카오 access 토큰 발급
+    String getKakaoUserInfo(String accessToken); // access토큰으로 카카오 사용자 정보를 가져온다
     MemberDto getMemberByNickname(String nickname);
     MemberDto getMemberByEmail(String email);
     MemberDto getMemberByMemberId(Long memberId);
     List<MemberDto> getMemberList();
-    Member create(Member member);
+    Member createMember(Member member);
 //    MemberDto memberEntityToDto(Member member);
-    Member update(Member member);
+    void updateMember(Member member);
     int emailCheck(String email);
     int passwordCheck(String password);
-    boolean nicknameCheck(String nickname);
+    int nicknameCheck(String nickname);
 
     int loginCheck(MemberLoginReq memberLoginReq);
+    int nicknameCheckExceptMe(String nickname, String curNickname);
+    void deleteMember(Long memberId);
 }

@@ -16,9 +16,9 @@ public class MemberLoginRes extends BaseResponseBody {
 
     private String jwt;
 
-    public static MemberLoginRes of(Integer statusCode, String message, String jwt) {
+    public static MemberLoginRes of(Integer status, String message, String jwt) {
         MemberLoginRes res = new MemberLoginRes();
-        res.setStatusCode(statusCode);
+        res.setStatus(status);
         res.setMessage(message);
         res.setJwt(jwt);
 

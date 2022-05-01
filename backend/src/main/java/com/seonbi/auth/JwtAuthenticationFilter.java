@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         //Request의 Header에서 token값을 가져온다
         String token = request.getHeader("Authorization");
 
-        System.out.println("token=" + token);
+//        System.out.println("token=" + token);
         // 비어있거나  Bearer로 시작하지 않는다면?
         if (token == null || !token.startsWith("Bearer ")) {
             chain.doFilter(request, response);

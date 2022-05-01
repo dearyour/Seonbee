@@ -12,9 +12,9 @@ public class MemberGetRes extends BaseResponseBody{
 
     private MemberDto member;
 
-    public static MemberGetRes of(Integer statusCode, String message, MemberDto member) {
+    public static MemberGetRes of(Integer status, String message, MemberDto member) {
         MemberGetRes res = new MemberGetRes();
-        res.setStatusCode(statusCode);
+        res.setStatus(status);
         res.setMessage(message);
         res.setMember(member);
 
