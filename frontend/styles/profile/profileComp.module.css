@@ -1,0 +1,30 @@
+.profile_img {
+  width: 28vh;
+  height: 28vh;
+  border-radius: 100%;
+}
+
+.name {
+  text-align: center;
+  background-color: #c0b4a5;
+  color: white;
+  padding: 5px 8px 5px 8px;
+  margin-right: 5px;
+  border-radius: 10px;
+  font-size: 14px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.content {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  color: #64543e;
+}
+
+.info {
+  display: flex;
+  margin: 3px;
+}
