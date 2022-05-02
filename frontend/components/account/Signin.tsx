@@ -1,9 +1,29 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import seonbee from "../../public/seonbee.png";
 import styled from "@emotion/styled";
+import axios from "axios";
 
 type Props = {};
+// const __Login = useCallback(() => {
+//   return axios({
+//     method: "POST",
+//     url: process.env.BACK_EC2 + "member/login",
+//     // url: "https://localhost:8000/api/member/login",
+//     // url: "http://j6a101.p.ssafy.io:8000/api/member/login",
+//   })
+//     .then((res) => {
+//       return res.data;
+//     })
+//     .catch((err) => {
+//       return err;
+//     });
+// }, []);
+
+// useEffect(() => {
+//   __Login();
+// }, [__Login]);
+
 // const ID_REGEX = new RegExp(
 //   "^([\\w._-])[a-zA-Z0-9]+([\\w._-])([a-zA-Z0-9])+([\\w._-])+@([a-zA-Z0-9]+.)+[a-zA-Z0-9]{2,8}$"
 // );
