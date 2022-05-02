@@ -13,6 +13,8 @@ export const memberSlice = createSlice({
   initialState,
   reducers: {
     profileEdit: (state) => {},
+
+    //로그인 리듀서
     getMember: (state) => {
       state.isLoading = true;
     },
@@ -21,6 +23,21 @@ export const memberSlice = createSlice({
       state.member = payload;
     },
     setMemberFail: (state, { payload: error }) => {
+      state.isLoading = false;
+      state.error = error;
+    },
+
+    //호패 리듀서
+    // state는 리듀서 상태, payload 는 인자
+    // 요청할때 dispatch에 인자를 넣어 보내고 싶다면 payload까지 작성해줘야함
+    getMypage: (state, { payload }: any) => {
+      state.isLoading = true;
+    },
+    setMypage: (state, { payload }) => {
+      state.isLoading = false;
+      state.myPage = payload;
+    },
+    setMypageFail: (state, { payload: error }) => {
       state.isLoading = false;
       state.error = error;
     },
