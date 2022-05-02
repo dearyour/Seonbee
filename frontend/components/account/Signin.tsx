@@ -7,34 +7,13 @@ import styled from "@emotion/styled";
 import axios from "axios";
 import Router from "next/router";
 type Props = {};
-// const __Login = useCallback(() => {
-//   return axios({
-//     method: "POST",
-//     url: process.env.BACK_EC2 + "member/login",
-//     // url: "https://localhost:8000/api/member/login",
-//     // url: "http://j6a101.p.ssafy.io:8000/api/member/login",
-//   })
-//     .then((res) => {
-//       return res.data;
-//     })
-//     .catch((err) => {
-//       return err;
-//     });
-// }, []);
-
-// useEffect(() => {
-//   __Login();
-// }, [__Login]);
-
 // const ID_REGEX = new RegExp(
 //   "^([\\w._-])[a-zA-Z0-9]+([\\w._-])([a-zA-Z0-9])+([\\w._-])+@([a-zA-Z0-9]+.)+[a-zA-Z0-9]{2,8}$"
 // );
 // const ID_REGEX = new RegExp("^[a-z0-9_-]{5,20}$");
-const ID_REGEX = new RegExp(
-  "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"
-);
+const ID_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 // const PW_REGEX = new RegExp("^(?=.*[a-zA-Z])(?=.*d)(?=.*W).{8,16}$");
-const PW_REGEX = new RegExp("^[a-zA-Z0-9]{8,16}$");
+const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
 // 비밀번호 정규표현식 : 최소 8자, 최대 16자, 하나 이상의 문자, 하나 이상의 숫자, 하나 이상의 특수문자
 
 const ERROR_MSG: any = {
@@ -107,27 +86,27 @@ const Signin = (props: Props) => {
       });
   };
 
-  const __getMemberInfo = () => {
-    const token = sessionStorage.getItem("Token");
-    axios({
-      method: "GET",
-      url: process.env.NEXT_PUBLIC_BACK + "member/auth",
-      headers: { Authorization: "Bearer " + token },
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const __getMemberInfo = () => {
+  //   const token = sessionStorage.getItem("Token");
+  //   axios({
+  //     method: "GET",
+  //     url: process.env.NEXT_PUBLIC_BACK + "member/auth",
+  //     headers: { Authorization: "Bearer " + token },
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
     __SignIn();
     // __getMemberInfo();
     dispatch(memberActions.getMember());
-    // Router.push(`/`);
+    Router.push(`/`);
   };
 
   return (
