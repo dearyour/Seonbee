@@ -1,20 +1,33 @@
 import type { NextPage } from 'next'
-import { Button, FormControl, InputLabel, Select, MenuItem, Stack, Slider } from '@mui/material'
+import { Button, Input, FormControl, InputLabel, Select, MenuItem, Stack, Slider } from '@mui/material'
 import styled from '@emotion/styled'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import baseurl from 'baseurl'
+import GetImage from 'store/api/GetImage'
+
 const Asd: NextPage = () => {
   const [imgtest, setImageUrl] = useState<string>('')
+  const [imgfile, setimgfile] = useState<any>();
 
-  const image = () => {
+  // const image = (id: number) => {
+  //   axios({
+  //     method: 'get',
+  //     url: baseurl + 'member/image/' + String(id),
+  //   })
+  //     .then((res) => {
+  //       const byteimg = base64ToArrayBuffer(res.data)
+  //       setImageUrl("data:image/png;base64," + btoa(String.fromCharCode.apply(null, Array.from(new Uint8Array(byteimg)))))
+  //     })
+  // }
+
+  const getimg = () => {
     axios({
       method: 'get',
-      url: baseurl + 'member/image/0',
+      url: baseurl + 'member/image/3',
     })
       .then((res) => {
-        const byteimg = base64ToArrayBuffer(res.data)
-        setImageUrl("data:image/png;base64," + btoa(String.fromCharCode.apply(null, Array.from(new Uint8Array(byteimg)))))
+        setImageUrl(GetImage(res.data))
       })
   }
   function base64ToArrayBuffer(base64: any) {
@@ -22,6 +35,26 @@ const Asd: NextPage = () => {
     const binaryString = window.atob(base64); // Comment this if not using base64
     const bytes = new Uint8Array(binaryString.length);
     return bytes.map((byte, i) => binaryString.charCodeAt(i));
+  }
+
+  function getImageFiles(e: any) {
+    e.preventDefault()
+    const files = e.currentTarget.files;
+    setimgfile(files[0])
+  }
+
+  const uploadImg = () => {
+    let data = new FormData()
+    data.append('image', imgfile)
+    data.append('name', 'test')
+    axios({
+      method: 'POST',
+      url: baseurl + 'member/image/test',
+      data: data
+    })
+      .then((res) => {
+        console.log(res)
+      })
   }
 
   const Test = styled.div`
@@ -52,8 +85,13 @@ const Asd: NextPage = () => {
   return (
     <div className='m-5 rainbow'>
       가나다라마바사
-      <button onClick={image}>image</button>
+      <button onClick={getimg}>image</button>
       <img src={imgtest}></img>
+      <Input id="contained-button-file" onChange={getImageFiles} type="file" />
+      <Button variant="contained" onClick={uploadImg} component="span">
+        Upload
+      </Button>
+      <img src={imgfile}></img>
     </div>
   )
 }
