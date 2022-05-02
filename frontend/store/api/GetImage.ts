@@ -8,7 +8,6 @@ import baseurl from 'baseurl'
 // }
 
 const GetImage = (data: string) => {
-  console.log(data)
   return "data:image/png;base64," + data
 }
 

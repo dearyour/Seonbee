@@ -31,7 +31,7 @@ const FriendList = (props: Props) => {
   }, [])
 
   return (
-    <Carousel centerMode={true} centerSlidePercentage={20} infiniteLoop={true} swipeable={true} showIndicators={false}>
+    <Carousel centerMode={true} centerSlidePercentage={20} showThumbs={false} infiniteLoop={true} swipeable={true} showIndicators={false}>
       {
         members.map((member, index) => {
           return (
