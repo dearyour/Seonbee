@@ -44,7 +44,6 @@ const Signin = (props: Props) => {
       [id]: value,
     }));
   };
-  console.log(ID_REGEX.test(inputState["email"]));
 
   const checkRegex = (inputId: any) => {
     let result: any;
@@ -115,9 +114,43 @@ const Signin = (props: Props) => {
       msg = "비밀번호를 입력해주세요.";
     }
     if (isNormal) {
-      __SignIn();
-      dispatch(memberActions.getMember());
-      Router.push(`/`);
+      const data = {
+        email: inputState.email,
+        password: inputState.password,
+      };
+      console.log(data);
+      axios({
+        method: "POST",
+        url: process.env.NEXT_PUBLIC_BACK + "member/login",
+        data: data,
+      })
+        .then((res: any) => {
+          console.log(res);
+          switch (res.status) {
+            case 200:
+              sessionStorage.setItem("Token", res.data.jwt);
+              dispatch(memberActions.getMember());
+              Router.push(`/`);
+              Swal.fire({
+                title: "로그인에 성공했습니다",
+                text: "메인페이지로 이동합니다",
+                icon: "success",
+                showConfirmButton: false,
+              });
+              break;
+          }
+        })
+        .catch((err) => {
+          // console.log(err.response);
+          if (err.response) {
+            Swal.fire({
+              icon: "error",
+              title: "회원 정보를 다시 확인해주세요",
+              text: "지속적으로 같은 문제 발생시 관리자에게 문의하세요",
+              confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+            });
+          }
+        });
     } else {
       Swal.fire({
         icon: "error",
