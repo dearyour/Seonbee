@@ -3,6 +3,7 @@ package com.seonbi.api.service;
 import com.seonbi.db.entity.Image;
 import com.seonbi.db.repository.ImageRepository;
 import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,7 +59,7 @@ public class ImageServiceImpl implements ImageService{
     }
 
     @Override
-    public byte[] getImage(Long imageId) {
+    public String getImage(Long imageId) {
         String imagePath="";
         Image image=imageRepository.findByImageIdAndIsDeleted(imageId, false);
         if (image==null){
@@ -70,13 +71,14 @@ public class ImageServiceImpl implements ImageService{
         System.out.println(imagePath);
         try {
             InputStream imageStream=new FileInputStream(imagePath);
-            return IOUtils.toByteArray(imageStream);
+            byte[] imageByteArray=IOUtils.toByteArray(imageStream);
+            return new String(Base64.encodeBase64(imageByteArray));
         } catch (FileNotFoundException e) {
             System.out.println("image not found");
-            return new byte[0];
+            return null;
         } catch (IOException e) {
             System.out.println("imageStream empty");
-            return new byte[0];
+            return null;
         }
     }
 }
