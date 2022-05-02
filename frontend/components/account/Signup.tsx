@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { memberActions } from "store/slice/member";
 import Swal from "sweetalert2";
 import Router from "next/router";
 const ID_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-const NICK_REGEX = /^[a-zA-Z0-9]{4,8}$/;
+const NICK_REGEX = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,8}$/;
 // const PW_REGEX = new RegExp("^(?=.*[a-zA-Z])(?=.*d)(?=.*W).{8,16}$");
 const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
 // 비밀번호 정규표현식 : 최소 8자, 최대 16자, 하나 이상의 문자, 하나 이상의 숫자, 하나 이상의 특수문자
@@ -11,12 +13,13 @@ const ERROR_MSG: any = {
   required: "비어있소.",
   invalidId: "Ex) Email@naver.com",
   validId: "허가한다.",
-  invalidPw: "대 소문자, 숫자 구성 8~16 글자",
+  invalidPw: "대,소문자 or 숫자 구성 8~16 글자",
   validPw: "허가한다.",
-  invalidNick: "대, 소문자 구성 4~8 글자",
+  invalidNick: "한글 or 대,소문자 or 숫자 2~8 글자",
   invalidConfirmPw: "비밀번호가 일치하지 않습니다.",
 };
 const Signup = () => {
+  const dispatch = useDispatch();
   const [promotion, setPromotion] = useState(false);
   const [inputState, setInputState] = useState<any>({
     email: "",
@@ -72,7 +75,35 @@ const Signup = () => {
 
     setErrorData((prev: any) => ({ ...prev, [inputId]: result }));
   };
-  console.log(inputState.email);
+
+  const __SignIn = () => {
+    const data = {
+      email: inputState.email,
+      password: inputState.password,
+    };
+    console.log(data);
+    axios({
+      method: "POST",
+      url: process.env.NEXT_PUBLIC_BACK + "member/login",
+      data: data,
+    })
+      .then((res) => {
+        console.log(res);
+        sessionStorage.setItem("Token", res.data.jwt);
+        dispatch(memberActions.getMember());
+        Router.push("/");
+        Swal.fire({
+          title: "회원가입에 성공했습니다",
+          text: "선비에 오신걸 환영합니다!",
+          icon: "success",
+          showConfirmButton: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
   const __SignUp = () => {
     const data = {
       email: inputState.email,
@@ -87,6 +118,7 @@ const Signup = () => {
     })
       .then((res) => {
         console.log(res);
+        __SignIn();
       })
       .catch((err) => {});
   };
@@ -111,12 +143,6 @@ const Signup = () => {
     }
     if (isNormal) {
       __SignUp();
-      Swal.fire({
-        title: "회원가입에 성공했습니다",
-        text: "선비에 오신걸 환영합니다!",
-        icon: "success",
-        showConfirmButton: false,
-      });
     } else {
       Swal.fire({
         icon: "error",
