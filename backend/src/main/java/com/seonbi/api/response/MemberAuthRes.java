@@ -14,9 +14,9 @@ public class MemberAuthRes extends BaseResponseBody {
 
     private MemberAuthDto memberAuthDto;
 
-    public static MemberAuthRes of(Integer statusCode, String message, MemberAuthDto memberAuthDto) {
+    public static MemberAuthRes of(Integer status, String message, MemberAuthDto memberAuthDto) {
         MemberAuthRes res = new MemberAuthRes();
-        res.setStatusCode(statusCode);
+        res.setStatus(status);
         res.setMessage(message);
         res.setMemberAuthDto(memberAuthDto);
 

@@ -1,15 +1,29 @@
-import styled from '@emotion/styled';
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
-import Calendar from 'react-calendar';
+import styled from "@emotion/styled";
+import moment from "moment";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import Calendar, {
+  CalendarTileProperties,
+  OnChangeDateCallback,
+} from "react-calendar";
+import SideCalendarDate from "./SideCalendarDate";
 
-type Props = {}
+type Props = {};
 
 const SideCalendar = (props: Props) => {
   const [value, onChange] = useState<Date>(new Date());
   const [days, setDays] = useState<string[]>([]);
 
+  const date_change: OnChangeDateCallback = (
+    v: Date,
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    onChange(v);
+    console.log(v);
+  };
 
+  useEffect(() => {
+    setDays(["2022-05-02", "2022-05-03"]);
+  }, []);
   const [mounted, setMounted] = useState<boolean>(false);
   useEffect(() => setMounted(true), []);
 
@@ -20,35 +34,36 @@ const SideCalendar = (props: Props) => {
     width: 8px;
     background-color: #f87171;
     border-radius: 50%;
-    display: flex;
-    margin-left: 1px;
-  `
-  return (
-    <div className='px-2'>
+    position: absolute;
+    top: 0;
+    right: 40%;
+  `;
 
+  const addDot = ({ activeStartDate, date, view }: CalendarTileProperties) => {
+    if (days.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
+      return (
+        <>
+          <div className="position-relative">
+            <Dot></Dot>
+          </div>
+        </>
+      );
+    } else {
+      return null;
+    }
+  };
+  return (
+    <div className="px-2">
       <Calendar
-        onChange={onChange}
+        onChange={date_change}
         value={value}
         formatMonthYear={(locale, date) => moment(date).format("YY.MM")}
         formatDay={(locale, date) => moment(date).format("DD")}
-        tileContent={({ activeStartDate, date, view }) => {
-          if (days.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
-            return (
-              <>
-                <div className="flex justify-center items-center absoluteDiv">
-                  <Dot ></Dot>
-                </div>
-              </>
-            );
-          } else {
-            return null
-          }
-        }}
+        tileContent={addDot}
       />
+      <SideCalendarDate></SideCalendarDate>
     </div>
+  );
+};
 
-  )
-}
-
-export default SideCalendar
-
+export default SideCalendar;

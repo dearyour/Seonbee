@@ -31,7 +31,15 @@ const FriendList = (props: Props) => {
   }, [])
 
   return (
-    <Carousel centerMode={true} centerSlidePercentage={20} infiniteLoop={true} swipeable={true} showIndicators={false}>
+    <Wrap 
+    centerMode={true} 
+    centerSlidePercentage={20} 
+    showThumbs={false} 
+    infiniteLoop={true} 
+    swipeable={true} 
+    showIndicators={false}
+    showStatus={false}
+    >
       {
         members.map((member, index) => {
           return (
@@ -44,9 +52,15 @@ const FriendList = (props: Props) => {
           )
         })
       }
-    </Carousel >
+    </Wrap >
   )
 }
+
+const Wrap = styled(Carousel)`
+  /* li {
+    min-width: 10%;
+  } */
+`
 const ImgWrap = styled.div`
   overflow: hidden;
   position: relative;
@@ -60,17 +74,18 @@ const FriendImg = styled.img`
 
 const Content = styled.div`
   position: absolute;
+  font-size: 1rem;
   top: 30%;
-  left: 40%;
-  right: 40%;
+  left: 30%;
+  /* right: 40%; */
   z-index:2;
 
 `
 const Dday = styled.div`
   position: absolute;
   top: 50%;
-  left: 40%;
-  right: 40%;
+  left: 30%;
+  /* right: 40%; */
   z-index:2;
 `
 
