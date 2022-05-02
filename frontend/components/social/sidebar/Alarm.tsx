@@ -9,11 +9,14 @@ type Props = {}
 const Alarm = (props: Props) => {
 
   return (
-    <Card className=''>
+    <div className='px-2'>
+
+    <Card >
       <CardContent>
 
       </CardContent>
     </Card>
+    </div>
   )
 }
 
