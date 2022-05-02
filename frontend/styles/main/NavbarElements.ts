@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import Link from 'next/link';
+import styled from "@emotion/styled";
+import Link from "next/link";
 
 export const Nav = styled.nav`
   background: transparent;
@@ -12,6 +12,7 @@ export const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 10;
+  margin-bottom: 5px;
 
   @media screen and (max-width: 960px) {
     transition: 0.8s all ease;
@@ -26,6 +27,9 @@ export const NavbarContainer = styled.div`
   width: 100%;
   padding: 0 24px;
   max-width: 1100px;
+  /* .isMain {
+    margin-top: 22px;
+  } */
 `;
 
 export const MobileIcon = styled.div`

@@ -3,8 +3,7 @@ import { Button, Input, FormControl, InputLabel, Select, MenuItem, Stack, Slider
 import styled from '@emotion/styled'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import baseurl from 'baseurl'
-import GetImage from 'store/api/GetImage'
+import GetImage from 'utils/GetImage'
 
 const Asd: NextPage = () => {
   const [imgtest, setImageUrl] = useState<string>('')
@@ -24,7 +23,7 @@ const Asd: NextPage = () => {
   const getimg = () => {
     axios({
       method: 'get',
-      url: baseurl + 'member/image/3',
+      // url: baseurl + 'member/image/3',
     })
       .then((res) => {
         setImageUrl(GetImage(res.data))
@@ -49,7 +48,7 @@ const Asd: NextPage = () => {
     data.append('name', 'test')
     axios({
       method: 'POST',
-      url: baseurl + 'member/image/test',
+      // url: baseurl + 'member/image/test',
       data: data
     })
       .then((res) => {
