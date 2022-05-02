@@ -1,0 +1,6 @@
+.lantern_bg {
+  object-fit: cover;
+  height: 60vh;
+  width: 47vw;
+  border-radius: 10px;
+}

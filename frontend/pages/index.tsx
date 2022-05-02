@@ -1,7 +1,7 @@
-import React from 'react';
-import Navbar from 'components/commons/bars/Navbar';
-import type { NextPage } from 'next';
-import Head from 'next/head';
+import React from "react";
+import Navbar from "components/commons/bars/Navbar";
+import type { NextPage } from "next";
+import Head from "next/head";
 
 const Home: NextPage = () => {
   return (
