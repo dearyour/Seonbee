@@ -23,4 +23,5 @@ public interface MemberService {
     int loginCheck(MemberLoginReq memberLoginReq);
     int nicknameCheckExceptMe(String nickname, String curNickname);
     void deleteMember(Long memberId);
+    boolean isMemberValid(Long hostId);
 }

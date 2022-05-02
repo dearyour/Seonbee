@@ -1,11 +1,16 @@
 package com.seonbi.api.service;
 
+import com.seonbi.api.model.FriendDto;
+import com.seonbi.api.model.FriendFollowDto;
 import com.seonbi.db.entity.Friend;
 import com.seonbi.db.entity.Member;
 import com.seonbi.db.repository.FriendRepository;
 import com.seonbi.db.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FriendServiceImpl implements FriendService{
@@ -15,6 +20,9 @@ public class FriendServiceImpl implements FriendService{
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    ImageService imageService;
 
 
 
@@ -41,4 +49,32 @@ public class FriendServiceImpl implements FriendService{
         return 200;
 
     }
+
+    @Override
+    public int followFriendAllow(Long followeeId, Long followerId, String allow) {
+        Friend friend = friendRepository.findByFollowerIdAndFolloweeIdAndIsAllowedAndIsDeleted(followerId, followeeId, "BEFORE", false);
+        if (friend==null){
+            return 401;
+        }
+        friend.setIsAllowed(allow);
+        friendRepository.save(friend);
+        return 200;
+    }
+
+    @Override
+    public List<FriendFollowDto> getFollowFriendAll(Long followeeId) {
+        List<Friend> friends=friendRepository.findAllByFolloweeIdAndIsAllowedAndIsDeleted(followeeId, "BEFORE", false);
+        List<FriendFollowDto> friendFollowDtoList=new ArrayList<>();
+        for (Friend friend: friends){
+            Member member= memberRepository.findByMemberIdAndIsDeleted(friend.getFollowerId(), false);
+            if (member==null){
+                continue;
+            }
+            String imageString=imageService.getImage(member.getImageId());
+            FriendFollowDto friendFollowDto=new FriendFollowDto(member.getMemberId(), member.getNickname(), imageString);
+            friendFollowDtoList.add(friendFollowDto);
+        }
+        return friendFollowDtoList;
+    }
+
 }
