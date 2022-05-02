@@ -24,12 +24,11 @@ public class Member extends BaseEntity{
     private String nickname;
     private Boolean isAdmin=false;
     private Boolean isKakao=false;
-    private String birthday;    // 1997-04-10
+    private String birthday;    // 1997.04.10
     @JsonIgnore
     private String password;
     private String gender;
     private String mbti;
-    private String job;
     private String interest;
     private String likelist;
     private String banlist;
