@@ -4,16 +4,14 @@ import styles from "styles/profile/profileMain.module.css";
 
 type Props = {};
 
-const ProfileMain = (props: Props) => {
+const DDays = (props: Props) => {
   return (
     <>
-      <div>
-        <div className="mb-3">
-          <span className="tag clickable">생일 D-13</span>
-        </div>
+      <div className="mb-3">
+        <span className="tag clickable">생일 D-13</span>
       </div>
     </>
   );
 };
 
-export default ProfileMain;
+export default DDays;

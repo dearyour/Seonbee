@@ -1,4 +1,23 @@
 html,
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e9e5e1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c0b4a5;
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a39788;
+}
 body {
   padding: 0;
   margin: 0;
@@ -59,7 +78,7 @@ a {
 
 /* title */
 .font_2 {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 /* content */
@@ -68,30 +87,69 @@ a {
 }
 
 /* 컬러 (폰트, 배경, 테두리) */
-/* 폰트 강조 */
+/* 강조 */
 .main_color {
-  color: #cef3ff;
+  color: #5cbab0;
 }
 
 .main_bg_color {
-  background-color: #cef3ff;
+  background-color: #5cbab0;
 }
 
 .main_border_color {
-  border-color: #cef3ff;
+  border-color: #5cbab0;
+}
+
+/* 연한 */
+.light_color {
+  color: #e9e5e1;
+}
+
+.light_bg_color {
+  background-color: #e9e5e1;
+}
+
+.light_border_color {
+  border-color: #e9e5e1;
+}
+
+/* 일반 */
+.normal_color {
+  color: #c0b4a5;
+}
+
+.normal_bg_color {
+  background-color: #c0b4a5;
+}
+
+.normal_border_color {
+  border-color: #c0b4a5;
 }
 
 /* 폰트 기본 */
-.sub_color {
-  color: #f2ffff;
+.font_color {
+  color: #64543e;
 }
 
-.sub_bg_color {
-  background-color: #f2ffff;
+.font_bg_color {
+  background-color: #64543e;
 }
 
-.sub_border_color {
-  border-color: #f2ffff;
+.font_border_color {
+  border-color: #64543e;
+}
+
+/* 회색 */
+.gray_color {
+  color: #cccac8;
+}
+
+.gray_bg_color {
+  background-color: #cccac8;
+}
+
+.gray_border_color {
+  border-color: #cccac8;
 }
 
 .center {
@@ -113,11 +171,11 @@ a {
 }
 
 .semi_bold {
-  font-weight: 600px;
+  font-weight: 600;
 }
 
 .bold {
-  font-weight: 800px;
+  font-weight: 800;
 }
 
 .clickable {

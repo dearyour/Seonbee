@@ -1,6 +1,6 @@
 .profile_img {
-  width: 28vh;
-  height: 28vh;
+  width: 26vh;
+  height: 26vh;
   border-radius: 100%;
 }
 
@@ -15,16 +15,23 @@
   white-space: nowrap;
   display: flex;
   align-items: center;
+  max-height: 4vh;
 }
 
 .content {
   font-size: 14px;
   display: flex;
   align-items: center;
+  text-align: left;
   color: #64543e;
 }
 
 .info {
   display: flex;
   margin: 3px;
+}
+
+.infos {
+  height: 29vh;
+  overflow-y: auto;
 }

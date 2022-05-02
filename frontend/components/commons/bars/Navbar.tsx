@@ -11,20 +11,20 @@ import {
 import Image from "next/image";
 import TextLogo from "public/textLogo2.png";
 import Link from "next/link";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import Sidebar from "./Sidebar";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMain, setIsMain] = useState<boolean>(false);
-
   useEffect(() => {
     if (Router.pathname === "/") {
       setIsMain(true);
     } else {
       setIsMain(false);
     }
-  }, [Router.pathname]);
+  }, []);
+
   if (isMain) {
     return (
       <div>

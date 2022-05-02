@@ -3,4 +3,116 @@
   height: 60vh;
   width: 47vw;
   border-radius: 10px;
+  z-index: 1;
+  position: relative;
+}
+
+.lantern_festival {
+  height: 60vh;
+  width: 47vw;
+  position: relative;
+}
+
+.lantern_container {
+  height: 60vh;
+  width: 47vw;
+}
+
+.line1 {
+  top: 8vh;
+  height: 1.4px;
+  width: 47vw;
+  background-color: #e9e5e1;
+  transform: rotate(2.5deg);
+  z-index: 3;
+  position: absolute;
+}
+
+.line2 {
+  top: 21vh;
+  height: 1.4px;
+  width: 47vw;
+  background-color: #e9e5e1;
+  transform: rotate(2.5deg);
+  z-index: 3;
+  position: absolute;
+}
+
+.line3 {
+  top: 33vh;
+  height: 1.4px;
+  width: 47vw;
+  background-color: #e9e5e1;
+  transform: rotate(2.5deg);
+  z-index: 3;
+  position: absolute;
+}
+
+.lantern_list {
+  top: 20vh;
+  height: 10vh;
+  width: 47vw;
+  transform: rotate(2.5deg);
+  position: absolute;
+  z-index: 4;
+}
+
+.create_lantern {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 9vh;
+  width: 11vh;
+  border-radius: 25px;
+  border: 1.5px dashed white;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin: 1.5vh;
+  padding: 2px;
+  z-index: 5;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.create_lantern:hover {
+  background-color: #5cbab0;
+  color: white;
+  border-color: #5cbab0;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.create_btn {
+  bottom: 3vh;
+  right: 3vh;
+  z-index: 7;
+  position: absolute;
+}
+
+.create_lantern_modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 64vh;
+  width: 56vh;
+  background-color: #e9e5e1;
+  z-index: 8;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  box-shadow: 10px 10px 8px 1px rgba(0, 0, 0, 0.2);
+}
+
+.lantern_box {
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+}
+
+.select_lanterns {
+  display: flex;
+  min-width: 50em;
 }

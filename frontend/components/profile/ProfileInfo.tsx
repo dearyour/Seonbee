@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Btn from "components/commons/Btn";
 import React from "react";
 import styles from "styles/profile/profileComp.module.css";
 
@@ -33,13 +34,25 @@ const ProfileInfo = (props: Props) => {
 
   return (
     <>
-      <div className="d-flex flex-column ps-4 py-4 text-center">
-        <img
-          src="http://file3.instiz.net/data/file3/2018/02/07/d/0/1/d0195222a4a450ce18689a54279204c4.jpg"
-          alt="프로필 이미지"
-          className={styles.profile_img}
-        />
-        <div className="d-flex flex-column my-4">{infos()}</div>
+      <div className="d-flex flex-column justify-content-between ps-4 py-4 text-center">
+        <div>
+          <img
+            src="http://file3.instiz.net/data/file3/2018/02/07/d/0/1/d0195222a4a450ce18689a54279204c4.jpg"
+            alt="프로필 이미지"
+            className={styles.profile_img}
+          />
+          <div className={styles.infos + " d-flex flex-column my-4"}>
+            {infos()}
+          </div>
+        </div>
+        <div>
+          <Btn filled={true} className="me-2 mb-3">
+            벗 맺기 신청
+          </Btn>
+          <Btn filled={true} className="ms-2 mb-3">
+            선물 추천
+          </Btn>
+        </div>
       </div>
     </>
   );
