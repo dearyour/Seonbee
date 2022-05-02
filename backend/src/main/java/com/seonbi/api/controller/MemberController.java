@@ -76,30 +76,33 @@ public class MemberController {
     }
 
     @PostMapping()
-    public ResponseEntity<? extends BaseResponseBody> createMember(MemberCreateReq memberCreateReq) {
+    public ResponseEntity<? extends BaseResponseBody> createMember(@RequestBody MemberCreateReq memberCreateReq) {
         // 이메일 유효성 검사
 
         String email = memberCreateReq.getEmail();
         String nickname = memberCreateReq.getNickname();
         String password = memberCreateReq.getPassword();
+        System.out.println(email);
+        System.out.println(nickname);
+        System.out.println(password);
 
         int emailCode = memberService.emailCheck(email);
         if (emailCode == 401)
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "올바른 이메일 형식으로 입력해주세요."));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401, "올바른 이메일 형식으로 입력해주세요."));
         else if (emailCode == 402)
-            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "이메일이 중복됩니다. 다른 이메일로 가입해주세요."));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(402, "이메일이 중복됩니다. 다른 이메일로 가입해주세요."));
 
         // 닉네임 중복 검사
         int nicknameCode = memberService.nicknameCheck(nickname);
         if (nicknameCode == 401)
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
         if (nicknameCode == 402)
-            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(402, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
 
         // 비밀번호 유효성 검사
         int passwordCode = memberService.passwordCheck(password);
         if (passwordCode == 401)
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
+            return ResponseEntity.status(200).body(BaseResponseBody.of(401, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
 
         Member member = new Member();
         member.setEmail(email);

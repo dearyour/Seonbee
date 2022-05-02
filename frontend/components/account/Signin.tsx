@@ -84,7 +84,7 @@ const Signin = (props: Props) => {
     setErrorData((prev: any) => ({ ...prev, [inputId]: result }));
   };
 
-  const __SignIn = useCallback(() => {
+  const __SignIn = () => {
     const data = {
       email: inputState.email,
       password: inputState.password,
@@ -95,9 +95,13 @@ const Signin = (props: Props) => {
       url: process.env.NEXT_PUBLIC_BACK + "member/login",
       data: data,
     })
-      .then((res) => {})
-      .catch((err) => {});
-  }, []);
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();

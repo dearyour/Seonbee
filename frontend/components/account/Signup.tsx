@@ -67,7 +67,8 @@ const Signup = () => {
 
     setErrorData((prev: any) => ({ ...prev, [inputId]: result }));
   };
-  const __SignUp = useCallback(() => {
+  console.log(inputState.email);
+  const __SignUp = () => {
     const data = {
       email: inputState.email,
       nickname: inputState.nickname,
@@ -83,7 +84,7 @@ const Signup = () => {
         console.log(res);
       })
       .catch((err) => {});
-  }, []);
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
