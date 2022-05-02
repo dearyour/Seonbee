@@ -58,9 +58,23 @@ public class LanternController {
         if (member==null){
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         }
+        if (!memberService.isMemberValid(lanternCreateReq.getHostId())){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않는 사용자입니다."));
+        }
+        Schedule schedule = scheduleService.getSchedule(lanternCreateReq.getScheduleId());
+        if (schedule==null || schedule.getMemberId()!=lanternCreateReq.getHostId()){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(402, "유효하지 않는 일정입니다."));
+        }
 
-//        Lantern lantern=
+        Lantern lantern=new Lantern();
+        lantern.setGuestId(member.getMemberId());
+        lantern.setLanternType(lanternCreateReq.getLanternType());
+        lantern.setContent(lanternCreateReq.getContent());
+        lantern.setPosition(lanternCreateReq.getPosition());
+        lantern.setHostId(lanternCreateReq.getHostId());
+        lantern.setScheduleId(lanternCreateReq.getScheduleId());
 
+        lanternService.createLantern(lantern);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 

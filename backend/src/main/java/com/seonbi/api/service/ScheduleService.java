@@ -8,4 +8,5 @@ public interface ScheduleService {
 
     void createSchedule(Schedule schedule);
 
+    Schedule getSchedule(Long scheduleId);
 }

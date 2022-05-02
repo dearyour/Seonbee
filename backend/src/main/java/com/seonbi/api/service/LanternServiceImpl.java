@@ -35,4 +35,9 @@ public class LanternServiceImpl implements LanternService{
         Lantern lantern=lanternRepository.findByLanternIdAndIsDeleted(lanternId, false);
         return modelMapper.map(lantern, LanternDto.class);
     }
+
+    @Override
+    public void createLantern(Lantern lantern) {
+        lanternRepository.save(lantern);
+    }
 }

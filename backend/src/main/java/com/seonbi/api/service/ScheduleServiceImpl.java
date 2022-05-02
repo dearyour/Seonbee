@@ -26,4 +26,9 @@ public class ScheduleServiceImpl implements ScheduleService{
         scheduleRepository.save(schedule);
     }
 
+    @Override
+    public Schedule getSchedule(Long scheduleId) {
+        return scheduleRepository.findScheduleByScheduleIdAndIsDeleted(scheduleId, false);
+    }
+
 }
