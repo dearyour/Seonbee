@@ -1,15 +1,14 @@
 
 package com.seonbi.api.controller;
 
+import com.seonbi.api.model.FriendDto;
+import com.seonbi.api.model.FriendFollowDto;
 import com.seonbi.api.model.MemberAuthDto;
 import com.seonbi.api.model.MemberDto;
 import com.seonbi.api.request.FriendFollowAllowReq;
 import com.seonbi.api.request.MemberCreateReq;
 import com.seonbi.api.request.MemberLoginReq;
-import com.seonbi.api.response.BaseResponseBody;
-import com.seonbi.api.response.MemberAuthRes;
-import com.seonbi.api.response.MemberGetRes;
-import com.seonbi.api.response.MemberLoginRes;
+import com.seonbi.api.response.*;
 import com.seonbi.api.service.FriendService;
 import com.seonbi.api.service.ImageService;
 import com.seonbi.api.service.MemberAuthService;
@@ -27,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/friend")
@@ -63,6 +63,18 @@ public class FriendController {
             return ResponseEntity.status(406).body(BaseResponseBody.of(406, "자기 자신에게 벗 요청할 수 없습니다."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
+
+    @GetMapping("/follow")
+    public ResponseEntity<? extends BaseResponseBody> getFollowFriendAll(@ApiIgnore Authentication authentication) {
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
+        }
+
+        List<FriendFollowDto> friendFollowDtoList=friendService.getFollowFriendAll(member.getMemberId());
+
+        return ResponseEntity.status(200).body(FriendFollowGetAllRes.of(200, "success", friendFollowDtoList));
     }
 
     @PostMapping("/follow/allow")
