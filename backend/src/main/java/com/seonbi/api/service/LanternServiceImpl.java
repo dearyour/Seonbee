@@ -3,6 +3,7 @@ package com.seonbi.api.service;
 import com.seonbi.api.model.LanternDto;
 import com.seonbi.api.model.MemberDto;
 import com.seonbi.db.entity.Lantern;
+import com.seonbi.db.entity.Member;
 import com.seonbi.db.entity.Schedule;
 import com.seonbi.db.repository.FriendRepository;
 import com.seonbi.db.repository.LanternRepository;
@@ -33,7 +34,16 @@ public class LanternServiceImpl implements LanternService{
     @Override
     public LanternDto getLantern(Long lanternId) {
         Lantern lantern=lanternRepository.findByLanternIdAndIsDeleted(lanternId, false);
-        return modelMapper.map(lantern, LanternDto.class);
+        if (lantern==null){
+            return null;
+        }
+        LanternDto lanternDto=modelMapper.map(lantern, LanternDto.class);
+        Member guest=memberRepository.findByMemberIdAndIsDeleted(lantern.getGuestId(), false);
+        if (guest==null){   // 글 쓴 사람이 없는 경우 null
+            return null;
+        }
+        lanternDto.setNickname(guest.getNickname());
+        return lanternDto;
     }
 
     @Override

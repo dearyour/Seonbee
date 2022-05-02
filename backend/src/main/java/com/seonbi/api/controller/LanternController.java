@@ -4,6 +4,7 @@ import com.seonbi.api.model.LanternDto;
 import com.seonbi.api.request.LanternCreateReq;
 import com.seonbi.api.request.ScheduleCreateReq;
 import com.seonbi.api.response.BaseResponseBody;
+import com.seonbi.api.response.LanternGetRes;
 import com.seonbi.api.service.*;
 import com.seonbi.db.entity.Lantern;
 import com.seonbi.db.entity.Member;
@@ -91,7 +92,7 @@ public class LanternController {
         }
 
         LanternDto lantern = lanternService.getLantern(lanternId);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+        return ResponseEntity.status(200).body(LanternGetRes.of(200, "success", lantern));
     }
 
 

@@ -16,7 +16,7 @@ public class Lantern extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
-    private Long guestbookId;
+    private Long lanternId;
     private Long hostId;
     private Long guestId;
     private Long scheduleId;
