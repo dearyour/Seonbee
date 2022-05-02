@@ -1,10 +1,8 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
-const ID_REGEX = new RegExp(
-  "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"
-);
+const ID_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 // const PW_REGEX = new RegExp("^(?=.*[a-zA-Z])(?=.*d)(?=.*W).{8,16}$");
-const PW_REGEX = new RegExp("^[a-zA-Z0-9]{8,16}$");
+const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
 // 비밀번호 정규표현식 : 최소 8자, 최대 16자, 하나 이상의 문자, 하나 이상의 숫자, 하나 이상의 특수문자
 const ERROR_MSG: any = {
   required: "비어있소.",
