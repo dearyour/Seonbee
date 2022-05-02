@@ -1,15 +1,19 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
+import Swal from "sweetalert2";
+import Router from "next/router";
 const ID_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+const NICK_REGEX = /^[a-zA-Z0-9]{4,8}$/;
 // const PW_REGEX = new RegExp("^(?=.*[a-zA-Z])(?=.*d)(?=.*W).{8,16}$");
 const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
 // 비밀번호 정규표현식 : 최소 8자, 최대 16자, 하나 이상의 문자, 하나 이상의 숫자, 하나 이상의 특수문자
 const ERROR_MSG: any = {
   required: "비어있소.",
-  invalidId: "유효하지 않는 이메일 양식입니다.",
+  invalidId: "Ex) Email@naver.com",
   validId: "허가한다.",
-  invalidPw: "유효하지 않는 비밀번호 양식입니다.",
+  invalidPw: "대 소문자, 숫자 구성 8~16 글자",
   validPw: "허가한다.",
+  invalidNick: "대, 소문자 구성 4~8 글자",
   invalidConfirmPw: "비밀번호가 일치하지 않습니다.",
 };
 const Signup = () => {
@@ -51,6 +55,9 @@ const Signup = () => {
         case "email":
           result = ID_REGEX.test(value) ? true : "invalidId";
           break;
+        case "nickname":
+          result = NICK_REGEX.test(value) ? true : "invalidNick";
+          break;
         case "password":
           result = PW_REGEX.test(value) ? true : "invalidPw";
           checkRegex("passwordConfirm");
@@ -86,8 +93,37 @@ const Signup = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    __SignUp();
-    console.log("DD");
+    let isNormal = true;
+    let msg = "";
+
+    if (!inputState.email) {
+      isNormal = false;
+      msg = "이메일을 입력해주세요.";
+    } else if (!inputState.nickname) {
+      isNormal = false;
+      msg = "닉네임을 입력해주세요.";
+    } else if (!inputState.password) {
+      isNormal = false;
+      msg = "비밀번호를 입력해주세요.";
+    } else if (!inputState.passwordConfirm) {
+      isNormal = false;
+      msg = "비밀번호확인을 입력해주세요.";
+    }
+    if (isNormal) {
+      __SignUp();
+      Swal.fire({
+        title: "회원가입에 성공했습니다",
+        text: "선비에 오신걸 환영합니다!",
+        icon: "success",
+        showConfirmButton: false,
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: msg,
+        confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+      });
+    }
   };
   return (
     <div
