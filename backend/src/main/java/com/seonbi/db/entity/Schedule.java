@@ -18,8 +18,8 @@ public class Schedule extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
     private Long scheduleId;
     private Long memberId;
-    private String scheduleDate;    // 2022-04-21
-    private String content;
+    private String scheduleDate;    // 2022.04.21
+    private String title;
     private int background=1;
 
 }

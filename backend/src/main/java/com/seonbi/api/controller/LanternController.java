@@ -1,11 +1,11 @@
 package com.seonbi.api.controller;
 
+import com.seonbi.api.model.LanternDto;
+import com.seonbi.api.request.LanternCreateReq;
 import com.seonbi.api.request.ScheduleCreateReq;
 import com.seonbi.api.response.BaseResponseBody;
-import com.seonbi.api.service.ImageService;
-import com.seonbi.api.service.MemberAuthService;
-import com.seonbi.api.service.MemberService;
-import com.seonbi.api.service.ScheduleService;
+import com.seonbi.api.service.*;
+import com.seonbi.db.entity.Lantern;
 import com.seonbi.db.entity.Member;
 import com.seonbi.db.entity.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,9 @@ public class LanternController {
     @Autowired
     ScheduleService scheduleService;
 
+    @Autowired
+    LanternService lanternService;
+
     @PostMapping("/schedule")
     public ResponseEntity<? extends BaseResponseBody> createSchedule(
             @RequestBody ScheduleCreateReq scheduleCreateReq, @ApiIgnore Authentication authentication){
@@ -38,11 +41,42 @@ public class LanternController {
 
         Schedule schedule=new Schedule();
         schedule.setMemberId(member.getMemberId());
-        schedule.setContent(scheduleCreateReq.getContent());
+        schedule.setTitle(scheduleCreateReq.getTitle());
         schedule.setScheduleDate(scheduleCreateReq.getScheduleDate());
         schedule.setBackground(scheduleCreateReq.getBackground());
 
         scheduleService.createSchedule(schedule);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
+
+
+    @PostMapping()
+    public ResponseEntity<? extends BaseResponseBody> createLantern(
+            @RequestBody LanternCreateReq lanternCreateReq, @ApiIgnore Authentication authentication){
+
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
+
+//        Lantern lantern=
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
+
+
+
+
+    @GetMapping("/info/{lanternId}")
+    public ResponseEntity<? extends BaseResponseBody> getLantern(
+            @ApiIgnore Authentication authentication, @PathVariable Long lanternId){
+
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
+
+        LanternDto lantern = lanternService.getLantern(lanternId);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 

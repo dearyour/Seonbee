@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ScheduleCreateReq {
 
-    String content;
+    String title;
     String scheduleDate;
     int background=1;
 }

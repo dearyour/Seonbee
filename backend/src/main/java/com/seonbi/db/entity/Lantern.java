@@ -22,6 +22,6 @@ public class Lantern extends BaseEntity{
     private Long scheduleId;
     private String content;
     private Integer position=1;
-    private Integer imageNo=1;
+    private Integer lanternType=1;
 
 }
