@@ -1,15 +1,20 @@
 import styled from '@emotion/styled';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
-import Calendar from 'react-calendar';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import Calendar, { OnChangeDateCallback } from 'react-calendar';
 
 type Props = {}
 
 const SideCalendar = (props: Props) => {
   const [value, onChange] = useState<Date>(new Date());
   const [days, setDays] = useState<string[]>([]);
+  const date_change: OnChangeDateCallback = (v: Date, e: ChangeEvent<HTMLInputElement>) => {
+    onChange(v)
+    console.log(v)
+  }
 
-  const [mounted, setMounted] = useState(false);
+
+  const [mounted, setMounted] = useState<boolean>(false);
   useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
@@ -26,7 +31,7 @@ const SideCalendar = (props: Props) => {
     <div className='px-2'>
 
       <Calendar
-        onChange={onChange}
+        onChange={date_change}
         value={value}
         formatMonthYear={(locale, date) => moment(date).format("YY.MM")}
         formatDay={(locale, date) => moment(date).format("DD")}

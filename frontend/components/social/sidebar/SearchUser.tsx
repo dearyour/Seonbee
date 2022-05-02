@@ -48,7 +48,6 @@ const SearchUser = (props: Props) => {
 
             </div>
           })}
-          asd
         </>
       </CardContent>
     </Card>
