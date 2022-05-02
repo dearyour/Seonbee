@@ -82,6 +82,9 @@ public class MemberController {
         String email = memberCreateReq.getEmail();
         String nickname = memberCreateReq.getNickname();
         String password = memberCreateReq.getPassword();
+        System.out.println(email);
+        System.out.println(nickname);
+        System.out.println(password);
 
         int emailCode = memberService.emailCheck(email);
         if (emailCode == 401)
