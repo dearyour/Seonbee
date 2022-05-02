@@ -3,6 +3,7 @@ package com.seonbi.api.controller;
 
 import com.seonbi.api.model.MemberAuthDto;
 import com.seonbi.api.model.MemberDto;
+import com.seonbi.api.request.FriendFollowAllowReq;
 import com.seonbi.api.request.MemberCreateReq;
 import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.api.response.BaseResponseBody;
@@ -63,6 +64,24 @@ public class FriendController {
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
+
+    @PostMapping("/follow/allow")
+    public ResponseEntity<? extends BaseResponseBody> followFriendAllow(
+            @ApiIgnore Authentication authentication, @RequestBody FriendFollowAllowReq friendFollowAllowReq) {
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
+        }
+
+        int followFriendAllowCode=friendService.followFriendAllow(member.getMemberId(), friendFollowAllowReq.getFriendId(), friendFollowAllowReq.getAllow());
+        if (followFriendAllowCode==401){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "잘못된 요청입니다."));
+        }
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
+
+
 
 
 }

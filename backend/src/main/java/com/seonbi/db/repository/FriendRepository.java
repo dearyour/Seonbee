@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface FriendRepository extends JpaRepository<Friend,Long> {
 
     Friend findByFollowerIdAndFolloweeIdAndIsDeleted(Long followerId, Long followeeId, boolean isDeleted);
+    Friend findByFollowerIdAndFolloweeIdAndIsAllowedIsDeleted(Long followerId, Long followeeId, String isAllowed, boolean isDeleted);
 }

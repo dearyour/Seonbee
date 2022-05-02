@@ -41,4 +41,16 @@ public class FriendServiceImpl implements FriendService{
         return 200;
 
     }
+
+    @Override
+    public int followFriendAllow(Long followeeId, Long followerId, String allow) {
+        Friend friend = friendRepository.findByFollowerIdAndFolloweeIdAndIsAllowedIsDeleted(followerId, followeeId, "BEFORE", false);
+        if (friend==null){
+            return 401;
+        }
+        friend.setIsAllowed(allow);
+        friendRepository.save(friend);
+        return 200;
+    }
+
 }
