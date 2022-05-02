@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         <title>당신의 선물비서, 선비</title>
       </Head>
       <div>
-        <Navbar />
+        {/* <Navbar /> */}
       </div>
     </>
   );
