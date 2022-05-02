@@ -1,5 +1,8 @@
 package com.seonbi.db.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +11,8 @@ import javax.persistence.Id;
     특정 상품 받고싶소
  */
 @Entity
+@Getter
+@Setter
 public class Wishlist extends BaseEntity{
 
     @Id

@@ -173,6 +173,11 @@ public class MemberServiceImpl implements MemberService {
         memberRepositorySupport.deleteMember(memberId);
     }
 
+    @Override
+    public boolean isMemberValid(Long hostId) {
+        return memberRepository.existsByMemberIdAndIsDeleted(hostId, false);
+    }
+
 
     @Override
     public String kakaoToken(String code) {
