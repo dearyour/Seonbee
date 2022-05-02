@@ -1,5 +1,6 @@
 package com.seonbi.api.service;
 
+import com.seonbi.db.repository.ImageRepository;
 import com.seonbi.db.repository.ImageRepositorySupport;
 import com.seonbi.db.repository.MemberRepositorySupport;
 import org.json.simple.JSONObject;
@@ -42,6 +43,9 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    ImageService imageService;
+
 
 
     @Override
@@ -68,7 +72,9 @@ public class MemberServiceImpl implements MemberService {
         if (member==null){
             return null;
         }
-        return modelMapper.map(member, MemberDto.class);
+        MemberDto memberDto=modelMapper.map(member, MemberDto.class);
+        memberDto.setImageString(imageService.getImage(member.getImageId()));
+        return memberDto;
     }
 
     @Override
@@ -166,6 +172,7 @@ public class MemberServiceImpl implements MemberService {
     public void deleteMember(Long memberId) {
         memberRepositorySupport.deleteMember(memberId);
     }
+
 
     @Override
     public String kakaoToken(String code) {

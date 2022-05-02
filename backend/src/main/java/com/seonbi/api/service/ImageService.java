@@ -7,6 +7,5 @@ import java.io.IOException;
 public interface ImageService {
 
     Long saveImage(MultipartFile image) throws IOException;
-
-    byte[] getImage(Long imageId);
+    String getImage(Long imageId);
 }
