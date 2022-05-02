@@ -6,6 +6,7 @@ import seonbee from "../../public/seonbee.png";
 import styled from "@emotion/styled";
 import axios from "axios";
 import Router from "next/router";
+import Swal from "sweetalert2";
 type Props = {};
 // const ID_REGEX = new RegExp(
 //   "^([\\w._-])[a-zA-Z0-9]+([\\w._-])([a-zA-Z0-9])+([\\w._-])+@([a-zA-Z0-9]+.)+[a-zA-Z0-9]{2,8}$"
@@ -103,10 +104,28 @@ const Signin = (props: Props) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    __SignIn();
+    let isNormal = true;
+    let msg = "";
+
+    if (!errorData.email) {
+      isNormal = false;
+      msg = "이메일을 입력해주세요.";
+    } else if (!errorData.password) {
+      isNormal = false;
+      msg = "비밀번호를 입력해주세요.";
+    }
+    if (isNormal) {
+      __SignIn();
+      dispatch(memberActions.getMember());
+      Router.push(`/`);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: msg,
+        confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+      });
+    }
     // __getMemberInfo();
-    dispatch(memberActions.getMember());
-    Router.push(`/`);
   };
 
   return (

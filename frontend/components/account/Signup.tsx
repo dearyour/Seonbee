@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
+import Swal from "sweetalert2";
 const ID_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 // const PW_REGEX = new RegExp("^(?=.*[a-zA-Z])(?=.*d)(?=.*W).{8,16}$");
 const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
@@ -86,7 +87,31 @@ const Signup = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    __SignUp();
+    let isNormal = true;
+    let msg = "";
+
+    if (!inputState.email) {
+      isNormal = false;
+      msg = "이메일을 입력해주세요.";
+    } else if (!inputState.nickname) {
+      isNormal = false;
+      msg = "닉네임을 입력해주세요.";
+    } else if (!inputState.password) {
+      isNormal = false;
+      msg = "비밀번호를 입력해주세요.";
+    } else if (!inputState.passwordConfirm) {
+      isNormal = false;
+      msg = "비밀번호확인을 입력해주세요.";
+    }
+    if (isNormal) {
+      __SignUp();
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: msg,
+        confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+      });
+    }
     console.log("DD");
   };
   return (
