@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
+import { Carousel } from 'react-responsive-carousel'
 
 type Props = {}
 class DdayFriends {
@@ -30,18 +31,20 @@ const FriendList = (props: Props) => {
   }, [])
 
   return (
-    <div className='row'>
-      {members.map((member, index) => {
-        return (
-          <ImgWrap className='col-2' key={index}>
-            <FriendImg src={member.imageString} alt="" />
-            <Content>{member.dday}</Content>
-            <Dday>{member.content}</Dday>
+    <Carousel centerMode={true} centerSlidePercentage={20} showThumbs={false} infiniteLoop={true} swipeable={true} showIndicators={false}>
+      {
+        members.map((member, index) => {
+          return (
+            <ImgWrap key={index} className='mx-2'>
+              <FriendImg src={member.imageString} alt="" />
+              <Content>{member.dday}</Content>
+              <Dday>{member.content}</Dday>
 
-          </ImgWrap>
-        )
-      })}
-    </div>
+            </ImgWrap>
+          )
+        })
+      }
+    </Carousel >
   )
 }
 const ImgWrap = styled.div`

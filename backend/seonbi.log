@@ -1453,21 +1453,6 @@ com.auth0.jwt.exceptions.TokenExpiredException: The Token has expired on Thu Apr
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.46.jar:9.0.46]
 	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_192]
 
-<<<<<<< HEAD
-2022-04-29 11:50:24.412 DEBUG 18384 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
-2022-04-29 11:50:24.418 DEBUG 18384 --- [http-nio-127.0.0.1-8000-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
-2022-04-29 11:50:24.435 DEBUG 18384 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-04-29 11:50:24.436 DEBUG 18384 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Fri Apr 29 11:50:24 KST 2022, status=500, error=Internal Server Error, trace=com.auth0.jw (truncated)...]
-2022-04-29 11:50:24.442 DEBUG 18384 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 500
-2022-04-29 15:51:48.472 ERROR 18384 --- [http-nio-127.0.0.1-8000-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
-
-com.auth0.jwt.exceptions.TokenExpiredException: The Token has expired on Thu Apr 28 01:47:27 KST 2022.
-	at com.auth0.jwt.JWTVerifier.assertDateIsFuture(JWTVerifier.java:379) ~[java-jwt-3.10.3.jar:3.10.3]
-	at com.auth0.jwt.JWTVerifier.assertValidDateClaim(JWTVerifier.java:370) ~[java-jwt-3.10.3.jar:3.10.3]
-	at com.auth0.jwt.JWTVerifier.verifyClaims(JWTVerifier.java:295) ~[java-jwt-3.10.3.jar:3.10.3]
-	at com.auth0.jwt.JWTVerifier.verify(JWTVerifier.java:278) ~[java-jwt-3.10.3.jar:3.10.3]
-	at com.auth0.jwt.JWTVerifier.verify(JWTVerifier.java:261) ~[java-jwt-3.10.3.jar:3.10.3]
-=======
 2022-04-29 15:15:26.401 DEBUG 8964 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
 2022-04-29 15:15:26.403 DEBUG 8964 --- [http-nio-127.0.0.1-8000-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
 2022-04-29 15:15:26.407 DEBUG 8964 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
@@ -1485,7 +1470,6 @@ com.auth0.jwt.exceptions.JWTDecodeException: The string '�������)]
 	at com.auth0.jwt.impl.JWTParser.parseHeader(JWTParser.java:51) ~[java-jwt-3.10.3.jar:3.10.3]
 	at com.auth0.jwt.JWTDecoder.<init>(JWTDecoder.java:43) ~[java-jwt-3.10.3.jar:3.10.3]
 	at com.auth0.jwt.JWTVerifier.verify(JWTVerifier.java:260) ~[java-jwt-3.10.3.jar:3.10.3]
->>>>>>> develop
 	at com.seonbi.util.JwtTokenProvider.handleError(JwtTokenProvider.java:66) ~[main/:na]
 	at com.seonbi.auth.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:58) ~[main/:na]
 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.7.jar:5.3.7]
@@ -1529,36 +1513,6 @@ com.auth0.jwt.exceptions.JWTDecodeException: The string '�������)]
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.46.jar:9.0.46]
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.46.jar:9.0.46]
 	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.46.jar:9.0.46]
-<<<<<<< HEAD
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1707) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_192]
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_192]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.46.jar:9.0.46]
-	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_192]
-
-2022-04-29 15:51:48.479 DEBUG 18384 --- [http-nio-127.0.0.1-8000-exec-10] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
-2022-04-29 15:51:48.481 DEBUG 18384 --- [http-nio-127.0.0.1-8000-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
-2022-04-29 15:51:48.487 DEBUG 18384 --- [http-nio-127.0.0.1-8000-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
-2022-04-29 15:51:48.488 DEBUG 18384 --- [http-nio-127.0.0.1-8000-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Fri Apr 29 15:51:48 KST 2022, status=500, error=Internal Server Error, trace=com.auth0.jw (truncated)...]
-2022-04-29 15:51:48.491 DEBUG 18384 --- [http-nio-127.0.0.1-8000-exec-10] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 500
-2022-04-29 15:51:56.872 ERROR 18384 --- [http-nio-127.0.0.1-8000-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
-
-com.auth0.jwt.exceptions.TokenExpiredException: The Token has expired on Thu Apr 28 01:47:27 KST 2022.
-	at com.auth0.jwt.JWTVerifier.assertDateIsFuture(JWTVerifier.java:379) ~[java-jwt-3.10.3.jar:3.10.3]
-	at com.auth0.jwt.JWTVerifier.assertValidDateClaim(JWTVerifier.java:370) ~[java-jwt-3.10.3.jar:3.10.3]
-	at com.auth0.jwt.JWTVerifier.verifyClaims(JWTVerifier.java:295) ~[java-jwt-3.10.3.jar:3.10.3]
-	at com.auth0.jwt.JWTVerifier.verify(JWTVerifier.java:278) ~[java-jwt-3.10.3.jar:3.10.3]
-=======
 	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.46.jar:9.0.46]
 	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.46.jar:9.0.46]
 	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.46.jar:9.0.46]
@@ -1741,7 +1695,6 @@ Using generated security password: 0f6458be-64b0-4354-968e-69f7aff2d8dc
 com.auth0.jwt.exceptions.SignatureVerificationException: The Token's Signature resulted invalid when verified using the Algorithm: HmacSHA512
 	at com.auth0.jwt.algorithms.HMACAlgorithm.verify(HMACAlgorithm.java:50) ~[java-jwt-3.10.3.jar:3.10.3]
 	at com.auth0.jwt.JWTVerifier.verify(JWTVerifier.java:277) ~[java-jwt-3.10.3.jar:3.10.3]
->>>>>>> develop
 	at com.auth0.jwt.JWTVerifier.verify(JWTVerifier.java:261) ~[java-jwt-3.10.3.jar:3.10.3]
 	at com.seonbi.util.JwtTokenProvider.handleError(JwtTokenProvider.java:66) ~[main/:na]
 	at com.seonbi.auth.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:58) ~[main/:na]
@@ -2554,6 +2507,7 @@ com.auth0.jwt.exceptions.SignatureVerificationException: The Token's Signature r
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.46.jar:9.0.46]
 	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
 
+<<<<<<< HEAD
 2022-04-29 15:54:26.428 DEBUG 9560 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
 2022-04-29 15:54:26.433 DEBUG 9560 --- [http-nio-127.0.0.1-8000-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
 2022-04-29 15:54:26.452 DEBUG 9560 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
@@ -2574,3 +2528,395 @@ com.auth0.jwt.exceptions.SignatureVerificationException: The Token's Signature r
 2022-04-29 16:00:47.366  INFO 9560 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2022-04-29 16:00:47.524  INFO 9560 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
 >>>>>>> develop
+=======
+2022-04-28 13:39:21.652  INFO 3476 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@70136963, org.springframework.security.web.context.SecurityContextPersistenceFilter@2880b57b, org.springframework.security.web.header.HeaderWriterFilter@28285ab8, org.springframework.web.filter.CorsFilter@6a046fb4, org.springframework.security.web.authentication.logout.LogoutFilter@4bc79756, com.seonbi.auth.JwtAuthenticationFilter@214b432c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4181643a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1f8f318a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@28164709, org.springframework.security.web.session.SessionManagementFilter@4147600f, org.springframework.security.web.access.ExceptionTranslationFilter@794dd984, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3861e34a]
+2022-04-28 13:39:21.795 DEBUG 3476 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-04-28 13:39:21.846 DEBUG 3476 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-04-28 13:39:21.858 DEBUG 3476 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-04-28 13:39:22.154 DEBUG 3476 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/**] in 'resourceHandlerMapping'
+2022-04-28 13:39:22.162 DEBUG 3476 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-04-28 13:39:22.183  WARN 3476 --- [restartedMain] o.s.b.a.m.MustacheAutoConfiguration      : Cannot find template location: classpath:/templates/ (please add some templates, check your Mustache configuration, or set spring.mustache.check-template-location=false)
+2022-04-28 13:39:22.331  INFO 3476 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8000 (http) with context path ''
+2022-04-28 13:39:22.579  INFO 3476 --- [restartedMain] com.seonbi.SeonbiApplication             : Started SeonbiApplication in 7.61 seconds (JVM running for 8.229)
+2022-04-28 13:39:27.718  INFO 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-28 13:39:27.719  INFO 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-04-28 13:39:27.720 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-04-28 13:39:27.720 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-04-28 13:39:27.720 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-04-28 13:39:27.721 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@ff49a00
+2022-04-28 13:39:27.721 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@5853f497
+2022-04-28 13:39:27.721 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-04-28 13:39:27.721  INFO 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-04-28 13:39:27.750 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 13:39:27.754 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 13:39:27.930 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:39:27.930 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 13:39:27.947 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 13:40:17.391 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 13:40:17.391 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 13:40:17.416 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:40:17.416 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 13:40:17.423 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 13:40:23.130 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 13:40:23.130 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 13:40:23.154 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:40:23.154 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 13:40:23.163 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 13:42:07.091 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 13:42:07.092 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 13:42:07.113 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:42:07.113 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 13:42:07.119 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 13:54:11.488 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/image/default_image.png", parameters={}
+2022-04-28 13:54:11.490  WARN 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.PageNotFound             : No mapping for GET /image/default_image.png
+2022-04-28 13:54:11.490  WARN 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.PageNotFound             : No handler found for GET /image/default_image.png
+2022-04-28 13:54:11.491  WARN 3476 --- [http-nio-127.0.0.1-8000-exec-9] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.servlet.NoHandlerFoundException: No handler found for GET /image/default_image.png]
+2022-04-28 13:54:11.491 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2022-04-28 13:54:11.493 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
+2022-04-28 13:54:11.495 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2022-04-28 13:54:11.503 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json;q=0.8', given [image/avif, image/webp, image/apng, image/svg+xml, image/*, */*;q=0.8] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:54:11.504 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Thu Apr 28 13:54:11 KST 2022, status=404, error=Not Found, trace=org.springframework.web. (truncated)...]
+2022-04-28 13:54:11.518 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 404
+2022-04-28 13:54:28.277 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 13:54:28.278 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 13:54:28.304 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:54:28.305 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 13:54:28.312 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 13:54:50.936 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 13:54:50.936 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 13:54:50.956 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:54:50.956 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 13:54:50.962 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 13:54:58.838 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 13:54:58.839 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 13:54:58.860 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:54:58.860 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 13:54:58.866 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 13:55:05.284 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 13:55:05.285 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 13:55:05.314 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:55:05.314 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 13:55:05.320 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 13:55:07.767 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 13:55:07.767 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 13:55:07.788 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:55:07.789 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 13:55:07.795 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 13:55:48.392 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 13:55:48.392 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 13:55:48.424 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 13:55:48.424 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 13:55:48.429 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 14:02:31.722 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 14:02:31.723 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 14:02:31.744 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 14:02:31.745 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 14:02:31.750 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 14:05:10.565 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 14:05:10.566 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 14:05:10.586 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 14:05:10.586 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 14:05:10.593 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 14:07:17.942 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 14:07:17.943 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 14:07:17.964 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 14:07:17.964 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 14:07:17.971 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 14:08:20.506 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 14:08:20.506 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 14:08:20.527 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 14:08:20.528 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 14:08:20.533 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 14:09:49.562 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 14:09:49.562 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 14:09:49.584 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 14:09:49.584 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 14:09:49.591 DEBUG 3476 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 15:51:13.360  INFO 17364 --- [restartedMain] com.seonbi.SeonbiApplication             : Starting SeonbiApplication using Java 11.0.13 on DESKTOP-KVCQHCD with PID 17364 (C:\Users\multicampus\Desktop\project\S06P31A406\backend\build\classes\java\main started by SSAFY in C:\Users\multicampus\Desktop\project\S06P31A406\backend)
+2022-04-28 15:51:13.363  INFO 17364 --- [restartedMain] com.seonbi.SeonbiApplication             : No active profile set, falling back to default profiles: default
+2022-04-28 15:51:13.445  INFO 17364 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-04-28 15:51:13.446  INFO 17364 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-04-28 15:51:15.139  INFO 17364 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-28 15:51:15.248  INFO 17364 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 96 ms. Found 2 JPA repository interfaces.
+2022-04-28 15:51:15.820  INFO 17364 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4e1ede8a' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-28 15:51:15.829  INFO 17364 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-28 15:51:16.764  INFO 17364 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8000 (http)
+2022-04-28 15:51:16.781  INFO 17364 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-28 15:51:16.781  INFO 17364 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.46]
+2022-04-28 15:51:16.924  INFO 17364 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-28 15:51:16.925  INFO 17364 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3478 ms
+2022-04-28 15:51:17.411  INFO 17364 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-28 15:51:17.491  INFO 17364 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.31.Final
+2022-04-28 15:51:17.688  INFO 17364 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-28 15:51:17.866  INFO 17364 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-28 15:51:18.431  INFO 17364 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-28 15:51:18.452  INFO 17364 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-04-28 15:51:19.646  INFO 17364 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-28 15:51:19.657  INFO 17364 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-28 15:51:19.680  INFO 17364 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-04-28 15:51:19.772  WARN 17364 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-28 15:51:21.270 DEBUG 17364 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 12 mappings in 'requestMappingHandlerMapping'
+2022-04-28 15:51:21.380  INFO 17364 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-04-28 15:51:21.532  INFO 17364 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: ec02a190-96d9-42d4-818c-273f06657468
+
+2022-04-28 15:51:21.662  INFO 17364 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6b353a6b, org.springframework.security.web.context.SecurityContextPersistenceFilter@5ff76a2f, org.springframework.security.web.header.HeaderWriterFilter@16e6a44c, org.springframework.web.filter.CorsFilter@31e4b0e2, org.springframework.security.web.authentication.logout.LogoutFilter@4658c1a0, com.seonbi.auth.JwtAuthenticationFilter@7ff0fe29, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@396872db, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@37656c88, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@b0435c1, org.springframework.security.web.session.SessionManagementFilter@4ce6d0fe, org.springframework.security.web.access.ExceptionTranslationFilter@33706e89, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@c9225d6]
+2022-04-28 15:51:21.848 DEBUG 17364 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-04-28 15:51:21.923 DEBUG 17364 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-04-28 15:51:21.938 DEBUG 17364 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-04-28 15:51:22.320 DEBUG 17364 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/**] in 'resourceHandlerMapping'
+2022-04-28 15:51:22.333 DEBUG 17364 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-04-28 15:51:22.363  WARN 17364 --- [restartedMain] o.s.b.a.m.MustacheAutoConfiguration      : Cannot find template location: classpath:/templates/ (please add some templates, check your Mustache configuration, or set spring.mustache.check-template-location=false)
+2022-04-28 15:51:22.583  INFO 17364 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8000 (http) with context path ''
+2022-04-28 15:51:22.897  INFO 17364 --- [restartedMain] com.seonbi.SeonbiApplication             : Started SeonbiApplication in 10.096 seconds (JVM running for 10.891)
+2022-04-28 15:51:46.189  INFO 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-28 15:51:46.190  INFO 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-04-28 15:51:46.190 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-04-28 15:51:46.190 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-04-28 15:51:46.190 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-04-28 15:51:46.192 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@5c552a2d
+2022-04-28 15:51:46.192 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@3e62b7e9
+2022-04-28 15:51:46.193 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-04-28 15:51:46.193  INFO 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2022-04-28 15:51:46.235 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 15:51:46.241 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 15:51:46.456 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 15:51:46.457 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 15:51:46.486 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 15:51:51.245 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 15:51:51.245 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 15:51:51.260 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 15:51:51.260 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 15:51:51.267 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 15:51:53.605 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 15:51:53.606 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 15:51:53.619 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 15:51:53.619 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 15:51:53.625 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 15:51:56.061 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 15:51:56.062 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 15:51:56.075 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 15:51:56.076 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 15:51:56.081 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 15:52:12.581 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 15:52:12.581 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 15:52:12.598 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 15:52:12.599 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 15:52:12.605 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 15:52:17.133 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/2", parameters={}
+2022-04-28 15:52:17.133 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 15:52:17.147 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 15:52:17.147 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 15:52:17.154 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 15:52:20.555 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/2", parameters={}
+2022-04-28 15:52:20.555 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 15:52:20.568 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 15:52:20.568 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 15:52:20.574 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 15:52:20.706 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/2", parameters={}
+2022-04-28 15:52:20.706 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 15:52:20.714 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 15:52:20.714 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 15:52:20.720 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 15:52:20.852 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/2", parameters={}
+2022-04-28 15:52:20.852 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 15:52:20.860 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 15:52:20.861 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 15:52:20.867 DEBUG 17364 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:18:38.674  INFO 18660 --- [restartedMain] com.seonbi.SeonbiApplication             : Starting SeonbiApplication using Java 11.0.13 on DESKTOP-KVCQHCD with PID 18660 (C:\Users\multicampus\Desktop\project\S06P31A406\backend\build\classes\java\main started by SSAFY in C:\Users\multicampus\Desktop\project\S06P31A406\backend)
+2022-04-28 16:18:38.678  INFO 18660 --- [restartedMain] com.seonbi.SeonbiApplication             : No active profile set, falling back to default profiles: default
+2022-04-28 16:18:38.750  INFO 18660 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-04-28 16:18:38.750  INFO 18660 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-04-28 16:18:40.367  INFO 18660 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-28 16:18:40.468  INFO 18660 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 90 ms. Found 2 JPA repository interfaces.
+2022-04-28 16:18:40.900  INFO 18660 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@1f9bb0ec' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-28 16:18:40.905  INFO 18660 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-28 16:18:41.619  INFO 18660 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8000 (http)
+2022-04-28 16:18:41.632  INFO 18660 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-28 16:18:41.633  INFO 18660 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.46]
+2022-04-28 16:18:41.746  INFO 18660 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-28 16:18:41.746  INFO 18660 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2996 ms
+2022-04-28 16:18:42.134  INFO 18660 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-28 16:18:42.197  INFO 18660 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.31.Final
+2022-04-28 16:18:42.357  INFO 18660 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-28 16:18:42.483  INFO 18660 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-28 16:18:42.896  INFO 18660 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-28 16:18:42.914  INFO 18660 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-04-28 16:18:43.791  INFO 18660 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-28 16:18:43.799  INFO 18660 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-28 16:18:43.818  INFO 18660 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-04-28 16:18:43.877  WARN 18660 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-28 16:18:44.734 DEBUG 18660 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 13 mappings in 'requestMappingHandlerMapping'
+2022-04-28 16:18:44.825  INFO 18660 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-04-28 16:18:44.946  INFO 18660 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: e8eadd50-6032-4168-b33a-9e99d53d7668
+
+2022-04-28 16:18:45.049  INFO 18660 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4411d7ed, org.springframework.security.web.context.SecurityContextPersistenceFilter@7e106191, org.springframework.security.web.header.HeaderWriterFilter@367b91f1, org.springframework.web.filter.CorsFilter@17344d4d, org.springframework.security.web.authentication.logout.LogoutFilter@686823b4, com.seonbi.auth.JwtAuthenticationFilter@7f8ad5fe, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@81c7065, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6dfa0bda, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1ce12719, org.springframework.security.web.session.SessionManagementFilter@5ac489d9, org.springframework.security.web.access.ExceptionTranslationFilter@54875626, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3ba24530]
+2022-04-28 16:18:45.181 DEBUG 18660 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-04-28 16:18:45.227 DEBUG 18660 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-04-28 16:18:45.238 DEBUG 18660 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-04-28 16:18:45.535 DEBUG 18660 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/**] in 'resourceHandlerMapping'
+2022-04-28 16:18:45.543 DEBUG 18660 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-04-28 16:18:45.567  WARN 18660 --- [restartedMain] o.s.b.a.m.MustacheAutoConfiguration      : Cannot find template location: classpath:/templates/ (please add some templates, check your Mustache configuration, or set spring.mustache.check-template-location=false)
+2022-04-28 16:18:45.730  INFO 18660 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8000 (http) with context path ''
+2022-04-28 16:18:45.963  INFO 18660 --- [restartedMain] com.seonbi.SeonbiApplication             : Started SeonbiApplication in 7.81 seconds (JVM running for 8.462)
+2022-04-28 16:18:54.253  INFO 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-28 16:18:54.254  INFO 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-04-28 16:18:54.254 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-04-28 16:18:54.254 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-04-28 16:18:54.255 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-04-28 16:18:54.256 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@6459c346
+2022-04-28 16:18:54.256 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@1e733aa5
+2022-04-28 16:18:54.256 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-04-28 16:18:54.256  INFO 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-04-28 16:18:54.311 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/member/image/test", parameters={masked}
+2022-04-28 16:18:54.316 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#imageUploadTest(String, String, MultipartFile)
+2022-04-28 16:18:54.472 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:18:54.473 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.seonbi.api.response.BaseResponseBody@354fe10c]
+2022-04-28 16:18:54.489 DEBUG 18660 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:20:55.296  INFO 8968 --- [restartedMain] com.seonbi.SeonbiApplication             : Starting SeonbiApplication using Java 11.0.13 on DESKTOP-KVCQHCD with PID 8968 (C:\Users\multicampus\Desktop\project\S06P31A406\backend\build\classes\java\main started by SSAFY in C:\Users\multicampus\Desktop\project\S06P31A406\backend)
+2022-04-28 16:20:55.299  INFO 8968 --- [restartedMain] com.seonbi.SeonbiApplication             : No active profile set, falling back to default profiles: default
+2022-04-28 16:20:55.367  INFO 8968 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-04-28 16:20:55.368  INFO 8968 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-04-28 16:20:56.793  INFO 8968 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-28 16:20:56.866  INFO 8968 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 64 ms. Found 2 JPA repository interfaces.
+2022-04-28 16:20:57.269  INFO 8968 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@2a73fa50' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-28 16:20:57.276  INFO 8968 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2022-04-28 16:20:57.947  INFO 8968 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8000 (http)
+2022-04-28 16:20:57.958  INFO 8968 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-04-28 16:20:57.959  INFO 8968 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.46]
+2022-04-28 16:20:58.073  INFO 8968 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-04-28 16:20:58.073  INFO 8968 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2705 ms
+2022-04-28 16:20:58.468  INFO 8968 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-28 16:20:58.537  INFO 8968 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.31.Final
+2022-04-28 16:20:58.705  INFO 8968 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-28 16:20:58.831  INFO 8968 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-04-28 16:20:59.210  INFO 8968 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-04-28 16:20:59.228  INFO 8968 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-04-28 16:21:00.165  INFO 8968 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-28 16:21:00.188  INFO 8968 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-28 16:21:00.213  INFO 8968 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-04-28 16:21:00.292  WARN 8968 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-28 16:21:01.480 DEBUG 8968 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 13 mappings in 'requestMappingHandlerMapping'
+2022-04-28 16:21:01.597  INFO 8968 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2022-04-28 16:21:01.767  INFO 8968 --- [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 1c53e24c-7b8b-40a7-ba5a-8b4ec08f92ef
+
+2022-04-28 16:21:01.944  INFO 8968 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2e3637ea, org.springframework.security.web.context.SecurityContextPersistenceFilter@2eabaab7, org.springframework.security.web.header.HeaderWriterFilter@6b42f505, org.springframework.web.filter.CorsFilter@445050b0, org.springframework.security.web.authentication.logout.LogoutFilter@323b8fd1, com.seonbi.auth.JwtAuthenticationFilter@4781b465, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5b11e901, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5b2c5d41, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@379a7cf0, org.springframework.security.web.session.SessionManagementFilter@1d426567, org.springframework.security.web.access.ExceptionTranslationFilter@646100ed, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@489ae377]
+2022-04-28 16:21:02.170 DEBUG 8968 --- [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-04-28 16:21:02.232 DEBUG 8968 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2022-04-28 16:21:02.242 DEBUG 8968 --- [restartedMain] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2022-04-28 16:21:02.523 DEBUG 8968 --- [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/**] in 'resourceHandlerMapping'
+2022-04-28 16:21:02.532 DEBUG 8968 --- [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-04-28 16:21:02.553  WARN 8968 --- [restartedMain] o.s.b.a.m.MustacheAutoConfiguration      : Cannot find template location: classpath:/templates/ (please add some templates, check your Mustache configuration, or set spring.mustache.check-template-location=false)
+2022-04-28 16:21:02.721  INFO 8968 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8000 (http) with context path ''
+2022-04-28 16:21:02.990  INFO 8968 --- [restartedMain] com.seonbi.SeonbiApplication             : Started SeonbiApplication in 8.171 seconds (JVM running for 8.776)
+2022-04-28 16:21:07.411  INFO 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-28 16:21:07.412  INFO 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-04-28 16:21:07.412 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2022-04-28 16:21:07.412 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2022-04-28 16:21:07.413 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2022-04-28 16:21:07.414 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@c5712ba
+2022-04-28 16:21:07.414 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@4aed4844
+2022-04-28 16:21:07.414 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2022-04-28 16:21:07.414  INFO 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-04-28 16:21:07.442 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:21:07.446 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:21:07.639 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:21:07.640 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:21:07.666 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:21:24.308 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:21:24.308 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:21:24.326 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:21:24.326 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:21:24.337 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:21:31.499 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:21:31.499 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:21:31.513 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:21:31.513 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:21:31.522 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:23:04.761 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:23:04.762 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:23:04.776 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:23:04.776 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:23:04.785 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:24:34.508 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 16:24:34.509 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:24:34.523 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:24:34.523 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 16:24:34.529 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:25:41.333 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/0", parameters={}
+2022-04-28 16:25:41.334 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:25:41.347 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:25:41.347 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAVUAAAGhCAYAAADRDychAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsM (truncated)...]
+2022-04-28 16:25:41.354 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:25:46.577 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:25:46.578 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:25:46.592 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:25:46.592 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:25:46.605 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:27:24.336 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/api/member/image/test", parameters={masked}
+2022-04-28 16:27:24.339 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#imageUploadTest(String, String, MultipartFile)
+2022-04-28 16:27:24.447 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:27:24.447 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.seonbi.api.response.BaseResponseBody@b736a6d]
+2022-04-28 16:27:24.455 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:27:37.265 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/2", parameters={}
+2022-04-28 16:27:37.266 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:27:37.281 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:27:37.281 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAABWFiQWNhYjAyAK+l9SIAACAASURBVHic7L0vfOM+t+773ee+YIE (truncated)...]
+2022-04-28 16:27:37.286 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:28:55.849 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/2", parameters={}
+2022-04-28 16:28:55.849 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:28:55.862 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:28:55.863 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAABWFiQWNhYjAyAK+l9SIAACAASURBVHic7L0vfOM+t+773ee+YIE (truncated)...]
+2022-04-28 16:28:55.877 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:29:03.609 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:29:03.610 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:29:03.624 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:29:03.625 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:29:03.634 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:36:49.348 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:36:49.348 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:36:49.362 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:36:49.363 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:36:49.371 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:36:56.409 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:36:56.410 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:36:56.423 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:36:56.424 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:36:56.433 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:37:40.768 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:37:40.769 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:37:40.782 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:37:40.783 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:37:40.791 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:37:49.786 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:37:49.786 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:37:49.799 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:37:49.799 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:37:49.808 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:38:39.488 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/1", parameters={}
+2022-04-28 16:38:39.489 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:38:39.502 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:38:39.503 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAAYoAAAFrCAYAAADPZs43AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxI (truncated)...]
+2022-04-28 16:38:39.512 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:40:48.961 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/member/image/test", parameters={masked}
+2022-04-28 16:40:48.962 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#imageUploadTest(String, String, MultipartFile)
+2022-04-28 16:40:48.998 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:40:48.998 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.seonbi.api.response.BaseResponseBody@ba78096]
+2022-04-28 16:40:48.999 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:41:04.439 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/3", parameters={}
+2022-04-28 16:41:04.440 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:41:04.477 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:41:04.482 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAB4AAAAQ4CAYAAADo08FDAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJ (truncated)...]
+2022-04-28 16:41:04.689 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 16:55:00.652 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/member/image/3", parameters={}
+2022-04-28 16:55:00.653 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.seonbi.api.controller.MemberController#getImage(Long)
+2022-04-28 16:55:00.689 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [text/plain, */*, text/plain, */*, application/json, application/*+json, application/json, application/*+json]
+2022-04-28 16:55:00.691 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing ["iVBORw0KGgoAAAANSUhEUgAAB4AAAAQ4CAYAAADo08FDAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJ (truncated)...]
+2022-04-28 16:55:00.859 DEBUG 8968 --- [http-nio-127.0.0.1-8000-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2022-04-28 20:21:25.994  WARN 8968 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h15m24s457ms462µs500ns).
+>>>>>>> feat/FE-social
