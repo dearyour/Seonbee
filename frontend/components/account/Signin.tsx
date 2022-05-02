@@ -84,8 +84,24 @@ const Signin = (props: Props) => {
     setErrorData((prev: any) => ({ ...prev, [inputId]: result }));
   };
 
+  const __SignIn = useCallback(() => {
+    const data = {
+      email: inputState.email,
+      password: inputState.password,
+    };
+    console.log(data);
+    axios({
+      method: "POST",
+      url: process.env.NEXT_PUBLIC_BACK + "member/login",
+      data: data,
+    })
+      .then((res) => {})
+      .catch((err) => {});
+  }, []);
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    __SignIn();
   };
 
   return (
