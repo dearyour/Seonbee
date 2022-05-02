@@ -201,7 +201,7 @@ public class MemberController {
 
     }
 
-    @GetMapping("{memberId}")
+    @GetMapping("/{memberId}")
     public ResponseEntity<? extends BaseResponseBody> getMemberByMemberId(@PathVariable("memberId") Long memberId) {
         MemberDto memberDto = memberService.getMemberByMemberId(memberId);
         if (memberDto == null) {
@@ -210,7 +210,7 @@ public class MemberController {
         return ResponseEntity.status(200).body(MemberGetRes.of(200, "Success", memberDto));
     }
 
-    @GetMapping("check/{nickname}")
+    @GetMapping("/check/{nickname}")
     public ResponseEntity<? extends BaseResponseBody> nicknameCheck(@PathVariable("nickname") String nickname) {
         int nicknameCode = memberService.nicknameCheck(nickname);
         if (nicknameCode == 401) {
@@ -221,7 +221,7 @@ public class MemberController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
     }
 
-    @GetMapping("update/check/{nickname}")
+    @GetMapping("/update/check/{nickname}")
     public ResponseEntity<? extends BaseResponseBody> updateNicknameCheck(
             @ApiIgnore Authentication authentication, @PathVariable("nickname") String nickname) {
         Member member = memberAuthService.memberAuthorize(authentication);
@@ -237,24 +237,10 @@ public class MemberController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
     }
 
-    @GetMapping("/image/{imageId}")
-    public ResponseEntity<String> getImage(@PathVariable("imageId") Long imageId) {
-        byte[] imageByteArray = imageService.getImage(imageId);
-        String imageString = new String(Base64.encodeBase64(imageByteArray));
-        return new ResponseEntity<String>(imageString, HttpStatus.OK);
-    }
-
-    // @PostMapping("/image/test")
-    // public ResponseEntity<? extends BaseResponseBody> imageUploadTest(
-    // @RequestParam("name") String name,
-    // @RequestParam(required = false, value="gender") String gender,
-    // @RequestParam(required = false, value="image") MultipartFile image
-    // ) throws IOException {
-    //
-    // System.out.println(name+" "+gender);
-    // Long imageId=imageService.saveImage(image);
-    // System.out.println("imageId: "+imageId);
-    //
-    // return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-    // }
+//    @GetMapping("/image/{imageId}")
+//    public ResponseEntity<String> getImage(@PathVariable("imageId") Long imageId){
+//        byte[] imageByteArray=imageService.getImage(imageId);
+//        String imageString = new String(Base64.encodeBase64(imageByteArray));
+//        return new ResponseEntity<String>(imageString, HttpStatus.OK);
+//    }
 }
