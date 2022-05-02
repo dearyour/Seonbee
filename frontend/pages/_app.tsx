@@ -8,7 +8,7 @@ import Navbar from "components/commons/bars/Navbar";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div>
+    <div className="vh-100 background-image-1">
       <Navbar></Navbar>
       <Component {...pageProps} />
     </div>
