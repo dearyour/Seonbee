@@ -1,5 +1,5 @@
-import React from 'react';
-import Router from 'next/router';
+import React from "react";
+import Router from "next/router";
 import {
   SidebarContainer,
   Icon,
@@ -7,7 +7,7 @@ import {
   SidebarWrapper,
   SidebarMenu,
   SidebarLink,
-} from 'styles/main/SidebarElements';
+} from "styles/main/SidebarElements";
 
 interface Props {
   isOpen: boolean;
@@ -22,16 +22,14 @@ function Sidebar({ isOpen, toggle }: Props) {
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
-          <SidebarLink onClick={() => Router.push('/')}>대문</SidebarLink>
-          <SidebarLink onClick={() => Router.push('/shop')}>
+          <SidebarLink onClick={() => Router.push("/")}>대문</SidebarLink>
+          <SidebarLink onClick={() => Router.push("/shop")}>
             저잣거리
           </SidebarLink>
-          <SidebarLink onClick={() => Router.push('/social')}>
+          <SidebarLink onClick={() => Router.push("/social")}>
             사랑방
           </SidebarLink>
-          <SidebarLink onClick={() => Router.push('/profile')}>
-            호패
-          </SidebarLink>
+          <SidebarLink onClick={() => Router.push("/redux")}>호패</SidebarLink>
         </SidebarMenu>
       </SidebarWrapper>
     </SidebarContainer>
