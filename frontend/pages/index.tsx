@@ -4,9 +4,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Btn from "components/commons/Btn";
 
-import HeroSection from 'components/main/HeroSection';
-import { Button } from '@mui/material';
-import Router from 'next/router';
+import HeroSection from "components/main/HeroSection";
+import { Button } from "@mui/material";
+import Router from "next/router";
 
 const Home: NextPage = () => {
   return (
@@ -31,10 +31,10 @@ const Home: NextPage = () => {
           <div className="col"></div>
         </div>
 
-      <div>
-        <Navbar />
-        <HeroSection />
-        <Button onClick={() => Router.push('/chat')}>선물 추천받기</Button>
+        <div>
+          <HeroSection />
+          <Button onClick={() => Router.push("/chat")}>선물 추천받기</Button>
+        </div>
       </div>
     </div>
   );

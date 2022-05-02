@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { memberActions } from "store/slice/member";
 import Image from "next/image";
 import seonbee from "../../public/seonbee.png";
 import styled from "@emotion/styled";
 import axios from "axios";
-
+import Router from "next/router";
 type Props = {};
 // const __Login = useCallback(() => {
 //   return axios({
@@ -44,6 +46,7 @@ const ERROR_MSG: any = {
 };
 
 const Signin = (props: Props) => {
+  const dispatch = useDispatch();
   const [inputState, setInputState] = useState<any>({
     email: "",
     password: "",
@@ -97,6 +100,22 @@ const Signin = (props: Props) => {
     })
       .then((res) => {
         console.log(res);
+        sessionStorage.setItem("Token", res.data.jwt);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const __getMemberInfo = () => {
+    const token = sessionStorage.getItem("Token");
+    axios({
+      method: "GET",
+      url: process.env.NEXT_PUBLIC_BACK + "member/auth",
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -106,6 +125,9 @@ const Signin = (props: Props) => {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     __SignIn();
+    // __getMemberInfo();
+    dispatch(memberActions.getMember());
+    // Router.push(`/`);
   };
 
   return (
