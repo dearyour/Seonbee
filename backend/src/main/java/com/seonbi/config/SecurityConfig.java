@@ -65,7 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration=new CorsConfiguration();
 
-        configuration.addAllowedOrigin("http://localhost:8080"); // 허용할 url   왜 * 로 하면 에러..?
+        configuration.addAllowedOrigin("http://localhost:3000"); // 허용할 url   왜 * 로 하면 에러..?
+        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*"); // 허용할 Header
         configuration.addAllowedMethod("*"); // 허용할 http Method;
         configuration.setAllowCredentials(true); //뭔지 모르겠다...
