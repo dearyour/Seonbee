@@ -66,6 +66,29 @@ const Signin = (props: Props) => {
     setErrorData((prev: any) => ({ ...prev, [inputId]: result }));
   };
 
+  useEffect(() => {
+    document.title = "납시오";
+    // if(userLoginInfo.isLogin==true) {
+    //   Swal.fire({
+    //     title: '로그인된 상태입니다',
+    //     icon: 'warning',
+    //     showConfirmButton: false,
+    //   });
+    //   Router.push('/');
+    // }
+    if (
+      sessionStorage.getItem("Token") != null &&
+      sessionStorage.getItem("Token") != "undefined"
+    ) {
+      Swal.fire({
+        title: "로그인된 상태입니다",
+        icon: "warning",
+        showConfirmButton: false,
+      });
+      Router.push("/");
+    }
+  }, []);
+
   const __SignIn = () => {
     const data = {
       email: inputState.email,

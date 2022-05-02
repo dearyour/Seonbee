@@ -8,7 +8,7 @@ import {
   SidebarMenu,
   SidebarLink,
 } from "styles/main/SidebarElements";
-
+import Swal from "sweetalert2";
 interface Props {
   isOpen: boolean;
   toggle: () => void;
@@ -30,6 +30,27 @@ function Sidebar({ isOpen, toggle }: Props) {
             사랑방
           </SidebarLink>
           <SidebarLink onClick={() => Router.push("/redux")}>호패</SidebarLink>
+          {sessionStorage.getItem("Token") != null &&
+          sessionStorage.getItem("Token") != "undefined" ? (
+            <SidebarLink
+              onClick={() => {
+                sessionStorage.clear();
+                Swal.fire({
+                  title: "로그아웃 되었습니다",
+                  text: "메인페이지로 이동합니다",
+                  icon: "success",
+                  showConfirmButton: false,
+                });
+                Router.push("/");
+              }}
+            >
+              떠나겠소
+            </SidebarLink>
+          ) : (
+            <SidebarLink onClick={() => Router.push("/login")}>
+              납시오
+            </SidebarLink>
+          )}
         </SidebarMenu>
       </SidebarWrapper>
     </SidebarContainer>

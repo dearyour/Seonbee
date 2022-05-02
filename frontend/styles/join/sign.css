@@ -10,6 +10,7 @@
   min-height: 100vh;
   /* background: #03a9f4; */
   transition: 0.5s;
+  margin-top: -100px;
 }
 .account.active {
   /* background: #f43648; */
