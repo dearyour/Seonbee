@@ -13,7 +13,7 @@ const reduxTestData = {
 
 const Redux = (props: Props) => {
   const dispatch = useDispatch();
-  const { nickname, memberId, imageId } = useSelector(
+  const { nickname, memberId, imageString } = useSelector(
     (state: RootState) => state.member.info
   );
 
@@ -31,7 +31,7 @@ const Redux = (props: Props) => {
     <div style={{ textAlign: "center" }}>
       <div>nickname : {nickname}</div>
       <div>memberId : {memberId}</div>
-      <div>imageId : {imageId}</div>
+      <div>imageId : {"data:image/png;base64," + imageString}</div>
     </div>
   ) : (
     <div></div>
