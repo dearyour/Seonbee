@@ -37,9 +37,9 @@ function* watchMypageState() {
 // 로그인 사가
 function* getLoginState() {
   try {
-    // const token = sessionStorage.getItem("Token");
+    const token = sessionStorage.getItem("Token");
     // console.log("유저통신전");
-    const userdata: AxiosResponse = yield call(GetLoginState);
+    const userdata: AxiosResponse = yield call(GetLoginState, token);
     // console.log("유저통신후");
     yield put(memberActions.setMember(userdata));
   } catch (err) {
