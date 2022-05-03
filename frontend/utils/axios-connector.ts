@@ -37,7 +37,7 @@ axiosConnector.interceptors.response.use(
 export default axiosConnector;
 
 // 사용법 예시
-// import axiosConnector from "utils/axios-connector.js";
+// import axiosConnector from "utils/axios-connector";
 // GET
 // axiosConnector
 //   .get(`userinfo/${this.content.userId}`)
@@ -48,3 +48,14 @@ export default axiosConnector;
 //   .post("/playlist", formData)
 //   .then((res) => {})
 //   .catch((err) => {});
+
+// axiosConnector({
+//   method: "get",
+//   url: "member", //http://localhost:8000/api/member
+// })
+//   .then((res) => {
+//     console.log(res);
+//   })
+//   .catch((err) => {
+//     console.log(err.response);
+//   });
