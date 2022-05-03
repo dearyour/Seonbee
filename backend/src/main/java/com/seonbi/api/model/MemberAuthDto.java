@@ -11,13 +11,13 @@ import lombok.ToString;
 @NoArgsConstructor
 public class MemberAuthDto{
 
-    private Long memberId=0l;
+    private Long memberId;
     private String nickname;
-    private Long imageId=0l;
+    private String imageString;
 
-    public MemberAuthDto(Long memberId, String nickname, Long imageId) {
+    public MemberAuthDto(Long memberId, String nickname, String imageString) {
         this.memberId = memberId;
         this.nickname = nickname;
-        this.imageId = imageId;
+        this.imageString = imageString;
     }
 }

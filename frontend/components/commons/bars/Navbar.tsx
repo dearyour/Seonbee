@@ -13,6 +13,7 @@ import TextLogo from "public/textLogo2.png";
 import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import Sidebar from "./Sidebar";
+import Swal from "sweetalert2";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,7 +60,30 @@ function Navbar() {
               <NavLinks onClick={() => Router.push("/social")}>사랑방</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks onClick={() => Router.push("/profile")}>호패</NavLinks>
+              <NavLinks onClick={() => Router.push("/redux")}>호패</NavLinks>
+            </NavItem>
+            <NavItem>
+              {sessionStorage.getItem("Token") != null &&
+              sessionStorage.getItem("Token") != "undefined" ? (
+                <NavLinks
+                  onClick={() => {
+                    sessionStorage.clear();
+                    Swal.fire({
+                      title: "로그아웃 되었습니다",
+                      text: "메인페이지로 이동합니다",
+                      icon: "success",
+                      showConfirmButton: false,
+                    });
+                    Router.push("/");
+                  }}
+                >
+                  떠나겠소
+                </NavLinks>
+              ) : (
+                <NavLinks onClick={() => Router.push("/login")}>
+                  납시오
+                </NavLinks>
+              )}
             </NavItem>
           </NavMenu>
         </NavbarContainer>
