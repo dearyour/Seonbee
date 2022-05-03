@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import "react-calendar/dist/Calendar.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../styles/join/sign.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import type { AppProps } from "next/app";

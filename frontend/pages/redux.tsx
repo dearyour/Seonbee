@@ -14,7 +14,7 @@ const reduxTestData = {
 const Redux = (props: Props) => {
   const dispatch = useDispatch();
   const { nickname, memberId, imageId } = useSelector(
-    (state: RootState) => state.member.member
+    (state: RootState) => state.member.info
   );
 
   const testRedux = useCallback(() => {
