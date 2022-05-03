@@ -21,10 +21,12 @@ public class DdayUtil {
             double deadline = (todayDate.getTimeInMillis() - cmpDate.getTimeInMillis()) / (24*60*60*1000.0);
             if (deadline>=0 && deadline<1){
                 return "D-day";
-            } else if (deadline<0){
-                return "D"+(long)(deadline-1);
             } else if (deadline>7){
                 return null;
+            } else if (deadline<-358){
+                return null;
+            } else if (deadline<0){
+                return "D"+(long)(deadline-1);
             } else {
                 return "D+"+(long)deadline;
             }

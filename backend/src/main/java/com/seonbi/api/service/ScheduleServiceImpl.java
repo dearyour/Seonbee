@@ -42,7 +42,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override
     public Schedule getSchedule(Long scheduleId) {
-        return scheduleRepository.findScheduleByScheduleIdAndIsDeleted(scheduleId, false);
+        return scheduleRepository.findByScheduleIdAndIsDeleted(scheduleId, false);
     }
 
     @Override

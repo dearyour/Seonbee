@@ -1,6 +1,7 @@
 package com.seonbi.api.service;
 
 import com.seonbi.api.model.MemberSearchDto;
+import com.seonbi.db.entity.Schedule;
 import com.seonbi.db.repository.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,10 +21,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,6 +48,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     FriendService friendService;
+
+    @Autowired
+    ScheduleRepository scheduleRepository;
 
 
 
@@ -89,11 +90,44 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member createMember(Member member) {
-        return memberRepository.save(member);
+        Member newMember=memberRepository.save(member);
+
+        // 생일 일정에 추가
+        if (member.getBirthday()!=null){
+            String[] birthday=member.getBirthday().split("\\.");
+            if (birthday.length==3) {
+                Schedule schedule=new Schedule();
+                schedule.setMemberId(newMember.getMemberId());
+                schedule.setTitle("생일");
+                schedule.setBirthday(true);
+                schedule.setScheduleDate("2022." + birthday[1] + "." + birthday[2]);
+                schedule.setBackground(1);
+                scheduleRepository.save(schedule);
+            }
+        }
+
+        return newMember;
     }
 
     @Override
     public void updateMember(Member member) {
+        if (member.getBirthday()!=null){
+            String[] birthday=member.getBirthday().split("\\.");
+            if (birthday.length==3) {
+                // 생일 일정에서 변경
+                Schedule schedule = scheduleRepository.findByMemberIdAndIsBirthdayAndIsDeleted(member.getMemberId(), true, false);
+                if (schedule==null){    // 기존 등록된 생일이 없으면 새로 생성
+                    schedule=new Schedule();
+                }
+                schedule.setMemberId(member.getMemberId());
+                schedule.setTitle("생일");
+                schedule.setBirthday(true);
+                schedule.setScheduleDate("2022." + birthday[1] + "." + birthday[2]);
+                schedule.setBackground(1);
+                scheduleRepository.save(schedule);
+            }
+        }
+
         memberRepository.save(member);
     }
 
