@@ -2,6 +2,7 @@
 package com.seonbi.api.service;
 
 import com.seonbi.api.model.MemberDto;
+import com.seonbi.api.model.MemberSearchDto;
 import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.db.entity.Member;
 import java.util.HashMap;
@@ -24,4 +25,5 @@ public interface MemberService {
     int nicknameCheckExceptMe(String nickname, String curNickname);
     void deleteMember(Long memberId);
     boolean isMemberValid(Long hostId);
+    List<MemberSearchDto> searchByNickname(Long memberId, String nickname);
 }
