@@ -6,6 +6,7 @@ import seonbee from "../../public/seonbee.png";
 import styled from "@emotion/styled";
 import axios from "axios";
 import Router from "next/router";
+import Swal from "sweetalert2";
 type Props = {};
 // const ID_REGEX = new RegExp(
 //   "^([\\w._-])[a-zA-Z0-9]+([\\w._-])([a-zA-Z0-9])+([\\w._-])+@([a-zA-Z0-9]+.)+[a-zA-Z0-9]{2,8}$"
@@ -43,7 +44,6 @@ const Signin = (props: Props) => {
       [id]: value,
     }));
   };
-  console.log(ID_REGEX.test(inputState["email"]));
 
   const checkRegex = (inputId: any) => {
     let result: any;
@@ -65,6 +65,29 @@ const Signin = (props: Props) => {
 
     setErrorData((prev: any) => ({ ...prev, [inputId]: result }));
   };
+
+  useEffect(() => {
+    document.title = "납시오";
+    // if(userLoginInfo.isLogin==true) {
+    //   Swal.fire({
+    //     title: '로그인된 상태입니다',
+    //     icon: 'warning',
+    //     showConfirmButton: false,
+    //   });
+    //   Router.push('/');
+    // }
+    if (
+      sessionStorage.getItem("Token") != null &&
+      sessionStorage.getItem("Token") != "undefined"
+    ) {
+      Swal.fire({
+        title: "로그인된 상태입니다",
+        icon: "warning",
+        showConfirmButton: false,
+      });
+      Router.push("/");
+    }
+  }, []);
 
   const __SignIn = () => {
     const data = {
@@ -103,10 +126,62 @@ const Signin = (props: Props) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    __SignIn();
+    let isNormal = true;
+    let msg = "";
+
+    if (!errorData.email) {
+      isNormal = false;
+      msg = "이메일을 입력해주세요.";
+    } else if (!errorData.password) {
+      isNormal = false;
+      msg = "비밀번호를 입력해주세요.";
+    }
+    if (isNormal) {
+      const data = {
+        email: inputState.email,
+        password: inputState.password,
+      };
+      console.log(data);
+      axios({
+        method: "POST",
+        url: process.env.NEXT_PUBLIC_BACK + "member/login",
+        data: data,
+      })
+        .then((res: any) => {
+          console.log(res);
+          switch (res.status) {
+            case 200:
+              sessionStorage.setItem("Token", res.data.jwt);
+              dispatch(memberActions.getMember());
+              Router.push(`/`);
+              Swal.fire({
+                title: "로그인에 성공했습니다",
+                text: "메인페이지로 이동합니다",
+                icon: "success",
+                showConfirmButton: false,
+              });
+              break;
+          }
+        })
+        .catch((err) => {
+          // console.log(err.response);
+          if (err.response) {
+            Swal.fire({
+              icon: "error",
+              title: "회원 정보를 다시 확인해주세요",
+              text: "지속적으로 같은 문제 발생시 관리자에게 문의하세요",
+              confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+            });
+          }
+        });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: msg,
+        confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+      });
+    }
     // __getMemberInfo();
-    dispatch(memberActions.getMember());
-    Router.push(`/`);
   };
 
   return (

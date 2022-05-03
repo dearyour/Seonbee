@@ -22,7 +22,7 @@ export const GetMypageState = (
 ) => {
   return axios({
     method: "GET",
-    url: GetMemberurl + "member/" + memberId,
+    url: GetMemberurl + "profile/" + memberId,
     headers: { Authorization: "Bearer " + token },
   })
     .then((res) => {
