@@ -13,6 +13,12 @@ const client = new Client({
 client.onConnect = function (frame) {
   console.log("hello");
 };
+// export const sendtest = () => {
+//   client.publish({
+//     destination: "/topic/general",
+//     body: "Hello world",
+//   });
+// };
 
 client.onStompError = function (frame) {
   console.log("Broker reported error: " + frame.headers["message"]);
