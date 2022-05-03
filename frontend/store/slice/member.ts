@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Member } from "../interface/Member";
 const initialState: Member | any = {
-  nickname: "",
-  member: [],
-  myPage: [],
+  info: [],
   isLoading: false,
   error: null,
 };
@@ -20,7 +18,7 @@ export const memberSlice = createSlice({
     },
     setMember: (state, { payload }) => {
       state.isLoading = false;
-      state.member = payload;
+      state.info = payload;
     },
     setMemberFail: (state, { payload: error }) => {
       state.isLoading = false;
@@ -35,7 +33,7 @@ export const memberSlice = createSlice({
     },
     setMypage: (state, { payload }) => {
       state.isLoading = false;
-      state.myPage = payload;
+      state.info = payload;
     },
     setMypageFail: (state, { payload: error }) => {
       state.isLoading = false;
