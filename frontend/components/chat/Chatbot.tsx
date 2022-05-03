@@ -13,19 +13,30 @@ import {
 } from 'styles/chat/ChatbotElements';
 
 function Chatbot() {
-  const textQuery = async () => {
-    const response = await axios.post('http://localhost:3030/text_query', {
-      text: '안녕',
-      userId: 'seonbee406-2022',
-    });
-    console.log('response from dialogflow', response);
+  // const textQuery = async () => {
+  //   const response = await axios.post('http://localhost:3030/text_query', {
+  //     text: '안녕',
+  //     userId: 'seonbee406-2022',
+  //   });
+  //   console.log('response from dialogflow', response);
+  // };
+
+  const keyUpHandler = (e: { key: string; target: { value: any } }) => {
+    if (e.key === 'Enter') {
+      if (e.target.value) {
+        // we will send text query route
+        // textQuery(e.target.value);
+
+        e.target.value = '';
+      }
+    }
   };
 
   return (
     <ChatbotWidget>
-      <ChatbotHeader>
+      {/* <ChatbotHeader>
         <h1>Seonbee Bot</h1>
-      </ChatbotHeader>
+      </ChatbotHeader> */}
       <ChatbotBody>
         {/* component messages */}
         <Messages />
@@ -40,8 +51,9 @@ function Chatbot() {
           style={{ borderBottom: '1px solid black' }}
           sx={{ ml: 1, flex: 0.8 }}
           placeholder="대답해 주시오"
+          onKeyUp={keyUpHandler}
         />
-        <SendBtn onClick={() => textQuery()}>
+        <SendBtn>
           <FiSend />
         </SendBtn>
       </ChatbotFooter>
