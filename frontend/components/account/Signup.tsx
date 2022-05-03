@@ -175,7 +175,7 @@ const Signup = () => {
         <input
           id="nickname"
           type="text"
-          placeholder="이메일"
+          placeholder="닉네임"
           value={inputState.nickname || ""}
           onChange={handleChange}
           onBlur={() => checkRegex("nickname")}
