@@ -3,13 +3,16 @@ package com.seonbi.api.service;
 import com.seonbi.api.model.FriendDdayDto;
 import com.seonbi.api.model.FriendDto;
 import com.seonbi.api.model.FriendFollowDto;
+import com.seonbi.api.model.FriendScheduleDto;
 import com.seonbi.common.util.DdayUtil;
 import com.seonbi.db.entity.Friend;
 import com.seonbi.db.entity.Member;
 import com.seonbi.db.entity.Schedule;
+import com.seonbi.db.entity.Wishlist;
 import com.seonbi.db.repository.FriendRepository;
 import com.seonbi.db.repository.MemberRepository;
 import com.seonbi.db.repository.ScheduleRepository;
+import com.seonbi.db.repository.WishlistRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,12 @@ public class FriendServiceImpl implements FriendService{
 
     @Autowired
     ScheduleRepository scheduleRepository;
+
+    @Autowired
+    ProductService productService;
+
+    @Autowired
+    WishlistRepository wishlistRepository;
 
 
     @Override
@@ -132,6 +141,35 @@ public class FriendServiceImpl implements FriendService{
         }
 
         return friendIdList;
+    }
+
+    @Override
+    public List<FriendDto> getFriendAll(Long memberId) {
+        List<FriendDto> friendDtoList=new ArrayList<>();
+        List<Long> friendIdList=getFriendIdAll(memberId);
+        for (Long friendId: friendIdList){
+            Member member=memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
+            List<Schedule> schedules=scheduleRepository.findAllByMemberIdAndIsDeletedOrderByScheduleDate(friendId, false);  // 친구 일정
+            List<FriendScheduleDto> scheduleDtoList=new ArrayList<>();
+            for (Schedule schedule: schedules) {    // 한 친구의 일정을 여러개 리스트로 담기
+                String dday=DdayUtil.Dday(schedule.getScheduleDate());
+                if (dday==null){    // 일주일 지난 경우
+                    continue;
+                }
+                FriendScheduleDto scheduleDto=new FriendScheduleDto(dday, schedule.getTitle());
+                scheduleDtoList.add(scheduleDto);
+            }
+            List<Wishlist> wishlists=wishlistRepository.findAllByMemberIdAndIsDeleted(friendId, false);
+            List<String> imageUrls=new ArrayList<>();
+            for (Wishlist wishlist: wishlists) {
+                imageUrls.add(productService.getProductImage(wishlist.getProductId()));
+            }
+
+            FriendDto friendDto=new FriendDto(friendId, member.getNickname(), imageService.getImage(member.getImageId()),
+                    member.getVerse(), imageUrls, scheduleDtoList);
+            friendDtoList.add(friendDto);
+        }
+        return friendDtoList;
     }
 
 
