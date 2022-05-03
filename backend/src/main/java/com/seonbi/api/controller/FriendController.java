@@ -101,6 +101,5 @@ public class FriendController {
 
         return ResponseEntity.status(200).body(FriendDdayAllRes.of(200, "success", friendList));
     }
-
-
+    
 }
