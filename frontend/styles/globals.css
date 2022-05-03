@@ -63,10 +63,14 @@ a {
 
 .background-image-1 {
   background-image: url("../public/images/2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .background-image-2 {
   background-image: url("../public/images/1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .background-image-3 {
