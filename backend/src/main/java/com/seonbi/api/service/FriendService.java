@@ -16,4 +16,5 @@ public interface FriendService {
     boolean isFriend(Long memberId1, Long memberId2);
     List<FriendDdayDto> getFriendDdayAll(Long memberId);
     List<Long> getFriendIdAll(Long memberId);
+    List<FriendDto> getFriendAll(Long memberId);
 }
