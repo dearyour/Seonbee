@@ -101,5 +101,19 @@ public class FriendController {
 
         return ResponseEntity.status(200).body(FriendDdayAllRes.of(200, "success", friendList));
     }
+
+    @GetMapping()
+    public ResponseEntity<? extends BaseResponseBody> getFriendAll(@ApiIgnore Authentication authentication) {
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
+        }
+
+        List<FriendDto> friendList=friendService.getFriendAll(member.getMemberId());
+
+        return ResponseEntity.status(200).body(FriendAllRes.of(200, "success", friendList));
+    }
+
+
     
 }

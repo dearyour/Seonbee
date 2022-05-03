@@ -15,5 +15,10 @@ public class FriendScheduleDto {
      * 일정 정보
      */
     private String dday;
-    private String content;
+    private String title;
+
+    public FriendScheduleDto(String dday, String title) {
+        this.dday = dday;
+        this.title = title;
+    }
 }

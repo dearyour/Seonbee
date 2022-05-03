@@ -20,6 +20,15 @@ public class FriendDto {
     private String nickname;
     private String imageString;
     private String verse;
-    private List<String> productList=new ArrayList<>();
+    private List<String> wishlist=new ArrayList<>();
     private List<FriendScheduleDto> scheduleList=new ArrayList<>();
+
+    public FriendDto(Long friendId, String nickname, String imageString, String verse, List<String> wishlist, List<FriendScheduleDto> scheduleList) {
+        this.friendId = friendId;
+        this.nickname = nickname;
+        this.imageString = imageString;
+        this.verse = verse;
+        this.wishlist = wishlist;
+        this.scheduleList = scheduleList;
+    }
 }
