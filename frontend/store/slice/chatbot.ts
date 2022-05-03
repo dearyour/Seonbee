@@ -8,7 +8,7 @@ export const chatbotSlice = createSlice({
   name: 'chatbot',
   initialState,
   reducers: {
-    updateMessage: (state, action: PayloadAction<any>) => {},
+    saveMessage: (state, action: PayloadAction<any>) => {},
   },
 });
 
