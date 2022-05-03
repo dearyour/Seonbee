@@ -9,7 +9,7 @@ const UserCard = ({
   nickname,
   verse,
   imageString,
-  product,
+  wishlist,
   schedule,
 }: CardMember) => {
   return (
@@ -30,13 +30,14 @@ const UserCard = ({
               <span>{nickname}</span>님의 갖고싶소
             </div>
             <div className="row">
-              {product.map((now: any, index: number) => {
-                return (
-                  <div className="col-3" key={index}>
-                    <ProductImg src={now.imageUrl} alt="" />
-                  </div>
-                );
-              })}
+              {wishlist &&
+                wishlist.map((now: any, index: number) => {
+                  return (
+                    <div className="col-3" key={index}>
+                      <ProductImg src={now.imageUrl} alt="" />
+                    </div>
+                  );
+                })}
             </div>
             <div className="mt-1">
               <Btn className="me-2" filled={true}>

@@ -14,4 +14,5 @@ public interface FriendRepository extends JpaRepository<Friend,Long> {
     Friend findByFollowerIdAndFolloweeIdAndIsDeleted(Long followerId, Long followeeId, boolean isDeleted);
     Friend findByFollowerIdAndFolloweeIdAndIsAllowedAndIsDeleted(Long followerId, Long followeeId, String isAllowed, boolean isDeleted);
     List<Friend> findAllByFolloweeIdAndIsAllowedAndIsDeleted(Long followeeId, String isAllowed, boolean isDeleted);
+    List<Friend> findAllByFollowerIdAndIsAllowedAndIsDeleted(Long followerId, String isAllowed, boolean isDeleted);
 }
