@@ -51,7 +51,7 @@ public class ImageServiceImpl implements ImageService{
             newImage.setOriginImage(originalFileName);
             newImage.setSaveImage(saveFileName);
 
-            System.out.println(("원본 파일 이름 : {" + image.getOriginalFilename() + "}, 실제 저장 파일 이름 : {" + saveFileName + "}"));
+//            System.out.println(("원본 파일 이름 : {" + image.getOriginalFilename() + "}, 실제 저장 파일 이름 : {" + saveFileName + "}"));
             image.transferTo(new File(folder, saveFileName));
         }
         Image savedImage=imageRepository.save(newImage);

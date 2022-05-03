@@ -1,14 +1,13 @@
 package com.seonbi.api.service;
 
-import com.seonbi.db.repository.ImageRepository;
-import com.seonbi.db.repository.ImageRepositorySupport;
-import com.seonbi.db.repository.MemberRepositorySupport;
+import com.seonbi.api.model.MemberSearchDto;
+import com.seonbi.db.entity.Schedule;
+import com.seonbi.db.repository.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import com.seonbi.api.model.MemberDto;
 import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.db.entity.Member;
-import com.seonbi.db.repository.MemberRepository;
 import com.seonbi.util.JwtTokenProvider;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,6 +42,15 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     ImageService imageService;
+
+    @Autowired
+    FriendRepository friendRepository;
+
+    @Autowired
+    FriendService friendService;
+
+    @Autowired
+    ScheduleRepository scheduleRepository;
 
 
 
@@ -84,18 +90,44 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member createMember(Member member) {
-        return memberRepository.save(member);
-    }
+        Member newMember=memberRepository.save(member);
 
-//    @Override
-//    public MemberDto memberEntityToDto(Member member) {
-//        MemberDto memberDto=new MemberDto();
-//
-//        return null;
-//    }
+        // 생일 일정에 추가
+        if (member.getBirthday()!=null){
+            String[] birthday=member.getBirthday().split("\\.");
+            if (birthday.length==3) {
+                Schedule schedule=new Schedule();
+                schedule.setMemberId(newMember.getMemberId());
+                schedule.setTitle("생일");
+                schedule.setBirthday(true);
+                schedule.setScheduleDate("2022." + birthday[1] + "." + birthday[2]);
+                schedule.setBackground(1);
+                scheduleRepository.save(schedule);
+            }
+        }
+
+        return newMember;
+    }
 
     @Override
     public void updateMember(Member member) {
+        if (member.getBirthday()!=null){
+            String[] birthday=member.getBirthday().split("\\.");
+            if (birthday.length==3) {
+                // 생일 일정에서 변경
+                Schedule schedule = scheduleRepository.findByMemberIdAndIsBirthdayAndIsDeleted(member.getMemberId(), true, false);
+                if (schedule==null){    // 기존 등록된 생일이 없으면 새로 생성
+                    schedule=new Schedule();
+                }
+                schedule.setMemberId(member.getMemberId());
+                schedule.setTitle("생일");
+                schedule.setBirthday(true);
+                schedule.setScheduleDate("2022." + birthday[1] + "." + birthday[2]);
+                schedule.setBackground(1);
+                scheduleRepository.save(schedule);
+            }
+        }
+
         memberRepository.save(member);
     }
 
@@ -176,6 +208,21 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean isMemberValid(Long hostId) {
         return memberRepository.existsByMemberIdAndIsDeleted(hostId, false);
+    }
+
+    @Override
+    public List<MemberSearchDto> searchByNickname(Long memberId, String nickname) {
+        List<Member> members = memberRepository.findAllByNicknameContainsAndIsDeleted(nickname, false);
+        List<MemberSearchDto> memberSearchDtos=new ArrayList<>();
+        for (Member member: members){
+            MemberSearchDto memberSearchDto=modelMapper.map(member, MemberSearchDto.class);
+            // 나와 해당 닉네임이 포함된 회원이 친구인지 아닌지
+            memberSearchDto.setFriend(friendService.isFriend(memberId, member.getMemberId()));
+            memberSearchDto.setImageString(imageService.getImage(member.getImageId()));
+            memberSearchDtos.add(memberSearchDto);
+
+        }
+        return memberSearchDtos;
     }
 
 

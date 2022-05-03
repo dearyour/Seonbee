@@ -125,12 +125,13 @@ public class ProfileController {
             @PathVariable("memberId") Long memberId,
             @ApiIgnore Authentication authentication) {
         Member member = memberAuthService.memberAuthorize(authentication);
-        if (member == null || !member.getMemberId().equals(memberId)) {
+        if (member == null || !member.getMemberId().equals(memberId)) {     // 사용자가 본인이 아니면
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         }
 
         memberService.deleteMember(memberId);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
+
 
 }
