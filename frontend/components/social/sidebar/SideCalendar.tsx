@@ -5,6 +5,7 @@ import Calendar, {
   CalendarTileProperties,
   OnChangeDateCallback,
 } from "react-calendar";
+import axiosConnector from "utils/axios-connector";
 import SideCalendarDate from "./SideCalendarDate";
 
 type Props = {};
@@ -23,6 +24,16 @@ const SideCalendar = (props: Props) => {
 
   useEffect(() => {
     setDays(["2022-05-02", "2022-05-03"]);
+    // axiosConnector({
+    //   method: 'GET',
+    //   url: 'friend/schedule'
+    // })
+    // .then((res)=>{
+    //   console.log(res)
+    // })
+    // .catch((err)=>{
+    //   console.log(err.response)
+    // })
   }, []);
   const [mounted, setMounted] = useState<boolean>(false);
   useEffect(() => setMounted(true), []);

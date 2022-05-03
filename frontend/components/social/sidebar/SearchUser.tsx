@@ -3,6 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { InputAdornment, TextField } from "@mui/material";
 import { BsSearch } from "react-icons/bs";
+import axiosConnector from "utils/axios-connector";
 
 type Props = {};
 class SearchedMember {
@@ -27,6 +28,18 @@ const SearchUser = (props: Props) => {
   ) => {
     // console.log(event.target.value)
     setKeyword(event.target.value);
+  };
+  const Search = () => {
+    axiosConnector({
+      method: "GET",
+      url: "member/search/" + keyword,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   return (
