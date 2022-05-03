@@ -16,35 +16,49 @@ a {
 }
 
 @font-face {
-  font-family: 'kdg_Medium';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/kdg_Medium.woff') format('woff');
+  font-family: "kdg_Medium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/kdg_Medium.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'GilbeotRainbow';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/GilbeotRainbow.woff') format('woff');
+  font-family: "GilbeotRainbow";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/GilbeotRainbow.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 .kdg {
-  font-family: 'kdg_Medium';
+  font-family: "kdg_Medium";
 }
 
 .rainbow {
-  font-family: 'GilbeotRainbow';
+  font-family: "GilbeotRainbow";
 }
 
 .background-image-1 {
-  background-image: url('../public/images/2.jpg');
+  background-image: url("../public/images/2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .background-image-2 {
-  background-image: url('../public/images/1.jpg');
+  background-image: url("../public/images/1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .background-image-3 {
-  background-image: url('../public/images/3.jpg');
+  background-image: url("../public/images/3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.MainChar {
+  background-image: url("../public/MainChar.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
