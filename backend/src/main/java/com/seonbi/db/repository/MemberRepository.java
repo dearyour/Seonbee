@@ -5,6 +5,8 @@ import com.seonbi.db.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member,Long> {
@@ -15,5 +17,5 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     boolean existsByNicknameAndIsDeleted(String nickname, boolean isDeleted);
     Member findByMemberIdAndIsDeleted(Long memberId, boolean isDeleted);
     boolean existsByMemberIdAndIsDeleted(Long memberId, boolean isDeleted);
-
+    List<Member> findAllByNicknameContainsAndIsDeleted(String nickname, boolean isDeleted);
 }

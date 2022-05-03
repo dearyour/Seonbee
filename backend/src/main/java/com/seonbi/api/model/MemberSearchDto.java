@@ -14,8 +14,8 @@ public class MemberSearchDto {
     /**
      * 사랑방 - 다른 회원 검색
      */
-    private Long memberId=0l;
+    private Long memberId;
     private String nickname;
     private String imageString;
-    boolean isFriend=false;
+    boolean friend=false;
 }

@@ -1,14 +1,12 @@
 package com.seonbi.api.service;
 
-import com.seonbi.db.repository.ImageRepository;
-import com.seonbi.db.repository.ImageRepositorySupport;
-import com.seonbi.db.repository.MemberRepositorySupport;
+import com.seonbi.api.model.MemberSearchDto;
+import com.seonbi.db.repository.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import com.seonbi.api.model.MemberDto;
 import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.db.entity.Member;
-import com.seonbi.db.repository.MemberRepository;
 import com.seonbi.util.JwtTokenProvider;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -45,6 +44,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     ImageService imageService;
+
+    @Autowired
+    FriendRepository friendRepository;
+
+    @Autowired
+    FriendService friendService;
 
 
 
@@ -86,13 +91,6 @@ public class MemberServiceImpl implements MemberService {
     public Member createMember(Member member) {
         return memberRepository.save(member);
     }
-
-//    @Override
-//    public MemberDto memberEntityToDto(Member member) {
-//        MemberDto memberDto=new MemberDto();
-//
-//        return null;
-//    }
 
     @Override
     public void updateMember(Member member) {
@@ -176,6 +174,21 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean isMemberValid(Long hostId) {
         return memberRepository.existsByMemberIdAndIsDeleted(hostId, false);
+    }
+
+    @Override
+    public List<MemberSearchDto> searchByNickname(Long memberId, String nickname) {
+        List<Member> members = memberRepository.findAllByNicknameContainsAndIsDeleted(nickname, false);
+        List<MemberSearchDto> memberSearchDtos=new ArrayList<>();
+        for (Member member: members){
+            MemberSearchDto memberSearchDto=modelMapper.map(member, MemberSearchDto.class);
+            // 나와 해당 닉네임이 포함된 회원이 친구인지 아닌지
+            memberSearchDto.setFriend(friendService.isFriend(memberId, member.getMemberId()));
+            memberSearchDto.setImageString(imageService.getImage(member.getImageId()));
+            memberSearchDtos.add(memberSearchDto);
+
+        }
+        return memberSearchDtos;
     }
 
 

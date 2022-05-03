@@ -77,4 +77,14 @@ public class FriendServiceImpl implements FriendService{
         return friendFollowDtoList;
     }
 
+    @Override
+    public boolean isFriend(Long memberId1, Long memberId2) {
+        // 회원 둘다 유효하다는 전제하에
+        if (friendRepository.findByFollowerIdAndFolloweeIdAndIsAllowedAndIsDeleted(memberId1, memberId2, "OK", false)!=null
+                || friendRepository.findByFollowerIdAndFolloweeIdAndIsAllowedAndIsDeleted(memberId2, memberId1, "OK", false)!=null){
+            return true;
+        }
+        return false;
+    }
+
 }

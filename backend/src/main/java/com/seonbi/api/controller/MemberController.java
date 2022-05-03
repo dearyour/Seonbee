@@ -3,12 +3,10 @@ package com.seonbi.api.controller;
 
 import com.seonbi.api.model.MemberAuthDto;
 import com.seonbi.api.model.MemberDto;
+import com.seonbi.api.model.MemberSearchDto;
 import com.seonbi.api.request.MemberCreateReq;
 import com.seonbi.api.request.MemberLoginReq;
-import com.seonbi.api.response.BaseResponseBody;
-import com.seonbi.api.response.MemberAuthRes;
-import com.seonbi.api.response.MemberGetRes;
-import com.seonbi.api.response.MemberLoginRes;
+import com.seonbi.api.response.*;
 import com.seonbi.api.service.ImageService;
 import com.seonbi.api.service.MemberAuthService;
 import com.seonbi.api.service.MemberService;
@@ -26,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/member")
@@ -141,5 +140,18 @@ public class MemberController {
             return ResponseEntity.status(402).body(BaseResponseBody.of(402, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
+    }
+
+    @GetMapping("/search/{nickname}")
+    public ResponseEntity<? extends BaseResponseBody> searchByNickname(
+            @PathVariable("nickname") String nickname, @ApiIgnore Authentication authentication) {
+        Member member = memberAuthService.memberAuthorize(authentication);
+        if (member == null) {
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
+
+        List<MemberSearchDto> members=memberService.searchByNickname(member.getMemberId(), nickname);
+
+        return ResponseEntity.status(200).body(MemberSearchGetAllRes.of(200, "success", members));
     }
 }

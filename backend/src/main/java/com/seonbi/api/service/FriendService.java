@@ -12,4 +12,5 @@ public interface FriendService {
     int followFriend(Long memberId, Long friendId);
     int followFriendAllow(Long followeeId, Long followerId, String allow);
     List<FriendFollowDto> getFollowFriendAll(Long followeeId);
+    boolean isFriend(Long memberId1, Long memberId2);
 }
