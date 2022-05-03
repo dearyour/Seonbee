@@ -17,7 +17,7 @@ function Btn({
   filled = false,
 }: BtnProps) {
   const mainColor = isDisabled ? "#9fa5a8" : filled ? "#5CBAB0" : "#FFFFFF";
-  const effectColor = isDisabled ? "#9fa5a8" : filled ? "#379C91" : "#5CBAB0";
+  const effectColor = isDisabled ? "#9A9898" : filled ? "#379C91" : "#5CBAB0";
   const fontColor = !filled ? "#5CBAB0" : "white";
   const effectFontColor = filled ? "white" : "#F2FFFF";
 
@@ -30,7 +30,7 @@ function Btn({
     color: fontColor,
     borderRadius: 30,
     backgroundColor: mainColor,
-    border: "2px solid #5CBAB0",
+    border: "2px solid " + mainColor,
     fontFamily: ["Pretendard-Regular"].join(","),
     "&:hover": {
       backgroundColor: effectColor,

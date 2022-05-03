@@ -60,7 +60,7 @@ function Navbar() {
               <NavLinks onClick={() => Router.push("/social")}>사랑방</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks onClick={() => Router.push("/redux")}>호패</NavLinks>
+              <NavLinks onClick={() => Router.push("/profile")}>호패</NavLinks>
             </NavItem>
             <NavItem>
               {sessionStorage.getItem("Token") != null &&
