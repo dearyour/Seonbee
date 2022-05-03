@@ -1,9 +1,7 @@
-import React from 'react'
-
+import React from "react";
+import Join from "components/account/Join";
 function login() {
-  return (
-    <div>login</div>
-  )
+  return <Join></Join>;
 }
 
-export default login
+export default login;

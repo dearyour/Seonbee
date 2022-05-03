@@ -1,9 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
 }
 .account {
@@ -13,6 +10,7 @@
   min-height: 100vh;
   /* background: #03a9f4; */
   transition: 0.5s;
+  margin-top: -100px;
 }
 .account.active {
   /* background: #f43648; */
@@ -39,7 +37,7 @@
   position: relative;
   width: 50%;
   height: 100%;
-  z-index: 1000;
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +69,7 @@
   height: 100%;
   /* background: #fff; */
   background: rgb(240, 234, 234);
-  z-index: 10000;
+  z-index: 11;
   display: flex;
   justify-content: center;
   align-items: center;

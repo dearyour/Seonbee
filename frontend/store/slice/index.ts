@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
 import member from 'store/slice/member';
 import chatbot from 'store/slice/chatbot';
+import layout from "store/slice/layout";
 
 // 루트 리듀서
 const rootReducer = (state: any, action: any) => {
@@ -11,7 +12,9 @@ const rootReducer = (state: any, action: any) => {
       ...action.payload,
     };
   }
-  return combineReducers({ member, chatbot })(state, action);
+
+  return combineReducers({ member, chatbot, layout })(state, action);
+
 };
 
 export default rootReducer;
