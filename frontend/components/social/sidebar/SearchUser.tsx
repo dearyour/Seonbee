@@ -19,6 +19,11 @@ class SearchedMember {
     this.isFriend = data.isFriend || false;
   }
 }
+function SearchList(data: Array<SearchedMember>): SearchedMember[] {
+  return data.map((people) => {
+    return new SearchedMember(people);
+  });
+}
 
 const SearchUser = (props: Props) => {
   const [members, setMembers] = useState<SearchedMember[]>([]);
@@ -51,6 +56,11 @@ const SearchUser = (props: Props) => {
               id="outlined-basic"
               // value={keyword}
               onChange={handleChange}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  Search();
+                }
+              }}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

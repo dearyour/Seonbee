@@ -28,15 +28,15 @@ const Social = (props: Props) => {
   useEffect(() => {
     setMembers([temp_member, temp_member, temp_member, temp_member]);
     // axiosConnector({
-    //   method:'GET',
-    //   url:'friend'
+    //   method: "GET",
+    //   url: "friend",
     // })
-    // .then((res)=>{
-    //   console.log(res)
-    // })
-    // .catch((err)=>{
-    //   console.log(err.response)
-    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response);
+    //   });
   }, []);
 
   return (

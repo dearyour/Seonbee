@@ -10,9 +10,18 @@ import SideCalendarDate from "./SideCalendarDate";
 
 type Props = {};
 
+interface FriendSchedule {
+  friendId: number;
+  nickname: string;
+  scheduleDate: string;
+  title: string;
+}
+
 const SideCalendar = (props: Props) => {
   const [value, onChange] = useState<Date>(new Date());
   const [days, setDays] = useState<string[]>([]);
+  const [data, setData] = useState<FriendSchedule[]>([]);
+  const [showdate, setShowDate] = useState<FriendSchedule[]>([]);
 
   const date_change: OnChangeDateCallback = (
     v: Date,
@@ -23,7 +32,7 @@ const SideCalendar = (props: Props) => {
   };
 
   useEffect(() => {
-    setDays(["2022-05-02", "2022-05-03"]);
+    setDays(["2022.05.02", "2022.05.03"]);
     // axiosConnector({
     //   method: 'GET',
     //   url: 'friend/schedule'
@@ -51,7 +60,7 @@ const SideCalendar = (props: Props) => {
   `;
 
   const addDot = ({ activeStartDate, date, view }: CalendarTileProperties) => {
-    if (days.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
+    if (days.find((x) => x === moment(date).format("YYYY.MM.DD"))) {
       return (
         <>
           <div className="position-relative">
