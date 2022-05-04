@@ -9,12 +9,15 @@ import {
   SidebarLink,
 } from "styles/main/SidebarElements";
 import Swal from "sweetalert2";
+import { useSelector, useDispatch } from "react-redux";
+import { memberActions } from "store/slice/member";
 interface Props {
   isOpen: boolean;
   toggle: () => void;
 }
 
 function Sidebar({ isOpen, toggle }: Props) {
+  const dispatch = useDispatch();
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
       <Icon onClick={toggle}>
@@ -35,6 +38,7 @@ function Sidebar({ isOpen, toggle }: Props) {
             <SidebarLink
               onClick={() => {
                 sessionStorage.clear();
+                dispatch(memberActions.reset());
                 Swal.fire({
                   title: "로그아웃 되었습니다",
                   text: "메인페이지로 이동합니다",
