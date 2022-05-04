@@ -39,6 +39,10 @@ export const memberSlice = createSlice({
       state.isLoading = false;
       state.error = error;
     },
+
+    reset: (state) => {
+      state.info = initialState.info;
+    },
   },
 });
 
