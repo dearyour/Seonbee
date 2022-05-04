@@ -369,6 +369,19 @@ const Signup = () => {
                   ))}
                 </SearchTagContainer>
               </SearchBoxContainer>
+              <span>생일</span>
+              <input
+                id="date"
+                className="dateSection"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                type="date"
+              />
+              <ControlMenu
+                value={sortType}
+                onChange={setSortType}
+                optionList={gender}
+              />
               <input
                 id="interest"
                 type="text"
@@ -383,19 +396,6 @@ const Signup = () => {
                 value={inputState.mbti || ""}
                 onChange={handleChange}
                 placeholder="MBTI"
-              />
-              <span>생일</span>
-              <input
-                id="date"
-                className="dateSection"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                type="date"
-              />
-              <ControlMenu
-                value={sortType}
-                onChange={setSortType}
-                optionList={gender}
               />
               <input
                 id="verse"
