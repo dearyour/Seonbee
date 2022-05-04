@@ -1,6 +1,7 @@
 package com.seonbi.api.controller;
 
 import com.seonbi.api.model.WishlistDto;
+import com.seonbi.api.request.ReserveProductReq;
 import com.seonbi.api.response.BaseResponseBody;
 import com.seonbi.api.response.WishlistAllRes;
 import com.seonbi.api.service.*;
@@ -55,23 +56,32 @@ public class WishController {
 
     @PostMapping("/reserve")
     public ResponseEntity<? extends BaseResponseBody> reserveWishlist(
-            @PathVariable Long hostId, @ApiIgnore Authentication authentication){
+            @RequestBody ReserveProductReq reserveProductReq, @ApiIgnore Authentication authentication){
 
         Member member=memberAuthService.memberAuthorize(authentication);
         if (member==null){
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         }
-        if (memberService.isMemberValid(hostId)){   // hostId가 없는 경우
+        Long receiverId=reserveProductReq.getReceiverId();
+        if (!memberService.isMemberValid(receiverId)){   // receiverId가 없는 경우
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 사용자입니다."));
         }
-        if (!friendService.isFriend(hostId, member.getMemberId())){     // 친구가 아닌 경우
+        if (!friendService.isFriend(receiverId, member.getMemberId())){     // 친구가 아닌 경우
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         }
 
-        List<WishlistDto> wishes=wishlistService.getWishlist(hostId);
+        int reserveWishlistCode=wishlistService.reserveWishlist(
+                member.getMemberId(), receiverId, reserveProductReq.getWishlistId());
 
-        return ResponseEntity.status(200).body(WishlistAllRes.of(200, "success", wishes));
+        if (reserveWishlistCode==401){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 상품입니다."));
+        } else if (reserveWishlistCode==402){
+            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "이미 예약된 상품입니다."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
+
+
 
 
 }

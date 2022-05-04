@@ -13,7 +13,7 @@ public class WishlistDto {
     /**
      * 호패 - 갖고싶소 목록
      */
-    private Long productId;
+    private Long wishlistId;
     private Long price;
     private String name;
     private String buyUrl;

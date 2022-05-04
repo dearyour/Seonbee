@@ -11,13 +11,13 @@ import java.util.List;
 @Setter
 public class WishlistAllRes extends BaseResponseBody{
 
-    private List<WishlistDto> wishlist;
+    private List<WishlistDto> wishes;
 
     public static WishlistAllRes of(Integer status, String message, List<WishlistDto> wishes) {
         WishlistAllRes res = new WishlistAllRes();
         res.setStatus(status);
         res.setMessage(message);
-        res.setWishlist(wishes);
+        res.setWishes(wishes);
 
         return res;
     }
