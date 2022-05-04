@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { InputAdornment, TextField } from "@mui/material";
+import { Button, InputAdornment, TextField } from "@mui/material";
 import { BsSearch } from "react-icons/bs";
 import axiosConnector from "utils/axios-connector";
+import GetImage from "utils/GetImage";
+import Image from "next/image";
+import styled from "@emotion/styled";
+import Btn from "components/commons/Btn";
 
+// interface
 type Props = {};
 class SearchedMember {
-  friendId: number;
+  memberId: number;
   nickname: string;
   imageString: string;
-  isFriend: boolean;
+  friend: boolean;
 
   constructor(data: any) {
-    this.friendId = data.friendId || 0;
+    this.memberId = data.memberId || 0;
     this.nickname = data.nickname || "";
     this.imageString = data.imageString || "";
-    this.isFriend = data.isFriend || false;
+    this.friend = data.friend || false;
   }
 }
 function SearchList(data: Array<SearchedMember>): SearchedMember[] {
@@ -25,6 +30,7 @@ function SearchList(data: Array<SearchedMember>): SearchedMember[] {
   });
 }
 
+//
 const SearchUser = (props: Props) => {
   const [members, setMembers] = useState<SearchedMember[]>([]);
   const [keyword, setKeyword] = useState<string>("");
@@ -41,6 +47,8 @@ const SearchUser = (props: Props) => {
     })
       .then((res) => {
         console.log(res);
+        setMembers(SearchList(res.data.members));
+        console.log(members);
       })
       .catch((err) => {
         console.log(err.response);
@@ -64,14 +72,39 @@ const SearchUser = (props: Props) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <BsSearch />
+                    <BsSearch onClick={Search} className="clickable" />
                   </InputAdornment>
                 ),
               }}
               variant="standard"
             />
             {members.map((member, index) => {
-              <div key={index}></div>;
+              return (
+                <div key={index}>
+                  <div className="row mt-1">
+                    <div className="col-2 col-lg-3">
+                      <ProfileImage
+                        src={GetImage(member.imageString)}
+                        alt="profile"
+                        width={"100%"}
+                        height={"100%"}
+                      ></ProfileImage>
+                    </div>
+                    <div className="col-5 clickable my-auto overflow-hidden">
+                      {member.nickname}
+                    </div>
+                    <div className="col-4">
+                      <div className="d-flex align-items-center h-100">
+                        {member.friend ? (
+                          <Btn filled={true}>삭제</Btn>
+                        ) : (
+                          <Btn className="">추가</Btn>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
             })}
           </>
         </CardContent>
@@ -79,5 +112,14 @@ const SearchUser = (props: Props) => {
     </div>
   );
 };
+
+const FriendBtn = styled(Button)`
+  margin-top: auto;
+  margin-bottom: auto;
+`;
+
+const ProfileImage = styled(Image)`
+  border-radius: 100%;
+`;
 
 export default SearchUser;

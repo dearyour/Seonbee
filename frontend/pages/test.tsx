@@ -14,6 +14,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import GetImage from "utils/GetImage";
 import WsAlarm from "WsClient/wsAlarm";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const Asd: NextPage = () => {
   const [imgtest, setImageUrl] = useState<string>("");
@@ -112,6 +119,21 @@ const Asd: NextPage = () => {
         ws close
       </Button>
       <img src={imgfile}></img>
+      <Swiper
+        // install Swiper modules
+        modules={[Navigation, Pagination, A11y]}
+        spaceBetween={50}
+        slidesPerView={2}
+        navigation
+        pagination={{ clickable: true }}
+      >
+        <SwiperSlide>
+          <div className="my-5">Slide 1</div>
+        </SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+      </Swiper>
     </div>
   );
 };

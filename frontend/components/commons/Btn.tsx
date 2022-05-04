@@ -7,6 +7,7 @@ type BtnProps = {
   onClick?: Function;
   filled?: boolean;
   className?: string;
+  small?: boolean;
 };
 
 function Btn({
@@ -15,6 +16,7 @@ function Btn({
   className,
   onClick = () => console.warn("클릭 이벤트가 지정되지 않음"),
   filled = false,
+  small = false,
 }: BtnProps) {
   const borderColor = isDisabled ? "#9fa5a8" : filled ? "#FF6464" : "#FF6464";
   const mainColor = isDisabled ? "#9fa5a8" : filled ? "#FF6464" : "#FFFFFF";
@@ -25,8 +27,8 @@ function Btn({
   const CustomBtn = styled(Button)({
     boxShadow: "none",
     textTransform: "none",
-    fontSize: "1rem",
-    padding: "3px 10px",
+    fontSize: small ? "0.875rem" : "1rem",
+    padding: small ? "2px 10px" : "1px 5px",
     // lineHeight: 1.5,
     color: fontColor,
     borderRadius: 30,

@@ -1,10 +1,9 @@
 import styled from "@emotion/styled";
-import axios from "axios";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { Carousel } from "react-responsive-carousel";
 import axiosConnector from "utils/axios-connector";
 import GetImage from "utils/GetImage";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
 type Props = {};
 class DdayFriends {
@@ -43,41 +42,39 @@ const FriendList = (props: Props) => {
   }, []);
 
   return (
-    <Wrap
-      centerMode={true}
-      centerSlidePercentage={20}
-      showThumbs={false}
-      infiniteLoop={true}
-      swipeable={true}
-      showIndicators={false}
-      showStatus={false}
-    >
-      {members.map((member, index) => {
-        return (
-          <ImgWrap key={index} className="mx-2">
-            <FriendImg src={GetImage(member.imageString)} alt="" />
-            <Content>{member.dday}</Content>
-            <Dday>{member.title}</Dday>
-          </ImgWrap>
-        );
-      })}
-    </Wrap>
+    <div>
+      <Swiper
+        modules={[Navigation, Pagination, A11y]}
+        spaceBetween={50}
+        slidesPerView={5}
+        navigation
+        pagination={{ clickable: true }}
+      >
+        {members.map((member, index) => {
+          return (
+            <SwiperSlide key={index}>
+              <ImgWrap className="mx-2">
+                <FriendImg src={GetImage(member.imageString)} alt="" />
+                <Content>{member.dday}</Content>
+                <Dday>{member.title}</Dday>
+              </ImgWrap>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </div>
   );
 };
 
-const Wrap = styled(Carousel)`
-  /* li {
-    min-width: 10%;
-  } */
-`;
 const ImgWrap = styled.div`
   overflow: hidden;
   position: relative;
 `;
 const FriendImg = styled.img`
   border-radius: 10px;
-  object-fit: cover;
+  object-fit: scale-down;
   width: 100%;
+  /* height: 150px; */
   opacity: 50%;
 `;
 

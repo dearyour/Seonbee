@@ -1,6 +1,6 @@
 interface Schedule {
   dday: number;
-  content: string;
+  title: string;
 }
 
 interface Product {
@@ -9,7 +9,7 @@ interface Product {
 
 export default class CardMember {
   nickname: string;
-  schedule: Array<Schedule>;
+  scheduleList: Array<Schedule>;
   imageString: string;
   verse: string;
   wishlist: Array<Product>;
@@ -17,7 +17,7 @@ export default class CardMember {
   constructor(data: any) {
     this.imageString = data.imageString || "";
     this.nickname = data.nickname || "";
-    this.schedule = data.schedule || [];
+    this.scheduleList = data.scheduleList || [];
     this.wishlist = data.wishlist || [];
     this.verse = data.verse || "";
   }
