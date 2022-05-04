@@ -1,9 +1,6 @@
 package com.seonbi.api.service;
 
-import com.seonbi.api.model.FriendDdayDto;
-import com.seonbi.api.model.FriendDto;
-import com.seonbi.api.model.FriendFollowDto;
-import com.seonbi.api.model.FriendScheduleDto;
+import com.seonbi.api.model.*;
 import com.seonbi.common.util.DdayUtil;
 import com.seonbi.db.entity.Friend;
 import com.seonbi.db.entity.Member;
@@ -170,6 +167,23 @@ public class FriendServiceImpl implements FriendService{
             friendDtoList.add(friendDto);
         }
         return friendDtoList;
+    }
+
+    @Override
+    public List<FriendCalendarDto> getFriendCalendarAll(Long memberId) {
+        List<FriendCalendarDto> friendCalendarDtoList=new ArrayList<>();
+        List<Long> friendIdList=getFriendIdAll(memberId);
+        for (Long friendId: friendIdList){
+            Member member= memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
+            List<Schedule> schedules=scheduleRepository.findAllByMemberIdAndIsDeletedOrderByScheduleDate(friendId, false);  // 친구 일정
+            for (Schedule schedule: schedules) {    // 같은 친구라도 일정별로 따로 넣기
+                FriendCalendarDto friendCalendarDto = new FriendCalendarDto(friendId, member.getNickname(),
+                        schedule.getScheduleDate(), schedule.getTitle());
+                friendCalendarDtoList.add(friendCalendarDto);
+            }
+
+        }
+        return friendCalendarDtoList;
     }
 
 

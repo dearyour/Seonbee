@@ -1,5 +1,6 @@
 package com.seonbi.api.service;
 
+import com.seonbi.api.model.FriendCalendarDto;
 import com.seonbi.api.model.FriendDdayDto;
 import com.seonbi.api.model.FriendDto;
 import com.seonbi.api.model.FriendFollowDto;
@@ -17,4 +18,5 @@ public interface FriendService {
     List<FriendDdayDto> getFriendDdayAll(Long memberId);
     List<Long> getFriendIdAll(Long memberId);
     List<FriendDto> getFriendAll(Long memberId);
+    List<FriendCalendarDto> getFriendCalendarAll(Long memberId);
 }
