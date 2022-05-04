@@ -5,17 +5,11 @@ import Calendar, {
   CalendarTileProperties,
   OnChangeDateCallback,
 } from "react-calendar";
+import FriendSchedule from "store/interface/social/friendschedule";
 import axiosConnector from "utils/axios-connector";
 import SideCalendarDate from "./SideCalendarDate";
 
 type Props = {};
-
-interface FriendSchedule {
-  friendId: number;
-  nickname: string;
-  scheduleDate: string;
-  title: string;
-}
 
 const SideCalendar = (props: Props) => {
   const [value, onChange] = useState<Date>(new Date());
@@ -23,32 +17,46 @@ const SideCalendar = (props: Props) => {
   const [data, setData] = useState<FriendSchedule[]>([]);
   const [showdate, setShowDate] = useState<FriendSchedule[]>([]);
 
+  // 달력 날짜 변경 시 해당하는 기념일 보여주기
   const date_change: OnChangeDateCallback = (
     v: Date,
     e: ChangeEvent<HTMLInputElement>
   ) => {
     onChange(v);
-    console.log(v);
+    const now = moment(v).format("YYYY.MM.DD");
+    setShowDate(
+      data.filter((schedule: FriendSchedule) => {
+        return schedule.scheduleDate === now;
+      })
+    );
   };
 
   useEffect(() => {
-    setDays(["2022.05.02", "2022.05.03"]);
-    // axiosConnector({
-    //   method: 'GET',
-    //   url: 'friend/schedule'
-    // })
-    // .then((res)=>{
-    //   console.log(res)
-    // })
-    // .catch((err)=>{
-    //   console.log(err.response)
-    // })
+    // setDays(["2022.05.02", "2022.05.03"]);
+    axiosConnector({
+      method: "GET",
+      url: "friend/schedule",
+    })
+      .then((res) => {
+        // console.log(res);
+        setDays(
+          res.data.friends.map((friend: FriendSchedule) => {
+            return friend.scheduleDate;
+          })
+        );
+        setData(res.data.friends);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   }, []);
+
+  // react18 react-calendar 버그 수정
   const [mounted, setMounted] = useState<boolean>(false);
   useEffect(() => setMounted(true), []);
-
   if (!mounted) return null;
 
+  // 달력에 점 추가
   const Dot = styled.div`
     height: 8px;
     width: 8px;
@@ -72,6 +80,7 @@ const SideCalendar = (props: Props) => {
       return null;
     }
   };
+
   return (
     <div className="px-2">
       <Calendar
@@ -80,8 +89,9 @@ const SideCalendar = (props: Props) => {
         formatMonthYear={(locale, date) => moment(date).format("YY.MM")}
         formatDay={(locale, date) => moment(date).format("DD")}
         tileContent={addDot}
+        className="mx-auto"
       />
-      <SideCalendarDate></SideCalendarDate>
+      <SideCalendarDate props={showdate}></SideCalendarDate>
     </div>
   );
 };

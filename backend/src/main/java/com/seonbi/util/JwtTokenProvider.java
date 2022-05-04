@@ -20,7 +20,7 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private static String secretKey = "c2VvbmJp7J206rOgIOyLtuyngOunjCBzZW9uYmVl6rCAIOuPvOuyhOuguOuEpOyalOOFoOOFoA==";  //시크릿 키
-    private static Integer expirationTime = 30 * 60 * 1000;  // access 유효시간 (30분)
+    private static Integer expirationTime = 30 * 60 * 10000;  // access 유효시간 (30분) > 개발 용으로 10배로 늘림
 
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
