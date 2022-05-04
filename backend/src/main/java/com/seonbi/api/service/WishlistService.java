@@ -8,4 +8,5 @@ import java.util.List;
 public interface WishlistService {
     List<WishlistDto> getWishlist(Long hostId);
     int reserveWishlist(Long giverId, Long receiverId, Long wishlistId);
+    int deleteWishlist(Long memberId, Long wishlistId);
 }
