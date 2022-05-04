@@ -116,7 +116,7 @@ public class FriendServiceImpl implements FriendService{
                     continue;
                 }
                 FriendDdayDto friendDdayDto = new FriendDdayDto(friendId, member.getNickname(),
-                        imageService.getImage(member.getImageId()), schedule.getTitle(), dday);
+                        imageService.getImage(member.getImageId()), dday, schedule.getTitle());
                 friendDdayDtoList.add(friendDdayDto);
             }
 
