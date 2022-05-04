@@ -225,18 +225,22 @@ const Signup = () => {
     let isNormal = true;
     let msg = "";
 
-    if (!inputState.email) {
+    let emailValue = errorData.email != true;
+    let nickNameValue = nicknameCheckRes.code == 200;
+    let passwordValue = errorData.password != true;
+    let passwordConfirmValue = errorData.passwordConfirm != true;
+    if (!inputState.email || emailValue) {
       isNormal = false;
-      msg = "이메일을 입력해주세요.";
-    } else if (!inputState.nickname) {
+      msg = "이메일을 다시 입력해주세요.";
+    } else if (!nickNameValue) {
       isNormal = false;
-      msg = "닉네임을 입력해주세요.";
-    } else if (!inputState.password) {
+      msg = "닉네임을 다시 입력해주세요.";
+    } else if (!inputState.password || passwordValue) {
       isNormal = false;
-      msg = "비밀번호를 입력해주세요.";
-    } else if (!inputState.passwordConfirm) {
+      msg = "비밀번호를 다시 입력해주세요.";
+    } else if (!inputState.passwordConfirm || passwordConfirmValue) {
       isNormal = false;
-      msg = "비밀번호확인을 입력해주세요.";
+      msg = "비밀번호 확인을 다시 입력해주세요.";
     }
     if (isNormal) {
       __SignUp();
@@ -248,7 +252,6 @@ const Signup = () => {
       });
     }
   };
-  console.log(nicknameCheckRes.code);
   return (
     <div
       className={
@@ -266,6 +269,10 @@ const Signup = () => {
           type="text"
           placeholder="이메일"
           value={inputState.email || ""}
+          // onChange={(e) => {
+          //   handleChange(e);
+          //   checkRegex("email");
+          // }}
           onChange={handleChange}
           onBlur={() => checkRegex("email")}
         />
@@ -296,7 +303,9 @@ const Signup = () => {
           id="password"
           placeholder="비밀번호"
           value={inputState.password || ""}
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(e);
+          }}
           onBlur={() => checkRegex("password")}
         />
         <div className="text-red-500">
