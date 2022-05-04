@@ -8,7 +8,7 @@ import Router from "next/router";
 import SearchTag from "./SearchTag";
 import Btn from "components/commons/Btn";
 const ID_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-const NICK_REGEX = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,8}$/;
+const NICK_REGEX = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,12}$/;
 // const PW_REGEX = new RegExp("^(?=.*[a-zA-Z])(?=.*d)(?=.*W).{8,16}$");
 const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
 // 비밀번호 정규표현식 : 최소 8자, 최대 16자, 하나 이상의 문자, 하나 이상의 숫자, 하나 이상의 특수문자
@@ -18,7 +18,7 @@ const ERROR_MSG: any = {
   validId: "허가한다.",
   invalidPw: "대,소문자 or 숫자 구성 8~16 글자",
   validPw: "허가한다.",
-  invalidNick: "한글 or 대,소문자 or 숫자 2~8 글자",
+  invalidNick: "한글 or 대,소문자 or 숫자 2~12 글자",
   invalidConfirmPw: "비밀번호가 일치하지 않습니다.",
 };
 const ControlMenu = React.memo(({ value, onChange, optionList }: any) => {
@@ -66,7 +66,8 @@ const Signup = () => {
   });
   const [searchTags, setSearchTags] = useState<any>([]);
   const [banTags, setBanTags] = useState<any>([]);
-
+  const [nicknameCheckRes, setNicknameCheckRes] = useState<any>({}); // 닉네임 중복검사
+  console.log(nicknameCheckRes);
   const onSearch = (e: any) => {
     if (inputRef.current.value.length > 0 && inputRef.current.value.trim()) {
       if (e.key === "Enter") {
@@ -144,6 +145,27 @@ const Signup = () => {
 
     setErrorData((prev: any) => ({ ...prev, [inputId]: result }));
   };
+
+  const nicknameHandleChange = (e: any) => {
+    const value = e.target.value;
+
+    return axios({
+      method: "GET",
+      url: process.env.NEXT_PUBLIC_BACK + "member/check/" + value,
+    })
+      .then((res) => {
+        console.log(res.status);
+        setNicknameCheckRes({ code: res.data.status, msg: res.data.message });
+        return res.status;
+      })
+      .catch((err) => {
+        setNicknameCheckRes({
+          code: err.response.data.status,
+          msg: err.response.data.message,
+        });
+        return console.log(err.response);
+      });
+  };
   const __SignIn = () => {
     const data = {
       email: inputState.email,
@@ -191,7 +213,6 @@ const Signup = () => {
       data: data,
     })
       .then((res) => {
-        // console.log(res);
         __SignIn();
       })
       .catch((err) => {});
@@ -227,6 +248,7 @@ const Signup = () => {
       });
     }
   };
+  console.log(nicknameCheckRes.code);
   return (
     <div
       className={
@@ -255,13 +277,19 @@ const Signup = () => {
           type="text"
           placeholder="닉네임"
           value={inputState.nickname || ""}
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(e);
+            nicknameHandleChange(e);
+          }}
           onBlur={() => checkRegex("nickname")}
         />
+        {/* {404는 쿼리없이 호출했을때, 401은 2-12글자 아닐때 402는 닉넴중복} */}
         <div className="text-red-500">
-          {errorData["nickname"] !== true
-            ? ERROR_MSG[errorData["nickname"]]
-            : ""}
+          {nicknameCheckRes.code == 404
+            ? "비어있소"
+            : nicknameCheckRes.code == 401
+            ? nicknameCheckRes.msg
+            : nicknameCheckRes.msg}
         </div>
         <input
           type="password"
