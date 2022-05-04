@@ -29,8 +29,6 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     WishlistRepository wishlistRepository;
 
-
-
     @Override
     public String getProductImage(Long productId) {
         Product product= productRepository.findByProductIdAndIsDeleted(productId, false);
