@@ -7,10 +7,10 @@ const axiosConnector = axios.create({
 
 axiosConnector.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("jwt");
+    const token = sessionStorage.getItem("Token");
 
     if (token && config.headers) {
-      config.headers["Authorization"] = token;
+      config.headers["Authorization"] = "Bearer " + token;
     } else {
       config.withCredentials = false;
     }
