@@ -129,12 +129,14 @@ const Signin = (props: Props) => {
     let isNormal = true;
     let msg = "";
 
-    if (!errorData.email) {
+    let emailValue = errorData.email != true;
+    let passwordValue = errorData.password != true;
+    if (!inputState.email || emailValue) {
       isNormal = false;
-      msg = "이메일을 입력해주세요.";
-    } else if (!errorData.password) {
+      msg = "이메일을 다시 입력해주세요.";
+    } else if (!inputState.password || passwordValue) {
       isNormal = false;
-      msg = "비밀번호를 입력해주세요.";
+      msg = "비밀번호를 다시 입력해주세요.";
     }
     if (isNormal) {
       const data = {
