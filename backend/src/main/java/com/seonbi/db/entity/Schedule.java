@@ -21,5 +21,6 @@ public class Schedule extends BaseEntity{
     private String scheduleDate;    // 2022.04.21
     private String title;
     private int background=1;
+    private boolean isBirthday=false;   // 회원가입/수정시 생일이면 바로 추가
 
 }

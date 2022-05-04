@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
+import axios from "axios";
 import FriendList from "components/social/carousel/FriendList";
 import SideBar from "components/social/sidebar/SideBar";
 import UserCard from "components/social/usercard/UserCard";
 import React, { useEffect, useState } from "react";
 import CardMember from "store/interface/social/cardmember";
+import axiosConnector from "utils/axios-connector";
 
 type Props = {};
 
@@ -12,6 +14,7 @@ const Blue = styled.span`
 `;
 const Social = (props: Props) => {
   const [members, setMembers] = useState<CardMember[]>([]);
+
   const temp_member = {
     nickname: "asd",
     schedule: [
@@ -19,11 +22,21 @@ const Social = (props: Props) => {
       { dday: -10, content: "수능" },
     ],
     verse: "asd",
-    product: [{ imageUrl: "https://picsum.photos/150/150" }],
+    wishlist: [{ imageUrl: "https://picsum.photos/150/150" }],
     imageString: "https://picsum.photos/150/150",
   };
   useEffect(() => {
     setMembers([temp_member, temp_member, temp_member, temp_member]);
+    // axiosConnector({
+    //   method:'GET',
+    //   url:'friend'
+    // })
+    // .then((res)=>{
+    //   console.log(res)
+    // })
+    // .catch((err)=>{
+    //   console.log(err.response)
+    // })
   }, []);
 
   return (
