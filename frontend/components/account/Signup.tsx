@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import Router from "next/router";
 import SearchTag from "./SearchTag";
 import Btn from "components/commons/Btn";
+import ControlMenu from "./ControlMenu";
+
 const ID_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 const NICK_REGEX = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,12}$/;
 // const PW_REGEX = new RegExp("^(?=.*[a-zA-Z])(?=.*d)(?=.*W).{8,16}$");
@@ -21,21 +23,6 @@ const ERROR_MSG: any = {
   invalidNick: "한글 or 대,소문자 or 숫자 2~12 글자",
   invalidConfirmPw: "비밀번호가 일치하지 않습니다.",
 };
-const ControlMenu = React.memo(({ value, onChange, optionList }: any) => {
-  return (
-    <select
-      className="ControlMenu"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    >
-      {optionList.map((it: any, idx: number) => (
-        <option key={idx} value={it.value}>
-          {it.name}
-        </option>
-      ))}
-    </select>
-  );
-});
 
 const Signup = () => {
   const dispatch = useDispatch();

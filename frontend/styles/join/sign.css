@@ -218,7 +218,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -500px;
+    /* margin-top: -500px; */
   }
   .containers .blueBg {
     top: 0;
