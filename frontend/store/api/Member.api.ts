@@ -17,11 +17,10 @@ const GetMemberurl = process.env.NEXT_PUBLIC_BACK;
 //     });
 // };
 
-export const GetLoginState = (token: string | null) => {
+export const GetLoginState = () => {
   return axiosConnector({
     method: "GET",
     url: "member/auth",
-    // headers: { Authorization: "Bearer " + token },
   })
     .then((res) => {
       console.log(res.data.memberAuthDto);

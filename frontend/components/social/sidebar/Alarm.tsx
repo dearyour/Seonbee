@@ -6,7 +6,7 @@ import WsAlarm from "WsClient/wsAlarm";
 type Props = {};
 
 const Alarm = (props: Props) => {
-  WsAlarm.activate();
+  // WsAlarm.activate();
   return (
     <div className="px-2">
       <Card>
