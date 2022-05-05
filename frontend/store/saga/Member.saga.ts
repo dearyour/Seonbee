@@ -25,6 +25,7 @@ function* getKakaoKey() {
     // console.log("##카카오사가");
     // console.log(code);
     yield put(memberActions.getKakaoKeySuccess(response.jwt));
+    getLoginState();
     Router.push("/");
     // if (response.newUser) {
     //   Router.push("/user/profileEdit")

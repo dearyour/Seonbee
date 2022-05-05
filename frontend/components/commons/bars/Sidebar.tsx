@@ -38,6 +38,7 @@ function Sidebar({ isOpen, toggle }: Props) {
             <SidebarLink
               onClick={() => {
                 sessionStorage.clear();
+                localStorage.removeItem("persist:root");
                 dispatch(memberActions.reset());
                 Swal.fire({
                   title: "로그아웃 되었습니다",
