@@ -10,7 +10,7 @@
   min-height: 100vh;
   /* background: #03a9f4; */
   transition: 0.5s;
-  margin-top: -100px;
+  margin-top: -80px;
 }
 .account.active {
   /* background: #f43648; */
@@ -218,7 +218,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* margin-top: -500px; */
+    margin-top: 30px;
   }
   .containers .blueBg {
     top: 0;
