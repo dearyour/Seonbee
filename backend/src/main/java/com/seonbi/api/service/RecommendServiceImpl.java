@@ -1,6 +1,7 @@
 package com.seonbi.api.service;
 
 import com.seonbi.api.model.ReceiverDto;
+import com.seonbi.api.model.ReceiverProductDto;
 import com.seonbi.api.model.RecommendReceiverDto;
 import com.seonbi.db.entity.Member;
 import com.seonbi.db.entity.Receiver;
@@ -64,5 +65,10 @@ public class RecommendServiceImpl implements RecommendService{
 
         }
         return receiverDtoList;
+    }
+
+    @Override
+    public List<ReceiverProductDto> getGiveProductAll(Long receiverId, Boolean isMember) {
+        return null;
     }
 }

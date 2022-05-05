@@ -6,6 +6,7 @@ import com.seonbi.api.model.WishlistDto;
 import com.seonbi.api.request.ReceiverIsMemberReq;
 import com.seonbi.api.request.ReserveProductReq;
 import com.seonbi.api.response.BaseResponseBody;
+import com.seonbi.api.response.RecommendReceiverAllRes;
 import com.seonbi.api.response.WishlistAllRes;
 import com.seonbi.api.service.*;
 import com.seonbi.db.entity.Member;
@@ -44,25 +45,19 @@ public class GiveController {
         }
 
         List<RecommendReceiverDto> recommendReceiverDtoList=recommendService.getGiveAll(member.getMemberId());
-//        List<ReceiverDto> receiverList=receiverService.getGiveReceiverAll(member.getMemberId());
 
-        return ResponseEntity.status(200).body(WishlistAllRes.of(200, "success", wishes));
+        return ResponseEntity.status(200).body(RecommendReceiverAllRes.of(200, "success", recommendReceiverDtoList));
     }
 
     @PostMapping()
-    public ResponseEntity<? extends BaseResponseBody> getGive(
+    public ResponseEntity<? extends BaseResponseBody> getGiveProductAll(
             @RequestBody ReceiverIsMemberReq receiverIsMemberReq, @ApiIgnore Authentication authentication){
 
         Member member=memberAuthService.memberAuthorize(authentication);
         if (member==null){
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         }
-
-        Receiver receiver=receiverService.getGive(
-                receiverIsMemberReq.getReceiverId(), receiverIsMemberReq.getIsMember());
-
-
-
+        recommendService.getGiveProductAll(receiverIsMemberReq.getReceiverId(), receiverIsMemberReq.getIsMember());
         return ResponseEntity.status(200).body(WishlistAllRes.of(200, "success", wishes));
     }
 
