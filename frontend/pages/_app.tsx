@@ -5,6 +5,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "../styles/join/sign.css";
+import "../styles/cards/card.css";
 import type { AppProps } from "next/app";
 import { createStore } from "redux";
 import wrapper, { persistedReducer } from "store/index";
