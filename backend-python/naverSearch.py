@@ -7,7 +7,7 @@ client_secret="zMezMl3SPr"
 query = "케이크"
 query = urllib.parse.quote(query)
 
-display = "100"
+display = "5"
 
 url = "https://openapi.naver.com/v1/search/shop?query=" + query + "&display=" + display
 # url = "https://openapi.naver.com/v1/search/shop"
