@@ -57,9 +57,7 @@ function Navbar() {
               <NavLinks onClick={() => Router.push("/")}>대문</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks onClick={() => Router.push("/redux")}>
-                저잣거리
-              </NavLinks>
+              <NavLinks onClick={() => Router.push("/shop")}>저잣거리</NavLinks>
             </NavItem>
             <NavItem>
               <NavLinks onClick={() => Router.push("/social")}>사랑방</NavLinks>

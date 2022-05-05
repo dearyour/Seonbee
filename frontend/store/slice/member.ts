@@ -4,6 +4,7 @@ const initialState: Member | any = {
   info: [],
   isLoading: false,
   error: null,
+  session: "",
 };
 
 export const memberSlice = createSlice({
@@ -12,6 +13,19 @@ export const memberSlice = createSlice({
   reducers: {
     profileEdit: (state) => {},
 
+    //카카오 리듀서
+    getKakaoKey: (state) => {
+      state.isLoading = true;
+    },
+    getKakaoKeySuccess: (state, { payload }) => {
+      state.session = payload;
+      state.isLoading = false;
+      sessionStorage.setItem("Token", payload);
+    },
+    getKakaoKeyError: (state, { payload }) => {
+      state.error = payload;
+      state.isLoading = false;
+    },
     //로그인 리듀서
     getMember: (state) => {
       state.isLoading = true;
