@@ -34,7 +34,7 @@ public class WishController {
     FriendService friendService;
 
     @GetMapping("/{hostId}")
-    public ResponseEntity<? extends BaseResponseBody> getWishlist(
+    public ResponseEntity<? extends BaseResponseBody> getFriendsWishlist(
             @PathVariable Long hostId, @ApiIgnore Authentication authentication){
 
         Member member=memberAuthService.memberAuthorize(authentication);

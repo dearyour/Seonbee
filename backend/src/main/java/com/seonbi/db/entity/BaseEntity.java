@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ public class BaseEntity {
     @Column(updatable = false)
     LocalDateTime createdDate;  // 생성 날짜
 
-    @LastModifiedBy
+    @LastModifiedDate
     LocalDateTime modifiedDate; // 수정 날짜
 
     Boolean isDeleted=false;    // 지워졌는지 여부
