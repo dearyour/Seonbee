@@ -7,11 +7,14 @@ import Swal from "sweetalert2";
 import Router from "next/router";
 import SearchTag from "./SearchTag";
 import Btn from "components/commons/Btn";
-const ID_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+import ControlMenu from "./ControlMenu";
+
+//백에서 사용하는 되는 유효성
+const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
 const NICK_REGEX = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,12}$/;
-// const PW_REGEX = new RegExp("^(?=.*[a-zA-Z])(?=.*d)(?=.*W).{8,16}$");
 const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
-// 비밀번호 정규표현식 : 최소 8자, 최대 16자, 하나 이상의 문자, 하나 이상의 숫자, 하나 이상의 특수문자
+// // 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
+// const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{8,16}$/;
 const ERROR_MSG: any = {
   required: "비어있소.",
   invalidId: "Ex) Email@naver.com",
@@ -21,21 +24,6 @@ const ERROR_MSG: any = {
   invalidNick: "한글 or 대,소문자 or 숫자 2~12 글자",
   invalidConfirmPw: "비밀번호가 일치하지 않습니다.",
 };
-const ControlMenu = React.memo(({ value, onChange, optionList }: any) => {
-  return (
-    <select
-      className="ControlMenu"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    >
-      {optionList.map((it: any, idx: number) => (
-        <option key={idx} value={it.value}>
-          {it.name}
-        </option>
-      ))}
-    </select>
-  );
-});
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -382,6 +370,19 @@ const Signup = () => {
                   ))}
                 </SearchTagContainer>
               </SearchBoxContainer>
+              <span>생일</span>
+              <input
+                id="date"
+                className="dateSection"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                type="date"
+              />
+              <ControlMenu
+                value={sortType}
+                onChange={setSortType}
+                optionList={gender}
+              />
               <input
                 id="interest"
                 type="text"
@@ -396,19 +397,6 @@ const Signup = () => {
                 value={inputState.mbti || ""}
                 onChange={handleChange}
                 placeholder="MBTI"
-              />
-              <span>생일</span>
-              <input
-                id="date"
-                className="dateSection"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                type="date"
-              />
-              <ControlMenu
-                value={sortType}
-                onChange={setSortType}
-                optionList={gender}
               />
               <input
                 id="verse"

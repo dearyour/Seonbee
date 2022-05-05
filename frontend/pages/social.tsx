@@ -26,26 +26,27 @@ const Social = (props: Props) => {
     imageString: "https://picsum.photos/150/150",
   };
   useEffect(() => {
-    setMembers([temp_member, temp_member, temp_member, temp_member]);
-    // axiosConnector({
-    //   method:'GET',
-    //   url:'friend'
-    // })
-    // .then((res)=>{
-    //   console.log(res)
-    // })
-    // .catch((err)=>{
-    //   console.log(err.response)
-    // })
+    // setMembers([temp_member, temp_member, temp_member, temp_member]);
+    axiosConnector({
+      method: "GET",
+      url: "friend",
+    })
+      .then((res) => {
+        console.log(res);
+        setMembers(res.data.friends);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   }, []);
 
   return (
     <div className="container">
       <div className="row mt-3">
-        <div className="col-24 col-xl-3">
+        <div className="col-12 col-lg-6 col-xl-3">
           <SideBar></SideBar>
         </div>
-        <div className="col">
+        <div className="col-12 col-lg-6 col-xl-9">
           <div className="mb-3">
             벗에게 안성맞춤인 선물과 함께 <Blue>응원과 축하</Blue>를 건네보시오
           </div>
