@@ -3,26 +3,18 @@ package com.seonbi.api.controller;
 
 import com.seonbi.api.model.*;
 import com.seonbi.api.request.FriendFollowAllowReq;
-import com.seonbi.api.request.MemberCreateReq;
-import com.seonbi.api.request.MemberLoginReq;
 import com.seonbi.api.response.*;
 import com.seonbi.api.service.FriendService;
 import com.seonbi.api.service.ImageService;
 import com.seonbi.api.service.MemberAuthService;
 import com.seonbi.api.service.MemberService;
 import com.seonbi.db.entity.Member;
-import com.seonbi.util.JwtTokenProvider;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController

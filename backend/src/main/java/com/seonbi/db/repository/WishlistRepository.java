@@ -13,4 +13,5 @@ import java.util.List;
 public interface WishlistRepository extends JpaRepository<Wishlist,Long> {
 
     List<Wishlist> findAllByMemberIdAndIsDeleted(Long memberId, boolean isDeleted);
+    Wishlist findByWishlistIdAndIsDeleted(Long wishlistId, boolean isDeleted);
 }
