@@ -14,8 +14,7 @@ public class ReceiverDto {
      * 호패 - 추천인
      */
     private Long receiverId;
-    private String nickname;
-    private Boolean isMember;
+    private String name;
     private String imageString;
 
 }

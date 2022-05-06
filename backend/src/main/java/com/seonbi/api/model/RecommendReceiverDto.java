@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -13,9 +15,12 @@ public class RecommendReceiverDto {
     /**
      * 호패 - 주고싶소 목록
      */
-    private Long receiverId;
-    private String name;
-    private Boolean isMember;
-    private String imageString;
 
+    private List<ReceiverDto> noneMemberList;
+    private List<ReceiverDto> memberList;
+
+    public RecommendReceiverDto(List<ReceiverDto> noneMemberList, List<ReceiverDto> memberList) {
+        this.noneMemberList = noneMemberList;
+        this.memberList = memberList;
+    }
 }
