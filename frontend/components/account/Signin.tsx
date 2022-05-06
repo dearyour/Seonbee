@@ -88,41 +88,6 @@ const Signin = (props: Props) => {
     }
   }, []);
 
-  const __SignIn = () => {
-    const data = {
-      email: inputState.email,
-      password: inputState.password,
-    };
-    console.log(data);
-    axios({
-      method: "POST",
-      url: process.env.NEXT_PUBLIC_BACK + "member/login",
-      data: data,
-    })
-      .then((res) => {
-        console.log(res);
-        sessionStorage.setItem("Token", res.data.jwt);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // const __getMemberInfo = () => {
-  //   const token = sessionStorage.getItem("Token");
-  //   axios({
-  //     method: "GET",
-  //     url: process.env.NEXT_PUBLIC_BACK + "member/auth",
-  //     headers: { Authorization: "Bearer " + token },
-  //   })
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
   const handleSubmit = (event: any) => {
     event.preventDefault();
     let isNormal = true;
@@ -233,3 +198,38 @@ const LoginWrapper = styled.div`
 `;
 
 export default Signin;
+
+// const __SignIn = () => {
+//   const data = {
+//     email: inputState.email,
+//     password: inputState.password,
+//   };
+//   console.log(data);
+//   axios({
+//     method: "POST",
+//     url: process.env.NEXT_PUBLIC_BACK + "member/login",
+//     data: data,
+//   })
+//     .then((res) => {
+//       console.log(res);
+//       sessionStorage.setItem("Token", res.data.jwt);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+
+// const __getMemberInfo = () => {
+//   const token = sessionStorage.getItem("Token");
+//   axios({
+//     method: "GET",
+//     url: process.env.NEXT_PUBLIC_BACK + "member/auth",
+//     headers: { Authorization: "Bearer " + token },
+//   })
+//     .then((res) => {
+//       console.log(res);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };

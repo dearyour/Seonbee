@@ -1,3 +1,4 @@
+import Card from "components/cards/card";
 import React from "react";
 
 type Props = {};
@@ -5,7 +6,10 @@ type Props = {};
 const Give = (props: Props) => {
   return (
     <>
-      <div>주고 싶소</div>
+      <div>
+        {" "}
+        <Card></Card>
+      </div>
     </>
   );
 };

@@ -165,3 +165,14 @@
   transform: translateY(0px);
   transition-delay: 0.75s;
 }
+
+@media (max-width: 991px) {
+  .containerc .card {
+    position: relative;
+    width: 160px;
+    height: 225px;
+    background: #232323;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+}
