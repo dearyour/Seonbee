@@ -75,4 +75,10 @@ public class WishlistServiceImpl implements WishlistService{
 
         return 200;
     }
+
+    @Override
+    public void addWishlist(Long memberId, Long productId) {
+        Wishlist wishlist=new Wishlist(productId, memberId);
+        wishlistRepository.save(wishlist);
+    }
 }

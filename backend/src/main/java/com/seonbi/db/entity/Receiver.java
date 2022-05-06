@@ -27,6 +27,6 @@ public class Receiver extends BaseEntity{
     private String purpose;      // 용도
     private Long upPrice=50000l;
     private Long downPrice=0l;
-    private Long memberId=0l;
+//    private Long memberId=0l;
 
 }
