@@ -1,9 +1,11 @@
 package com.seonbi.api.controller;
 
+import com.seonbi.api.model.ProductDto;
 import com.seonbi.api.model.ReceiverProductDto;
 import com.seonbi.api.model.RecommendReceiverDto;
 import com.seonbi.api.request.GiveFriendProductReq;
 import com.seonbi.api.response.BaseResponseBody;
+import com.seonbi.api.response.ProductAllRes;
 import com.seonbi.api.response.ReceiverProductAllRes;
 import com.seonbi.api.response.RecommendReceiverAllRes;
 import com.seonbi.api.service.*;
@@ -34,6 +36,16 @@ public class ShopController {
 
     @Autowired
     WishlistService wishlistService;
+
+    @Autowired
+    ProductService productService;
+
+    @GetMapping()
+    public ResponseEntity<? extends BaseResponseBody> getProductAll(){
+        List<ProductDto> productDtoList=productService.getProductAll();
+
+        return ResponseEntity.status(200).body(ProductAllRes.of(200, "success", productDtoList));
+    }
 
     @PostMapping()
     public ResponseEntity<? extends BaseResponseBody> addGiveProduct(
