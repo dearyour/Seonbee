@@ -13,8 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 public class ReceiverProductDto {
     /**
-     * 사랑방 - 벗 목록 디데이순
+     * 호패 - 주고싶소 개인 상품 목록
      */
+
+    private Long productId;
+    private Long price;
     private String name;
-    List<ReceiverProductDto> productList;
+    private String buyUrl;
+    private String imageUrl;
 }
