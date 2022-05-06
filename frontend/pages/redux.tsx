@@ -23,7 +23,7 @@ const Redux = (props: Props) => {
 
   useEffect(() => {
     // testRedux();
-    dispatch(memberActions.getMypage(memberId));
+    dispatch(memberActions.getMyProfile(memberId));
     dispatch(layoutAction.updateDetailState(reduxTestData));
   }, [dispatch]);
 

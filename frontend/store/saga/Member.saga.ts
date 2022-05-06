@@ -9,30 +9,30 @@ import {
   fork,
 } from "redux-saga/effects";
 import { memberActions } from "../slice/member";
-import { GetLoginState, GetMypageState } from "../api/Member.api";
+import { GetLoginState, GetMyProfileState } from "../api/Member.api";
 
 // 마이페이지 사가
-function* getMypageState(memberId: any) {
+function* getMyProfileState(memberId: any) {
   const token = sessionStorage.getItem("Token");
   // console.log(memberId.payload);
   // console.log("##memberId");
   try {
     // console.log("마이페이지 통신전");
     const userdata: AxiosResponse = yield call(
-      GetMypageState,
+      GetMyProfileState,
       memberId.payload,
       token
     );
     // console.log("마이페이지 통신후");
-    yield put(memberActions.setMypage(userdata));
+    yield put(memberActions.setMyProfile(userdata));
   } catch (err) {
     console.log(err);
-    yield put(memberActions.setMypageFail(err));
+    yield put(memberActions.setMyProfileFail(err));
   }
 }
 
-function* watchMypageState() {
-  yield takeLatest(memberActions.getMypage, getMypageState);
+function* watchMyProfileState() {
+  yield takeLatest(memberActions.getMyProfile, getMyProfileState);
 }
 // 로그인 사가
 function* getLoginState() {

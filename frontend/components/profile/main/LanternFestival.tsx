@@ -1,13 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 import Btn from "components/commons/Btn";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "styles/profile/profileMain.module.css";
 import LanternCreateModal from "./LanternCreateModal";
 import LanternList from "./LanternList";
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store/slice";
+import { layoutAction } from "store/slice/layout";
+import { memberActions } from "store/slice/member";
 
 type Props = {};
 
 const LanternFestival = (props: Props) => {
+  const lanterns = useSelector((state: RootState) => state.member.lanterns);
+
   const [mode, setMode] = useState<string>("read");
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
@@ -16,6 +23,7 @@ const LanternFestival = (props: Props) => {
       setMode("create");
     } else {
       setMode("read");
+      setShowCreateModal(false);
     }
   };
 
@@ -44,7 +52,19 @@ const LanternFestival = (props: Props) => {
         <div className={styles.line2} />
         <div className={styles.line3} />
         {/* 연등 */}
-        {mode === "create" ? <LanternList onClick={onClickLantern} /> : null}
+        {mode === "create" ? (
+          <LanternList
+            mode="create"
+            lanterns={lanterns}
+            onClick={onClickLantern}
+          />
+        ) : (
+          <LanternList
+            mode="read"
+            lanterns={lanterns}
+            onClick={onClickLantern}
+          />
+        )}
         <div className={styles.create_btn + " shadow"}>
           <Btn
             filled={true}

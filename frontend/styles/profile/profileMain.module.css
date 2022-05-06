@@ -77,9 +77,33 @@
 }
 
 .create_lantern:hover {
-  background-color: #5cbab0;
+  background-color: #ff6464;
   color: white;
-  border-color: #5cbab0;
+  border-color: #ff6464;
+}
+
+.blank_lantern {
+  height: 11vh;
+  width: 11vh;
+  z-index: 5;
+  margin: 1.5vh;
+}
+
+.read_lantern {
+  object-fit: contain;
+  height: 11vh;
+  width: 11vh;
+  z-index: 5;
+  cursor: pointer;
+  margin-left: 1.5vh;
+  margin-right: 1.5vh;
+}
+
+.read_lantern:hover {
+  object-fit: contain;
+  height: 12vh;
+  width: 12vh;
+  margin-left: 1.2vh;
 }
 
 .absolute {
@@ -112,7 +136,23 @@
   overflow-x: auto;
 }
 
-.select_lanterns {
+.lantern_choices {
   display: flex;
   min-width: 50em;
+  height: 14vh;
+}
+
+.icon {
+  top: 2vh;
+  right: 2vh;
+  position: absolute;
+}
+
+.selected_lantern {
+  background-color: #c0b4a5;
+  border-radius: 20px;
+}
+
+.unselected_lantern {
+  border-radius: 20px;
 }

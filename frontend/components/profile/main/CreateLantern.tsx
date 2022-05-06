@@ -6,7 +6,7 @@ type Props = {
   onClick?: Function;
 };
 
-const Lantern = (props: Props) => {
+const CreateLantern = (props: Props) => {
   return (
     <>
       <div className={styles.create_lantern}>연등 달기</div>
@@ -14,4 +14,4 @@ const Lantern = (props: Props) => {
   );
 };
 
-export default Lantern;
+export default CreateLantern;

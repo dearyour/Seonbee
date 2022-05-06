@@ -1,9 +1,61 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Member } from "../interface/Member";
-const initialState: Member | any = {
+import { Lantern } from "../interface/Lantern";
+const initialState: any = {
   nickname: "",
   member: [],
-  myPage: [],
+
+  myProfile: [] as Member[],
+  lanterns: [
+    {
+      lanternId: 1,
+      guestId: 1,
+      nickname: "김선비",
+      content: "ㅊㅊㅊ",
+      position: 1,
+      lanternType: 4,
+    },
+    {
+      lanternId: 1,
+      guestId: 1,
+      nickname: "김선비",
+      content: "ㅊㅊㅊ",
+      position: 3,
+      lanternType: 6,
+    },
+    {
+      lanternId: 1,
+      guestId: 1,
+      nickname: "김선비",
+      content: "ㅊㅊㅊ",
+      position: 13,
+      lanternType: 3,
+    },
+    {
+      lanternId: 1,
+      guestId: 1,
+      nickname: "김선비",
+      content: "ㅊㅊㅊ",
+      position: 6,
+      lanternType: 6,
+    },
+    {
+      lanternId: 1,
+      guestId: 1,
+      nickname: "김선비",
+      content: "ㅊㅊㅊ",
+      position: 7,
+      lanternType: 7,
+    },
+    {
+      lanternId: 1,
+      guestId: 1,
+      nickname: "김선비",
+      content: "ㅊㅊㅊ",
+      position: 10,
+      lanternType: 2,
+    },
+  ] as Lantern[],
   isLoading: false,
   error: null,
 };
@@ -30,14 +82,14 @@ export const memberSlice = createSlice({
     //호패 리듀서
     // state는 리듀서 상태, payload 는 인자
     // 요청할때 dispatch에 인자를 넣어 보내고 싶다면 payload까지 작성해줘야함
-    getMypage: (state, { payload }: any) => {
+    getMyProfile: (state, { payload }: any) => {
       state.isLoading = true;
     },
-    setMypage: (state, { payload }) => {
+    setMyProfile: (state, { payload }) => {
       state.isLoading = false;
-      state.myPage = payload;
+      state.myProfile = payload;
     },
-    setMypageFail: (state, { payload: error }) => {
+    setMyProfileFail: (state, { payload: error }) => {
       state.isLoading = false;
       state.error = error;
     },

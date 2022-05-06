@@ -16,7 +16,7 @@ export const GetLoginState = (token: string | null) => {
     });
 };
 
-export const GetMypageState = (
+export const GetMyProfileState = (
   memberId: object | null,
   token: string | null
 ) => {
