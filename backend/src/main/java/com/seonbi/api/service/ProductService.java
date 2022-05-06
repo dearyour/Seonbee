@@ -8,4 +8,5 @@ public interface ProductService {
 
     String getProductImage(Long productId);
     List<ProductDto> getProductAll();
+    List<ProductDto> getProductAllByKeyword(String keyword);
 }

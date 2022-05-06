@@ -47,7 +47,14 @@ public class ShopController {
         return ResponseEntity.status(200).body(ProductAllRes.of(200, "success", productDtoList));
     }
 
-    @PostMapping()
+    @GetMapping("/{keyword}")
+    public ResponseEntity<? extends BaseResponseBody> getProductAllByKeyword(@PathVariable String keyword){
+        List<ProductDto> productDtoList=productService.getProductAllByKeyword(keyword);
+
+        return ResponseEntity.status(200).body(ProductAllRes.of(200, "success", productDtoList));
+    }
+
+    @PostMapping("/give")
     public ResponseEntity<? extends BaseResponseBody> addGiveProduct(
             @RequestBody GiveFriendProductReq giveProductReq, @ApiIgnore Authentication authentication){
 
@@ -62,7 +69,7 @@ public class ShopController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
-    @GetMapping("/{productId}")
+    @GetMapping("/wish/{productId}")
     public ResponseEntity<? extends BaseResponseBody> addWishProduct(
             @PathVariable Long productId, @ApiIgnore Authentication authentication){
 

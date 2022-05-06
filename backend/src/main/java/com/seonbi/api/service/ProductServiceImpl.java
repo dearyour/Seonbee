@@ -43,4 +43,12 @@ public class ProductServiceImpl implements ProductService{
 
         return productDtoList;
     }
+
+    @Override
+    public List<ProductDto> getProductAllByKeyword(String keyword) {
+        List<Product> products=productRepository.findAllByNameContains(keyword);
+        List<ProductDto> productDtoList=modelMapper.map(products, new TypeToken<List<ProductDto>>() {}.getType());
+
+        return productDtoList;
+    }
 }
