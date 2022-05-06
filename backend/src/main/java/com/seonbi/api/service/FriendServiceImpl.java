@@ -171,7 +171,7 @@ public class FriendServiceImpl implements FriendService{
 
     @Override
     public List<FriendCalendarDto> getFriendCalendarAll(Long memberId) {
-        List<FriendCalendarDto> friendCalendarDtoList=new ArrayList<>();
+        List<FriendCalendarDto> friendCalendarDtoList=new ArrayList<FriendCalendarDto>();
         List<Long> friendIdList=getFriendIdAll(memberId);
         for (Long friendId: friendIdList){
             Member member= memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
