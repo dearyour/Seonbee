@@ -9,5 +9,5 @@ public interface RecommendService {
 
     RecommendReceiverDto getGiveAll(Long memberId);
     List<ReceiverProductDto> getGiveProductAll(Long memberId, Long receiverId, Boolean isMember);
-    int addGiveProduct(Long friendId, Long productId);
+    int addGiveProduct(Long memberId, Long friendId, Long productId);
 }

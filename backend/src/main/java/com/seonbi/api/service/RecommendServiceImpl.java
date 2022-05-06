@@ -84,8 +84,17 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public int addGiveProduct(Long friendId, Long productId) {
+    public int addGiveProduct(Long memberId, Long friendId, Long productId) {
+        if (!memberService.isMemberValid(friendId)){
+            return 401;
+        }
+        if (!friendService.isFriend(memberId, friendId)){
+            return 403;
+        }
 
-        return 0;
+        Recommend recommend=new Recommend(productId, friendId, memberId, true, true);
+        recommendRepository.save(recommend);
+
+        return 200;
     }
 }
