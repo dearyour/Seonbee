@@ -58,7 +58,7 @@ public class GiveController {
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         }
         recommendService.getGiveProductAll(receiverIsMemberReq.getReceiverId(), receiverIsMemberReq.getIsMember());
-        return ResponseEntity.status(200).body(WishlistAllRes.of(200, "success", wishes));
+        return ResponseEntity.status(200).body(WishlistAllRes.of(200, "success"));
     }
 
 

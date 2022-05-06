@@ -13,5 +13,4 @@ import java.util.List;
 public interface ReceiverRepository extends JpaRepository<Receiver,Long> {
 
     Receiver findByReceiverIdAndIsDeleted(Long receiverId, boolean isDeleted);
-    List<Receiver> findAllByMember
 }

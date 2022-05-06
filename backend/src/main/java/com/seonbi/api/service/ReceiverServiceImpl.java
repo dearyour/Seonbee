@@ -24,15 +24,4 @@ public class ReceiverServiceImpl implements ReceiverService{
     @Autowired
     WishlistRepository wishlistRepository;
 
-
-    @Override
-    public Receiver getReceiver(Long receiverId) {
-        return null;
-    }
-
-    @Override
-    public List<ReceiverDto> getGiveReceiverAll(Long memberId) {
-        receiverRepository.
-        return null;
-    }
 }
