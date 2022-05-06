@@ -1,13 +1,11 @@
 package com.seonbi.api.controller;
 
+import com.seonbi.api.model.FriendFollowDto;
 import com.seonbi.api.model.ProductDto;
 import com.seonbi.api.model.ReceiverProductDto;
 import com.seonbi.api.model.RecommendReceiverDto;
 import com.seonbi.api.request.GiveFriendProductReq;
-import com.seonbi.api.response.BaseResponseBody;
-import com.seonbi.api.response.ProductAllRes;
-import com.seonbi.api.response.ReceiverProductAllRes;
-import com.seonbi.api.response.RecommendReceiverAllRes;
+import com.seonbi.api.response.*;
 import com.seonbi.api.service.*;
 import com.seonbi.db.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +37,9 @@ public class ShopController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    FriendService friendService;
 
     @GetMapping()
     public ResponseEntity<? extends BaseResponseBody> getProductAll(){
@@ -80,6 +81,17 @@ public class ShopController {
 
         wishlistService.addWishlist(member.getMemberId(), productId);
         return ResponseEntity.status(200).body(ReceiverProductAllRes.of(200, "success"));
+    }
+
+    @GetMapping("/friend")
+    public ResponseEntity<? extends BaseResponseBody> getFriendAll(@ApiIgnore Authentication authentication){
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
+
+        List<FriendFollowDto> friends=friendService.shopGetFriendAll(member.getMemberId());
+        return ResponseEntity.status(200).body(FriendFollowGetAllRes.of(200, "success", friends));
     }
 
 
