@@ -34,21 +34,37 @@ function SearchList(data: Array<SearchedMember>): SearchedMember[] {
 const SearchUser = (props: Props) => {
   const [members, setMembers] = useState<SearchedMember[]>([]);
   const [keyword, setKeyword] = useState<string>("");
+
   const handleChange: React.ChangeEventHandler = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    // console.log(event.target.value)
+    // console.log(event.target.value);
     setKeyword(event.target.value);
   };
+
   const Search = () => {
     axiosConnector({
       method: "GET",
       url: "member/search/" + keyword,
     })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setMembers(SearchList(res.data.members));
-        console.log(members);
+        //console.log(members);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
+  const FriendRequest: Function = (id: number) => {
+    // console.log("asd");
+    axiosConnector({
+      method: "GET",
+      url: "friend/follow/" + String(id),
+    })
+      .then((res) => {
+        console.log(res);
       })
       .catch((err) => {
         console.log(err.response);
@@ -98,7 +114,13 @@ const SearchUser = (props: Props) => {
                         {member.friend ? (
                           <Btn filled={true}>삭제</Btn>
                         ) : (
-                          <Btn className="">추가</Btn>
+                          <Btn
+                            className=""
+                            onClick={FriendRequest}
+                            param={member.memberId}
+                          >
+                            추가
+                          </Btn>
                         )}
                       </div>
                     </div>
