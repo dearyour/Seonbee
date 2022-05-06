@@ -7,7 +7,6 @@ import com.seonbi.db.entity.Member;
 import com.seonbi.db.entity.Receiver;
 import com.seonbi.db.entity.Recommend;
 import com.seonbi.db.repository.*;
-import org.checkerframework.checker.units.qual.A;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +41,9 @@ public class RecommendServiceImpl implements RecommendService{
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    FriendService friendService;
+
     @Override
     public RecommendReceiverDto getGiveAll(Long memberId) {
         List<Recommend> recommends = recommendRepository.findAllByMemberIdAndIsSavedAndIsDeleted(memberId, false, false);
@@ -53,22 +55,24 @@ public class RecommendServiceImpl implements RecommendService{
                 continue;
             }
             ReceiverDto receiverDto=modelMapper.map(receiver, ReceiverDto.class);
-            Member receiverMember=memberRepository.findByMemberIdAndIsDeleted(receiver.getMemberId(), false);
-            if (receiverMember==null){  // 추천받은 사람이 회원이 아닌 경우
+            if (recommend.getIsMember()){
+                Member receiverMember=memberRepository.findByMemberIdAndIsDeleted(recommend.getReceiverId(), false);
+                if (receiverMember!=null && friendService.isFriend(memberId, receiverMember.getMemberId())){  // 추천받은 사람이 친구인 경우
+                    receiverDto.setImageString(imageService.getImage(receiverMember.getImageId()));
+                    memberList.add(receiverDto);
+                }
+            } else {      // 친구가 아닌 경우
                 receiverDto.setImageString(imageService.getImage(0l));
                 noneMemberList.add(receiverDto);
-            } else {      // 회원인 경우
-                receiverDto.setImageString(imageService.getImage(receiverMember.getImageId()));
-                memberList.add(receiverDto);
             }
         }
         return new RecommendReceiverDto(noneMemberList, memberList);
     }
 
     @Override
-    public List<ReceiverProductDto> getGiveProductAll(Long memberId, Long receiverId) {
-        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndReceiverIdAndIsSavedAndIsDeleted(
-                memberId, receiverId, false, false);
+    public List<ReceiverProductDto> getGiveProductAll(Long memberId, Long receiverId, Boolean isMember) {
+        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndReceiverIdAndIsSavedAndIsMemberAndIsDeleted(
+                memberId, receiverId, true, isMember,false);
         List<ReceiverProductDto> productDtoList=new ArrayList<>();
         for (Recommend recommend: recommends){
             ReceiverProductDto receiverProductDto=modelMapper.map(
@@ -77,5 +81,11 @@ public class RecommendServiceImpl implements RecommendService{
         }
 
         return productDtoList;
+    }
+
+    @Override
+    public int addGiveProduct(Long friendId, Long productId) {
+
+        return 0;
     }
 }
