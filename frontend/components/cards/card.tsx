@@ -20,11 +20,11 @@ const Card = (props: Props) => {
           <div className="contentBx">
             <h2>녹색 짚신</h2>
             <div className="size">
-              <h3>Size :</h3>
+              <h3>정보 :</h3>
               <span>7</span>
-              <span>8</span>
+              {/* <span>8</span>
               <span>9</span>
-              <span>10</span>
+              <span>10</span> */}
             </div>
             <div className="color">
               <h3>가격 : 90,000 냥</h3>
