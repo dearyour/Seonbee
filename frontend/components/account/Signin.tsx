@@ -7,15 +7,14 @@ import styled from "@emotion/styled";
 import axios from "axios";
 import Router from "next/router";
 import Swal from "sweetalert2";
+import Login from "./kakaoLogin";
+
 type Props = {};
-// const ID_REGEX = new RegExp(
-//   "^([\\w._-])[a-zA-Z0-9]+([\\w._-])([a-zA-Z0-9])+([\\w._-])+@([a-zA-Z0-9]+.)+[a-zA-Z0-9]{2,8}$"
-// );
-// const ID_REGEX = new RegExp("^[a-z0-9_-]{5,20}$");
-const ID_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-// const PW_REGEX = new RegExp("^(?=.*[a-zA-Z])(?=.*d)(?=.*W).{8,16}$");
+//백에서 사용하는 되는 유효성
+const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
 const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
-// 비밀번호 정규표현식 : 최소 8자, 최대 16자, 하나 이상의 문자, 하나 이상의 숫자, 하나 이상의 특수문자
+// // 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
+// const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{8,16}$/;
 
 const ERROR_MSG: any = {
   required: "비어있소.",
@@ -129,12 +128,14 @@ const Signin = (props: Props) => {
     let isNormal = true;
     let msg = "";
 
-    if (!errorData.email) {
+    let emailValue = errorData.email != true;
+    let passwordValue = errorData.password != true;
+    if (!inputState.email || emailValue) {
       isNormal = false;
-      msg = "이메일을 입력해주세요.";
-    } else if (!errorData.password) {
+      msg = "이메일을 다시 입력해주세요.";
+    } else if (!inputState.password || passwordValue) {
       isNormal = false;
-      msg = "비밀번호를 입력해주세요.";
+      msg = "비밀번호를 다시 입력해주세요.";
     }
     if (isNormal) {
       const data = {
@@ -213,9 +214,11 @@ const Signin = (props: Props) => {
             ? ERROR_MSG[errorData["password"]]
             : ""}
         </div>
-
         <input type="submit" name="" value="등장" />
-        <a href="#" className="forgot">
+        <LoginWrapper>
+          <Login />
+        </LoginWrapper>
+        <a href="/shop" className="forgot">
           비밀스러운 번호를 까먹었소?
         </a>
       </form>
@@ -224,6 +227,9 @@ const Signin = (props: Props) => {
 };
 const ImageWrapper = styled(Image)`
   object-fit: cover;
+`;
+const LoginWrapper = styled.div`
+  margin-top: -20px;
 `;
 
 export default Signin;

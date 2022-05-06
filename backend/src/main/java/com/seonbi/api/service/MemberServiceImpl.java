@@ -228,11 +228,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public String kakaoToken(String code) {
-        String restapiKey="946bfa1b0c2ba70a70f6070dba9642d3";
+        String restapiKey="92fc0696d48204014f31850bda9c7686";
         String access_Token= "";
         String refresh_Token="";
         String requestURL="https://kauth.kakao.com/oauth/token";
-        String redirectURI="http://localhost:8080/kakao";
+        String redirectURI="http://localhost:3000/auth/kakao/callback";
 
         try {
             URL url=new URL(requestURL);
@@ -264,7 +264,6 @@ public class MemberServiceImpl implements MemberService {
             System.out.println(result);
             JSONParser parser = new JSONParser();
             JSONObject element = (JSONObject) parser.parse(result);
-
             access_Token = element.get("access_token").toString();
             refresh_Token= element.get("refresh_token").toString();
 
@@ -355,7 +354,7 @@ public class MemberServiceImpl implements MemberService {
                 System.out.println(member.getMemberId());
             }
 
-           token=  JwtTokenProvider.getToken(email);
+           token=JwtTokenProvider.getToken(email);
             System.out.println("access token="+token);
 
 

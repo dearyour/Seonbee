@@ -9,7 +9,38 @@ import {
   fork,
 } from "redux-saga/effects";
 import { memberActions } from "../slice/member";
-import { GetLoginState, GetMypageState } from "../api/Member.api";
+import { GetLoginState, GetMypageState, KakaoLogin } from "../api/Member.api";
+import Router from "next/router";
+
+// 카카오 사가
+function* getKakaoKey() {
+  interface tokentype extends AxiosResponse {
+    jwt: string;
+    newUser: boolean;
+  }
+  try {
+    const code = new URL(window.location.href).searchParams.get("code");
+    const response: tokentype = yield call(KakaoLogin, code);
+    // console.log(response);
+    // console.log("##카카오사가");
+    // console.log(code);
+    yield put(memberActions.getKakaoKeySuccess(response.jwt));
+    getLoginState();
+    Router.push("/");
+    // if (response.newUser) {
+    //   Router.push("/user/profileEdit")
+    // } else {
+    //   Router.push("/");
+    // }
+  } catch (err) {
+    yield put(memberActions.getKakaoKeyError(err));
+    Router.push("/");
+  }
+}
+
+function* watchGetKakaoKey() {
+  yield takeLatest(memberActions.getKakaoKey, getKakaoKey);
+}
 
 // 마이페이지 사가
 function* getMypageState(memberId: any) {
@@ -53,5 +84,9 @@ function* watchMemberState() {
 }
 
 export default function* MemberSaga() {
-  yield all([fork(watchMemberState), fork(watchMypageState)]);
+  yield all([
+    fork(watchMemberState),
+    fork(watchMypageState),
+    fork(watchGetKakaoKey),
+  ]);
 }

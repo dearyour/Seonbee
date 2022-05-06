@@ -14,8 +14,11 @@ import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import Sidebar from "./Sidebar";
 import Swal from "sweetalert2";
+import { useSelector, useDispatch } from "react-redux";
+import { memberActions } from "store/slice/member";
 
 function Navbar() {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [isMain, setIsMain] = useState<boolean>(false);
   const router = useRouter();
@@ -54,9 +57,7 @@ function Navbar() {
               <NavLinks onClick={() => Router.push("/")}>대문</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks onClick={() => Router.push("/redux")}>
-                저잣거리
-              </NavLinks>
+              <NavLinks onClick={() => Router.push("/shop")}>저잣거리</NavLinks>
             </NavItem>
             <NavItem>
               <NavLinks onClick={() => Router.push("/social")}>사랑방</NavLinks>
@@ -70,6 +71,8 @@ function Navbar() {
                 <NavLinks
                   onClick={() => {
                     sessionStorage.clear();
+                    localStorage.removeItem("persist:root");
+                    dispatch(memberActions.reset());
                     Swal.fire({
                       title: "로그아웃 되었습니다",
                       text: "메인페이지로 이동합니다",
