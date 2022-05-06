@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
+import axios from "axios";
 import FriendList from "components/social/carousel/FriendList";
 import SideBar from "components/social/sidebar/SideBar";
 import UserCard from "components/social/usercard/UserCard";
 import React, { useEffect, useState } from "react";
 import CardMember from "store/interface/social/cardmember";
+import axiosConnector from "utils/axios-connector";
 
 type Props = {};
 
@@ -12,6 +14,7 @@ const Blue = styled.span`
 `;
 const Social = (props: Props) => {
   const [members, setMembers] = useState<CardMember[]>([]);
+
   const temp_member = {
     nickname: "asd",
     schedule: [
@@ -19,20 +22,31 @@ const Social = (props: Props) => {
       { dday: -10, content: "수능" },
     ],
     verse: "asd",
-    product: [{ imageUrl: "https://picsum.photos/150/150" }],
+    wishlist: [{ imageUrl: "https://picsum.photos/150/150" }],
     imageString: "https://picsum.photos/150/150",
   };
   useEffect(() => {
-    setMembers([temp_member, temp_member, temp_member, temp_member]);
+    // setMembers([temp_member, temp_member, temp_member, temp_member]);
+    axiosConnector({
+      method: "GET",
+      url: "friend",
+    })
+      .then((res) => {
+        console.log(res);
+        setMembers(res.data.friends);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   }, []);
 
   return (
     <div className="container">
       <div className="row mt-3">
-        <div className="col-24 col-xl-3">
+        <div className="col-12 col-lg-6 col-xl-3">
           <SideBar></SideBar>
         </div>
-        <div className="col">
+        <div className="col-12 col-lg-6 col-xl-9">
           <div className="mb-3">
             벗에게 안성맞춤인 선물과 함께 <Blue>응원과 축하</Blue>를 건네보시오
           </div>

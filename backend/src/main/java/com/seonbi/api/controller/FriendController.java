@@ -1,10 +1,7 @@
 
 package com.seonbi.api.controller;
 
-import com.seonbi.api.model.FriendDto;
-import com.seonbi.api.model.FriendFollowDto;
-import com.seonbi.api.model.MemberAuthDto;
-import com.seonbi.api.model.MemberDto;
+import com.seonbi.api.model.*;
 import com.seonbi.api.request.FriendFollowAllowReq;
 import com.seonbi.api.request.MemberCreateReq;
 import com.seonbi.api.request.MemberLoginReq;
@@ -93,7 +90,44 @@ public class FriendController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
+    @GetMapping("/dday")
+    public ResponseEntity<? extends BaseResponseBody> getFriendDdayAll(@ApiIgnore Authentication authentication) {
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
+        }
+
+        List<FriendDdayDto> friendList=friendService.getFriendDdayAll(member.getMemberId());
+
+        return ResponseEntity.status(200).body(FriendDdayAllRes.of(200, "success", friendList));
+    }
+
+    @GetMapping()
+    public ResponseEntity<? extends BaseResponseBody> getFriendAll(@ApiIgnore Authentication authentication) {
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
+        }
+
+        List<FriendDto> friendList=friendService.getFriendAll(member.getMemberId());
+
+        return ResponseEntity.status(200).body(FriendAllRes.of(200, "success", friendList));
+    }
+
+    @GetMapping("/schedule")
+    public ResponseEntity<? extends BaseResponseBody> getFriendCalendarAll(@ApiIgnore Authentication authentication) {
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403,"사용자 권한이 없습니다."));
+        }
+
+        List<FriendCalendarDto> friendList=friendService.getFriendCalendarAll(member.getMemberId());
+
+        return ResponseEntity.status(200).body(FriendCalendarAllRes.of(200, "success", friendList));
+    }
 
 
 
+
+    
 }

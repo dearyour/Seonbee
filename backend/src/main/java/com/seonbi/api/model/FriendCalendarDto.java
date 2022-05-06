@@ -18,5 +18,12 @@ public class FriendCalendarDto {
     private Long friendId;
     private String nickname;
     private String scheduleDate;
-    private String content;
+    private String title;
+
+    public FriendCalendarDto(Long friendId, String nickname, String scheduleDate, String title) {
+        this.friendId = friendId;
+        this.nickname = nickname;
+        this.scheduleDate = scheduleDate;
+        this.title = title;
+    }
 }

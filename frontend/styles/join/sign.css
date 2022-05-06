@@ -10,7 +10,7 @@
   min-height: 100vh;
   /* background: #03a9f4; */
   transition: 0.5s;
-  margin-top: -100px;
+  margin-top: -80px;
 }
 .account.active {
   /* background: #f43648; */
@@ -18,8 +18,10 @@
 .containers {
   position: relative;
   width: 800px;
-  height: 700px;
+  min-height: 800px;
+  /* height: 100%; */
   margin: 20px;
+  /* overflow: auto; */
 }
 .containers .blueBg {
   position: absolute;
@@ -75,7 +77,9 @@
   align-items: center;
   box-shadow: 0 5px 45px rgba(0, 0, 0, 0.25);
   transition: 0.5s ease-in-out;
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .formBx.active {
   left: 50%;
@@ -108,10 +112,11 @@
   display: flex;
   flex-direction: column;
 }
-.formBx form h3 {
+.formBx form h4 {
   font-size: 1.5em;
   color: #333;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
+  margin-top: -15px;
   font-weight: 500;
 }
 .formBx form input {
@@ -142,10 +147,11 @@
 /* .signupForm.action {
   transition-delay: 0.4s;
 } */
-/* .promotion_wrapper .promotion {
+.promotion_wrapper .promotion {
   height: 50%;
   transition: 1s;
-} */
+  margin-top: -17px;
+}
 .promotion_wrapper .promotion input {
   width: 45%;
   margin-bottom: 10px;
@@ -165,13 +171,44 @@
   cursor: pointer;
   text-align: center;
   margin: auto;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  /* margin-top: 10px; */
+  margin-bottom: 10px;
 }
 .text-red-500 {
-  margin-top: -20px;
+  margin-top: -25px;
   margin-bottom: 10px;
   color: red;
+}
+
+.dateSection {
+  border: none;
+  border-radius: 5px;
+  /* background-color: #ececec; */
+
+  /* padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px; */
+  /* cursor: pointer; */
+  font-size: 20px;
+}
+/* .selectInfo {
+  display: flex;
+  justify-content: space-between;
+} */
+.ControlMenu {
+  margin-left: 10px;
+  /* border: none; */
+  border-radius: 5px;
+  /* background-color: #ececec; */
+
+  padding-top: 3px;
+  padding-bottom: 6px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  cursor: pointer;
+  font-size: 18px;
 }
 
 @media (max-width: 991px) {
@@ -181,7 +218,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -200px;
+    margin-top: 30px;
   }
   .containers .blueBg {
     top: 0;

@@ -1,25 +1,24 @@
 interface Schedule {
-  dday: number
-  content: string
+  dday: number;
+  title: string;
 }
 
 interface Product {
-  imageUrl: string
+  imageUrl: string;
 }
 
-
 export default class CardMember {
-  nickname: string
-  schedule: Array<Schedule>
-  imageString: string
-  verse: string
-  product: Array<Product>
+  nickname: string;
+  scheduleList: Array<Schedule>;
+  imageString: string;
+  verse: string;
+  wishlist: Array<Product>;
 
   constructor(data: any) {
-    this.imageString = data.imageString || ''
-    this.nickname = data.nickname || ''
-    this.schedule = data.schedule || []
-    this.product = data.product || []
-    this.verse = data.verse || ''
+    this.imageString = data.imageString || "";
+    this.nickname = data.nickname || "";
+    this.scheduleList = data.scheduleList || [];
+    this.wishlist = data.wishlist || [];
+    this.verse = data.verse || "";
   }
 }

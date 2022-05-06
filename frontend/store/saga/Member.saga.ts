@@ -9,9 +9,68 @@ import {
   fork,
 } from "redux-saga/effects";
 import { memberActions } from "../slice/member";
-import { GetLoginState, GetMyProfileState } from "../api/Member.api";
+import {
+  GetLoginState,
+  GetMyProfileState,
+  KakaoLogin,
+  GetLanternFestivalState,
+} from "../api/Member.api";
+import Router from "next/router";
 
+// 카카오 사가
+function* getKakaoKey() {
+  interface tokentype extends AxiosResponse {
+    jwt: string;
+    newUser: boolean;
+  }
+  try {
+    const code = new URL(window.location.href).searchParams.get("code");
+    const response: tokentype = yield call(KakaoLogin, code);
+    // console.log(response);
+    // console.log("##카카오사가");
+    // console.log(code);
+    yield put(memberActions.getKakaoKeySuccess(response.jwt));
+    getLoginState();
+    Router.push("/");
+    // if (response.newUser) {
+    //   Router.push("/user/profileEdit")
+    // } else {
+    //   Router.push("/");
+    // }
+  } catch (err) {
+    yield put(memberActions.getKakaoKeyError(err));
+    Router.push("/");
+  }
+}
+
+function* watchGetKakaoKey() {
+  yield takeLatest(memberActions.getKakaoKey, getKakaoKey);
+}
+
+// 로그인 사가
+function* getLoginState() {
+  try {
+    const token = sessionStorage.getItem("Token");
+    // console.log("유저통신전");
+    const userdata: AxiosResponse = yield call(GetLoginState, token);
+    // console.log("유저통신후");
+    yield put(memberActions.setMember(userdata));
+  } catch (err) {
+    console.log(err);
+    yield put(memberActions.setMemberFail(err));
+  }
+}
+
+function* watchMemberState() {
+  yield takeLatest(memberActions.getMember, getLoginState);
+}
+
+// [profile]
 // 마이페이지 사가
+function* watchMyProfileState() {
+  yield takeLatest(memberActions.getMyProfile, getMyProfileState);
+}
+
 function* getMyProfileState(memberId: any) {
   const token = sessionStorage.getItem("Token");
   // console.log(memberId.payload);
@@ -31,27 +90,29 @@ function* getMyProfileState(memberId: any) {
   }
 }
 
-function* watchMyProfileState() {
-  yield takeLatest(memberActions.getMyProfile, getMyProfileState);
+// 연등회 사가
+function* watchLanternFestivalState() {
+  yield takeLatest(memberActions.getLanternFestival, getLanternFestivalState);
 }
-// 로그인 사가
-function* getLoginState() {
+
+function* getLanternFestivalState(hostId: any) {
   try {
-    const token = sessionStorage.getItem("Token");
-    // console.log("유저통신전");
-    const userdata: AxiosResponse = yield call(GetLoginState, token);
-    // console.log("유저통신후");
-    yield put(memberActions.setMember(userdata));
+    const lanternData: AxiosResponse = yield call(
+      GetLanternFestivalState,
+      hostId.payload
+    );
+    yield put(memberActions.setLanternFestival(lanternData));
   } catch (err) {
     console.log(err);
-    yield put(memberActions.setMemberFail(err));
+    yield put(memberActions.setLanternFestivalFail(err));
   }
 }
 
-function* watchMemberState() {
-  yield takeLatest(memberActions.getMember, getLoginState);
-}
-
 export default function* MemberSaga() {
-  yield all([fork(watchMemberState), fork(watchMypageState)]);
+  yield all([
+    fork(watchMemberState),
+    fork(watchGetKakaoKey),
+    fork(watchMyProfileState),
+    fork(watchLanternFestivalState),
+  ]);
 }

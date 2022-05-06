@@ -22,6 +22,6 @@ public class Recommend extends BaseEntity{
     private Long receiverId;
     private Long memberId;
     private Boolean isSaved=false;    // false: 추천서, true: 주고싶소
-    private Boolean isMember=false;         // 받는 사람이 회원인지
+//    private Boolean isMember=false;         // 받는 사람이 회원인지
 
 }

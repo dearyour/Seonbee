@@ -1,14 +1,30 @@
-import type { NextPage } from 'next'
-import { Button, Input, FormControl, InputLabel, Select, MenuItem, Stack, Slider } from '@mui/material'
-import styled from '@emotion/styled'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import GetImage from 'utils/GetImage'
+import type { NextPage } from "next";
+import {
+  Button,
+  Input,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Stack,
+  Slider,
+} from "@mui/material";
+import styled from "@emotion/styled";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import GetImage from "utils/GetImage";
+import WsAlarm from "WsClient/wsAlarm";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const Asd: NextPage = () => {
-  const [imgtest, setImageUrl] = useState<string>('')
+  const [imgtest, setImageUrl] = useState<string>("");
   const [imgfile, setimgfile] = useState<any>();
-
   // const image = (id: number) => {
   //   axios({
   //     method: 'get',
@@ -22,67 +38,65 @@ const Asd: NextPage = () => {
 
   const getimg = () => {
     axios({
-      method: 'get',
+      method: "get",
       // url: baseurl + 'member/image/3',
-    })
-      .then((res) => {
-        setImageUrl(GetImage(res.data))
-      })
-  }
+    }).then((res) => {
+      setImageUrl(GetImage(res.data));
+    });
+  };
   function base64ToArrayBuffer(base64: any) {
-    console.log(base64)
+    console.log(base64);
     const binaryString = window.atob(base64); // Comment this if not using base64
     const bytes = new Uint8Array(binaryString.length);
     return bytes.map((byte, i) => binaryString.charCodeAt(i));
   }
 
   function getImageFiles(e: any) {
-    e.preventDefault()
+    e.preventDefault();
     const files = e.currentTarget.files;
-    setimgfile(files[0])
+    setimgfile(files[0]);
   }
 
   const uploadImg = () => {
-    let data = new FormData()
-    data.append('image', imgfile)
-    data.append('name', 'test')
+    let data = new FormData();
+    data.append("image", imgfile);
+    data.append("name", "test");
     axios({
-      method: 'POST',
+      method: "POST",
       // url: baseurl + 'member/image/test',
-      data: data
-    })
-      .then((res) => {
-        console.log(res)
-      })
-  }
+      data: data,
+    }).then((res) => {
+      console.log(res);
+    });
+  };
 
   const Test = styled.div`
     color: blue;
     margin: 10px;
-  `
+  `;
   class fruit {
-    name: string
-    id: number
+    name: string;
+    id: number;
 
     constructor(data: any | Array<any>) {
       // console.log(typeof data)
-      this.name = data.name || ''
-      this.id = data.id || 0
+      this.name = data.name || "";
+      this.id = data.id || 0;
     }
   }
-  const data = [{ name: '사과', id: null }, { name: '바나나', id: 2 }]
-  let f = new Array(new fruit(data))
+  const data = [
+    { name: "사과", id: null },
+    { name: "바나나", id: 2 },
+  ];
+  let f = new Array(new fruit(data));
   let fruits = data.map((now) => {
-    return new fruit(now)
-  })
+    return new fruit(now);
+  });
 
-  console.log(f)
-
-
-
+  console.log(f);
 
   return (
-    <div className='m-5 rainbow'>
+    <div className="m-5 rainbow">
       가나다라마바사
       <button onClick={getimg}>image</button>
       <img src={imgtest}></img>
@@ -90,9 +104,38 @@ const Asd: NextPage = () => {
       <Button variant="contained" onClick={uploadImg} component="span">
         Upload
       </Button>
+      <Button
+        onClick={() => {
+          WsAlarm.activate();
+        }}
+      >
+        open
+      </Button>
+      <Button
+        onClick={() => {
+          WsAlarm.deactivate();
+        }}
+      >
+        ws close
+      </Button>
       <img src={imgfile}></img>
+      <Swiper
+        // install Swiper modules
+        modules={[Navigation, Pagination, A11y]}
+        spaceBetween={50}
+        slidesPerView={2}
+        navigation
+        pagination={{ clickable: true }}
+      >
+        <SwiperSlide>
+          <div className="my-5">Slide 1</div>
+        </SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+      </Swiper>
     </div>
-  )
-}
+  );
+};
 
 export default Asd;
