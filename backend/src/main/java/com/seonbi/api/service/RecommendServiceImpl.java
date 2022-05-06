@@ -6,10 +6,7 @@ import com.seonbi.api.model.RecommendReceiverDto;
 import com.seonbi.db.entity.Member;
 import com.seonbi.db.entity.Receiver;
 import com.seonbi.db.entity.Recommend;
-import com.seonbi.db.repository.MemberRepository;
-import com.seonbi.db.repository.ReceiverRepository;
-import com.seonbi.db.repository.RecommendRepository;
-import com.seonbi.db.repository.WishlistRepository;
+import com.seonbi.db.repository.*;
 import org.checkerframework.checker.units.qual.A;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +39,12 @@ public class RecommendServiceImpl implements RecommendService{
     @Autowired
     ImageService imageService;
 
+    @Autowired
+    ProductRepository productRepository;
+
     @Override
     public RecommendReceiverDto getGiveAll(Long memberId) {
-        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndIsDeleted(memberId, false);
+        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndIsSavedAndIsDeleted(memberId, false, false);
         List<ReceiverDto> memberList=new ArrayList<>();
         List<ReceiverDto> noneMemberList=new ArrayList<>();
         for (Recommend recommend: recommends){
@@ -67,7 +67,15 @@ public class RecommendServiceImpl implements RecommendService{
 
     @Override
     public List<ReceiverProductDto> getGiveProductAll(Long memberId, Long receiverId) {
+        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndReceiverIdAndIsSavedAndIsDeleted(
+                memberId, receiverId, false, false);
+        List<ReceiverProductDto> productDtoList=new ArrayList<>();
+        for (Recommend recommend: recommends){
+            ReceiverProductDto receiverProductDto=modelMapper.map(
+                    productRepository.findByProductIdAndIsDeleted(recommend.getProductId(), false), ReceiverProductDto.class);
+            productDtoList.add(receiverProductDto);
+        }
 
-        return null;
+        return productDtoList;
     }
 }
