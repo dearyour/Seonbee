@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface RecommendService {
 
-    List<RecommendReceiverDto> getGiveAll(Long memberId);
-    List<ReceiverProductDto> getGiveProductAll(Long receiverId, Boolean isMember);
+    RecommendReceiverDto getGiveAll(Long memberId);
+    List<ReceiverProductDto> getGiveProductAll(Long memberId, Long receiverId);
 }

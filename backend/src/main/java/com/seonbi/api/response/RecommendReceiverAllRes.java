@@ -11,9 +11,9 @@ import java.util.List;
 @Setter
 public class RecommendReceiverAllRes extends BaseResponseBody{
 
-    private List<RecommendReceiverDto> receiverList;
+    private RecommendReceiverDto receiverList;
 
-    public static RecommendReceiverAllRes of(Integer status, String message, List<RecommendReceiverDto> receiverList) {
+    public static RecommendReceiverAllRes of(Integer status, String message, RecommendReceiverDto receiverList) {
         RecommendReceiverAllRes res = new RecommendReceiverAllRes();
         res.setStatus(status);
         res.setMessage(message);
