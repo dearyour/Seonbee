@@ -5,6 +5,7 @@ type BtnProps = {
   isDisabled?: boolean;
   children?: any;
   onClick?: Function;
+  param?: any;
   filled?: boolean;
   className?: string;
   small?: boolean;
@@ -15,6 +16,7 @@ function Btn({
   children = "",
   className,
   onClick = () => console.warn("클릭 이벤트가 지정되지 않음"),
+  param = "",
   filled = false,
   small = false,
 }: BtnProps) {
@@ -50,13 +52,25 @@ function Btn({
   });
 
   return (
-    <CustomBtn
-      className={className}
-      variant="contained"
-      onClick={() => onClick()}
-    >
-      {children}
-    </CustomBtn>
+    <>
+      {param ? (
+        <CustomBtn
+          className={className}
+          variant="contained"
+          onClick={() => onClick(param)}
+        >
+          {children}
+        </CustomBtn>
+      ) : (
+        <CustomBtn
+          className={className}
+          variant="contained"
+          onClick={() => onClick()}
+        >
+          {children}
+        </CustomBtn>
+      )}
+    </>
   );
 }
 

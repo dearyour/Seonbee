@@ -171,7 +171,7 @@ public class FriendServiceImpl implements FriendService{
 
     @Override
     public List<FriendCalendarDto> getFriendCalendarAll(Long memberId) {
-        List<FriendCalendarDto> friendCalendarDtoList=new ArrayList<>();
+        List<FriendCalendarDto> friendCalendarDtoList=new ArrayList<FriendCalendarDto>();
         List<Long> friendIdList=getFriendIdAll(memberId);
         for (Long friendId: friendIdList){
             Member member= memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
@@ -186,5 +186,18 @@ public class FriendServiceImpl implements FriendService{
         return friendCalendarDtoList;
     }
 
+    @Override
+    public List<FriendFollowDto> shopGetFriendAll(Long memberId) {
+        List<FriendFollowDto> friendDtoList=new ArrayList<>();
+        List<Long> friendIdList=getFriendIdAll(memberId);
+        for (Long friendId: friendIdList){
+            Member member=memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
+
+            FriendFollowDto friendDto=new FriendFollowDto(
+                    friendId, member.getNickname(), imageService.getImage(member.getImageId()));
+            friendDtoList.add(friendDto);
+        }
+        return friendDtoList;
+    }
 
 }
