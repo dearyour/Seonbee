@@ -1,14 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: any = {
-  nickname: '',
+interface Messages {
+  messages: any[];
+}
+
+const initialState: Messages = {
+  messages: [],
 };
 
 export const chatbotSlice = createSlice({
   name: 'chatbot',
   initialState,
   reducers: {
-    saveMessage: (state, action: PayloadAction<any>) => {},
+    resetMessage: (state) => {
+      state.messages = [];
+    },
+    saveMessage: (state, action: PayloadAction<any>) => {
+      state.messages = state.messages.concat(action.payload);
+    },
   },
 });
 

@@ -6,7 +6,6 @@ import { ChatbotWrapper } from 'styles/chat/ChatbotElements';
 function chat() {
   return (
     <>
-      <Navbar />
       <ChatbotWrapper>
         <Chatbot />
       </ChatbotWrapper>
