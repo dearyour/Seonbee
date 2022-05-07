@@ -65,11 +65,12 @@ const LanternFestivalCreateModal = (props: Props) => {
     console.log("formData", formData);
     axiosConnector({
       method: "POST",
-      url: `lantern/schedule`,
+      url: `profile/lantern/schedule`,
       data: formData,
     })
       .then((res) => {
         console.log(res.data);
+        props.onClick();
       })
       .catch((err) => {
         console.log(err.response);

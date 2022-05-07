@@ -16,6 +16,7 @@ import Sidebar from "./Sidebar";
 import Swal from "sweetalert2";
 import { useSelector, useDispatch } from "react-redux";
 import { memberActions } from "store/slice/member";
+import { RootState } from "store/slice";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -35,6 +36,8 @@ function Navbar() {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+
+  const uid = useSelector((state: RootState) => state.member.member.memberId);
 
   return (
     <>
@@ -63,7 +66,9 @@ function Navbar() {
               <NavLinks onClick={() => Router.push("/social")}>사랑방</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks onClick={() => Router.push("/profile")}>호패</NavLinks>
+              <NavLinks onClick={() => Router.push(`/profile/${uid}`)}>
+                호패
+              </NavLinks>
             </NavItem>
             <NavItem>
               {sessionStorage.getItem("Token") != null &&
