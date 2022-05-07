@@ -29,7 +29,12 @@ const LanternCreateModal = (props: Props) => {
           }
           onClick={() => setSelectedLantern(i)}
         >
-          <Image src={lantern} alt={`lantern${i}`} width={200} height={240} />
+          <Image
+            src={lantern}
+            alt={`lantern${i}`}
+            layout="fill"
+            objectFit="contain"
+          />
         </div>
       );
     }
@@ -63,7 +68,7 @@ const LanternCreateModal = (props: Props) => {
           color="primary"
           onChange={(e) => setMsg(e.target.value)}
         />
-        {/* 연등 Create Modal */}
+        {/* 연등 선택 */}
         <div className="semi_bold font_3 font_color my-3">연등 선택</div>
         <div>
           <div className={styles.lantern_box}>
@@ -74,7 +79,7 @@ const LanternCreateModal = (props: Props) => {
         </div>
         <div className="text-end mt-2">
           {msg ? (
-            <Btn filled={true} onClick={() => oncClickComplete()}>
+            <Btn filled={true} onClick={() => onClickComplete()}>
               연등 달기
             </Btn>
           ) : (

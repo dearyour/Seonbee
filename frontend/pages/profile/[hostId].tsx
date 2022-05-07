@@ -1,6 +1,6 @@
 import { style } from "@mui/system";
 import styles from "styles/profile/profilePage.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileInfo from "components/profile/ProfileInfo";
 import ProfileMain from "components/profile/main/ProfileMain";
 import Wish from "components/profile/wish/Wish";
@@ -8,15 +8,27 @@ import Give from "components/profile/give/Give";
 import Lantern from "components/profile/lantern/Lantern";
 import Chat from "components/profile/chat/Chat";
 import Setting from "components/profile/setting/Setting";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { memberActions } from "store/slice/member";
 
 type Props = {};
 
 const Profile = (props: Props) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { hostId } = router.query;
+
+  useEffect(() => {
+    dispatch(memberActions.setHostId(hostId));
+    console.log("hostId", hostId);
+  }, []);
+
   const sideBtnNames = [
     "호패",
+    "연등회 모음",
     "갖고 싶소",
     "주고 싶소",
-    "연등회 모음",
     "추천 내역",
     "설정",
   ];
@@ -50,21 +62,35 @@ const Profile = (props: Props) => {
           {/* 본문 영역 */}
           <div className={styles.main_content + " shadow d-flex"}>
             {/* 프로필 정보 */}
-            <div
-              className={styles.profile_info + " d-flex justify-content-center"}
-            >
-              <ProfileInfo />
-            </div>
+            {selectedBtn === "호패" ? (
+              <div
+                className={
+                  styles.profile_info + " d-flex justify-content-center"
+                }
+              >
+                <ProfileInfo />
+              </div>
+            ) : selectedBtn === "연등회 모음" ? (
+              <div
+                className={
+                  styles.profile_info + " d-flex justify-content-center"
+                }
+              >
+                <ProfileInfo />
+              </div>
+            ) : selectedBtn === "주고 싶소" ? null : selectedBtn ===
+              "갖고 싶소" ? null : selectedBtn ===
+              "추천 내역" ? null : selectedBtn === "설정" ? null : null}
             {/* 콘텐츠 영역 */}
             <div className={styles.content + " center_flex"}>
               {selectedBtn === "호패" ? (
                 <ProfileMain />
+              ) : selectedBtn === "연등회 모음" ? (
+                <Lantern />
               ) : selectedBtn === "주고 싶소" ? (
                 <Give />
               ) : selectedBtn === "갖고 싶소" ? (
                 <Wish />
-              ) : selectedBtn === "연등회 모음" ? (
-                <Lantern />
               ) : selectedBtn === "추천 내역" ? (
                 <Chat />
               ) : selectedBtn === "설정" ? (

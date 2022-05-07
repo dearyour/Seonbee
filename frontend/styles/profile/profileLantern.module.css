@@ -1,0 +1,78 @@
+.lantern_container {
+  height: 60vh;
+  width: 47vw;
+}
+
+.lantern_festivals {
+  height: 58vh;
+}
+
+.lantern_card {
+  height: 9.2vw;
+  width: 9.2vw;
+  border-radius: 20px;
+  overflow: auto;
+  position: relative;
+}
+
+.lantern_text {
+  display: flex;
+  flex-direction: column;
+  height: 9.2vw;
+  width: 9.2vw;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  border-radius: 20px;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.icon {
+  top: 2vh;
+  right: 2vh;
+  position: absolute;
+}
+
+.selected_lantern_background {
+  width: 20vw;
+  height: 13vh;
+  position: relative;
+  border: 5px solid;
+  border-color: #c0b4a5;
+}
+
+.unselected_lantern_background {
+  width: 20vw;
+  height: 13vh;
+  position: relative;
+  border: 5px solid;
+  border-color: #e9e5e1;
+}
+
+.create_lantern_festival_modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 64vh;
+  width: 56vh;
+  background-color: #e9e5e1;
+  z-index: 8;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  box-shadow: 10px 10px 8px 1px rgba(0, 0, 0, 0.2);
+}
+
+.lantern_background_box {
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+}
+
+.lantern_background_choices {
+  display: flex;
+  min-width: 76em;
+  height: 14vh;
+}

@@ -10,20 +10,13 @@ import { RootState } from "store/slice";
 import { layoutAction } from "store/slice/layout";
 import { memberActions } from "store/slice/member";
 
-type Props = {
-  hostId: number;
-};
+type Props = {};
 
 const LanternFestival = (props: Props) => {
-  const dispatch = useDispatch();
   const lanterns = useSelector((state: RootState) => state.member.lanterns);
 
   const [mode, setMode] = useState<string>("read");
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
-
-  useEffect(() => {
-    dispatch(memberActions.getLanternFestival(props.hostId));
-  }, []);
 
   const onClickBtn = (e: React.MouseEvent) => {
     if (mode === "read") {

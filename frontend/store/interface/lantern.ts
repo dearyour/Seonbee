@@ -23,3 +23,19 @@ function LanternList(data: Array<any>): Lantern[] {
 }
 
 export default LanternList;
+
+export class LanternFestival {
+  scheduleId: number;
+  scheduleDate: string;
+  title: string;
+  backgroud: number;
+  lanternList: Lantern[];
+
+  constructor(data: any) {
+    this.scheduleId = data.scheduleId || 0;
+    this.scheduleDate = data.scheduleDate || "";
+    this.title = data.title || "";
+    this.backgroud = data.backgroud || 0;
+    this.lanternList = data.lanternList || [];
+  }
+}

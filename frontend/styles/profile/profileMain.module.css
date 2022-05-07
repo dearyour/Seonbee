@@ -104,6 +104,7 @@
   height: 12vh;
   width: 12vh;
   margin-left: 1.2vh;
+  z-index: 10;
 }
 
 .absolute {
@@ -151,8 +152,14 @@
 .selected_lantern {
   background-color: #c0b4a5;
   border-radius: 20px;
+  width: 11vh;
+  height: 13vh;
+  position: relative;
 }
 
 .unselected_lantern {
   border-radius: 20px;
+  width: 11vh;
+  height: 13vh;
+  position: relative;
 }

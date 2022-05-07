@@ -6,7 +6,7 @@ const initialState: any = {
   member: [],
 
   hostId: 0,
-  myProfile: [] as Member[],
+  myProfile: {} as Member,
   lanterns: [
     {
       lanternId: 1,
@@ -16,47 +16,25 @@ const initialState: any = {
       position: 1,
       lanternType: 4,
     },
+  ] as Lantern[], // 연등회 1개 정보
+  lanternFestivals: [
     {
-      lanternId: 1,
-      guestId: 1,
-      nickname: "김선비",
-      content: "ㅊㅊㅊ",
-      position: 3,
-      lanternType: 6,
+      scheduleId: 1,
+      scheduleDate: "2022.11.30",
+      title: "수능",
+      backgroud: 1,
+      lanternList: [
+        {
+          lanternId: 1,
+          guestId: 1,
+          nickname: "김기솔",
+          content: "ㅊㅊㅊ",
+          position: 13,
+          lanternType: 4,
+        },
+      ],
     },
-    {
-      lanternId: 1,
-      guestId: 1,
-      nickname: "김선비",
-      content: "ㅊㅊㅊ",
-      position: 13,
-      lanternType: 3,
-    },
-    {
-      lanternId: 1,
-      guestId: 1,
-      nickname: "김선비",
-      content: "ㅊㅊㅊ",
-      position: 6,
-      lanternType: 6,
-    },
-    {
-      lanternId: 1,
-      guestId: 1,
-      nickname: "김선비",
-      content: "ㅊㅊㅊ",
-      position: 7,
-      lanternType: 7,
-    },
-    {
-      lanternId: 1,
-      guestId: 1,
-      nickname: "김선비",
-      content: "ㅊㅊㅊ",
-      position: 10,
-      lanternType: 2,
-    },
-  ] as Lantern[],
+  ], // 연등회 전체 정보
 
   info: [],
   isLoading: false,
@@ -121,16 +99,16 @@ export const memberSlice = createSlice({
     },
 
     // 연등회 정보
-    resetLanternFestival: (state) => {
-      state.lanternFestival = initialState.lanternFestival;
+    resetLanternFestivals: (state) => {
+      state.lanternFestivals = initialState.lanternFestivals;
     },
-    getLanternFestival: (state) => {
+    getLanternFestivals: (state) => {
       state.isLoading = true;
     },
-    setLanternFestival: (state, { payload }) => {
-      state.lanternFestival = payload;
+    setLanternFestivals: (state, { payload }) => {
+      state.lanternFestivals = payload;
     },
-    setLanternFestivalFail: (state, { payload: error }) => {
+    setLanternFestivalsFail: (state, { payload: error }) => {
       state.error = error;
     },
 
