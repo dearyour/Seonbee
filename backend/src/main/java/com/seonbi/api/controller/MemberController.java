@@ -103,6 +103,7 @@ public class MemberController {
         if (passwordCode == 401)
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
 
+
         Member member = new Member();
         member.setEmail(email);
         member.setPassword(passwordEncoder.encode(password));
