@@ -67,14 +67,12 @@ const LanternFestivalCreateModal = (props: Props) => {
       scheduleDate: newScheduleDate,
       background: selectedLanternBackground,
     };
-    console.log("formData", formData);
     axiosConnector({
       method: "POST",
       url: `profile/lantern/schedule`,
       data: formData,
     })
       .then((res) => {
-        console.log(res.data);
         props.onClick();
         dispatch(profileActions.getLanternFestivals(hostId));
       })

@@ -6,6 +6,8 @@ import { lanternImages } from "styles/profile/LanternElements";
 import Image from "next/image";
 import { MdOutlineClose } from "react-icons/md";
 import Btn from "components/commons/Btn";
+import { useSelector } from "react-redux";
+import { RootState } from "store/slice";
 
 type Props = {
   onClickClose: Function;
@@ -13,6 +15,8 @@ type Props = {
 };
 
 const LanternCreateModal = (props: Props) => {
+  const { nickname } = useSelector((state: RootState) => state.profile.profile);
+
   const [selectedLantern, setSelectedLantern] = useState<number>(0);
   const [content, setContent] = useState<string>("");
 
@@ -52,7 +56,7 @@ const LanternCreateModal = (props: Props) => {
           <MdOutlineClose size="24" />
         </div>
         <div className="font_2 font_color text-center mt-3 mb-4">
-          <span className="bold me-1">오연서</span>
+          <span className="bold me-1">{nickname}</span>
           <span>님에게 연등 달기</span>
         </div>
         {/* 축하 메시지 */}

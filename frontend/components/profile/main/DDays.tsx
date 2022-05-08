@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "styles/profile/profileMain.module.css";
 import { DdayType } from "store/interface/Lantern";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,9 +16,11 @@ const DDays = (props: Props) => {
   const lanternFestivals = useSelector(
     (state: RootState) => state.profile.lanternFestivals
   );
-  const [selectedScheduleId, setSelectedScheduleId] = useState<number>(
-    props.ddays[0].scheduleId
-  );
+  const [selectedScheduleId, setSelectedScheduleId] = useState<number>(0);
+
+  useEffect(() => {
+    setSelectedScheduleId(props.ddays[0].scheduleId);
+  }, [props.ddays]);
 
   const ddays = () => {
     const result = new Array(ddaysLen).fill(null);

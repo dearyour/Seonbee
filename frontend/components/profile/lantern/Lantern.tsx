@@ -15,6 +15,7 @@ type Props = {};
 const Lantern = (props: Props) => {
   const dispatch = useDispatch();
   const hostId = useSelector((state: RootState) => state.profile.hostId);
+  const uid = useSelector((state: RootState) => state.member.info.memberId);
   const lanternFestival = useSelector(
     (state: RootState) => state.profile.lanternFestival
   );
@@ -30,19 +31,16 @@ const Lantern = (props: Props) => {
   }, []);
 
   const onClickCancel = (e: React.MouseEvent) => {
-    console.log("onClickCancel");
     setShowCreateModal(false);
   };
 
   const onClickDelete = () => {
     if (lanternFestival) {
-      console.log("onClickDelete schedule");
       axiosConnector({
         method: "DELETE",
         url: `profile/lantern/schedule/${lanternFestival.scheduleId}`,
       })
         .then((res) => {
-          console.log("onClickDelete schedule", res.data);
           dispatch(profileActions.getLanternFestivals(hostId));
           if (showLanternFestival) {
             dispatch(profileActions.setShowLanternFestival(false));
@@ -62,14 +60,16 @@ const Lantern = (props: Props) => {
             <div className={styles.lantern_festivals}>
               <LanternFestivalCardList />
             </div>
-            <div className="ms-auto">
-              <Btn
-                filled={true}
-                onClick={() => setShowCreateModal(!showCreateModal)}
-              >
-                연등회 등록
-              </Btn>
-            </div>
+            {uid == hostId ? (
+              <div className="ms-auto">
+                <Btn
+                  filled={true}
+                  onClick={() => setShowCreateModal(!showCreateModal)}
+                >
+                  연등회 등록
+                </Btn>
+              </div>
+            ) : null}
           </div>
         </div>
       ) : (
@@ -92,9 +92,11 @@ const Lantern = (props: Props) => {
                 {lanternFestival.scheduleDate})
               </div>
             </div>
-            <div className="pt-1 font_hover" onClick={() => onClickDelete()}>
-              <div>연등회 삭제</div>
-            </div>
+            {uid == hostId ? (
+              <div className="pt-1 font_hover" onClick={() => onClickDelete()}>
+                <div>연등회 삭제</div>
+              </div>
+            ) : null}
           </div>
           <LanternFestival lanternFestival={lanternFestival} />
         </div>

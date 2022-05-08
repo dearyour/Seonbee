@@ -61,7 +61,6 @@ const LanternFestival = (props: Props) => {
   };
 
   const onClickClose = () => {
-    console.log("onClickClose");
     if (showCreateModal) {
       setShowCreateModal(false);
     } else {
@@ -70,7 +69,6 @@ const LanternFestival = (props: Props) => {
   };
 
   const onClickComplete = (content: string, lanternType: number) => {
-    console.log("onClickComplete");
     const formData = {
       hostId,
       scheduleId: props.lanternFestival.scheduleId,
@@ -78,14 +76,12 @@ const LanternFestival = (props: Props) => {
       position,
       lanternType,
     };
-    console.log("formData", formData);
     axiosConnector({
       method: "POST",
       url: `profile/lantern`,
       data: formData,
     })
       .then((res) => {
-        console.log("onClickComplete", res.data);
         setMode("read");
         onClickClose();
         dispatch(profileActions.getLanternFestivals(hostId));
@@ -96,14 +92,12 @@ const LanternFestival = (props: Props) => {
   };
 
   const onClickDelete = (lanterId: number | undefined) => {
-    console.log(`profile/lantern/${lanterId}`);
     if (lanterId) {
       axiosConnector({
         method: "DELETE",
         url: `profile/lantern/${lanterId}`,
       })
         .then((res) => {
-          console.log("onClickDelete", res.data);
           setMode("read");
           onClickClose();
           dispatch(profileActions.getLanternFestivals(hostId));

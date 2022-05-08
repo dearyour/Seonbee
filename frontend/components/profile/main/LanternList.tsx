@@ -65,7 +65,7 @@ const LanternList = (props: Props) => {
             props.mode === "read" ? props.onClickLantern(lantern) : null
           }
         >
-          <ReadLantern lantern={lantern} />
+          <ReadLantern lantern={lantern} blinkType={(i % 3) + 1} />
         </div>
       );
     }

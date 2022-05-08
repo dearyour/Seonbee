@@ -9,10 +9,10 @@ import { calDday } from "utils/utils";
 
 const initialState: any = {
   hostId: 0,
-  profile: {} as Member,
+  profile: new Member({}),
   lanterns: [] as LanternType[], // 연등회 1개 정보
   showLanternFestival: false,
-  lanternFestival: {} as LanternFestivalType,
+  lanternFestival: new LanternFestivalType({}),
   lanternFestivals: [] as LanternFestivalType[], // 연등회 전체 정보
   ddays: [] as DdayType[],
 
@@ -49,7 +49,6 @@ export const profileSlice = createSlice({
       state.lanternFestivals = initialState.lanternFestivals;
     },
     getLanternFestivals: (state, { payload }: any) => {
-      console.log("getLanternFestivals");
       state.isLoading = true;
     },
     setLanternFestivals: (state, { payload }) => {
@@ -58,7 +57,6 @@ export const profileSlice = createSlice({
       for (let i = 0; i < payload.length; i++) {
         const lanternFestival = payload[i];
         const ddayCnt = calDday(lanternFestival.scheduleDate);
-        console.log("ddayCnt", ddayCnt);
         if (ddayCnt < 7) {
           const dday = {
             scheduleId: lanternFestival.scheduleId,
@@ -68,17 +66,26 @@ export const profileSlice = createSlice({
           ddays.push(dday);
         }
       }
-      console.log("setLanternFestivals ddays", ddays);
       state.ddays = ddays;
+      let flag = false;
       if (state.lanternFestival) {
         for (let i = 0; i < payload.length; i++) {
           if (payload[i].scheduleId === state.lanternFestival.scheduleId) {
+            console.log("state.lanternFestival", payload[i].title);
+            state.lanternFestival = payload[i];
+            flag = true;
+            break;
+          }
+        }
+      }
+      if (!flag) {
+        for (let i = 0; i < payload.length; i++) {
+          if (payload[i].scheduleId === ddays[0].scheduleId) {
+            console.log("state.lanternFestival X", payload[i].title);
             state.lanternFestival = payload[i];
             break;
           }
         }
-      } else {
-        state.lanternFestival = payload[0];
       }
     },
     setLanternFestivalsFail: (state, { payload: error }) => {

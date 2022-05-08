@@ -18,6 +18,26 @@ export const lanternImages = [
   lantern7,
 ];
 
+import blinkLantern0 from "public/images/blinkLantern0.png";
+import blinkLantern1 from "public/images/blinkLantern1.png";
+import blinkLantern2 from "public/images/blinkLantern2.png";
+import blinkLantern3 from "public/images/blinkLantern3.png";
+import blinkLantern4 from "public/images/blinkLantern4.png";
+import blinkLantern5 from "public/images/blinkLantern5.png";
+import blinkLantern6 from "public/images/blinkLantern6.png";
+import blinkLantern7 from "public/images/blinkLantern7.png";
+
+export const blinkLanternImages = [
+  blinkLantern0,
+  blinkLantern1,
+  blinkLantern2,
+  blinkLantern3,
+  blinkLantern4,
+  blinkLantern5,
+  blinkLantern6,
+  blinkLantern7,
+];
+
 import lanternBackground0 from "public/images/lanternBackground0.jpg";
 import lanternBackground1 from "public/images/lanternBackground1.jpg";
 import lanternBackground2 from "public/images/lanternBackground2.jpg";

@@ -6,13 +6,14 @@ import styles from "styles/profile/profileMain.module.css";
 import DDays from "./DDays";
 import LanternFestival from "./LanternFestival";
 import { profileActions } from "store/slice/profile";
+import { useRouter } from "next/router";
 
-type Props = {
-  hostId: any;
-};
+type Props = {};
 
 const ProfileMain = (props: Props) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { hostId } = router.query;
   const lanternFestival = useSelector(
     (state: RootState) => state.profile.lanternFestival
   );
@@ -23,6 +24,10 @@ const ProfileMain = (props: Props) => {
   const ddaysLen = ddays.length;
 
   useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
+    dispatch(profileActions.getLanternFestivals(hostId));
     for (let i = 0; i < ddaysLen; i++) {
       if (lanternFestivals[i].scheduleId === ddays[0].scheduleId) {
         const newLanternFestival = lanternFestivals[i];
@@ -30,8 +35,7 @@ const ProfileMain = (props: Props) => {
         break;
       }
     }
-    dispatch(profileActions.getLanternFestivals(props.hostId));
-  }, []);
+  }, [router.isReady]);
 
   return (
     <>

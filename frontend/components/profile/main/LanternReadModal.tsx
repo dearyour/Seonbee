@@ -22,7 +22,7 @@ const LanternReadModal = (props: Props) => {
     <>
       {props.lantern ? (
         <div className={styles.read_lantern_modal}>
-          <div className={styles.letter_text}>
+          <div className={styles.letter_text_container}>
             <div
               onClick={() => props.onClickClose()}
               className={styles.icon + " font_hover clickable"}
@@ -38,7 +38,9 @@ const LanternReadModal = (props: Props) => {
               <span>님의 연등 메시지</span>
             </div>
             {/* 축하 메시지 */}
-            <div className="font_3 font_color">{props.lantern.content}</div>
+            <div className={styles.letter_text + " font_3 font_color"}>
+              {props.lantern.content}
+            </div>
           </div>
           {props.lantern.guestId === uid && props.lantern ? (
             <div

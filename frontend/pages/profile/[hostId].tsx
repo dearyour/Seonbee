@@ -19,15 +19,24 @@ const Profile = (props: Props) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { hostId } = router.query;
-  const showLanternFestival = useSelector(
-    (state: RootState) => state.profile.showLanternFestival
-  );
+  const profile = useSelector((state: RootState) => state.profile.profile);
 
   useEffect(() => {
+    console.log("router.isReady", router.isReady);
+    if (!router.isReady) {
+      return;
+    }
+    console.log("hostId", hostId);
     dispatch(profileActions.setHostId(hostId));
     dispatch(profileActions.getProfile(hostId));
-    console.log("hostId", hostId);
-  }, []);
+  }, [router.isReady]);
+
+  // useEffect(() => {
+  //   return function cleanup() {
+  //     dispatch(profileActions.reset());
+  //     console.log("cleanup");
+  //   };
+  // });
 
   const sideBtnNames = [
     "호패",
@@ -53,9 +62,7 @@ const Profile = (props: Props) => {
           }
           onClick={(e) => {
             setSelectedBtn(sideBtnName);
-            if (showLanternFestival) {
-              dispatch(profileActions.reset());
-            }
+            dispatch(profileActions.reset());
           }}
         >
           {sideBtnName}
@@ -67,51 +74,53 @@ const Profile = (props: Props) => {
 
   return (
     <div className="center">
-      <div className={styles.modal}>
-        <div className="d-flex justify-content-between">
-          {/* 본문 영역 */}
-          <div className={styles.main_content + " shadow d-flex"}>
-            {/* 프로필 정보 */}
-            {selectedBtn === "호패" ? (
-              <div
-                className={
-                  styles.profile_info + " d-flex justify-content-center"
-                }
-              >
-                <ProfileInfo />
-              </div>
-            ) : selectedBtn === "연등회 모음" ? (
-              <div
-                className={
-                  styles.profile_info + " d-flex justify-content-center"
-                }
-              >
-                <ProfileInfo />
-              </div>
-            ) : selectedBtn === "주고 싶소" ? null : selectedBtn ===
-              "갖고 싶소" ? null : selectedBtn ===
-              "추천 내역" ? null : selectedBtn === "설정" ? null : null}
-            {/* 콘텐츠 영역 */}
-            <div className={styles.content + " center_flex"}>
+      {profile ? (
+        <div className={styles.modal}>
+          <div className="d-flex justify-content-between">
+            {/* 본문 영역 */}
+            <div className={styles.main_content + " shadow d-flex"}>
+              {/* 프로필 정보 */}
               {selectedBtn === "호패" ? (
-                <ProfileMain hostId={hostId} />
+                <div
+                  className={
+                    styles.profile_info + " d-flex justify-content-center"
+                  }
+                >
+                  <ProfileInfo />
+                </div>
               ) : selectedBtn === "연등회 모음" ? (
-                <Lantern />
-              ) : selectedBtn === "주고 싶소" ? (
-                <Give />
-              ) : selectedBtn === "갖고 싶소" ? (
-                <Wish />
-              ) : selectedBtn === "추천 내역" ? (
-                <Chat />
-              ) : selectedBtn === "설정" ? (
-                <Setting />
-              ) : null}
+                <div
+                  className={
+                    styles.profile_info + " d-flex justify-content-center"
+                  }
+                >
+                  <ProfileInfo />
+                </div>
+              ) : selectedBtn === "주고 싶소" ? null : selectedBtn ===
+                "갖고 싶소" ? null : selectedBtn ===
+                "추천 내역" ? null : selectedBtn === "설정" ? null : null}
+              {/* 콘텐츠 영역 */}
+              <div className={styles.content + " center_flex"}>
+                {selectedBtn === "호패" ? (
+                  <ProfileMain />
+                ) : selectedBtn === "연등회 모음" ? (
+                  <Lantern />
+                ) : selectedBtn === "주고 싶소" ? (
+                  <Give />
+                ) : selectedBtn === "갖고 싶소" ? (
+                  <Wish />
+                ) : selectedBtn === "추천 내역" ? (
+                  <Chat />
+                ) : selectedBtn === "설정" ? (
+                  <Setting />
+                ) : null}
+              </div>
             </div>
+            {/* 버튼 영역 */}
+            <div className={styles.side_btns + " font_3"}>{sideBtns()}</div>
           </div>
-          {/* 버튼 영역 */}
-          <div className={styles.side_btns + " font_3"}>{sideBtns()}</div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };
