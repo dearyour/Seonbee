@@ -155,7 +155,7 @@ public class MemberServiceImpl implements MemberService {
         Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d).{8,16}$");
         Matcher passMatcher = passPattern.matcher(password);
         if(!passMatcher.find()){
-            return 402;
+            return 401;
         }
         return 200;
     }

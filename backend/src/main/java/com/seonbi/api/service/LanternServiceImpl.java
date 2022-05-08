@@ -50,4 +50,32 @@ public class LanternServiceImpl implements LanternService{
     public void createLantern(Lantern lantern) {
         lanternRepository.save(lantern);
     }
+
+    @Override
+    public int deleteLantern(Long memberId, Long lanternId) {
+        Lantern lantern = lanternRepository.findByLanternIdAndIsDeleted(lanternId, false);
+        if (lantern==null){
+            return 401;
+        }
+        if (!lantern.getGuestId().equals(memberId)){
+            return 403;
+        }
+        lantern.setIsDeleted(true);
+        lanternRepository.save(lantern);
+        return 200;
+    }
+
+    @Override
+    public int deleteSchedule(Long memberId, Long scheduleId) {
+        Schedule schedule=scheduleRepository.findByScheduleIdAndIsDeleted(scheduleId, false);
+        if (schedule==null){
+            return 401;
+        }
+        if (!schedule.getMemberId().equals(memberId)){
+            return 403;
+        }
+        schedule.setIsDeleted(true);
+        scheduleRepository.save(schedule);
+        return 200;
+    }
 }
