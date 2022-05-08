@@ -69,7 +69,7 @@ public class WishlistServiceImpl implements WishlistService{
     public int deleteWishlist(Long memberId, Long wishlistId) {
         Wishlist wish=wishlistRepository.findByWishlistIdAndIsDeleted(wishlistId, false);
         if (wish==null) return 401;
-        if (wish.getMemberId()!=memberId)   return 403;
+        if (!wish.getMemberId().equals(memberId))   return 403;
         wish.setIsDeleted(true);
         wishlistRepository.save(wish);
 
