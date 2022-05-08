@@ -8,5 +8,12 @@ public class DdayUtilTest {
         System.out.println(DdayUtil.Dday("2022.05.05"));
         System.out.println(DdayUtil.Dday("2022.04.05"));
         System.out.println(DdayUtil.Dday("2023.04.05"));
+
+
+        Long a=1000l;
+        Long b=1000l;
+        System.out.println(a==b);
+        System.out.println(a.equals(b));
+
     }
 }
