@@ -111,7 +111,7 @@ public class ProfileController {
             return ResponseEntity.status(401).body(MemberGetRes.of(401, "존재하지 않는 회원입니다.", null));
         }
         if (friendService.isFriend(memberId, member.getMemberId())){
-            memberDto.setFriend(true);
+            memberDto.setIsFriend(true);
         }
         return ResponseEntity.status(200).body(MemberGetRes.of(200, "Success", memberDto));
     }
