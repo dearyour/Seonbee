@@ -24,7 +24,7 @@ const LanternFestivalCard = (props: Props) => {
       if (lanternFestivals[i].scheduleId === props.lanternFestival.scheduleId) {
         const newLanternFestival = lanternFestivals[i];
         dispatch(profileActions.setLanternFestival(newLanternFestival));
-        dispatch(profileActions.setShowLanternFestival());
+        dispatch(profileActions.setShowLanternFestival(true));
         break;
       }
     }

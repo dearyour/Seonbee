@@ -28,6 +28,8 @@ const DDays = (props: Props) => {
       const scheduleDate =
         dday.scheduleDate > 0
           ? "+" + String(dday.scheduleDate)
+          : dday.scheduleDate < 0
+          ? String(dday.scheduleDate)
           : "-" + String(dday.scheduleDate);
       result[i] = (
         <div
@@ -46,8 +48,9 @@ const DDays = (props: Props) => {
     }
     return result;
   };
+  const lanternFestivalLen = lanternFestivals.length;
   const onClickDday = (index: number) => {
-    for (let i = 0; i < ddaysLen; i++) {
+    for (let i = 0; i < lanternFestivalLen; i++) {
       if (lanternFestivals[i].scheduleId === props.ddays[index].scheduleId) {
         const newLanternFestival = lanternFestivals[i];
         dispatch(profileActions.setLanternFestival(newLanternFestival));

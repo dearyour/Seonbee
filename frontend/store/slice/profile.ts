@@ -96,8 +96,8 @@ export const profileSlice = createSlice({
         }
       }
     },
-    setShowLanternFestival: (state) => {
-      state.showLanternFestival = !state.showLanternFestival;
+    setShowLanternFestival: (state, { payload }) => {
+      state.showLanternFestival = payload;
     },
 
     reset: (state) => {

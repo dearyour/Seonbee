@@ -20,8 +20,16 @@ const ProfileMain = (props: Props) => {
     (state: RootState) => state.profile.lanternFestivals
   );
   const ddays = useSelector((state: RootState) => state.profile.ddays);
+  const ddaysLen = ddays.length;
 
   useEffect(() => {
+    for (let i = 0; i < ddaysLen; i++) {
+      if (lanternFestivals[i].scheduleId === ddays[0].scheduleId) {
+        const newLanternFestival = lanternFestivals[i];
+        dispatch(profileActions.setLanternFestival(newLanternFestival));
+        break;
+      }
+    }
     dispatch(profileActions.getLanternFestivals(props.hostId));
   }, []);
 

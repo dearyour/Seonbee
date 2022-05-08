@@ -54,7 +54,7 @@ const Profile = (props: Props) => {
           onClick={(e) => {
             setSelectedBtn(sideBtnName);
             if (showLanternFestival) {
-              dispatch(profileActions.setShowLanternFestival());
+              dispatch(profileActions.reset());
             }
           }}
         >

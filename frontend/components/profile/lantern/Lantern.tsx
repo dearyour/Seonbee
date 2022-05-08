@@ -23,6 +23,12 @@ const Lantern = (props: Props) => {
   );
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (showLanternFestival) {
+      dispatch(profileActions.setShowLanternFestival(false));
+    }
+  }, []);
+
   const onClickCancel = (e: React.MouseEvent) => {
     console.log("onClickCancel");
     setShowCreateModal(false);
@@ -38,7 +44,9 @@ const Lantern = (props: Props) => {
         .then((res) => {
           console.log("onClickDelete schedule", res.data);
           dispatch(profileActions.getLanternFestivals(hostId));
-          dispatch(profileActions.setShowLanternFestival());
+          if (showLanternFestival) {
+            dispatch(profileActions.setShowLanternFestival(false));
+          }
         })
         .catch((err) => {
           console.log(err.response);
@@ -69,7 +77,9 @@ const Lantern = (props: Props) => {
           <div className="d-flex justify-content-between">
             <div
               className="d-flex font_hover"
-              onClick={() => dispatch(profileActions.setShowLanternFestival())}
+              onClick={() =>
+                dispatch(profileActions.setShowLanternFestival(false))
+              }
               style={{ cursor: "pointer" }}
             >
               <div className={styles.icon_back + " mb-3 me-2"}>

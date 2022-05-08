@@ -45,7 +45,12 @@ const LanternList = (props: Props) => {
         } as const;
         styleList[index] = style;
         result[index] = (
-          <div style={style} onClick={() => props.onClickLantern(index)}>
+          <div
+            style={style}
+            onClick={() =>
+              props.mode === "create" ? props.onClickLantern(index) : null
+            }
+          >
             {lantern()}
           </div>
         );

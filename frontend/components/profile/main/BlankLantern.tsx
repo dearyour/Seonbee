@@ -9,7 +9,7 @@ type Props = {
 const BlankLantern = (props: Props) => {
   return (
     <>
-      <div className={styles.blank_lantern}>.</div>
+      <div className={styles.blank_lantern}></div>
     </>
   );
 };
