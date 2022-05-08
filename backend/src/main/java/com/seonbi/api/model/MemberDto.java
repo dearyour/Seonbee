@@ -23,7 +23,8 @@ public class MemberDto {
     private String imageString;
     private String verse;
 //    private String job;
-    private Boolean isFriend=false;
+//    private Boolean isFriend=false;
+    private String friendStatus="unfriend";    // friend/unfriend/requesting
     private Boolean isAdmin=false;
     private Boolean isKakao=false;
 
