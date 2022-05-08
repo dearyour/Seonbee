@@ -15,5 +15,10 @@ public class DdayUtilTest {
         System.out.println(a==b);
         System.out.println(a.equals(b));
 
+        Long c=0l;
+        Long d=0l;
+        System.out.println(c==d);
+        System.out.println(c.equals(d));
+
     }
 }
