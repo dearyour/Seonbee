@@ -23,8 +23,8 @@ public class MemberDto {
     private String imageString;
     private String verse;
 //    private String job;
-    private boolean isFriend=false;
-    private boolean isAdmin=false;
-    private boolean isKakao=false;
+    private Boolean isFriend=false;
+    private Boolean isAdmin=false;
+    private Boolean isKakao=false;
 
 }
