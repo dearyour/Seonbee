@@ -4,19 +4,38 @@ import React, { useEffect, useState } from "react";
 import styles from "styles/profile/profileMain.module.css";
 import LanternCreateModal from "./LanternCreateModal";
 import LanternList from "./LanternList";
+import { LanternFestivalType } from "store/interface/Lantern";
+import { lanternBackgroundImages } from "styles/profile/LanternElements";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/slice";
-import { layoutAction } from "store/slice/layout";
-import { memberActions } from "store/slice/member";
+import Image from "next/image";
+import axiosConnector from "utils/axios-connector";
+import { profileActions } from "store/slice/profile";
+import LanternReadModal from "./LanternReadModal";
+import { LanternType } from "store/interface/Lantern";
 
-type Props = {};
+type Props = {
+  lanternFestival: LanternFestivalType;
+};
 
 const LanternFestival = (props: Props) => {
-  const lanterns = useSelector((state: RootState) => state.member.lanterns);
+  const dispatch = useDispatch();
+  const hostId = useSelector((state: RootState) => state.profile.hostId);
 
   const [mode, setMode] = useState<string>("read");
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
+  const [position, setPosition] = useState<number>(0);
+  const [showLanternReadModal, setShowLanternReadModal] =
+    useState<boolean>(false);
+  const [lantern, setLantern] = useState<LanternType>({
+    lanternId: 0,
+    guestId: 0,
+    nickname: "",
+    content: "",
+    position: 0,
+    lanternType: 0,
+  });
 
   const onClickBtn = (e: React.MouseEvent) => {
     if (mode === "read") {
@@ -27,43 +46,98 @@ const LanternFestival = (props: Props) => {
     }
   };
 
-  const onClickLantern = (index: number) => {
-    if (mode === "read") {
-    } else {
+  const onClickLanternCreate = (index: number) => {
+    if (mode === "create") {
       setShowCreateModal(true);
+      setPosition(index);
     }
   };
 
-  const onClickCancel = (e: React.MouseEvent) => {
-    console.log("onClickCancel");
-    setShowCreateModal(false);
+  const onClickLanternRead = (lantern: LanternType) => {
+    if (mode === "read") {
+      setShowLanternReadModal(true);
+      setLantern(lantern);
+    }
+  };
+
+  const onClickClose = () => {
+    console.log("onClickClose");
+    if (showCreateModal) {
+      setShowCreateModal(false);
+    } else {
+      setShowLanternReadModal(false);
+    }
+  };
+
+  const onClickComplete = (content: string, lanternType: number) => {
+    console.log("onClickComplete");
+    const formData = {
+      hostId,
+      scheduleId: props.lanternFestival.scheduleId,
+      content,
+      position,
+      lanternType,
+    };
+    console.log("formData", formData);
+    axiosConnector({
+      method: "POST",
+      url: `profile/lantern`,
+      data: formData,
+    })
+      .then((res) => {
+        console.log("onClickComplete", res.data);
+        setMode("read");
+        onClickClose();
+        dispatch(profileActions.getLanternFestivals(hostId));
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
+  const onClickDelete = (lanterId: number | undefined) => {
+    console.log(`profile/lantern/${lanterId}`);
+    if (lanterId) {
+      axiosConnector({
+        method: "DELETE",
+        url: `profile/lantern/${lanterId}`,
+      })
+        .then((res) => {
+          console.log("onClickDelete", res.data);
+          setMode("read");
+          onClickClose();
+          dispatch(profileActions.getLanternFestivals(hostId));
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
   };
 
   return (
     <>
       <div className={styles.lantern_festival}>
-        <img
-          src="https://dthezntil550i.cloudfront.net/3q/latest/3q1708081746157540000130612/1280_960/a34307ac-b2ac-4fa7-b816-31d231253cdf.png"
-          alt="연등회 배경"
-          className={styles.lantern_bg}
-        />
+        <div className={styles.lantern_bg}>
+          <Image
+            src={
+              lanternBackgroundImages[props.lanternFestival.background]
+                ? lanternBackgroundImages[props.lanternFestival.background]
+                : lanternBackgroundImages[0]
+            }
+            alt="연등회 배경"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
         {/* 라인 */}
         <div className={styles.line1} />
         <div className={styles.line2} />
         <div className={styles.line3} />
         {/* 연등 */}
         {mode === "create" ? (
-          <LanternList
-            mode="create"
-            lanterns={lanterns}
-            onClick={onClickLantern}
-          />
+          <LanternList mode="create" onClickLantern={onClickLanternCreate} />
         ) : (
-          <LanternList
-            mode="read"
-            lanterns={lanterns}
-            onClick={onClickLantern}
-          />
+          <LanternList mode="read" onClickLantern={onClickLanternRead} />
         )}
         <div className={styles.create_btn + " shadow"}>
           <Btn
@@ -75,7 +149,19 @@ const LanternFestival = (props: Props) => {
           </Btn>
         </div>
       </div>
-      {showCreateModal ? <LanternCreateModal onClick={onClickCancel} /> : null}
+      {showCreateModal ? (
+        <LanternCreateModal
+          onClickClose={onClickClose}
+          onClickComplete={onClickComplete}
+        />
+      ) : null}
+      {showLanternReadModal ? (
+        <LanternReadModal
+          onClickClose={onClickClose}
+          onClickDelete={onClickDelete}
+          lantern={lantern}
+        />
+      ) : null}
     </>
   );
 };

@@ -1,20 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { Lantern } from "store/interface/Lantern";
+import { useSelector } from "react-redux";
+import { LanternType } from "store/interface/Lantern";
+import { RootState } from "store/slice";
 import styles from "styles/profile/profileMain.module.css";
 import BlankLantern from "./BlankLantern";
 import CreateLantern from "./CreateLantern";
 import ReadLantern from "./ReadLantern";
 
 type Props = {
-  onClick: Function;
+  onClickLantern: Function;
   mode: string;
-  lanterns: Array<Lantern>;
 };
 
 const LanternList = (props: Props) => {
-  const lanternsLen = props.lanterns ? props.lanterns.length : 0;
-  console.log("lanternsLen", props.lanterns);
+  const lanternList = useSelector(
+    (state: RootState) => state.profile.lanternFestival.lanternList
+  );
+
+  const lanternsLen = lanternList ? lanternList.length : 0;
+  console.log("lanternsLen", lanternsLen);
   // 모드에 따라 반환 연등 구분
   const lantern = () => {
     if (props.mode === "create") {
@@ -40,20 +45,22 @@ const LanternList = (props: Props) => {
         } as const;
         styleList[index] = style;
         result[index] = (
-          <div style={style} onClick={(e) => props.onClick(index)}>
+          <div style={style} onClick={() => props.onClickLantern(index)}>
             {lantern()}
           </div>
         );
       }
     }
     for (let i = 0; i < lanternsLen; i++) {
-      const lantern = props.lanterns[i];
+      const lantern = lanternList[i];
       result[lantern.position] = (
         <div
           style={styleList[lantern.position]}
-          onClick={(e) => props.onClick(props.lanterns[i])}
+          onClick={() =>
+            props.mode === "read" ? props.onClickLantern(lantern) : null
+          }
         >
-          <ReadLantern lantern={lantern} />;
+          <ReadLantern lantern={lantern} />
         </div>
       );
     }

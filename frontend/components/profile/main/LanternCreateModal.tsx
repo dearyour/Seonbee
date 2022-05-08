@@ -8,12 +8,13 @@ import { MdOutlineClose } from "react-icons/md";
 import Btn from "components/commons/Btn";
 
 type Props = {
-  onClick: Function;
+  onClickClose: Function;
+  onClickComplete: Function;
 };
 
 const LanternCreateModal = (props: Props) => {
   const [selectedLantern, setSelectedLantern] = useState<number>(0);
-  const [msg, setMsg] = useState<string>("");
+  const [content, setContent] = useState<string>("");
 
   const lanterns = () => {
     const result = new Array(8).fill(null);
@@ -41,18 +42,14 @@ const LanternCreateModal = (props: Props) => {
     return result;
   };
 
-  const onClickComplete = () => {
-    console.log("onClickComplete");
-  };
-
   return (
     <>
       <div className={styles.create_lantern_modal + " d-flex flex-column p-4"}>
         <div
-          onClick={() => props.onClick()}
-          className={styles.icon + " clickable"}
+          onClick={() => props.onClickClose()}
+          className={styles.icon + " font_hover clickable"}
         >
-          <MdOutlineClose size="24" color="#64543e" />
+          <MdOutlineClose size="24" />
         </div>
         <div className="font_2 font_color text-center mt-3 mb-4">
           <span className="bold me-1">오연서</span>
@@ -66,7 +63,7 @@ const LanternCreateModal = (props: Props) => {
           rows={6}
           variant="filled"
           color="primary"
-          onChange={(e) => setMsg(e.target.value)}
+          onChange={(e) => setContent(e.target.value)}
         />
         {/* 연등 선택 */}
         <div className="semi_bold font_3 font_color my-3">연등 선택</div>
@@ -78,8 +75,11 @@ const LanternCreateModal = (props: Props) => {
           </div>
         </div>
         <div className="text-end mt-2">
-          {msg ? (
-            <Btn filled={true} onClick={() => onClickComplete()}>
+          {content ? (
+            <Btn
+              filled={true}
+              onClick={() => props.onClickComplete(content, selectedLantern)}
+            >
               연등 달기
             </Btn>
           ) : (

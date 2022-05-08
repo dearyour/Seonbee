@@ -1,20 +1,32 @@
+@keyframes comeUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 3;
+    transform: translate(-50%, -50%);
+  }
+}
+
 .lantern_bg {
   object-fit: cover;
-  height: 60vh;
+  height: 58vh;
   width: 47vw;
   border-radius: 10px;
   z-index: 1;
   position: relative;
+  overflow: auto;
 }
 
 .lantern_festival {
-  height: 60vh;
+  height: 58vh;
   width: 47vw;
   position: relative;
 }
 
 .lantern_container {
-  height: 60vh;
+  height: 58vh;
   width: 47vw;
 }
 
@@ -91,8 +103,8 @@
 
 .read_lantern {
   object-fit: contain;
-  height: 11vh;
-  width: 11vh;
+  height: 15vh;
+  width: 9vh;
   z-index: 5;
   cursor: pointer;
   margin-left: 1.5vh;
@@ -101,9 +113,9 @@
 
 .read_lantern:hover {
   object-fit: contain;
-  height: 12vh;
-  width: 12vh;
-  margin-left: 1.2vh;
+  height: 16vh;
+  width: 10vh;
+  margin-left: 1vh;
   z-index: 10;
 }
 
@@ -116,6 +128,7 @@
   right: 3vh;
   z-index: 7;
   position: absolute;
+  border-radius: 20px;
 }
 
 .create_lantern_modal {
@@ -129,6 +142,7 @@
   transform: translate(-50%, -50%);
   border-radius: 20px;
   box-shadow: 10px 10px 8px 1px rgba(0, 0, 0, 0.2);
+  animation: comeUp 0.4s ease-in-out;
 }
 
 .lantern_box {
@@ -144,9 +158,16 @@
 }
 
 .icon {
-  top: 2vh;
-  right: 2vh;
+  top: 1vh;
+  right: 1vh;
   position: absolute;
+}
+
+.delete_btn_white {
+  bottom: 3vh;
+  right: 3vh;
+  position: absolute;
+  z-index: 13;
 }
 
 .selected_lantern {
@@ -162,4 +183,44 @@
   width: 11vh;
   height: 13vh;
   position: relative;
+}
+
+.read_lantern_modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 64vh;
+  width: 69vh;
+  z-index: 15;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  box-shadow: 10px 10px 8px 1px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: comeUp 0.4s ease-in-out;
+}
+
+.letter {
+  position: absolute;
+  z-index: 16;
+}
+
+.letter_text {
+  z-index: 17;
+  height: 31vh;
+  width: 69vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #64543e;
+  border-radius: 20px;
+  overflow-y: auto;
+  position: absolute;
+}
+
+.read_title {
+  margin-top: 10vh;
+}
+
+.ddays_container {
+  width: 47vw;
 }

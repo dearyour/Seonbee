@@ -9,11 +9,7 @@ import {
   fork,
 } from "redux-saga/effects";
 import { memberActions } from "../slice/member";
-import {
-  GetLoginState,
-  GetMyProfileState,
-  KakaoLogin,
-} from "../api/Member.api";
+import { GetLoginState, GetMypageState, KakaoLogin } from "../api/Member.api";
 import Router from "next/router";
 
 // 카카오 사가
@@ -47,36 +43,35 @@ function* watchGetKakaoKey() {
 }
 
 // 마이페이지 사가
-function* getMyProfileState(memberId: any) {
-  const token = sessionStorage.getItem("Token");
-  console.log(memberId.payload);
-  console.log("##memberId");
-  try {
-    console.log("마이페이지 통신전");
-    const userdata: AxiosResponse = yield call(
-      GetMyProfileState,
-      memberId.payload,
-      token
-    );
-    console.log("마이페이지 통신후");
-    yield put(memberActions.setMyProfile(userdata));
-  } catch (err) {
-    console.log(err);
-    yield put(memberActions.setMyProfileFail(err));
-  }
-}
+// function* getMypageState(memberId: any) {
+//   const token = sessionStorage.getItem("Token");
+//   // console.log(memberId.payload);
+//   // console.log("##memberId");
+//   try {
+//     // console.log("마이페이지 통신전");
+//     const userdata: AxiosResponse = yield call(
+//       GetMypageState,
+//       memberId.payload,
+//       token
+//     );
+//     // console.log("마이페이지 통신후");
+//     yield put(memberActions.setMypage(userdata));
+//   } catch (err) {
+//     console.log(err);
+//     yield put(memberActions.setMypageFail(err));
+//   }
+// }
 
-function* watchMyProfileState() {
-  yield takeLatest(memberActions.getMyProfile, getMyProfileState);
-}
+// function* watchMypageState() {
+//   yield takeLatest(memberActions.getMypage, getMypageState);
+// }
 // 로그인 사가
 function* getLoginState() {
-  console.log("getLoginState");
   try {
     const token = sessionStorage.getItem("Token");
-    console.log("유저통신전");
+    // console.log("유저통신전");
     const userdata: AxiosResponse = yield call(GetLoginState, token);
-    console.log("유저통신후");
+    // console.log("유저통신후");
     yield put(memberActions.setMember(userdata));
   } catch (err) {
     console.log(err);
@@ -91,7 +86,7 @@ function* watchMemberState() {
 export default function* MemberSaga() {
   yield all([
     fork(watchMemberState),
-    fork(watchMyProfileState),
+    // fork(watchMypageState),
     fork(watchGetKakaoKey),
   ]);
 }

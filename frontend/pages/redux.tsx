@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/slice";
 import { layoutAction } from "store/slice/layout";
 import { memberActions } from "store/slice/member";
+import { profileActions } from "store/slice/profile";
 type Props = {};
 
 const reduxTestData = {
@@ -23,7 +24,7 @@ const Redux = (props: Props) => {
 
   useEffect(() => {
     // testRedux();
-    dispatch(memberActions.getMyProfile(memberId));
+    dispatch(profileActions.getProfile(memberId));
     dispatch(layoutAction.updateDetailState(reduxTestData));
   }, [dispatch]);
 

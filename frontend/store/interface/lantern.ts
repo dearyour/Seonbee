@@ -1,4 +1,4 @@
-export class Lantern {
+export class LanternType {
   lanternId: number;
   guestId: number;
   nickname: string;
@@ -16,26 +16,38 @@ export class Lantern {
   }
 }
 
-function LanternList(data: Array<any>): Lantern[] {
+function LanternList(data: Array<any>): LanternType[] {
   return data.map((now) => {
-    return new Lantern(now);
+    return new LanternType(now);
   });
 }
 
 export default LanternList;
 
-export class LanternFestival {
+export class LanternFestivalType {
   scheduleId: number;
   scheduleDate: string;
   title: string;
-  backgroud: number;
-  lanternList: Lantern[];
+  background: number;
+  lanternList: LanternType[];
 
   constructor(data: any) {
     this.scheduleId = data.scheduleId || 0;
     this.scheduleDate = data.scheduleDate || "";
     this.title = data.title || "";
-    this.backgroud = data.backgroud || 0;
+    this.background = data.background || 0;
     this.lanternList = data.lanternList || [];
+  }
+}
+
+export class DdayType {
+  scheduleId: number;
+  scheduleDate: number;
+  title: string;
+
+  constructor(data: any) {
+    this.scheduleId = data.scheduleId || 0;
+    this.scheduleDate = data.scheduleDate || 0;
+    this.title = data.title || "";
   }
 }

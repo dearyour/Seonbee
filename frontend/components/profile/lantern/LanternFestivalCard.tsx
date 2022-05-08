@@ -1,28 +1,55 @@
 import React from "react";
 import styles from "styles/profile/profileLantern.module.css";
-import { LanternFestival } from "store/interface/Lantern";
+import { LanternFestivalType } from "store/interface/Lantern";
 import { lanternBackgroundImages } from "styles/profile/LanternElements";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { profileActions } from "store/slice/profile";
+import { RootState } from "store/slice";
 
 type Props = {
-  lanternFestival: LanternFestival;
+  lanternFestival: LanternFestivalType;
 };
 
 const LanternFestivalCard = (props: Props) => {
-  const lantern = lanternBackgroundImages[props.lanternFestival.backgroud];
+  const dispatch = useDispatch();
+  const lanternBackground =
+    lanternBackgroundImages[props.lanternFestival.background];
+  const lanternFestivals = useSelector(
+    (state: RootState) => state.profile.lanternFestivals
+  );
+  const lanternFestivalsLen = lanternFestivals ? lanternFestivals.length : 0;
+  const onClickLanternFestivalCard = () => {
+    for (let i = 0; i < lanternFestivalsLen; i++) {
+      if (lanternFestivals[i].scheduleId === props.lanternFestival.scheduleId) {
+        const newLanternFestival = lanternFestivals[i];
+        dispatch(profileActions.setLanternFestival(newLanternFestival));
+        dispatch(profileActions.setShowLanternFestival());
+        break;
+      }
+    }
+  };
   return (
     <>
-      <div className={styles.lantern_card + " font_2 shadow_s"}>
-        <div className={styles.lantern_text}>
-          <div style={{ zIndex: 2 }}>{props.lanternFestival.scheduleDate}</div>
-          <div style={{ zIndex: 2 }}>{props.lanternFestival.title}</div>
+      <div onClick={() => onClickLanternFestivalCard()}>
+        <div className={styles.lantern_card + " font_2 shadow_s"}>
+          <div className={styles.lantern_text}>
+            <div style={{ zIndex: 2 }}>
+              {props.lanternFestival.scheduleDate}
+            </div>
+            <div style={{ zIndex: 2 }}>
+              {props.lanternFestival.title
+                ? props.lanternFestival.title
+                : "제목없음"}
+            </div>
+          </div>
+          <Image
+            src={lanternBackground}
+            alt={`lanternBackground${props.lanternFestival.background}`}
+            layout="fill"
+            objectFit="cover"
+          />
         </div>
-        <Image
-          src={lantern}
-          alt={`lanternBackground${props.lanternFestival.backgroud}`}
-          layout="fill"
-          objectFit="cover"
-        />
       </div>
     </>
   );

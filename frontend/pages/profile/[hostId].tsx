@@ -10,7 +10,7 @@ import Chat from "components/profile/chat/Chat";
 import Setting from "components/profile/setting/Setting";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { memberActions } from "store/slice/member";
+import { profileActions } from "store/slice/profile";
 
 type Props = {};
 
@@ -20,7 +20,8 @@ const Profile = (props: Props) => {
   const { hostId } = router.query;
 
   useEffect(() => {
-    dispatch(memberActions.setHostId(hostId));
+    dispatch(profileActions.setHostId(hostId));
+    dispatch(profileActions.getProfile(hostId));
     console.log("hostId", hostId);
   }, []);
 
@@ -84,7 +85,7 @@ const Profile = (props: Props) => {
             {/* 콘텐츠 영역 */}
             <div className={styles.content + " center_flex"}>
               {selectedBtn === "호패" ? (
-                <ProfileMain />
+                <ProfileMain hostId={hostId} />
               ) : selectedBtn === "연등회 모음" ? (
                 <Lantern />
               ) : selectedBtn === "주고 싶소" ? (

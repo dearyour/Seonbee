@@ -7,12 +7,17 @@ import Image from "next/image";
 import { MdOutlineClose } from "react-icons/md";
 import Btn from "components/commons/Btn";
 import axiosConnector from "utils/axios-connector";
+import { profileActions } from "store/slice/profile";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store/slice";
 
 type Props = {
   onClick: Function;
 };
 
 const LanternFestivalCreateModal = (props: Props) => {
+  const dispatch = useDispatch();
+  const hostId = useSelector((state: RootState) => state.profile.hostId);
   const [content, setContent] = useState<string>("");
   const [scheduleDate, setScheduleDate] = useState<string>("");
   const [selectedLanternBackground, setSelectedLanternBackground] =
@@ -58,7 +63,7 @@ const LanternFestivalCreateModal = (props: Props) => {
   const onClickComplete = () => {
     const newScheduleDate = scheduleDate.replace(/-/g, ".");
     const formData = {
-      content,
+      title: content,
       scheduleDate: newScheduleDate,
       background: selectedLanternBackground,
     };
@@ -71,6 +76,7 @@ const LanternFestivalCreateModal = (props: Props) => {
       .then((res) => {
         console.log(res.data);
         props.onClick();
+        dispatch(profileActions.getLanternFestivals(hostId));
       })
       .catch((err) => {
         console.log(err.response);
@@ -86,9 +92,9 @@ const LanternFestivalCreateModal = (props: Props) => {
       >
         <div
           onClick={() => props.onClick()}
-          className={styles.icon + " clickable"}
+          className={styles.icon + " font_hover clickable"}
         >
-          <MdOutlineClose size="24" color="#64543e" />
+          <MdOutlineClose size="24" />
         </div>
         <div className="font_2 font_color text-center mt-3 mb-4">
           <span className="bold me-1">나의</span>

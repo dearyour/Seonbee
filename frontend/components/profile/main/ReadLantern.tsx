@@ -1,25 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import styles from "styles/profile/profileMain.module.css";
 import { lanternImages } from "styles/profile/LanternElements";
-import { Lantern } from "store/interface/Lantern";
+import { LanternType } from "store/interface/Lantern";
 import Image from "next/image";
+import LanternReadModal from "./LanternReadModal";
 
 type Props = {
-  onClick?: Function;
-  lantern: Lantern;
+  lantern: LanternType;
 };
 
 const ReadLantern = (props: Props) => {
   return (
     <>
-      {/* <img className={styles.read_lantern} src={lanternImages[props.lantern.lanternType]} alt="" /> */}
       <div className={styles.read_lantern}>
         <Image
           src={lanternImages[props.lantern.lanternType]}
           alt={`lantern${props.lantern.lanternType}`}
-          width={200}
-          height={240}
+          layout="fill"
+          objectFit="contain"
         />
       </div>
     </>

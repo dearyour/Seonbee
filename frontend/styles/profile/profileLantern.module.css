@@ -1,3 +1,14 @@
+@keyframes comeUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 3;
+    transform: translate(-50%, -50%);
+  }
+}
+
 .lantern_container {
   height: 60vh;
   width: 47vw;
@@ -5,21 +16,27 @@
 
 .lantern_festivals {
   height: 58vh;
+  width: 47vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-y: auto;
 }
 
 .lantern_card {
-  height: 9.2vw;
-  width: 9.2vw;
+  height: 10.2vw;
+  width: 10.2vw;
   border-radius: 20px;
   overflow: auto;
   position: relative;
+  cursor: pointer;
 }
 
 .lantern_text {
   display: flex;
   flex-direction: column;
-  height: 9.2vw;
-  width: 9.2vw;
+  height: 10.2vw;
+  width: 10.2vw;
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.2);
@@ -30,10 +47,18 @@
   z-index: 1;
 }
 
+.lantern_text:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .icon {
   top: 2vh;
   right: 2vh;
   position: absolute;
+}
+
+.icon_back {
+  cursor: pointer;
 }
 
 .selected_lantern_background {
@@ -63,6 +88,7 @@
   transform: translate(-50%, -50%);
   border-radius: 20px;
   box-shadow: 10px 10px 8px 1px rgba(0, 0, 0, 0.2);
+  animation: comeUp 0.4s ease-in-out;
 }
 
 .lantern_background_box {

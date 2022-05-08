@@ -40,7 +40,7 @@ export const GetLoginState = (token: string | null) => {
     });
 };
 
-export const GetMyProfileState = (
+export const GetMypageState = (
   memberId: object | null,
   token: string | null
 ) => {
