@@ -37,8 +37,8 @@ const Lantern = (props: Props) => {
       })
         .then((res) => {
           console.log("onClickDelete schedule", res.data);
-          setShowCreateModal(!showCreateModal);
           dispatch(profileActions.getLanternFestivals(hostId));
+          dispatch(profileActions.setShowLanternFestival());
         })
         .catch((err) => {
           console.log(err.response);

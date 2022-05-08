@@ -58,6 +58,7 @@ export const profileSlice = createSlice({
       for (let i = 0; i < payload.length; i++) {
         const lanternFestival = payload[i];
         const ddayCnt = calDday(lanternFestival.scheduleDate);
+        console.log("ddayCnt", ddayCnt);
         if (ddayCnt < 7) {
           const dday = {
             scheduleId: lanternFestival.scheduleId,
@@ -70,10 +71,6 @@ export const profileSlice = createSlice({
       console.log("setLanternFestivals ddays", ddays);
       state.ddays = ddays;
       if (state.lanternFestival) {
-        console.log(
-          "state.lanternFestival 있음",
-          state.lanternFestival.scheduleId
-        );
         for (let i = 0; i < payload.length; i++) {
           if (payload[i].scheduleId === state.lanternFestival.scheduleId) {
             state.lanternFestival = payload[i];
@@ -81,7 +78,6 @@ export const profileSlice = createSlice({
           }
         }
       } else {
-        ("state.lanternFestival 없음");
         state.lanternFestival = payload[0];
       }
     },

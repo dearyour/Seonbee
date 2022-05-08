@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React from "react";
 import styles from "styles/profile/profileMain.module.css";
 import { lanternImages } from "styles/profile/LanternElements";
 import { LanternType } from "store/interface/Lantern";
 import Image from "next/image";
-import LanternReadModal from "./LanternReadModal";
 
 type Props = {
   lantern: LanternType;

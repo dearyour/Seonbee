@@ -23,8 +23,6 @@ const ProfileMain = (props: Props) => {
 
   useEffect(() => {
     dispatch(profileActions.getLanternFestivals(props.hostId));
-    console.log("dispatch(profileActions.getLanternFestivals(hostId));");
-    console.log(lanternFestival);
   }, []);
 
   return (

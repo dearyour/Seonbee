@@ -19,7 +19,7 @@ const LanternList = (props: Props) => {
   );
 
   const lanternsLen = lanternList ? lanternList.length : 0;
-  console.log("lanternsLen", lanternsLen);
+
   // 모드에 따라 반환 연등 구분
   const lantern = () => {
     if (props.mode === "create") {
