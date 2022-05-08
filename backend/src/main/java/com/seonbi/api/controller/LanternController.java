@@ -117,7 +117,7 @@ public class LanternController {
 
     @DeleteMapping("/{lanternId}")
     public ResponseEntity<? extends BaseResponseBody> deleteLantern(
-            @ApiIgnore Authentication authentication, @PathVariable Long lanternId){
+            @ApiIgnore Authentication authentication, @PathVariable("lanternId") Long lanternId){
 
         Member member=memberAuthService.memberAuthorize(authentication);
         if (member==null){
@@ -131,7 +131,7 @@ public class LanternController {
 
     @DeleteMapping("/schedule/{scheduleId}")
     public ResponseEntity<? extends BaseResponseBody> deleteSchedule(
-            @ApiIgnore Authentication authentication, @PathVariable Long scheduleId){
+            @ApiIgnore Authentication authentication, @PathVariable("scheduleId") Long scheduleId){
 
         Member member=memberAuthService.memberAuthorize(authentication);
         if (member==null){
