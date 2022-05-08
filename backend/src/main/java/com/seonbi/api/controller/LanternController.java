@@ -129,7 +129,7 @@ public class LanternController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
-    @DeleteMapping("/{scheduleId}")
+    @DeleteMapping("/schedule/{scheduleId}")
     public ResponseEntity<? extends BaseResponseBody> deleteSchedule(
             @ApiIgnore Authentication authentication, @PathVariable Long scheduleId){
 
