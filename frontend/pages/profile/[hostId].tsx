@@ -11,6 +11,7 @@ import Setting from "components/profile/setting/Setting";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { profileActions } from "store/slice/profile";
+import { RootState } from "store/slice";
 
 type Props = {};
 
@@ -18,6 +19,9 @@ const Profile = (props: Props) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { hostId } = router.query;
+  const showLanternFestival = useSelector(
+    (state: RootState) => state.profile.showLanternFestival
+  );
 
   useEffect(() => {
     dispatch(profileActions.setHostId(hostId));
@@ -47,7 +51,12 @@ const Profile = (props: Props) => {
               ? styles.selected_btn
               : styles.side_btn) + " center_flex bold clickable"
           }
-          onClick={(e) => setSelectedBtn(sideBtnName)}
+          onClick={(e) => {
+            setSelectedBtn(sideBtnName);
+            if (showLanternFestival) {
+              dispatch(profileActions.setShowLanternFestival());
+            }
+          }}
         >
           {sideBtnName}
         </div>

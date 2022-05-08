@@ -1,5 +1,5 @@
 import Btn from "components/commons/Btn";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "styles/profile/profileLantern.module.css";
 import LanternFestivalCardList from "./LanternFestivalCardList";
 import LanternFestivalCreateModal from "./LanternFestivalCreateModal";
@@ -30,12 +30,13 @@ const Lantern = (props: Props) => {
 
   const onClickDelete = () => {
     if (lanternFestival) {
+      console.log("onClickDelete schedule");
       axiosConnector({
         method: "DELETE",
-        url: `profile/lantern/${lanternFestival.scheduleId}`,
+        url: `profile/lantern/schedule/${lanternFestival.scheduleId}`,
       })
         .then((res) => {
-          console.log("onClickDelete", res.data);
+          console.log("onClickDelete schedule", res.data);
           setShowCreateModal(!showCreateModal);
           dispatch(profileActions.getLanternFestivals(hostId));
         })
@@ -81,10 +82,7 @@ const Lantern = (props: Props) => {
                 {lanternFestival.scheduleDate})
               </div>
             </div>
-            <div
-              className="pt-1 font_hover"
-              onClick={() => props.onClickDelete(lanternFestival.scheduleId)}
-            >
+            <div className="pt-1 font_hover" onClick={() => onClickDelete()}>
               <div>연등회 삭제</div>
             </div>
           </div>

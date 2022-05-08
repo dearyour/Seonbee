@@ -58,7 +58,7 @@ export const profileSlice = createSlice({
       for (let i = 0; i < payload.length; i++) {
         const lanternFestival = payload[i];
         const ddayCnt = calDday(lanternFestival.scheduleDate);
-        if (ddayCnt > -7) {
+        if (ddayCnt < 7) {
           const dday = {
             scheduleId: lanternFestival.scheduleId,
             scheduleDate: ddayCnt,
@@ -67,6 +67,7 @@ export const profileSlice = createSlice({
           ddays.push(dday);
         }
       }
+      console.log("setLanternFestivals ddays", ddays);
       state.ddays = ddays;
       if (state.lanternFestival) {
         console.log(
