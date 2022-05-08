@@ -193,7 +193,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
         Member member=memberRepository.findByNicknameAndIsDeleted(nickname, false);
-        System.out.println(curNickname+" "+member.getNickname());
+//        System.out.println(curNickname+" "+member.getNickname());
         if (member==null || curNickname.equals(member.getNickname())){      // 닉네임 중복이 없거나 본인인 경우
             return 200;
         }
