@@ -22,7 +22,8 @@ public class MemberDto {
     private String banlist;
     private String imageString;
     private String verse;
-    private String job;
+//    private String job;
+    private boolean isFriend=false;
     private boolean isAdmin=false;
     private boolean isKakao=false;
 
