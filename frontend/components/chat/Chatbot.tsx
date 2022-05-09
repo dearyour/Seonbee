@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Avatar from '@mui/material/Avatar';
-import { InputBase } from '@mui/material';
-import { FiSend } from 'react-icons/fi';
-import axios from 'axios';
-import Messages from './Messages';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Avatar from "@mui/material/Avatar";
+import { InputBase } from "@mui/material";
+import { FiSend } from "react-icons/fi";
+import axios from "axios";
+import Messages from "./Messages";
 import {
   ChatbotWidget,
   ChatbotHeader,
   ChatbotBody,
   ChatbotFooter,
   SendBtn,
-} from 'styles/chat/ChatbotElements';
-import { useEffectOnce } from 'store/hook/useEffectOnce';
+} from "styles/chat/ChatbotElements";
+import { useEffectOnce } from "store/hook/useEffectOnce";
+import { chatbotActions } from "store/slice/chatbot";
 
 function Chatbot() {
   // const textQuery = async () => {
@@ -25,23 +26,27 @@ function Chatbot() {
 
   const dispatch = useDispatch();
 
+  // const [isLoaded, setLoaded] = useState<boolean>(false);
+
   useEffectOnce(() => {
-    eventQuery('WelcomeToSeonbee');
+    dispatch(chatbotActions.resetMessage());
+    eventQuery("WelcomeToSeonbee");
   });
 
   const textQuery = async (text: string) => {
     // 1. 유저가 입력한 메시지 처리
     let conversation = {
-      who: 'user',
+      who: "user",
       content: {
         text: {
           text: text,
         },
       },
+      quick_replies: [],
     };
 
-    console.log('text I sent', conversation);
-    // dispatch(saveMessage(conversation));
+    dispatch(chatbotActions.saveMessage(conversation));
+    // console.log('text I sent', conversation);
 
     // 2. 챗봇이 보낸 메시지 처리
     const textQueryVariables = {
@@ -51,26 +56,51 @@ function Chatbot() {
     try {
       // textQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        'http://localhost:5000/api/dialogflow/textQuery',
+        "http://localhost:5000/api/dialogflow/textQuery",
         textQueryVariables
       );
-      const content = response.data.fulfillmentMessages[0];
+      // const content = response.data.fulfillmentMessages[0];
+      // const content = {
+      //   text: {
+      //     text: response.data.fullfillmentMessages[0].text.text[0],
+      //   },
+      // };
 
-      conversation = {
-        who: 'bot',
-        content: content,
-      };
-      console.log(conversation);
+      // for (let content of response.data.fulfillmentMessages) {
+      //   conversation = {
+      //     who: 'bot',
+      //     content: content,
+      //   };
+      //   dispatch(chatbotActions.saveMessage(conversation));
+      // }
+      const content = response.data.fulfillmentMessages;
+      if (content.length == 1) {
+        conversation = {
+          who: "bot",
+          content: content[0],
+          quick_replies: [],
+        };
+      } else {
+        conversation = {
+          who: "botWithQR",
+          content: content[0],
+          quick_replies:
+            content[1].payload.fields.quick_replies.listValue.values,
+        };
+      }
+      dispatch(chatbotActions.saveMessage(conversation));
     } catch (error) {
       conversation = {
-        who: 'bot',
+        who: "bot",
         content: {
           text: {
-            text: '에러가 발생했습니다. 관리자에게 문의해주세요.',
+            text: "에러가 발생했습니다. 관리자에게 문의해주세요.",
           },
         },
+        quick_replies: [],
       };
-      console.log(conversation);
+
+      dispatch(chatbotActions.saveMessage(conversation));
     }
   };
 
@@ -83,38 +113,40 @@ function Chatbot() {
     try {
       // eventQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        'http://localhost:5000/api/dialogflow/eventQuery',
+        "http://localhost:5000/api/dialogflow/eventQuery",
         eventQueryVariables
       );
 
-      const content = response.data.fulfillmentMessages[0];
+      // const content = response.data.fulfillmentMessages[0];
+      for (let content of response.data.fulfillmentMessages) {
+        let conversation = {
+          who: "bot",
+          content: content,
+        };
 
-      let conversation = {
-        who: 'bot',
-        content: content,
-      };
-
-      console.log(conversation);
+        dispatch(chatbotActions.saveMessage(conversation));
+      }
     } catch (error) {
       let conversation = {
-        who: 'bot',
+        who: "bot",
         content: {
           text: {
-            text: '에러가 발생했습니다. 관리자에게 문의해주세요.',
+            text: "에러가 발생했습니다. 관리자에게 문의해주세요.",
           },
         },
       };
-      console.log(conversation);
+
+      dispatch(chatbotActions.saveMessage(conversation));
     }
   };
 
-  const keyUpHandler = (e: { key: string; target: { value: any } }) => {
-    if (e.key === 'Enter') {
+  const keyUpHandler = (e: any) => {
+    if (e.key === "Enter") {
       if (e.target.value) {
         // we will send text query route
         textQuery(e.target.value);
 
-        e.target.value = '';
+        e.target.value = "";
       }
     }
   };
@@ -135,7 +167,7 @@ function Chatbot() {
           sx={{ width: 24, height: 24 }}
         />
         <InputBase
-          style={{ borderBottom: '1px solid black' }}
+          style={{ borderBottom: "1px solid black" }}
           sx={{ ml: 1, flex: 0.8 }}
           placeholder="대답해 주시오"
           onKeyUp={keyUpHandler}

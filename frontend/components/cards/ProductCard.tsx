@@ -1,9 +1,22 @@
 import React from "react";
 import Image from "next/image";
-type Props = {};
+
 import imageURL from "public/shoes.png";
 import Btn from "components/commons/Btn";
-const Card = (props: Props) => {
+import styled from "@emotion/styled";
+
+interface Props {
+  productId: number;
+  name: string;
+  price: number;
+  buyUrl: string;
+  imageUrl: string;
+  giverId?: number;
+  giverName?: String;
+  isSaved?: boolean;
+}
+
+const ProductCard = (props: Props) => {
   return (
     <div>
       <div className="containerc">
@@ -14,7 +27,7 @@ const Card = (props: Props) => {
               width={350}
               height={200}
               //   layout="fill"
-              src={imageURL}
+              src={props.imageUrl}
             />
           </div>
           <div className="contentBx">
@@ -37,8 +50,10 @@ const Card = (props: Props) => {
           </div>
         </div>
       </div>
+
+      {/* {props.giverId && <div>{props.giverName}님이 선물하실 예정입니다.</div>} */}
     </div>
   );
 };
 
-export default Card;
+export default ProductCard;
