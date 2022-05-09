@@ -12,14 +12,14 @@ import ControlMenu from "./ControlMenu";
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
 const NICK_REGEX = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,12}$/;
-const PW_REGEX = /^[a-zA-Z0-9]{7,16}$/;
-// // 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
-// const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{8,16}$/;
+// const PW_REGEX = /^[a-zA-Z0-9]{7,16}$/;
+// 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
+const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{7,16}$/;
 const ERROR_MSG: any = {
   required: "비어있소.",
   invalidId: "Ex) Email@naver.com",
   validId: "허가한다.",
-  invalidPw: "대,소문자 or 숫자 구성 8~16 글자",
+  invalidPw: "대,소문자 and 숫자 포함 8~16 글자",
   validPw: "허가한다.",
   invalidNick: "한글 or 대,소문자 or 숫자 2~12 글자",
   invalidConfirmPw: "비밀번호가 일치하지 않습니다.",
