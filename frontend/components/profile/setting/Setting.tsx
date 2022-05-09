@@ -4,9 +4,10 @@ type Props = {};
 
 const Setting = (props: Props) => {
   return (
-    <>
-      <div>설정</div>
-    </>
+    <div className="row">
+      <div className="col-6"></div>
+      <div className="col-6"></div>
+    </div>
   );
 };
 

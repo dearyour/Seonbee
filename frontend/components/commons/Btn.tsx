@@ -35,8 +35,8 @@ function Btn({
     color: fontColor,
     borderRadius: 30,
     backgroundColor: mainColor,
-    border: "2px solid " + borderColor,
-    fontFamily: ["Pretendard-Regular"].join(","),
+    border: "2px solid " + mainColor,
+    fontFamily: "Pretendard",
     "&:hover": {
       backgroundColor: effectColor,
       borderColor: effectColor,

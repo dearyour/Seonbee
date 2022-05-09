@@ -61,12 +61,17 @@ const Alarm = (props: Props) => {
           <div className="row">
             {members.map((now, index) => {
               return (
-                <div key={index}>
-                  <div className="col">
-                    <Image src={GetImage(now.imageString)}></Image>
+                <div key={index} className="row">
+                  <div className="col-2">
+                    <Image
+                      src={GetImage(now.imageString)}
+                      alt="profile"
+                      width={"100%"}
+                      height={"100%"}
+                    ></Image>
                   </div>
-                  <div className="col">{now.nickname}님의 친구 신청</div>
-                  <div className="col">
+                  <div className="col-4">{now.nickname}</div>
+                  <div className="col-3">
                     <Btn
                       onClick={FriendRes}
                       param={{ id: now.friendId, allow: "OK" }}
@@ -74,7 +79,7 @@ const Alarm = (props: Props) => {
                       수락
                     </Btn>
                   </div>
-                  <div className="col">
+                  <div className="col-3">
                     <Btn
                       onClick={FriendRes}
                       param={{ id: now.friendId, allow: "NO" }}

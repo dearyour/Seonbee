@@ -9,11 +9,11 @@ export class Member {
   birthday: string;
   gender: string;
   mbti: string;
-  job: string;
   interest: string;
   likelist: string;
   banlist: string;
   image: string;
+  friendStatus: string;
 
   constructor(data: any) {
     this.id = data.id || 0;
@@ -26,11 +26,11 @@ export class Member {
     this.birthday = data.birthday || "";
     this.gender = data.gender || "";
     this.mbti = data.mbti || "";
-    this.job = data.job || "";
     this.interest = data.interest || "";
     this.likelist = data.likelist || "";
     this.banlist = data.banlist || "";
     this.image = data.image || "";
+    this.friendStatus = data.friendStatus || "";
   }
 }
 

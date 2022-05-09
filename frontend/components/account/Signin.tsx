@@ -186,9 +186,9 @@ const Signin = (props: Props) => {
         <LoginWrapper>
           <Login />
         </LoginWrapper>
-        <a href="/shop" className="forgot">
-          비밀스러운 번호를 까먹었소?
-        </a>
+        {/* <a href="/shop" className="forgot"> */}
+        {/* 비밀스러운 번호를 까먹었소? */}
+        {/* </a> */}
       </form>
     </div>
   );

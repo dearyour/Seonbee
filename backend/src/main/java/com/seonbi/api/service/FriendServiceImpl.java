@@ -200,4 +200,23 @@ public class FriendServiceImpl implements FriendService{
         return friendDtoList;
     }
 
+    @Override
+    public String getFriendStatus(Long memberId1, Long memberId2) {     // 로그인한 회원, 상대 회원
+        Friend friend1 = friendRepository.findByFollowerIdAndFolloweeIdAndIsDeleted(memberId1, memberId2, false);
+        Friend friend2 = friendRepository.findByFollowerIdAndFolloweeIdAndIsDeleted(memberId2, memberId1, false);
+        if (friend1==null && friend2==null){
+            return "unfriend";
+        }
+        if ((friend1!=null && "OK".equals(friend1.getIsAllowed())) || (friend2!=null && "OK".equals(friend2.getIsAllowed()))){
+            return "friend";
+        }
+        if (friend1!=null && "BEFORE".equals(friend1.getIsAllowed())){  // 로그인한 회원이 친구 요청 보낸 경우
+            return "requesting";
+        }
+        if (friend2!=null && "BEFORE".equals(friend2.getIsAllowed())){  // 로그인한 회원이 친구 요청 받은 경우
+            return "requested";
+        }
+        return "unfriend";
+    }
+
 }
