@@ -39,7 +39,7 @@ export const GetLoginState = (token: string | null) => {
       return console.log(err.response);
     });
 };
-//멤버 호패 정보
+
 export const GetMypageState = (
   memberId: object | null,
   token: string | null
@@ -72,3 +72,16 @@ export const GetMypageState = (
 //       return console.log(err.response);
 //     });
 // };
+
+export const GetLanternFestivalState = (hostId: number) => {
+  return axiosConnector({
+    method: "GET",
+    url: `profile/lantern/${hostId}`,
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return console.log(err.response);
+    });
+};

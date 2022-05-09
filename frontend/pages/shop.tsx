@@ -1,13 +1,9 @@
 import React from "react";
-import Card from "components/cards/card";
+import ProductCard from "components/cards/ProductCard";
 type Props = {};
 
 const shop = (props: Props) => {
-  return (
-    <div>
-      <Card></Card>
-    </div>
-  );
+  return <div>{/* <ProductCard></ProductCard> */}</div>;
 };
 
 export default shop;

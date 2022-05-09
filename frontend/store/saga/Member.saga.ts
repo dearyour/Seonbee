@@ -25,7 +25,7 @@ function* getKakaoKey() {
     // console.log("##카카오사가");
     // console.log(code);
     yield put(memberActions.getKakaoKeySuccess(response.jwt));
-    getLoginState();
+    yield call(getLoginState);
     Router.push("/");
     // if (response.newUser) {
     //   Router.push("/user/profileEdit")
@@ -43,28 +43,28 @@ function* watchGetKakaoKey() {
 }
 
 // 마이페이지 사가
-function* getMypageState(memberId: any) {
-  const token = sessionStorage.getItem("Token");
-  // console.log(memberId.payload);
-  // console.log("##memberId");
-  try {
-    // console.log("마이페이지 통신전");
-    const userdata: AxiosResponse = yield call(
-      GetMypageState,
-      memberId.payload,
-      token
-    );
-    // console.log("마이페이지 통신후");
-    yield put(memberActions.setMypage(userdata));
-  } catch (err) {
-    console.log(err);
-    yield put(memberActions.setMypageFail(err));
-  }
-}
+// function* getMypageState(memberId: any) {
+//   const token = sessionStorage.getItem("Token");
+//   // console.log(memberId.payload);
+//   // console.log("##memberId");
+//   try {
+//     // console.log("마이페이지 통신전");
+//     const userdata: AxiosResponse = yield call(
+//       GetMypageState,
+//       memberId.payload,
+//       token
+//     );
+//     // console.log("마이페이지 통신후");
+//     yield put(memberActions.setMypage(userdata));
+//   } catch (err) {
+//     console.log(err);
+//     yield put(memberActions.setMypageFail(err));
+//   }
+// }
 
-function* watchMypageState() {
-  yield takeLatest(memberActions.getMypage, getMypageState);
-}
+// function* watchMypageState() {
+//   yield takeLatest(memberActions.getMypage, getMypageState);
+// }
 // 로그인 사가
 function* getLoginState() {
   try {
@@ -86,7 +86,7 @@ function* watchMemberState() {
 export default function* MemberSaga() {
   yield all([
     fork(watchMemberState),
-    fork(watchMypageState),
+    // fork(watchMypageState),
     fork(watchGetKakaoKey),
   ]);
 }
