@@ -50,11 +50,15 @@ const Profile = (props: Props) => {
           {/* 본문 영역 */}
           <div className={styles.main_content + " shadow d-flex"}>
             {/* 프로필 정보 */}
-            <div
-              className={styles.profile_info + " d-flex justify-content-center"}
-            >
-              <ProfileInfo />
-            </div>
+            {selectedBtn === "호패" && (
+              <div
+                className={
+                  styles.profile_info + " d-flex justify-content-center"
+                }
+              >
+                <ProfileInfo />
+              </div>
+            )}
             {/* 콘텐츠 영역 */}
             <div className={styles.content + " center_flex"}>
               {selectedBtn === "호패" ? (
