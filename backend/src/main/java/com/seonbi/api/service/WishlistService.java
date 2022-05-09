@@ -9,4 +9,5 @@ public interface WishlistService {
     List<WishlistDto> getWishlist(Long hostId);
     int reserveWishlist(Long giverId, Long receiverId, Long wishlistId);
     int deleteWishlist(Long memberId, Long wishlistId);
+    void addWishlist(Long memberId, Long productId);
 }

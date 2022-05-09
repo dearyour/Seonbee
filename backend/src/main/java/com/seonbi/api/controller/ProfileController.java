@@ -9,6 +9,7 @@ import com.seonbi.api.response.BaseResponseBody;
 import com.seonbi.api.response.MemberAuthRes;
 import com.seonbi.api.response.MemberGetRes;
 import com.seonbi.api.response.MemberLoginRes;
+import com.seonbi.api.service.FriendService;
 import com.seonbi.api.service.ImageService;
 import com.seonbi.api.service.MemberAuthService;
 import com.seonbi.api.service.MemberService;
@@ -39,6 +40,9 @@ public class ProfileController {
 
     @Autowired
     MemberAuthService memberAuthService;
+
+    @Autowired
+    FriendService friendService;
 
     @PostMapping("/update")
     public ResponseEntity<? extends BaseResponseBody> updateMember(
@@ -96,11 +100,18 @@ public class ProfileController {
     }
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<? extends BaseResponseBody> getMemberByMemberId(@PathVariable("memberId") Long memberId) {
+    public ResponseEntity<? extends BaseResponseBody> getMemberByMemberId(
+            @ApiIgnore Authentication authentication, @PathVariable("memberId") Long memberId) {
+        Member member = memberAuthService.memberAuthorize(authentication);
+        if (member == null) {
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
         MemberDto memberDto = memberService.getMemberByMemberId(memberId);
         if (memberDto == null) {
             return ResponseEntity.status(401).body(MemberGetRes.of(401, "존재하지 않는 회원입니다.", null));
         }
+        String friendStatus=friendService.getFriendStatus(member.getMemberId(), memberDto.getMemberId());
+        memberDto.setFriendStatus(friendStatus);
         return ResponseEntity.status(200).body(MemberGetRes.of(200, "Success", memberDto));
     }
 

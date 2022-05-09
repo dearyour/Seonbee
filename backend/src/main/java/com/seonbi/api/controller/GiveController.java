@@ -1,11 +1,13 @@
 package com.seonbi.api.controller;
 
 import com.seonbi.api.model.ReceiverDto;
+import com.seonbi.api.model.ReceiverProductDto;
 import com.seonbi.api.model.RecommendReceiverDto;
 import com.seonbi.api.model.WishlistDto;
 import com.seonbi.api.request.ReceiverIsMemberReq;
 import com.seonbi.api.request.ReserveProductReq;
 import com.seonbi.api.response.BaseResponseBody;
+import com.seonbi.api.response.ReceiverProductAllRes;
 import com.seonbi.api.response.RecommendReceiverAllRes;
 import com.seonbi.api.response.WishlistAllRes;
 import com.seonbi.api.service.*;
@@ -44,9 +46,9 @@ public class GiveController {
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         }
 
-        List<RecommendReceiverDto> recommendReceiverDtoList=recommendService.getGiveAll(member.getMemberId());
+        RecommendReceiverDto receiverList=recommendService.getGiveAll(member.getMemberId());
 
-        return ResponseEntity.status(200).body(RecommendReceiverAllRes.of(200, "success", recommendReceiverDtoList));
+        return ResponseEntity.status(200).body(RecommendReceiverAllRes.of(200, "success", receiverList));
     }
 
     @PostMapping()
@@ -57,8 +59,9 @@ public class GiveController {
         if (member==null){
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         }
-        recommendService.getGiveProductAll(receiverIsMemberReq.getReceiverId(), receiverIsMemberReq.getIsMember());
-        return ResponseEntity.status(200).body(WishlistAllRes.of(200, "success"));
+        List<ReceiverProductDto> productDtoList = recommendService.getGiveProductAll(
+                member.getMemberId(), receiverIsMemberReq.getReceiverId(), receiverIsMemberReq.getIsMember());
+        return ResponseEntity.status(200).body(ReceiverProductAllRes.of(200, "success", productDtoList));
     }
 
 
