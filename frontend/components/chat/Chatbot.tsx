@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d10b2204481800fdb47f50240fc34c09c8e1d771
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
@@ -6,6 +9,7 @@ import { InputBase } from '@mui/material';
 import { FiSend } from 'react-icons/fi';
 import axios from 'axios';
 import Messages from './Messages';
+<<<<<<< HEAD
 =======
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +19,8 @@ import { FiSend } from "react-icons/fi";
 import axios from "axios";
 import Messages from "./Messages";
 >>>>>>> c1679fc6d3e161e338ed9dafda1050a479f6c822
+=======
+>>>>>>> d10b2204481800fdb47f50240fc34c09c8e1d771
 import {
   ChatbotWidget,
   ChatbotHeader,
@@ -158,6 +164,9 @@ function Chatbot() {
         textQuery(e.target.value);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d10b2204481800fdb47f50240fc34c09c8e1d771
         e.target.value = '';
         // setCurrInput('');
 
@@ -166,9 +175,12 @@ function Chatbot() {
         console.log(scrollRef.current == null);
 
         // scrollRef.current?.scrollIntoView();
+<<<<<<< HEAD
 =======
         e.target.value = "";
 >>>>>>> c1679fc6d3e161e338ed9dafda1050a479f6c822
+=======
+>>>>>>> d10b2204481800fdb47f50240fc34c09c8e1d771
       }
     }
   };
