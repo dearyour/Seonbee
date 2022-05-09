@@ -65,7 +65,9 @@ public class MemberController {
          */
 
         Member member = memberAuthService.memberAuthorize(authentication);
-        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        if (member == null) {
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
         String imageString= imageService.getImage(member.getImageId());
         MemberAuthDto memberAuthDto = new MemberAuthDto(member.getMemberId(), member.getNickname(), imageString);
 

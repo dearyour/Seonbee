@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Avatar from '@mui/material/Avatar';
-import { InputBase } from '@mui/material';
-import { FiSend } from 'react-icons/fi';
-import axios from 'axios';
-import Messages from './Messages';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Avatar from "@mui/material/Avatar";
+import { InputBase } from "@mui/material";
+import { FiSend } from "react-icons/fi";
+import axios from "axios";
+import Messages from "./Messages";
 import {
   ChatbotWidget,
   ChatbotHeader,
@@ -25,9 +25,8 @@ function Chatbot() {
   // };
 
   const dispatch = useDispatch();
-  const [currInput, setCurrInput] = useState<string>('');
-  // const inputRef = useRef<HTMLInputElement>(null);
-  const scrollRef = useRef<HTMLInputElement>(null);
+
+  // const [isLoaded, setLoaded] = useState<boolean>(false);
 
   useEffectOnce(() => {
     dispatch(chatbotActions.resetMessage());
@@ -147,28 +146,8 @@ function Chatbot() {
         // we will send text query route
         textQuery(e.target.value);
 
-        e.target.value = '';
-        // setCurrInput('');
-
-        console.log(scrollRef == null);
-
-        console.log(scrollRef.current == null);
-
-        // scrollRef.current?.scrollIntoView();
+        e.target.value = "";
       }
-    }
-  };
-
-  const sendInput = () => {
-    if (currInput) {
-      textQuery(currInput);
-
-      setCurrInput('');
-
-      // if (inputRef.current) {
-      //   inputRef.current.value = '';
-      //   inputRef.current.focus();
-      // }
     }
   };
 
@@ -177,7 +156,7 @@ function Chatbot() {
       {/* <ChatbotHeader>
         <h1>Seonbee Bot</h1>
       </ChatbotHeader> */}
-      <ChatbotBody ref={scrollRef}>
+      <ChatbotBody>
         {/* component messages */}
         <Messages />
       </ChatbotBody>
@@ -191,12 +170,9 @@ function Chatbot() {
           style={{ borderBottom: "1px solid black" }}
           sx={{ ml: 1, flex: 0.8 }}
           placeholder="대답해 주시오"
-          value={currInput}
           onKeyUp={keyUpHandler}
-          onChange={(e) => setCurrInput(e.target.value)}
-          // ref={inputRef}
         />
-        <SendBtn onClick={sendInput}>
+        <SendBtn>
           <FiSend />
         </SendBtn>
       </ChatbotFooter>

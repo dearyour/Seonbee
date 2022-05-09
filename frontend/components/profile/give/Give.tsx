@@ -20,7 +20,20 @@ interface GiveResponse {
 }
 
 const Give = (props: Props) => {
-  return <div></div>;
+  return (
+    <>
+      <div>
+        {" "}
+        <Swiper
+          modules={[Navigation, Pagination, A11y]}
+          spaceBetween={50}
+          slidesPerView={5}
+          navigation
+          pagination={{ clickable: true }}
+        ></Swiper>
+      </div>
+    </>
+  );
 };
 
 export default Give;

@@ -29,7 +29,6 @@ const Profile = (props: Props) => {
     console.log("hostId", hostId);
     dispatch(profileActions.setHostId(hostId));
     dispatch(profileActions.getProfile(hostId));
-    dispatch(profileActions.getLanternFestivals(hostId));
   }, [router.isReady]);
 
   // useEffect(() => {
@@ -56,7 +55,6 @@ const Profile = (props: Props) => {
       const sideBtnName = sideBtnNames[i];
       result[i] = (
         <div
-          key={i}
           className={
             (selectedBtn === sideBtnName
               ? styles.selected_btn
@@ -110,7 +108,7 @@ const Profile = (props: Props) => {
                 ) : selectedBtn === "주고 싶소" ? (
                   <Give />
                 ) : selectedBtn === "갖고 싶소" ? (
-                  <Wish props={hostId} />
+                  <Wish />
                 ) : selectedBtn === "추천 내역" ? (
                   <Chat />
                 ) : selectedBtn === "설정" ? (

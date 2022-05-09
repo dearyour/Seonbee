@@ -53,7 +53,6 @@ function* getLanternFestivalsState(hostId: any) {
     yield put(profileActions.setLanternFestivals(lanternData));
   } catch (err) {
     console.log(err);
-    yield put(profileActions.resetLanternFestival);
     yield put(profileActions.setLanternFestivalsFail(err));
   }
 }

@@ -19,9 +19,7 @@ const DDays = (props: Props) => {
   const [selectedScheduleId, setSelectedScheduleId] = useState<number>(0);
 
   useEffect(() => {
-    if (ddaysLen) {
-      setSelectedScheduleId(props.ddays[0].scheduleId);
-    }
+    setSelectedScheduleId(props.ddays[0].scheduleId);
   }, [props.ddays]);
 
   const ddays = () => {
@@ -37,7 +35,6 @@ const DDays = (props: Props) => {
           : "-" + String(dday.scheduleDate);
       result[i] = (
         <div
-          key={i}
           className={
             (selectedScheduleId === dday.scheduleId ? "selected_tag" : "tag") +
             " clickable me-2 my-1"

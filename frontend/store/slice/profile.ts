@@ -4,7 +4,6 @@ import {
   LanternType,
   LanternFestivalType,
   DdayType,
-  LanternFestivalTypeList,
 } from "../interface/Lantern";
 import { calDday } from "utils/utils";
 
@@ -53,7 +52,6 @@ export const profileSlice = createSlice({
       state.isLoading = true;
     },
     setLanternFestivals: (state, { payload }) => {
-      console.log("zxczxczxczxczxczxczxcasdasdqweqwe", payload);
       state.lanternFestivals = payload;
       const ddays = [];
       for (let i = 0; i < payload.length; i++) {
@@ -70,19 +68,8 @@ export const profileSlice = createSlice({
       }
       state.ddays = ddays;
       let flag = false;
-      // console.log("testestsetssdfsd");
-      // if (state.lanternFestival) {
-      //   for (let i = 0; i < payload.length; i++) {
-      //     if (payload[i].scheduleId === state.lanternFestival.scheduleId) {
-      //       console.log("state.lanternFestival", payload[i].title);
-      //       state.lanternFestival = payload[i];
-      //       flag = true;
-      //       break;
-      //     }
-      //   }
-      // }
-      if (ddays.length) {
-        for (let i = 0; i < ddays.length; i++) {
+      if (state.lanternFestival) {
+        for (let i = 0; i < payload.length; i++) {
           if (payload[i].scheduleId === state.lanternFestival.scheduleId) {
             console.log("state.lanternFestival", payload[i].title);
             state.lanternFestival = payload[i];
@@ -90,16 +77,10 @@ export const profileSlice = createSlice({
             break;
           }
         }
-      } else {
-        state.lanternFestival = initialState.lanternFestival;
       }
-      // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       if (!flag) {
         for (let i = 0; i < payload.length; i++) {
-          if (
-            ddays.length > i &&
-            payload[i].scheduleId === ddays[0].scheduleId
-          ) {
+          if (payload[i].scheduleId === ddays[0].scheduleId) {
             console.log("state.lanternFestival X", payload[i].title);
             state.lanternFestival = payload[i];
             break;
@@ -112,11 +93,7 @@ export const profileSlice = createSlice({
     },
     // 연등회 정보(1개) 조회
     setLanternFestival: (state, { payload }) => {
-      state.lanternFestival = new LanternFestivalType(payload);
-      // state.lanternFestival = payload;
-    },
-    resetLanternFestival: (state, { payload }) => {
-      state.lanternFestival = initialState.lanternFestival;
+      state.lanternFestival = payload;
     },
     setLanternFestivalWithId: (state, { payload }) => {
       for (let i = 0; i < state.lanternFestivals.length; i++) {
