@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { FiDelete } from "react-icons/fi";
 const Tag = styled.div`
   display: flex;
