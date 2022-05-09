@@ -414,12 +414,9 @@ const Signup = () => {
             </div>
           )}
         </div>
-        <Btn
-          filled={true}
-          className="me-2"
-          onClick={handleSubmit}
-          children="등록"
-        ></Btn>
+        <Btn filled={true} className="me-2" onClick={handleSubmit}>
+          등록
+        </Btn>
         {/* <input type="submit" name="" onClick={handleSubmit} value="등록" /> */}
       </form>
     </div>

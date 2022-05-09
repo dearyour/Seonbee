@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FiDelete } from "react-icons/Fi";
+import { FiDelete } from "react-icons/fi";
 const Tag = styled.div`
   display: flex;
   font-size: 14px;

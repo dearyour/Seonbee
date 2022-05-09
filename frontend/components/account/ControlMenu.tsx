@@ -15,5 +15,6 @@ const ControlMenu = React.memo(({ value, onChange, optionList }: any) => {
     </select>
   );
 });
+ControlMenu.displayName = "ControlMenu";
 
 export default ControlMenu;
