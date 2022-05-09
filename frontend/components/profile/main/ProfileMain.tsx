@@ -7,6 +7,7 @@ import DDays from "./DDays";
 import LanternFestival from "./LanternFestival";
 import { profileActions } from "store/slice/profile";
 import { useRouter } from "next/router";
+import ProfileInfo from "../ProfileInfo";
 
 type Props = {};
 
@@ -40,7 +41,7 @@ const ProfileMain = (props: Props) => {
   return (
     <>
       <div>
-        {lanternFestivals.length > 0 ? (
+        {lanternFestival.title ? (
           <div>
             <DDays ddays={ddays} />
             <LanternFestival lanternFestival={lanternFestival} />
