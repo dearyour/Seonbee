@@ -38,9 +38,14 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<ProductDto> getProductAll() {
+        long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
+
         List<Product> products=productRepository.findAll();
+//        System.out.println("db에서 가져오기 시간차이(m) : "+(System.currentTimeMillis()-beforeTime)/1000);
         List<ProductDto> productDtoList=modelMapper.map(products, new TypeToken<List<ProductDto>>() {}.getType());
 
+//        System.out.println("dto 변환 시간차이(m) : "+(System.currentTimeMillis()-beforeTime)/1000);
+//        System.out.println(productDtoList.size());
         return productDtoList;
     }
 
