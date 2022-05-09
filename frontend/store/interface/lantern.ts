@@ -40,6 +40,12 @@ export class LanternFestivalType {
   }
 }
 
+export const LanternFestivalTypeList = (data: LanternFestivalType[]) => {
+  return data.map((now) => {
+    return new LanternFestivalType(now);
+  });
+};
+
 export class DdayType {
   scheduleId: number;
   scheduleDate: number;
