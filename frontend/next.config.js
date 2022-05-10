@@ -1,8 +1,15 @@
+var CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: ["picsum.photos"],
+  },
+  webpack: {
+    plugins: [
+      new CaseSensitivePathsPlugin(),
+      // other plugins ...
+    ],
   },
   env: {
     NEXT_PUBLIC_BACK: process.env.NEXT_PUBLIC_BACK,
