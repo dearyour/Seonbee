@@ -30,4 +30,5 @@ public class Product extends BaseEntity{
     private Long hit=0l;
     private Long wish=0l;
     private Long give=0l;
+    private Long recommend=0l;
 }
