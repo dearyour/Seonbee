@@ -1,9 +1,12 @@
 import React from "react";
 import Image from "next/image";
-
+import useProfile from "store/hook/profileHooks";
 import imageURL from "public/shoes.png";
 import Btn from "components/commons/Btn";
 import styled from "@emotion/styled";
+import axiosConnector from "utils/axios-connector";
+import { useRouter } from "next/router";
+import { BsX } from "react-icons/bs";
 
 interface Props {
   name: string;
@@ -18,10 +21,43 @@ interface Props {
 }
 
 const ProductCard = (props: Props) => {
+  const { hostId, memberId } = useProfile();
+  const router = useRouter();
+
+  const wishReserve = () => {
+    axiosConnector({
+      method: "POST",
+      url: "profile/wish/reverse",
+      data: { receiverId: memberId, wishlistId: props.wishlistId },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
+  const ProductDelete = () => {
+    if (props.wishlistId) {
+      axiosConnector({
+        method: "DELETE",
+        url: "profile/wish/" + String(props.wishlistId),
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
+  };
   return (
     <div>
       <div className="containerc">
         <div className="card">
+          {memberId === hostId && <Xicon onClick={ProductDelete}></Xicon>}
+
           <div className="imgBx d-flex justify-content-center">
             <Image
               alt="cards"
@@ -39,17 +75,39 @@ const ProductCard = (props: Props) => {
               <h3>가격 : {props.price} 원</h3>
             </div>
             {/* <a href="#">상품 구경하기</a> */}
-            <Btn className="mx-2" filled={true}>
+            <Btn
+              className="mx-2"
+              filled={true}
+              onClick={() => {
+                router.push(props.buyUrl);
+              }}
+            >
               상품 구경하기
             </Btn>
-            <Btn>test</Btn>
+            {memberId === hostId ? null : props.giverId === memberId ? (
+              <Btn onClick={wishReserve}>취소</Btn>
+            ) : props.giverId ? null : (
+              <Btn onClick={wishReserve}>예약</Btn>
+            )}
+            {props.giverId && (
+              <div className="text-white">
+                {props.giverName}님이 예약하셨습니다.
+              </div>
+            )}
           </div>
         </div>
       </div>
-
-      {/* {props.giverId && <div>{props.giverName}님이 선물하실 예정입니다.</div>} */}
     </div>
   );
 };
+
+const Xicon = styled(BsX)`
+  font-size: 24px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 21;
+  cursor: pointer;
+`;
 
 export default ProductCard;
