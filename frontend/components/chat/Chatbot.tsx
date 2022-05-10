@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
 import { InputBase } from '@mui/material';
 import { FiSend } from 'react-icons/fi';
+import { AiOutlineGift, AiOutlineRedo } from 'react-icons/ai';
 import axios from 'axios';
 import Messages from './Messages';
 import {
@@ -11,9 +12,11 @@ import {
   ChatbotBody,
   ChatbotFooter,
   SendBtn,
-} from "styles/chat/ChatbotElements";
-import { useEffectOnce } from "store/hook/useEffectOnce";
-import { chatbotActions } from "store/slice/chatbot";
+} from 'styles/chat/ChatbotElements';
+import { useEffectOnce } from 'store/hook/useEffectOnce';
+import { chatbotActions } from 'store/slice/chatbot';
+import Btn from 'components/commons/Btn';
+import Router from 'next/router';
 
 function Chatbot() {
   // const textQuery = async () => {
@@ -26,24 +29,28 @@ function Chatbot() {
 
   const dispatch = useDispatch();
   const [currInput, setCurrInput] = useState<string>('');
+  const [isCompleted, setCompleted] = useState<boolean>(false);
+
   // const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLInputElement>(null);
 
   useEffectOnce(() => {
     dispatch(chatbotActions.resetMessage());
-    eventQuery("WelcomeToSeonbee");
+    eventQuery('WelcomeToSeonbee');
   });
 
   const textQuery = async (text: string) => {
     // 1. 유저가 입력한 메시지 처리
     let conversation = {
-      who: "user",
+      who: 'user',
       content: {
         text: {
           text: text,
         },
       },
       quick_replies: [],
+      question: '',
+      answer: '',
     };
 
     dispatch(chatbotActions.saveMessage(conversation));
@@ -57,7 +64,7 @@ function Chatbot() {
     try {
       // textQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        "http://localhost:5000/api/dialogflow/textQuery",
+        'http://localhost:5000/api/dialogflow/textQuery',
         textQueryVariables
       );
       // const content = response.data.fulfillmentMessages[0];
@@ -75,30 +82,44 @@ function Chatbot() {
       //   dispatch(chatbotActions.saveMessage(conversation));
       // }
       const content = response.data.fulfillmentMessages;
-      if (content.length == 1) {
-        conversation = {
-          who: "bot",
-          content: content[0],
-          quick_replies: [],
-        };
-      } else {
-        conversation = {
-          who: "botWithQR",
-          content: content[0],
-          quick_replies:
-            content[1].payload.fields.quick_replies.listValue.values,
-        };
-      }
+      // if (content.length == 1) {
+      //   conversation = {
+      //     who: 'bot',
+      //     content: content[0],
+      //     quick_replies: [],
+      //   };
+      // } else {
+      //   conversation = {
+      //     who: 'botWithQR',
+      //     content: content[0],
+      //     quick_replies:
+      //       content[1].payload.fields.quick_replies.listValue.values,
+      //   };
+      // }
+      conversation = {
+        who: 'bot',
+        content: content[0],
+        quick_replies: content[1].payload.fields.quick_replies.listValue.values,
+        question: content[1].payload.fields.qna.listValue.values[0].stringValue,
+        answer: content[1].payload.fields.qna.listValue.values[1].stringValue,
+      };
       dispatch(chatbotActions.saveMessage(conversation));
+
+      if (conversation.question === 'price') {
+        console.log('done');
+        setCompleted(true);
+      }
     } catch (error) {
       conversation = {
-        who: "bot",
+        who: 'bot',
         content: {
           text: {
-            text: "에러가 발생했습니다. 관리자에게 문의해주세요.",
+            text: '에러가 발생했습니다. 관리자에게 문의해주세요.',
           },
         },
         quick_replies: [],
+        question: '',
+        answer: '',
       };
 
       dispatch(chatbotActions.saveMessage(conversation));
@@ -114,14 +135,14 @@ function Chatbot() {
     try {
       // eventQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        "http://localhost:5000/api/dialogflow/eventQuery",
+        'http://localhost:5000/api/dialogflow/eventQuery',
         eventQueryVariables
       );
 
       // const content = response.data.fulfillmentMessages[0];
       for (let content of response.data.fulfillmentMessages) {
         let conversation = {
-          who: "bot",
+          who: 'bot',
           content: content,
         };
 
@@ -129,10 +150,10 @@ function Chatbot() {
       }
     } catch (error) {
       let conversation = {
-        who: "bot",
+        who: 'bot',
         content: {
           text: {
-            text: "에러가 발생했습니다. 관리자에게 문의해주세요.",
+            text: '에러가 발생했습니다. 관리자에게 문의해주세요.',
           },
         },
       };
@@ -142,13 +163,13 @@ function Chatbot() {
   };
 
   const keyUpHandler = (e: any) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       if (e.target.value) {
         // we will send text query route
         textQuery(e.target.value);
 
         e.target.value = '';
-        // setCurrInput('');
+        setCurrInput('');
 
         console.log(scrollRef == null);
 
@@ -182,23 +203,46 @@ function Chatbot() {
         <Messages />
       </ChatbotBody>
       <ChatbotFooter>
-        <Avatar
-          alt="avatar"
-          src="https://joeschmoe.io/api/v1/random"
-          sx={{ width: 24, height: 24 }}
-        />
-        <InputBase
-          style={{ borderBottom: "1px solid black" }}
-          sx={{ ml: 1, flex: 0.8 }}
-          placeholder="대답해 주시오"
-          value={currInput}
-          onKeyUp={keyUpHandler}
-          onChange={(e) => setCurrInput(e.target.value)}
-          // ref={inputRef}
-        />
-        <SendBtn onClick={sendInput}>
-          <FiSend />
-        </SendBtn>
+        {isCompleted ? (
+          <>
+            <Btn
+              className="me-5"
+              onClick={() =>
+                Router.push(
+                  { pathname: '/recommend', query: { hi: '안녕' } },
+                  { pathname: '/recommend' }
+                )
+              }
+            >
+              <AiOutlineGift />
+              &nbsp; 추천 결과 보러가기
+            </Btn>
+            <Btn>
+              <AiOutlineRedo />
+              &nbsp; 다시 입력하기
+            </Btn>
+          </>
+        ) : (
+          <>
+            <Avatar
+              alt="avatar"
+              src="https://joeschmoe.io/api/v1/random"
+              sx={{ width: 24, height: 24 }}
+            />
+            <InputBase
+              style={{ borderBottom: '1px solid black' }}
+              sx={{ ml: 1, flex: 0.8 }}
+              placeholder="대답해 주시오"
+              value={currInput}
+              onKeyUp={keyUpHandler}
+              onChange={(e) => setCurrInput(e.target.value)}
+              // ref={inputRef}
+            />
+            <SendBtn onClick={sendInput}>
+              <FiSend />
+            </SendBtn>
+          </>
+        )}
       </ChatbotFooter>
     </ChatbotWidget>
   );
