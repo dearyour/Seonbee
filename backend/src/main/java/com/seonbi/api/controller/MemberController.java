@@ -65,9 +65,7 @@ public class MemberController {
          */
 
         Member member = memberAuthService.memberAuthorize(authentication);
-        if (member == null) {
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         String imageString= imageService.getImage(member.getImageId());
         MemberAuthDto memberAuthDto = new MemberAuthDto(member.getMemberId(), member.getNickname(), imageString);
 
@@ -102,6 +100,7 @@ public class MemberController {
         int passwordCode = memberService.passwordCheck(password);
         if (passwordCode == 401)
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
+
 
         Member member = new Member();
         member.setEmail(email);

@@ -19,4 +19,6 @@ public interface FriendService {
     List<Long> getFriendIdAll(Long memberId);
     List<FriendDto> getFriendAll(Long memberId);
     List<FriendCalendarDto> getFriendCalendarAll(Long memberId);
+    List<FriendFollowDto> shopGetFriendAll(Long memberId);
+    String getFriendStatus(Long memberId1, Long memberId2);
 }

@@ -1,5 +1,5 @@
 const dialogflow = require('dialogflow');
-const config = require('../config/devkey');
+const config = require('../config/dev');
 
 const projectId = config.googleProjectId;
 const sessionId = config.dialogFlowSessionID;

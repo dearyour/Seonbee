@@ -12,7 +12,7 @@ import Login from "./kakaoLogin";
 type Props = {};
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
-const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
+const PW_REGEX = /^[a-zA-Z0-9]{7,16}$/;
 // // 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
 // const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{8,16}$/;
 
@@ -87,41 +87,6 @@ const Signin = (props: Props) => {
       Router.push("/");
     }
   }, []);
-
-  const __SignIn = () => {
-    const data = {
-      email: inputState.email,
-      password: inputState.password,
-    };
-    console.log(data);
-    axios({
-      method: "POST",
-      url: process.env.NEXT_PUBLIC_BACK + "member/login",
-      data: data,
-    })
-      .then((res) => {
-        console.log(res);
-        sessionStorage.setItem("Token", res.data.jwt);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // const __getMemberInfo = () => {
-  //   const token = sessionStorage.getItem("Token");
-  //   axios({
-  //     method: "GET",
-  //     url: process.env.NEXT_PUBLIC_BACK + "member/auth",
-  //     headers: { Authorization: "Bearer " + token },
-  //   })
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -206,8 +171,11 @@ const Signin = (props: Props) => {
           id="password"
           placeholder="비밀번호"
           value={inputState.password || ""}
-          onChange={handleChange}
-          onBlur={() => checkRegex("password")}
+          onChange={(e) => {
+            handleChange(e);
+            checkRegex("password");
+          }}
+          // onBlur={() => checkRegex("password")}
         />
         <div className="text-red-500">
           {errorData["password"] !== true
@@ -218,9 +186,9 @@ const Signin = (props: Props) => {
         <LoginWrapper>
           <Login />
         </LoginWrapper>
-        <a href="/shop" className="forgot">
-          비밀스러운 번호를 까먹었소?
-        </a>
+        {/* <a href="/shop" className="forgot"> */}
+        {/* 비밀스러운 번호를 까먹었소? */}
+        {/* </a> */}
       </form>
     </div>
   );
@@ -233,3 +201,38 @@ const LoginWrapper = styled.div`
 `;
 
 export default Signin;
+
+// const __SignIn = () => {
+//   const data = {
+//     email: inputState.email,
+//     password: inputState.password,
+//   };
+//   console.log(data);
+//   axios({
+//     method: "POST",
+//     url: process.env.NEXT_PUBLIC_BACK + "member/login",
+//     data: data,
+//   })
+//     .then((res) => {
+//       console.log(res);
+//       sessionStorage.setItem("Token", res.data.jwt);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+
+// const __getMemberInfo = () => {
+//   const token = sessionStorage.getItem("Token");
+//   axios({
+//     method: "GET",
+//     url: process.env.NEXT_PUBLIC_BACK + "member/auth",
+//     headers: { Authorization: "Bearer " + token },
+//   })
+//     .then((res) => {
+//       console.log(res);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };

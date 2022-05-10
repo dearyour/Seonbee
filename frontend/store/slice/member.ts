@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Member } from "../interface/Member";
+import { Member } from "../interface/member";
 const initialState: Member | any = {
   info: [],
   isLoading: false,
@@ -42,17 +42,17 @@ export const memberSlice = createSlice({
     //호패 리듀서
     // state는 리듀서 상태, payload 는 인자
     // 요청할때 dispatch에 인자를 넣어 보내고 싶다면 payload까지 작성해줘야함
-    getMypage: (state, { payload }: any) => {
-      state.isLoading = true;
-    },
-    setMypage: (state, { payload }) => {
-      state.isLoading = false;
-      state.info = payload;
-    },
-    setMypageFail: (state, { payload: error }) => {
-      state.isLoading = false;
-      state.error = error;
-    },
+    // getMypage: (state, { payload }: any) => {
+    //   state.isLoading = true;
+    // },
+    // setMypage: (state, { payload }) => {
+    //   state.isLoading = false;
+    //   state.info = payload;
+    // },
+    // setMypageFail: (state, { payload: error }) => {
+    //   state.isLoading = false;
+    //   state.error = error;
+    // },
 
     reset: (state) => {
       state.info = initialState.info;

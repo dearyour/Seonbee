@@ -1,6 +1,7 @@
 package com.seonbi.db.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Wishlist extends BaseEntity{
 
     @Id
@@ -22,4 +24,8 @@ public class Wishlist extends BaseEntity{
     private Long memberId;
     private Long giverId=0l;   // 선물 줄 사람, 0이면 아직 없음
 
+    public Wishlist(Long productId, Long memberId) {
+        this.productId = productId;
+        this.memberId = memberId;
+    }
 }

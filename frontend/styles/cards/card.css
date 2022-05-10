@@ -10,12 +10,13 @@
   position: relative;
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 .containerc .card {
   position: relative;
   width: 320px;
   height: 450px;
-  background: #232323;
+  background: #d2afaf;
   border-radius: 20px;
   overflow: hidden;
 }
@@ -38,9 +39,9 @@
   position: absolute;
   top: 30%;
   left: -20%;
-  font-size: 11em;
+  font-size: 10em;
   /* color: rgba(255, 255, 255, 0.02); */
-  color: #4b4032;
+  color: #e8cd83;
   font-weight: 800;
   font-style: italic;
   z-index: 1;
@@ -49,13 +50,13 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 1000;
+  z-index: 10;
   width: 100%;
-  height: 220px;
+  /* height: 220px; */
   transition: 0.5s;
 }
 .containerc .card:hover .imgBx {
-  top: 0;
+  top: 10%;
   transform: translateY(0);
 }
 .containerc .card .imgBx Image {
@@ -63,13 +64,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-25deg);
-  width: 270px;
+  /* width: 270px; */
 }
 .containerc .card .contentBx {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 100px;
+  height: 80px;
   text-align: center;
   transition: 1s;
   z-index: 10;
@@ -106,8 +107,8 @@
 .containerc .card .contentBx .size h3,
 .containerc .card .contentBx .color h3 {
   color: #fff;
-  font-weight: 300;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-right: 10px;
@@ -164,4 +165,15 @@
   opacity: 1;
   transform: translateY(0px);
   transition-delay: 0.75s;
+}
+
+@media (max-width: 991px) {
+  .containerc .card {
+    position: relative;
+    width: 160px;
+    height: 225px;
+    background: #232323;
+    border-radius: 10px;
+    overflow: hidden;
+  }
 }

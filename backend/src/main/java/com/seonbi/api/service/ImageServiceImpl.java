@@ -31,12 +31,12 @@ public class ImageServiceImpl implements ImageService{
         if (!fileFolder.exists()) {
             fileFolder.mkdirs();
         }
-        System.out.println(realPath);
+//        System.out.println(realPath);
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
         String saveFolder = realPath + File.separator + today;
         // 파일을 저장할 세부 경로 지정
         File folder = new File(saveFolder);
-        System.out.println("폴더: " + folder);
+//        System.out.println("폴더: " + folder);
         // 디렉터리가 존재하지 않을 경우
         if (!folder.exists()) {
             folder.mkdirs();

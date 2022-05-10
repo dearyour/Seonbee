@@ -146,6 +146,10 @@ public class FriendServiceImpl implements FriendService{
         List<Long> friendIdList=getFriendIdAll(memberId);
         for (Long friendId: friendIdList){
             Member member=memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
+            System.out.println(member);
+            if (member==null){
+                continue;
+            }
             List<Schedule> schedules=scheduleRepository.findAllByMemberIdAndIsDeletedOrderByScheduleDate(friendId, false);  // 친구 일정
             List<FriendScheduleDto> scheduleDtoList=new ArrayList<>();
             for (Schedule schedule: schedules) {    // 한 친구의 일정을 여러개 리스트로 담기
@@ -171,7 +175,7 @@ public class FriendServiceImpl implements FriendService{
 
     @Override
     public List<FriendCalendarDto> getFriendCalendarAll(Long memberId) {
-        List<FriendCalendarDto> friendCalendarDtoList=new ArrayList<>();
+        List<FriendCalendarDto> friendCalendarDtoList=new ArrayList<FriendCalendarDto>();
         List<Long> friendIdList=getFriendIdAll(memberId);
         for (Long friendId: friendIdList){
             Member member= memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
@@ -186,5 +190,37 @@ public class FriendServiceImpl implements FriendService{
         return friendCalendarDtoList;
     }
 
+    @Override
+    public List<FriendFollowDto> shopGetFriendAll(Long memberId) {
+        List<FriendFollowDto> friendDtoList=new ArrayList<>();
+        List<Long> friendIdList=getFriendIdAll(memberId);
+        for (Long friendId: friendIdList){
+            Member member=memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
+
+            FriendFollowDto friendDto=new FriendFollowDto(
+                    friendId, member.getNickname(), imageService.getImage(member.getImageId()));
+            friendDtoList.add(friendDto);
+        }
+        return friendDtoList;
+    }
+
+    @Override
+    public String getFriendStatus(Long memberId1, Long memberId2) {     // 로그인한 회원, 상대 회원
+        Friend friend1 = friendRepository.findByFollowerIdAndFolloweeIdAndIsDeleted(memberId1, memberId2, false);
+        Friend friend2 = friendRepository.findByFollowerIdAndFolloweeIdAndIsDeleted(memberId2, memberId1, false);
+        if (friend1==null && friend2==null){
+            return "unfriend";
+        }
+        if ((friend1!=null && "OK".equals(friend1.getIsAllowed())) || (friend2!=null && "OK".equals(friend2.getIsAllowed()))){
+            return "friend";
+        }
+        if (friend1!=null && "BEFORE".equals(friend1.getIsAllowed())){  // 로그인한 회원이 친구 요청 보낸 경우
+            return "requesting";
+        }
+        if (friend2!=null && "BEFORE".equals(friend2.getIsAllowed())){  // 로그인한 회원이 친구 요청 받은 경우
+            return "requested";
+        }
+        return "unfriend";
+    }
 
 }

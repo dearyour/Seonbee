@@ -67,7 +67,7 @@ public class LanternController {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않는 사용자입니다."));
         }
         Schedule schedule = scheduleService.getSchedule(lanternCreateReq.getScheduleId());
-        if (schedule==null || schedule.getMemberId()!=lanternCreateReq.getHostId()){
+        if (schedule==null || !schedule.getMemberId().equals(lanternCreateReq.getHostId())){
             return ResponseEntity.status(401).body(BaseResponseBody.of(402, "유효하지 않는 일정입니다."));
         }
 
@@ -91,9 +91,7 @@ public class LanternController {
             @ApiIgnore Authentication authentication, @PathVariable Long lanternId){
 
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null){
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
         LanternDto lantern = lanternService.getLantern(lanternId);
         return ResponseEntity.status(200).body(LanternGetRes.of(200, "success", lantern));
@@ -104,9 +102,7 @@ public class LanternController {
             @ApiIgnore Authentication authentication, @PathVariable Long hostId){
 
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null){
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         if (!memberService.isMemberValid(hostId)){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않는 사용자입니다."));
         }
@@ -115,6 +111,29 @@ public class LanternController {
         return ResponseEntity.status(200).body(ScheduleGetAllRes.of(200, "success", scheduleDtos));
     }
 
+    @DeleteMapping("/{lanternId}")
+    public ResponseEntity<? extends BaseResponseBody> deleteLantern(
+            @ApiIgnore Authentication authentication, @PathVariable("lanternId") Long lanternId){
+
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        int deleteLanternCode=lanternService.deleteLantern(member.getMemberId(), lanternId);
+        if (deleteLanternCode==401)     return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않는 연등입니다."));
+        else if (deleteLanternCode==403)     return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
+
+    @DeleteMapping("/schedule/{scheduleId}")
+    public ResponseEntity<? extends BaseResponseBody> deleteSchedule(
+            @ApiIgnore Authentication authentication, @PathVariable("scheduleId") Long scheduleId){
+
+        Member member=memberAuthService.memberAuthorize(authentication);
+        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        int deleteScheduleCode=lanternService.deleteSchedule(member.getMemberId(), scheduleId);
+        if (deleteScheduleCode==401)     return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않는 연등입니다."));
+        else if (deleteScheduleCode==403)     return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
 
 
 }
