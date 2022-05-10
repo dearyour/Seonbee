@@ -217,7 +217,8 @@ function Messages() {
           </MessagesDF>
           <QuickReplies>
             {/* {message.quick_replies[0].stringValue} */}
-            {renderQuickReplies(message.quick_replies)}
+            {message.quick_replies !== undefined &&
+              renderQuickReplies(message.quick_replies)}
           </QuickReplies>
         </>
       );
