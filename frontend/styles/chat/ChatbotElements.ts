@@ -28,7 +28,7 @@ export const ChatbotHeader = styled.div`
 `;
 
 export const ChatbotBody = styled.div`
-  height: calc(100vh - 160px);
+  height: calc(100vh - 200px);
   background-color: transparent;
   margin: 0.2rem;
   border-radius: 8px;

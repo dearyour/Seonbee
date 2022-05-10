@@ -30,6 +30,8 @@ function Messages() {
         },
       },
       quick_replies: [],
+      question: '',
+      answer: '',
     };
 
     dispatch(chatbotActions.saveMessage(conversation));
@@ -61,20 +63,27 @@ function Messages() {
       //   dispatch(chatbotActions.saveMessage(conversation));
       // }
       const content = response.data.fulfillmentMessages;
-      if (content.length == 1) {
-        conversation = {
-          who: 'bot',
-          content: content[0],
-          quick_replies: [],
-        };
-      } else {
-        conversation = {
-          who: 'botWithQR',
-          content: content[0],
-          quick_replies:
-            content[1].payload.fields.quick_replies.listValue.values,
-        };
-      }
+      // if (content.length == 1) {
+      //   conversation = {
+      //     who: 'bot',
+      //     content: content[0],
+      //     quick_replies: [],
+      //   };
+      // } else {
+      //   conversation = {
+      //     who: 'botWithQR',
+      //     content: content[0],
+      //     quick_replies:
+      //       content[1].payload.fields.quick_replies.listValue.values,
+      //   };
+      // }
+      conversation = {
+        who: 'bot',
+        content: content[0],
+        quick_replies: content[1].payload.fields.quick_replies.listValue.values,
+        question: content[1].payload.fields.qna.listValue.values[0].stringValue,
+        answer: content[1].payload.fields.qna.listValue.values[1].stringValue,
+      };
       dispatch(chatbotActions.saveMessage(conversation));
     } catch (error) {
       conversation = {
@@ -85,6 +94,8 @@ function Messages() {
           },
         },
         quick_replies: [],
+        question: '',
+        answer: '',
       };
 
       dispatch(chatbotActions.saveMessage(conversation));
@@ -197,9 +208,19 @@ function Messages() {
   const renderOneMessage = (message: any, i: number) => {
     if (message.who === 'bot') {
       return (
-        <MessagesDF key={i} style={{ paddingBottom: '1rem' }}>
-          <MessagesTextDF>{message.content.text.text}</MessagesTextDF>
-        </MessagesDF>
+        // <MessagesDF key={i} style={{ paddingBottom: '1rem' }}>
+        //   <MessagesTextDF>{message.content.text.text}</MessagesTextDF>
+        // </MessagesDF>
+        <>
+          <MessagesDF key={i}>
+            <MessagesTextDF>{message.content.text.text}</MessagesTextDF>
+          </MessagesDF>
+          <QuickReplies>
+            {/* {message.quick_replies[0].stringValue} */}
+            {message.quick_replies !== undefined &&
+              renderQuickReplies(message.quick_replies)}
+          </QuickReplies>
+        </>
       );
     } else if (message.who === 'user') {
       return (
@@ -207,19 +228,20 @@ function Messages() {
           <MessagesTextUser>{message.content.text.text}</MessagesTextUser>
         </MessagesUser>
       );
-    } else if (message.who === 'botWithQR') {
-      return (
-        <>
-          <MessagesDF key={i}>
-            <MessagesTextDF>{message.content.text.text}</MessagesTextDF>
-          </MessagesDF>
-          <QuickReplies>
-            {/* {message.quick_replies[0].stringValue} */}
-            {renderQuickReplies(message.quick_replies)}
-          </QuickReplies>
-        </>
-      );
     }
+    // else if (message.who === 'botWithQR') {
+    //   return (
+    //     <>
+    //       <MessagesDF key={i}>
+    //         <MessagesTextDF>{message.content.text.text}</MessagesTextDF>
+    //       </MessagesDF>
+    //       <QuickReplies>
+    //         {/* {message.quick_replies[0].stringValue} */}
+    //         {renderQuickReplies(message.quick_replies)}
+    //       </QuickReplies>
+    //     </>
+    //   );
+    // }
   };
 
   const renderMessages = (messages: []) => {
