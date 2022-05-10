@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import styled from "@emotion/styled";
 import axiosConnector from "utils/axios-connector";
+
 interface Props {
   hostId: any;
 }
