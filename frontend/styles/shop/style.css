@@ -16,7 +16,8 @@
   display: flex;
 }
 .home_panel-wrap {
-  flex-basis: 280px;
+  /* flex-basis: 280px; */
+  flex-basis: 30%;
   padding: 1rem;
 }
 .home_list-wrap {
