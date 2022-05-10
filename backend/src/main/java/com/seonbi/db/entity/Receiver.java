@@ -24,7 +24,7 @@ public class Receiver extends BaseEntity{
     private String job;
     private String interest;
     private String relation;    // 관계
-    private String object;      // 용도
+    private String purpose;      // 용도
     private Long upPrice=50000l;
     private Long downPrice=0l;
 
