@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import axiosConnector from "utils/axios-connector";
-import WsAlarm from "WsClient/wsAlarm";
 import Image from "next/image";
 import GetImage from "utils/GetImage";
 import Btn from "components/commons/Btn";
