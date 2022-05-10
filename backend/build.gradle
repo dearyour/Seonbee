@@ -140,7 +140,10 @@ dependencies {
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
 //    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.3")
 //    https://mvnrepository.com/artifact/javax.mail/mail
-    implementation ('javax.mail:mail:1.4.7')
+//    implementation ('javax.mail:mail:1.4.7')
+//    implementation("javax.mail:javax.mail-api:1.6.2")
+    implementation("org.springframework.boot:spring-boot-starter-mail:2.6.3")
+
 //    compile group: 'org.springframework', name: 'spring-context-support', version: '5.1.0.RELEASE'
 
 
