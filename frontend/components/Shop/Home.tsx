@@ -5,7 +5,8 @@ import List from "components/ShopContainer/List";
 import SearchBar from "components/ShopContainer/SearchBar";
 import { categoryRadio, categoryRadios, dataList } from "../constants";
 import CategoryBtn from "components/ShopComponent/CategoryBtn";
-
+import SearchUsers from "./SearchUsers";
+import styled from "@emotion/styled";
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedRating, setSelectedRating] = useState(null);
@@ -151,6 +152,8 @@ const Home = () => {
             changeChecked={handleChangeChecked}
             changePrice={handleChangePrice}
           />
+          <Blue>친구 검색</Blue>
+          <SearchUsers />
         </div>
         {/* List & Empty View */}
         <div className="home_list-wrap">
@@ -161,4 +164,12 @@ const Home = () => {
   );
 };
 
+const Blue = styled.span`
+  color: #38508c;
+`;
+const SidebarWrap = styled.div`
+  border: #c0b4a5 solid 2px;
+  padding: 5px;
+  border-radius: 5px;
+`;
 export default Home;
