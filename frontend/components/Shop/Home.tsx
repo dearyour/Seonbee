@@ -3,16 +3,21 @@ import EmptyView from "components/ShopComponent/EmptyView";
 import FilterPanel from "components/ShopContainer/FilterPanel";
 import List from "components/ShopContainer/List";
 import SearchBar from "components/ShopContainer/SearchBar";
-import { categoryRadio, dataList } from "../constants";
+import { categoryRadio, categoryRadios, dataList } from "../constants";
 import CategoryBtn from "components/ShopComponent/CategoryBtn";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedRating, setSelectedRating] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState([1000, 5000]);
+  //카테고리 상태
   const [categoryTag, setCategoryTag] = useState(1);
-  const handleClickEmote = useCallback((tag: number) => {
+  const [categoryTags, setCategoryTags] = useState(1);
+  const handleClickTag = useCallback((tag: number) => {
     setCategoryTag(tag);
+  }, []);
+  const handleClickTags = useCallback((tag: number) => {
+    setCategoryTags(tag);
   }, []);
   const [cuisines, setCuisines] = useState([
     { id: 1, checked: false, label: "American" },
@@ -26,6 +31,7 @@ const Home = () => {
   const [list, setList] = useState(dataList);
   const [resultsFound, setResultsFound] = useState(true);
   const [searchInput, setSearchInput] = useState("");
+  // 검색 옵션 토글버튼
   const [searchOption, setSearchOption] = useState(true);
   const handleSelectCategory = (event: React.MouseEvent, value: any) =>
     !value ? null : setSelectedCategory(value);
@@ -115,18 +121,18 @@ const Home = () => {
               <CategoryBtn
                 key={it.category_id}
                 {...it}
-                onClick={handleClickEmote}
+                onClick={handleClickTag}
                 isSelected={it.category_id === categoryTag}
               />
             ))}
           </div>
           <div className="input_box category_list_wrapper">
-            {categoryRadio.map((it: any) => (
+            {categoryRadios.map((it: any) => (
               <CategoryBtn
                 key={it.category_id}
                 {...it}
-                onClick={handleClickEmote}
-                isSelected={it.category_id === categoryTag}
+                onClick={handleClickTags}
+                isSelected={it.category_id === categoryTags}
               />
             ))}
           </div>
