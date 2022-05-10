@@ -13,9 +13,10 @@ const useStyles = makeStyles({
   wrap: {
     width: "100%",
     display: "flex",
-    flexDirection: "row-reverse",
-    justifyContent: "space-between",
-    alignItems: "center",
+    // flexDirection: "row-reverse",
+    // flexDirection: "column",
+    // justifyContent: "space-between",
+    // alignItems: "center",
     marginLeft: 0,
   },
   label: {
