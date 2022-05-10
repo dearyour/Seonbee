@@ -5,11 +5,9 @@ const nextConfig = {
   images: {
     domains: ["picsum.photos"],
   },
-  webpack: {
-    plugins: [
-      new CaseSensitivePathsPlugin(),
-      // other plugins ...
-    ],
+  webpack: (config, options) => {
+    config.plugins.push(new CaseSensitivePathsPlugin());
+    return config;
   },
   env: {
     NEXT_PUBLIC_BACK: process.env.NEXT_PUBLIC_BACK,

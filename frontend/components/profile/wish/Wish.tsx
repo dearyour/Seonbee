@@ -1,10 +1,11 @@
 import { Card } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ProductCard from "components/cards/Productcard";
+import ProductCard from "components/cards/ProductCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import styled from "@emotion/styled";
 import axiosConnector from "utils/axios-connector";
+
 interface Props {
   hostId: any;
 }

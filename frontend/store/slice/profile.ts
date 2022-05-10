@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Member } from "../interface/Member";
+import { Member } from "../interface/member";
 import {
   LanternType,
   LanternFestivalType,
   DdayType,
   LanternFestivalTypeList,
-} from "../interface/Lantern";
+} from "../interface/lantern";
 import { calDday } from "utils/utils";
 
 const initialState: any = {

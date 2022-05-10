@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import styles from "styles/profile/profileMain.module.css";
-import { DdayType } from "store/interface/Lantern";
+import { DdayType } from "store/interface/lantern";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store/slice";
 import { profileActions } from "store/slice/profile";

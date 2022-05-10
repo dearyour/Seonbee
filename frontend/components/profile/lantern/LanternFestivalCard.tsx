@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "styles/profile/profileLantern.module.css";
-import { LanternFestivalType } from "store/interface/Lantern";
+import { LanternFestivalType } from "store/interface/lantern";
 import { lanternBackgroundImages } from "styles/profile/LanternElements";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";

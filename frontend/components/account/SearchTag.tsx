@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { FiDelete } from "react-icons/fi";
 const Tag = styled.div`
   display: flex;
@@ -22,11 +22,17 @@ const TagLabel = styled.span`
   }
 `;
 
+const FiDeleteWrp = styled.span`
+  margin-top: -2px;
+`;
+
 const SearchTag = ({ tag, searchTag, deleteTag }: any) => {
   return (
     <Tag onClick={searchTag}>
       <TagLabel>{tag}</TagLabel>
-      <FiDelete width="12px" onClick={deleteTag} />
+      <FiDeleteWrp>
+        <FiDelete width="12px" onClick={deleteTag} />
+      </FiDeleteWrp>
     </Tag>
   );
 };
