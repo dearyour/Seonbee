@@ -16,14 +16,17 @@ export const GetProfileState = (memberId: any) => {
 };
 
 export const GetLanternFestivalsState = (hostId: any) => {
+  // console.log("aasdasdasdasdasdasdasdasd", hostId);
   return axiosConnector({
     method: "GET",
     url: `profile/lantern/${hostId}`,
   })
     .then((res) => {
+      // console.log(res);
       return res.data.scheduleDtos;
     })
     .catch((err) => {
+      // console.log(err.response);
       return console.log(err.response);
     });
 };
