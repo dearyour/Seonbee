@@ -29,7 +29,7 @@ const Signup = () => {
   const dispatch = useDispatch();
   const inputRef = useRef<any>(null);
   const banRef = useRef<any>(null);
-  const [promotion, setPromotion] = useState(false);
+  const [promotion, setPromotion] = useState<boolean>(false);
   const [inputState, setInputState] = useState<any>({
     email: "",
     nickname: "",

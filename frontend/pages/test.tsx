@@ -13,7 +13,6 @@ import styled from "@emotion/styled";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import GetImage from "utils/GetImage";
-import WsAlarm from "WsClient/wsAlarm";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 // Import Swiper styles
@@ -103,20 +102,6 @@ const Asd: NextPage = () => {
       <Input id="contained-button-file" onChange={getImageFiles} type="file" />
       <Button variant="contained" onClick={uploadImg} component="span">
         Upload
-      </Button>
-      <Button
-        onClick={() => {
-          WsAlarm.activate();
-        }}
-      >
-        open
-      </Button>
-      <Button
-        onClick={() => {
-          WsAlarm.deactivate();
-        }}
-      >
-        ws close
       </Button>
       <img src={imgfile}></img>
       <Swiper

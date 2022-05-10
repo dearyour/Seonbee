@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import styles from "styles/profile/profileMain.module.css";
 import LanternCreateModal from "./LanternCreateModal";
 import LanternList from "./LanternList";
-import { LanternFestivalType } from "store/interface/Lantern";
+import { LanternFestivalType } from "store/interface/lantern";
 import { lanternBackgroundImages } from "styles/profile/LanternElements";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,7 @@ import Image from "next/image";
 import axiosConnector from "utils/axios-connector";
 import { profileActions } from "store/slice/profile";
 import LanternReadModal from "./LanternReadModal";
-import { LanternType } from "store/interface/Lantern";
+import { LanternType } from "store/interface/lantern";
 
 type Props = {
   lanternFestival: LanternFestivalType;

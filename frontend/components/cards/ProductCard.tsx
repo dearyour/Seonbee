@@ -1,59 +1,113 @@
 import React from "react";
 import Image from "next/image";
-
+import useProfile from "store/hook/profileHooks";
 import imageURL from "public/shoes.png";
 import Btn from "components/commons/Btn";
 import styled from "@emotion/styled";
+import axiosConnector from "utils/axios-connector";
+import { useRouter } from "next/router";
+import { BsX } from "react-icons/bs";
 
 interface Props {
-  productId: number;
   name: string;
   price: number;
   buyUrl: string;
   imageUrl: string;
+  wishlistId?: number;
+  productId?: number;
   giverId?: number;
   giverName?: String;
   isSaved?: boolean;
 }
 
 const ProductCard = (props: Props) => {
+  const { hostId, memberId } = useProfile();
+  const router = useRouter();
+
+  const wishReserve = () => {
+    axiosConnector({
+      method: "POST",
+      url: "profile/wish/reverse",
+      data: { receiverId: memberId, wishlistId: props.wishlistId },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
+
+  const ProductDelete = () => {
+    if (props.wishlistId) {
+      axiosConnector({
+        method: "DELETE",
+        url: "profile/wish/" + String(props.wishlistId),
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
+  };
   return (
     <div>
       <div className="containerc">
         <div className="card">
-          <div className="imgBx">
+          {memberId === hostId && <Xicon onClick={ProductDelete}></Xicon>}
+
+          <div className="imgBx d-flex justify-content-center">
             <Image
               alt="cards"
-              width={350}
-              height={200}
+              width={"100%"}
+              height={"100%"}
               //   layout="fill"
               src={props.imageUrl}
+              className="rounded"
             />
           </div>
           <div className="contentBx">
-            <h2>녹색 짚신</h2>
-            <div className="size">
-              <h3>정보 :</h3>
-              <span>7</span>
-              {/* <span>8</span>
-              <span>9</span>
-              <span>10</span> */}
-            </div>
+            <h2>{props.name}</h2>
+
             <div className="color">
-              <h3>가격 : 90,000 냥</h3>
-              <span></span>
-              <span></span>
-              <span></span>
+              <h3>가격 : {props.price} 원</h3>
             </div>
             {/* <a href="#">상품 구경하기</a> */}
-            <Btn filled={true}>상품 구경하기</Btn>
+            <Btn
+              className="mx-2"
+              filled={true}
+              onClick={() => {
+                router.push(props.buyUrl);
+              }}
+            >
+              상품 구경하기
+            </Btn>
+            {memberId === hostId ? null : props.giverId === memberId ? (
+              <Btn onClick={wishReserve}>취소</Btn>
+            ) : props.giverId ? null : (
+              <Btn onClick={wishReserve}>예약</Btn>
+            )}
+            {props.giverId && (
+              <div className="text-white">
+                {props.giverName}님이 예약하셨습니다.
+              </div>
+            )}
           </div>
         </div>
       </div>
-
-      {/* {props.giverId && <div>{props.giverName}님이 선물하실 예정입니다.</div>} */}
     </div>
   );
 };
+
+const Xicon = styled(BsX)`
+  font-size: 24px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 21;
+  cursor: pointer;
+`;
 
 export default ProductCard;

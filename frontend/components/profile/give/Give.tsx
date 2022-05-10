@@ -5,7 +5,7 @@ import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import axiosConnector from "utils/axios-connector";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slice";
-import ProductCard from "components/cards/Productcard";
+import ProductCard from "components/cards/ProductCard";
 
 type Props = {};
 interface Member {

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { useSelector } from "react-redux";
-import { LanternType } from "store/interface/Lantern";
+import { LanternType } from "store/interface/lantern";
 import { RootState } from "store/slice";
 import styles from "styles/profile/profileMain.module.css";
 import BlankLantern from "./BlankLantern";
