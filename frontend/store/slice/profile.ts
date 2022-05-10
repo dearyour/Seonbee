@@ -5,7 +5,7 @@ import {
   LanternFestivalType,
   DdayType,
   LanternFestivalTypeList,
-} from "../interface/Lantern";
+} from "../interface/lantern";
 import { calDday } from "utils/utils";
 
 const initialState: any = {

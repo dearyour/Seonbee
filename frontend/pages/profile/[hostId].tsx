@@ -5,7 +5,7 @@ import ProfileInfo from "components/profile/ProfileInfo";
 import ProfileMain from "components/profile/main/ProfileMain";
 import Wish from "components/profile/wish/Wish";
 import Give from "components/profile/give/Give";
-import Lantern from "components/profile/lantern/Lantern";
+import Lantern from "components/profile/lantern/lantern";
 import Chat from "components/profile/chat/Chat";
 import Setting from "components/profile/setting/Setting";
 import { useRouter } from "next/router";

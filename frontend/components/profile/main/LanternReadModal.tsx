@@ -4,7 +4,7 @@ import styles from "styles/profile/profileMain.module.css";
 import Image from "next/image";
 import { MdOutlineClose } from "react-icons/md";
 import Btn from "components/commons/Btn";
-import { LanternType } from "store/interface/Lantern";
+import { LanternType } from "store/interface/lantern";
 import letterBg from "public/images/letter3.jpg";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slice";

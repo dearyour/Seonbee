@@ -5,7 +5,7 @@ import {
   lanternImages,
   blinkLanternImages,
 } from "styles/profile/LanternElements";
-import { LanternType } from "store/interface/Lantern";
+import { LanternType } from "store/interface/lantern";
 import Image from "next/image";
 
 type Props = {
