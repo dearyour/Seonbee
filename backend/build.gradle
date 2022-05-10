@@ -148,6 +148,13 @@ dependencies {
 
 
 
+/*
+ https://mvnrepository.com/artifact/org.jsoup/jsoup
+ Jsoup = HTML을 파싱하는 JAVA라이브러리
+ */
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.14.3'
+
+
 }
 
 test {
