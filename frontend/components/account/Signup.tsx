@@ -12,9 +12,9 @@ import ControlMenu from "./ControlMenu";
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
 const NICK_REGEX = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,12}$/;
-const PW_REGEX = /^[a-zA-Z0-9]{7,16}$/;
-// // 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
-// const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{8,16}$/;
+// const PW_REGEX = /^[a-zA-Z0-9]{7,16}$/;
+// 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
+const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{7,16}$/;
 const ERROR_MSG: any = {
   required: "비어있소.",
   invalidId: "Ex) Email@naver.com",
@@ -29,7 +29,7 @@ const Signup = () => {
   const dispatch = useDispatch();
   const inputRef = useRef<any>(null);
   const banRef = useRef<any>(null);
-  const [promotion, setPromotion] = useState(false);
+  const [promotion, setPromotion] = useState<boolean>(false);
   const [inputState, setInputState] = useState<any>({
     email: "",
     nickname: "",

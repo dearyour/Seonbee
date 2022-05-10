@@ -60,4 +60,37 @@ public class ProductServiceImpl implements ProductService{
 
         return productDtoList;
     }
+
+    @Override
+    public int addHitProduct(Long productId) {
+        Product product = productRepository.findByProductIdAndIsDeleted(productId, false);
+        if (product==null)  return 401;
+        product.setHit(product.getHit()+1);
+        productRepository.save(product);
+        return 200;
+    }
+    @Override
+    public int addGiveProduct(Long productId, int flag) {
+        Product product = productRepository.findByProductIdAndIsDeleted(productId, false);
+        if (product==null)  return 401;
+        product.setGive(product.getGive()+flag);
+        productRepository.save(product);
+        return 200;
+    }
+    @Override
+    public int addWishProduct(Long productId, int flag) {
+        Product product = productRepository.findByProductIdAndIsDeleted(productId, false);
+        if (product==null)  return 401;
+        product.setWish(product.getWish()+flag);
+        productRepository.save(product);
+        return 200;
+    }
+    @Override
+    public int addRecommendProduct(Long productId) {
+        Product product = productRepository.findByProductIdAndIsDeleted(productId, false);
+        if (product==null)  return 401;
+        product.setRecommend(product.getRecommend()+1);
+        productRepository.save(product);
+        return 200;
+    }
 }

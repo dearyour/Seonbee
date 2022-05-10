@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Member } from "../interface/Member";
+import { Member } from "../interface/member";
 const initialState: Member | any = {
   info: [],
   isLoading: false,
