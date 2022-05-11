@@ -8,7 +8,10 @@ import Router from "next/router";
 import SearchTag from "./SearchTag";
 import Btn from "components/commons/Btn";
 import ControlMenu from "./ControlMenu";
-
+import CheckEmailCode, { SendEmailCodeAPI } from "./CheckEmailCode";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Button from "@mui/material/Button";
+import InputAdornment from "@material-ui/core/InputAdornment";
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
 const NICK_REGEX = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,12}$/;
@@ -55,7 +58,8 @@ const Signup = () => {
   const [searchTags, setSearchTags] = useState<any>([]);
   const [banTags, setBanTags] = useState<any>([]);
   const [nicknameCheckRes, setNicknameCheckRes] = useState<any>({}); // 닉네임 중복검사
-  console.log(nicknameCheckRes);
+  const [authFin, setAuthFin] = useState<boolean>(false); //인증버튼 막기
+  const [showEmailCodeCheck, setShowEmailCodeCheck] = useState<boolean>(false); //이메일인증
   const onSearch = (e: any) => {
     if (inputRef.current.value.length > 0 && inputRef.current.value.trim()) {
       if (e.key === "Enter") {
@@ -86,6 +90,68 @@ const Signup = () => {
     newSearchTags.splice(idx, 1);
     setBanTags(newSearchTags);
   };
+
+  const sendEmailCodeClick = (e: any) => {
+    // 이메일로 인증번호 보내기 + 인증번호 입력 받을 수 있게 폼 열기
+    e.preventDefault();
+    let isNormal = true;
+    let msg = "";
+
+    if (!inputState.email) {
+      isNormal = false;
+      msg = "이메일을 입력해주세요.";
+    } else if (!ID_REGEX.test(inputState.email)) {
+      isNormal = false;
+      msg = "이메일 양식을 확인해주세요.";
+    } else {
+      // 인증코드 보내기
+      setShowEmailCodeCheck(true);
+      setAuthFin(true); // 우선 인증버튼 누르자마자 막기
+      Swal.fire({
+        title: "인증번호를 전송중입니다",
+        text: "전송에 시간이 조금 걸릴 수 있으니 조금만 기다려주세요",
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+          axios({
+            method: "POST",
+            url: process.env.NEXT_PUBLIC_BACK + "email/send",
+            data: inputState.email,
+          }).then((res: any) => {
+            if (res.data.status == 200) {
+              Swal.fire({
+                title: "이메일로 인증번호를 전송했습니다",
+                text: "이메일 수신에 시간이 조금 걸릴 수 있습니다",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 800,
+              });
+            } else if (res.data.status == 401) {
+              Swal.fire({
+                title: "이미 있는 이메일주소입니다. 다른 이메일로 시도해주세요",
+                icon: "error",
+                confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+              });
+              setShowEmailCodeCheck(false);
+              setAuthFin(false); // 우선 인증버튼 누르자마자 막기
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "로그인 중 문제가 발생했습니다",
+                text: "지속적으로 같은 문제 발생시 관리자에게 문의하세요",
+                confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+              });
+            }
+          });
+        },
+      });
+    }
+  };
+  const sendEmailCodeAgainClick = () => {
+    setShowEmailCodeCheck(false);
+    setAuthFin(false);
+  };
+
   // const updateSearchInput = (value: any) => {
   //   inputRef.current.value = value;
   // };
@@ -252,7 +318,7 @@ const Signup = () => {
       // onSubmit={handleSubmit}
       >
         <h4>호패 등록</h4>
-        <input
+        {/* <input
           id="email"
           type="text"
           placeholder="이메일"
@@ -263,7 +329,42 @@ const Signup = () => {
           // }}
           onChange={handleChange}
           onBlur={() => checkRegex("email")}
+        /> */}
+        <OutlinedInput
+          type="email"
+          id="email"
+          placeholder="이메일"
+          value={inputState.email || ""}
+          onChange={handleChange}
+          disabled={authFin ? true : false}
+          onBlur={() => checkRegex("email")}
+          // sx={{ width: 370, fontSize: 14 }}
+          endAdornment={
+            <InputAdornment position="end">
+              <Button
+                onClick={sendEmailCodeClick}
+                disabled={authFin ? true : false}
+              >
+                인증받기
+              </Button>
+            </InputAdornment>
+          }
         />
+        <>
+          {showEmailCodeCheck ? (
+            <CheckEmailCode
+              changeHandle={handleChange}
+              email={inputState.email}
+            />
+          ) : (
+            <></>
+          )}
+        </>
+        {authFin ? (
+          <Button onClick={sendEmailCodeAgainClick}>
+            이메일 변경 및 인증 다시 받기
+          </Button>
+        ) : null}
         <div className="text-red-500">
           {errorData["email"] !== true ? ERROR_MSG[errorData["email"]] : ""}
         </div>
@@ -280,7 +381,7 @@ const Signup = () => {
         />
         {/* {404는 쿼리없이 호출했을때, 401은 2-12글자 아닐때 402는 닉넴중복} */}
         {nicknameCheckRes.code == 404 ? (
-          <div className="text-red-500"> "비어있소" </div>
+          <div className="text-red-500"> 비어있소 </div>
         ) : nicknameCheckRes.code == 401 ? (
           <div className="text-red-500"> {nicknameCheckRes.msg}</div>
         ) : nicknameCheckRes.code == 402 ? (
