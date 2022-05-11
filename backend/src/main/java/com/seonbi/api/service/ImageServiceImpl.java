@@ -19,7 +19,8 @@ public class ImageServiceImpl implements ImageService{
     @Autowired
     ImageRepository imageRepository;
 
-    String realPath = new File("").getAbsolutePath() + File.separator + "images";
+//    String realPath = new File("").getAbsolutePath() + File.separator + "images";
+    String realPath = File.separator + "images";
 
     @Override
     public Long saveImage(MultipartFile image) throws IOException {
