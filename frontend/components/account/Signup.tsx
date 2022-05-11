@@ -19,7 +19,7 @@ const ERROR_MSG: any = {
   required: "비어있소.",
   invalidId: "Ex) Email@naver.com",
   validId: "허가한다.",
-  invalidPw: "대,소문자 or 숫자 구성 8~16 글자",
+  invalidPw: "대,소문자 and 숫자 구성 8~16 글자",
   validPw: "허가한다.",
   invalidNick: "한글 or 대,소문자 or 숫자 2~12 글자",
   invalidConfirmPw: "비밀번호가 일치하지 않습니다.",
@@ -280,11 +280,13 @@ const Signup = () => {
         />
         {/* {404는 쿼리없이 호출했을때, 401은 2-12글자 아닐때 402는 닉넴중복} */}
         <div className="text-red-500">
-          {nicknameCheckRes.code == 404
-            ? "비어있소"
-            : nicknameCheckRes.code == 401
-            ? nicknameCheckRes.msg
-            : nicknameCheckRes.msg}
+          {nicknameCheckRes.code == 404 ? (
+            "비어있소"
+          ) : nicknameCheckRes.code == 401 ? (
+            nicknameCheckRes.msg
+          ) : (
+            <div className="text-green-500">{nicknameCheckRes.msg}</div>
+          )}
         </div>
         <input
           type="password"
@@ -331,7 +333,7 @@ const Signup = () => {
             <div className="promotion">
               <SearchBoxContainer>
                 <SearchInputContainer>
-                  <span>좋은 선물</span>
+                  <SpanWrp>받고 싶은 선물</SpanWrp>
                   <input
                     type="text"
                     id="likelist"
@@ -354,7 +356,7 @@ const Signup = () => {
               </SearchBoxContainer>
               <SearchBoxContainer>
                 <SearchInputContainer>
-                  <span>싫은 선물</span>
+                  <SpanWrp>받기 싫은 선물</SpanWrp>
                   <input
                     type="text"
                     id="banlist"
@@ -447,6 +449,13 @@ const SearchTagContainer = styled.div`
   width: 100%;
   overflow: auto;
   justify-content: center;
+`;
+
+const SpanWrp = styled.span`
+  // margin: 0 10px;
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-right: 5px;
 `;
 
 export default Signup;

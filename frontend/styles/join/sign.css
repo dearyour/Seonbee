@@ -29,7 +29,8 @@
   width: 100%;
   height: 420px;
   /*background: #61b9ff;*/
-  background: rgba(255, 255, 255, 0.2);
+  /* background: rgba(255, 255, 255, 0.2); */
+  background: #c0b4a5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +62,7 @@
   font-weight: 500;
   border: none;
   border-radius: 10%;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
 }
 .formBx {
   position: absolute;
@@ -178,6 +179,9 @@
   margin-top: -25px;
   margin-bottom: 10px;
   color: red;
+}
+.text-green-500 {
+  color: green;
 }
 
 .dateSection {

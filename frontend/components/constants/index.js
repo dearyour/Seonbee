@@ -1,3 +1,110 @@
+const env = process.env;
+env.PUBLIC_URL = env.PUBLIC_URL || "";
+export const categoryRadio = [
+  {
+    category_id: 1,
+    category_img: process.env.PUBLIC_URL + `/assets/category1.png`,
+    category_descript: "전체",
+  },
+  {
+    category_id: 2,
+    category_img: process.env.PUBLIC_URL + `/assets/category2.png`,
+    category_descript: "상의",
+  },
+  {
+    category_id: 3,
+    category_img: process.env.PUBLIC_URL + `/assets/category3.png`,
+    category_descript: "하의",
+  },
+  {
+    category_id: 4,
+    category_img: process.env.PUBLIC_URL + `/assets/category4.png`,
+    category_descript: "모자",
+  },
+  {
+    category_id: 5,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "가방",
+  },
+  {
+    category_id: 6,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "신발",
+  },
+  {
+    category_id: 7,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "팔찌",
+  },
+  {
+    category_id: 8,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "목걸이",
+  },
+  {
+    category_id: 9,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "자바",
+  },
+  {
+    category_id: 10,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "리액트",
+  },
+];
+export const categoryRadios = [
+  {
+    category_id: 1,
+    category_img: process.env.PUBLIC_URL + `/assets/category1.png`,
+    category_descript: "전체",
+  },
+  {
+    category_id: 2,
+    category_img: process.env.PUBLIC_URL + `/assets/category2.png`,
+    category_descript: "동해",
+  },
+  {
+    category_id: 3,
+    category_img: process.env.PUBLIC_URL + `/assets/category3.png`,
+    category_descript: "물과",
+  },
+  {
+    category_id: 4,
+    category_img: process.env.PUBLIC_URL + `/assets/category4.png`,
+    category_descript: "백두산",
+  },
+  {
+    category_id: 5,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "하늘이",
+  },
+  {
+    category_id: 6,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "맑도록",
+  },
+  {
+    category_id: 7,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "뜨어",
+  },
+  {
+    category_id: 8,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "목걸이",
+  },
+  {
+    category_id: 9,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "자바",
+  },
+  {
+    category_id: 10,
+    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_descript: "리액트",
+  },
+];
+
 export const categoryList = [
   {
     id: 1,
