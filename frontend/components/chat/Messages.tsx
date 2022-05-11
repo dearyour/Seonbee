@@ -1,10 +1,10 @@
-import { Chip, Stack } from '@mui/material';
-import axios from 'axios';
-import Btn from 'components/commons/Btn';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/slice';
-import { chatbotActions } from 'store/slice/chatbot';
+import { Chip, Stack } from "@mui/material";
+import axios from "axios";
+import Btn from "components/commons/Btn";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store/slice";
+import { chatbotActions } from "store/slice/chatbot";
 import {
   StyledMessages,
   MessagesUser,
@@ -12,18 +12,18 @@ import {
   MessagesTextUser,
   MessagesTextDF,
   QuickReplies,
-} from 'styles/chat/MessageElements';
+} from "styles/chat/MessageElements";
 
 function Messages() {
   const dispatch = useDispatch();
   const messages = useSelector((state: RootState) => state.chatbot.messages);
-
+  const baseUrl = process.env.NEXT_PUBLIC_CHAT;
   // const [isLoaded, setLoaded] = useState<boolean>(false);
 
   const textQuery = async (text: string) => {
     // 1. 유저가 입력한 메시지 처리
     let conversation = {
-      who: 'user',
+      who: "user",
       content: {
         text: {
           text: text,
@@ -45,7 +45,7 @@ function Messages() {
     try {
       // textQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        'http://localhost:5000/api/dialogflow/textQuery',
+        baseUrl + "dialogflow/textQuery",
         textQueryVariables
       );
       // const content = response.data.fulfillmentMessages[0];
@@ -87,10 +87,10 @@ function Messages() {
       dispatch(chatbotActions.saveMessage(conversation));
     } catch (error) {
       conversation = {
-        who: 'bot',
+        who: "bot",
         content: {
           text: {
-            text: '에러가 발생했습니다. 관리자에게 문의해주세요.',
+            text: "에러가 발생했습니다. 관리자에게 문의해주세요.",
           },
         },
         quick_replies: [],
@@ -206,7 +206,7 @@ function Messages() {
   };
 
   const renderOneMessage = (message: any, i: number) => {
-    if (message.who === 'bot') {
+    if (message.who === "bot") {
       return (
         // <MessagesDF key={i} style={{ paddingBottom: '1rem' }}>
         //   <MessagesTextDF>{message.content.text.text}</MessagesTextDF>
