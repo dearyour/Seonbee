@@ -71,7 +71,7 @@ const ProfileInfo = (props: Props) => {
       const infoContent = profile[infoKey];
       if (infoContent) {
         result.push(
-          <div className={styles.info} key={i + 10000}>
+          <div className={styles.info}>
             <span className={styles.name}>{infoName}</span>
             <span className={styles.content}>{infoContent}</span>
           </div>

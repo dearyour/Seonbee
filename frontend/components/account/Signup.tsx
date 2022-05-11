@@ -22,7 +22,7 @@ const ERROR_MSG: any = {
   required: "비어있소.",
   invalidId: "Ex) Email@naver.com",
   validId: "허가한다.",
-  invalidPw: "대,소문자 and 숫자 구성 8~16 글자",
+  invalidPw: "대,소문자 and 숫자 포함 8~16 글자",
   validPw: "허가한다.",
   invalidNick: "한글 or 대,소문자 or 숫자 2~12 글자",
   invalidConfirmPw: "비밀번호가 일치하지 않습니다.",
