@@ -279,15 +279,15 @@ const Signup = () => {
           onBlur={() => checkRegex("nickname")}
         />
         {/* {404는 쿼리없이 호출했을때, 401은 2-12글자 아닐때 402는 닉넴중복} */}
-        <div className="text-red-500">
-          {nicknameCheckRes.code == 404 ? (
-            "비어있소"
-          ) : nicknameCheckRes.code == 401 ? (
-            nicknameCheckRes.msg
-          ) : (
-            <div className="text-green-500">{nicknameCheckRes.msg}</div>
-          )}
-        </div>
+        {nicknameCheckRes.code == 404 ? (
+          <div className="text-red-500"> "비어있소" </div>
+        ) : nicknameCheckRes.code == 401 ? (
+          <div className="text-red-500"> {nicknameCheckRes.msg}</div>
+        ) : nicknameCheckRes.code == 402 ? (
+          <div className="text-red-500"> {nicknameCheckRes.msg}</div>
+        ) : (
+          <div className="text-green-500">{nicknameCheckRes.msg}</div>
+        )}
         <input
           type="password"
           id="password"
