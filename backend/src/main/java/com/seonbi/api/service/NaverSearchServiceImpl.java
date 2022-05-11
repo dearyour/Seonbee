@@ -20,50 +20,40 @@ import org.springframework.web.client.RestTemplate;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
 public class NaverSearchServiceImpl implements NaverSearchService {
 
 
-    @Autowired
-    ProductRepository productRepository;
+//    @Autowired
+//    ProductRepository productRepository;
 
     @Override
     public void saveResults() {
 
         List<String> keyword = txtRead();
+        HashSet<Long> set=new HashSet<>();
 
         for (int i = 0; i < keyword.size(); i++) {
             String result = NaverShopSearch(keyword.get(i));
             List<Product> productList = StringToJson(result);
-
-
             // 해당 제품이 이미 product  테이블에 저장되어 있는지 확인하고 없으면 저장
 
             System.out.println("키워드="+keyword.get(i));
-            for(int j=0; j<productList.size(); j++)
-            {
-
-
-
+            for(int j=0; j<productList.size(); j++) {
                 Product product=productList.get(j);
                 product.setKeyword(keyword.get(i));
                 System.out.println(product.getNaverId());
 
-                Product byNaverId = productRepository.findByNaverId(product.getNaverId());
+//                Product byNaverId = productRepository.findByNaverId(product.getNaverId());
 
-                if(byNaverId==null)
-                {
-
-                    productRepository.save(product);
-                }
-
-
+//                if(byNaverId==null) {
+//                    productRepository.save(product);
+//                }
             }
         }
-
-
     }
 
 
@@ -93,52 +83,32 @@ public class NaverSearchServiceImpl implements NaverSearchService {
         String response = responseEntity.getBody();
         //System.out.println("Response status: " + status);
         //System.out.println(response);
-
-
         return response;
-
-
     }
 
 
     @Override
     public List<String> txtRead() {
         List<String> keywordList = new ArrayList<>();
-        File csv = new File("C:\\Users\\multicampus\\Desktop\\썸트렌드 데이터\\seonbee_keyword.txt");
-        BufferedReader br = null;
+        File csv = new File("C:\\ssafy\\project3\\database\\sometrend\\썸트렌드 데이터\\seonbee_keyword.txt");
         String line = "";
 
         try {
-            br = new BufferedReader(new FileReader(csv));
+            BufferedReader br = new BufferedReader(new FileReader(csv));
             while ((line = br.readLine()) != null) { // readLine()은 파일에서 개행된 한 줄의 데이터를 읽어온다.
-
-                //System.out.println(line);
                 keywordList.add(line);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (br != null) {
-                    br.close(); // 사용 후 BufferedReader를 닫아준다.
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return keywordList;
     }
 
     @Override
     public List<Product> StringToJson(String result) {
-
-
         List<Product> productList = new ArrayList<>();
-
         JSONParser parser = new JSONParser();
-
         try {
             JSONObject json = (JSONObject) parser.parse(result);
             JSONArray item = (JSONArray) json.get("items");
@@ -168,14 +138,11 @@ public class NaverSearchServiceImpl implements NaverSearchService {
 
                // System.out.println("상품이름="+new2);
                 product.setName(new2);
-
-
                 product.setImageUrl((String) object.get("image"));
                 product.setCategory1((String) object.get("category1"));
                 product.setCategory2((String) object.get("category2"));
                 product.setCategory3((String) object.get("category3"));
                 product.setBrand((String) object.get("brand"));
-
 
                 //System.out.println(product.toString());
 
@@ -189,24 +156,15 @@ public class NaverSearchServiceImpl implements NaverSearchService {
 
         return productList;
     }
-
-
-
     /*
     Spring 환경에서 특정 사이트 데이터를 크롤링하려면 Jsoup 라이브러리가 필요
 
      */
-
-
     @Override
     public String linkCrawling(String link) throws IOException {
-
         String url = null;
-
         Document doc = Jsoup.connect(link).get();  // 사이트 연결 및 데이터 저장  : link url로부터 문서 가져오기
-
         //   Elements select = doc.getElementsByAttribute("href");
-
         Elements select = doc.select(".product_bridge_product__HdCK7 .product_btn_link__3afs2");
 
         // System.out.println(select);

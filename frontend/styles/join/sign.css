@@ -29,7 +29,8 @@
   width: 100%;
   height: 420px;
   /*background: #61b9ff;*/
-  background: rgba(255, 255, 255, 0.2);
+  /* background: rgba(255, 255, 255, 0.2); */
+  background: #c0b4a5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +62,7 @@
   font-weight: 500;
   border: none;
   border-radius: 10%;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
 }
 .formBx {
   position: absolute;
@@ -74,7 +75,7 @@
   z-index: 11;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   box-shadow: 0 5px 45px rgba(0, 0, 0, 0.25);
   transition: 0.5s ease-in-out;
   /* overflow: hidden; */
@@ -94,6 +95,7 @@
 }
 .formBx .signinForm {
   transition-delay: 0.25s;
+  /* margin-top: 40px; */
 }
 .formBx.active .signinForm {
   left: -100%;
@@ -178,6 +180,11 @@
   margin-top: -25px;
   margin-bottom: 10px;
   color: red;
+}
+.text-green-500 {
+  margin-top: -25px;
+  margin-bottom: 10px;
+  color: green;
 }
 
 .dateSection {

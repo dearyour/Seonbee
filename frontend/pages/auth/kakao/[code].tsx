@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useEffectOnce } from 'store/hook/useEffectOnce';
-import { memberActions } from 'store/slice/member';
-import styled from '@emotion/styled';
+import React, { useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useEffectOnce } from "store/hook/useEffectOnce";
+import { memberActions } from "store/slice/member";
+import styled from "@emotion/styled";
 const Auth2 = () => {
   const dispatch = useDispatch();
   // const kakaoLogin = useCallback(() => {
