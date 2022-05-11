@@ -179,9 +179,4 @@ public class NaverSearchServiceImpl implements NaverSearchService {
         return url;
     }
 
-    @Override
-    public void saveResults2() {
-
-    }
-
 }
