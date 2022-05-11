@@ -35,7 +35,7 @@ function HeroSection() {
                   </Btn>
                   <Btn
                     onClick={() => {
-                      router.push("/signup");
+                      router.push("/login");
                     }}
                   >
                     선비에 가입하기

@@ -9,6 +9,7 @@ import Router from "next/router";
 import Swal from "sweetalert2";
 import Login from "./kakaoLogin";
 import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
 type Props = {};
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
@@ -186,9 +187,7 @@ const Signin = (props: Props) => {
         <LoginWrapper>
           <Login />
         </LoginWrapper>
-        {/* <a href="/shop" className="forgot"> */}
-        {/* 비밀스러운 번호를 까먹었소? */}
-        {/* </a> */}
+        <Button className="forgot">비밀스러운 번호를 까먹었소?</Button>
       </form>
     </div>
   );
