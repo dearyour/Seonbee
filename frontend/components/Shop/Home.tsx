@@ -141,20 +141,22 @@ const Home = () => {
       )}
       <div className="home_panelList-wrap">
         {/* Filter Panel */}
-        <div className="home_panel-wrap">
-          <FilterPanel
-            selectedCategory={selectedCategory}
-            selectCategory={handleSelectCategory}
-            selectedRating={selectedRating}
-            selectedPrice={selectedPrice}
-            selectRating={handleSelectRating}
-            cuisines={cuisines}
-            changeChecked={handleChangeChecked}
-            changePrice={handleChangePrice}
-          />
-          <Blue>친구 검색</Blue>
-          <SearchUsers />
-        </div>
+        {searchOption && (
+          <div className="home_panel-wrap">
+            <FilterPanel
+              selectedCategory={selectedCategory}
+              selectCategory={handleSelectCategory}
+              selectedRating={selectedRating}
+              selectRating={handleSelectRating}
+              selectedPrice={selectedPrice}
+              changePrice={handleChangePrice}
+              cuisines={cuisines}
+              changeChecked={handleChangeChecked}
+            />
+            <Blue>친구 검색</Blue>
+            <SearchUsers />
+          </div>
+        )}
         {/* List & Empty View */}
         <div className="home_list-wrap">
           {resultsFound ? <List list={list} /> : <EmptyView />}

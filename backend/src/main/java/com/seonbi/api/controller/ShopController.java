@@ -67,6 +67,7 @@ public class ShopController {
         int addGiveProductCode=recommendService.addGiveProduct(member.getMemberId(), giveProductReq.getFriendId(), giveProductReq.getProductId());
         if (addGiveProductCode==401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 사용자입니다."));
         if (addGiveProductCode==403)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        productService.addWishProduct(giveProductReq.getProductId(), 1);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
@@ -80,6 +81,7 @@ public class ShopController {
         }
 
         wishlistService.addWishlist(member.getMemberId(), productId);
+        productService.addWishProduct(productId, 1);
         return ResponseEntity.status(200).body(ReceiverProductAllRes.of(200, "success"));
     }
 
@@ -93,6 +95,15 @@ public class ShopController {
         List<FriendFollowDto> friends=friendService.shopGetFriendAll(member.getMemberId());
         return ResponseEntity.status(200).body(FriendFollowGetAllRes.of(200, "success", friends));
     }
+
+    @GetMapping("/hit/{productId}")
+    public ResponseEntity<? extends BaseResponseBody> addHitProduct(@PathVariable Long productId){
+        int addHitProductCode=productService.addHitProduct(productId);
+        if (addHitProductCode==401)     return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 상품입니다."));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
+    }
+
+
 
 
 }

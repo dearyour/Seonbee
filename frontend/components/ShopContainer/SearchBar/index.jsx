@@ -43,7 +43,7 @@ const SearchBar = ({ value, changeInput, searchOption, setSearchOption }) => {
 
 const SearchOptionButton = styled.div`
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   text-decoration: underline;
   color: #5e5e5e;
   margin-left: 100px;
