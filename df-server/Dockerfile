@@ -14,6 +14,8 @@ COPY package.json /app/package.json
 
 RUN npm install
 
+RUN export GOOGLE_APPLICATION_CREDENTIALS=seonbee-348514-6d6eb2bedcbf.json
+
 COPY . ./
 
 # 앱 실행
