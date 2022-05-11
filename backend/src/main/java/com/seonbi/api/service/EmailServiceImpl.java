@@ -42,7 +42,7 @@ public class EmailServiceImpl implements EmailService{
 
     @Override
     public int confirmCode(String email, String code, String tag) {
-        if (emailRepository.findByEmailAndCodeAndTag(email, code, tag)==null){
+        if (emailRepository.findByEmailAndCodeAndTagAndIsDeleted(email, code, tag, false)==null){
             return 402;
         }
         return 200;
