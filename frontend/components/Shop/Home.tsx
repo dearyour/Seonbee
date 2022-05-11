@@ -147,11 +147,11 @@ const Home = () => {
               selectedCategory={selectedCategory}
               selectCategory={handleSelectCategory}
               selectedRating={selectedRating}
-              selectedPrice={selectedPrice}
               selectRating={handleSelectRating}
+              selectedPrice={selectedPrice}
+              changePrice={handleChangePrice}
               cuisines={cuisines}
               changeChecked={handleChangeChecked}
-              changePrice={handleChangePrice}
             />
             <Blue>친구 검색</Blue>
             <SearchUsers />

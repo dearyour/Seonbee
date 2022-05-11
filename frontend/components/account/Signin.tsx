@@ -8,7 +8,7 @@ import axios from "axios";
 import Router from "next/router";
 import Swal from "sweetalert2";
 import Login from "./kakaoLogin";
-
+import TextField from "@mui/material/TextField";
 type Props = {};
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
@@ -93,15 +93,15 @@ const Signin = (props: Props) => {
     let isNormal = true;
     let msg = "";
 
-    let emailValue = errorData.email != true;
-    let passwordValue = errorData.password != true;
-    if (!inputState.email || emailValue) {
-      isNormal = false;
-      msg = "이메일을 다시 입력해주세요.";
-    } else if (!inputState.password || passwordValue) {
-      isNormal = false;
-      msg = "비밀번호를 다시 입력해주세요.";
-    }
+    // let emailValue = errorData.email != true;
+    // let passwordValue = errorData.password != true;
+    // if (!inputState.email || emailValue) {
+    //   isNormal = false;
+    //   msg = "이메일을 다시 입력해주세요.";
+    // } else if (!inputState.password || passwordValue) {
+    //   isNormal = false;
+    //   msg = "비밀번호를 다시 입력해주세요.";
+    // }
     if (isNormal) {
       const data = {
         email: inputState.email,
@@ -135,7 +135,7 @@ const Signin = (props: Props) => {
             Swal.fire({
               icon: "error",
               title: "회원 정보를 다시 확인해주세요",
-              text: "지속적으로 같은 문제 발생시 관리자에게 문의하세요",
+              text: "아이디 또는 비밀번호가 일치하지 않습니다",
               confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
             });
           }
@@ -161,7 +161,7 @@ const Signin = (props: Props) => {
           placeholder="이메일"
           value={inputState.email || ""}
           onChange={handleChange}
-          onBlur={() => checkRegex("email")}
+          // onBlur={() => checkRegex("email")}
         />
         <div className="text-red-500">
           {errorData["email"] !== true ? ERROR_MSG[errorData["email"]] : ""}
@@ -173,7 +173,7 @@ const Signin = (props: Props) => {
           value={inputState.password || ""}
           onChange={(e) => {
             handleChange(e);
-            checkRegex("password");
+            // checkRegex("password");
           }}
           // onBlur={() => checkRegex("password")}
         />
