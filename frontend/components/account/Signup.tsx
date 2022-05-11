@@ -9,8 +9,8 @@ import SearchTag from "./SearchTag";
 import Btn from "components/commons/Btn";
 import ControlMenu from "./ControlMenu";
 import CheckEmailCode, { SendEmailCodeAPI } from "./CheckEmailCode";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import Button from "@mui/material/Button";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
@@ -45,7 +45,9 @@ const Signup = () => {
     interest: "",
     mbti: "",
     verse: "",
+    code: false,
   });
+  console.log(inputState.email);
   // const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [date, setDate] = useState("1995-05-05");
   const [sortType, setSortType] = useState("성별");
@@ -113,12 +115,8 @@ const Signup = () => {
         showConfirmButton: false,
         didOpen: () => {
           Swal.showLoading();
-          axios({
-            method: "POST",
-            url: process.env.NEXT_PUBLIC_BACK + "email/send",
-            data: inputState.email,
-          }).then((res: any) => {
-            if (res.data.status == 200) {
+          SendEmailCodeAPI(inputState.email).then((res: any) => {
+            if (res?.status == 200) {
               Swal.fire({
                 title: "이메일로 인증번호를 전송했습니다",
                 text: "이메일 수신에 시간이 조금 걸릴 수 있습니다",
@@ -126,7 +124,7 @@ const Signup = () => {
                 showConfirmButton: false,
                 timer: 800,
               });
-            } else if (res.data.status == 401) {
+            } else if (res?.status == 401) {
               Swal.fire({
                 title: "이미 있는 이메일주소입니다. 다른 이메일로 시도해주세요",
                 icon: "error",
@@ -147,11 +145,19 @@ const Signup = () => {
       });
     }
   };
+  //이메일 유효성을 위한 true false
   const sendEmailCodeAgainClick = () => {
     setShowEmailCodeCheck(false);
     setAuthFin(false);
   };
 
+  const changeHandles = (value: any, name: any) => {
+    inputState[name] = value;
+    if (value == false) {
+      setAuthFin(false);
+    }
+  };
+  //입력후 빈문자열 만드는건 함수 사용안하고 직접사용으로 대체함
   // const updateSearchInput = (value: any) => {
   //   inputRef.current.value = value;
   // };
@@ -163,7 +169,7 @@ const Signup = () => {
     { value: "M", name: "남자" },
     { value: "F", name: "여자" },
   ];
-
+  //일반적인 input 핸들러
   const handleChange = (e: any) => {
     const { id, value } = e.target;
     setInputState((prevState: any) => ({
@@ -196,10 +202,9 @@ const Signup = () => {
           return;
       }
     }
-
     setErrorData((prev: any) => ({ ...prev, [inputId]: result }));
   };
-
+  //닉네임 유효성
   const nicknameHandleChange = (e: any) => {
     const value = e.target.value;
 
@@ -271,7 +276,7 @@ const Signup = () => {
       })
       .catch((err) => {});
   };
-
+  //태그 엔터 입력을 위해서 회원가입은 폼 기능막고 클릭으로 가입
   const handleSubmit = () => {
     // (event: any) => {
     //   event.preventDefault();
@@ -286,6 +291,9 @@ const Signup = () => {
     if (!inputState.email || emailValue) {
       isNormal = false;
       msg = "이메일을 다시 입력해주세요.";
+    } else if (!authFin || !showEmailCodeCheck || !inputState.code) {
+      isNormal = false;
+      msg = "이메일 인증을 해주세요.";
     } else if (!nickNameValue) {
       isNormal = false;
       msg = "닉네임을 다시 입력해주세요.";
@@ -318,29 +326,42 @@ const Signup = () => {
       // onSubmit={handleSubmit}
       >
         <h4>호패 등록</h4>
-        {/* <input
-          id="email"
+        <EmailWrp>
+          <input
+            id="email"
+            type="text"
+            placeholder="이메일"
+            value={inputState.email || ""}
+            disabled={authFin ? true : false}
+            // onChange={(e) => {
+            //   handleChange(e);
+            //   checkRegex("email");
+            // }}
+            onChange={handleChange}
+            onBlur={() => checkRegex("email")}
+          />
+          <Button
+            onClick={sendEmailCodeClick}
+            disabled={authFin ? true : false}
+            sx={{ width: 100, height: 47 }}
+          >
+            인증받기
+          </Button>
+        </EmailWrp>
+        {/* <OutlinedInput
           type="text"
-          placeholder="이메일"
-          value={inputState.email || ""}
-          // onChange={(e) => {
-          //   handleChange(e);
-          //   checkRegex("email");
-          // }}
-          onChange={handleChange}
-          onBlur={() => checkRegex("email")}
-        /> */}
-        <OutlinedInput
-          type="email"
           id="email"
           placeholder="이메일"
           value={inputState.email || ""}
           onChange={handleChange}
           disabled={authFin ? true : false}
+          // style={{ border: "3px" }}
           onBlur={() => checkRegex("email")}
           // sx={{ width: 370, fontSize: 14 }}
+          // sx={{ height: 30 }}
+
           endAdornment={
-            <InputAdornment position="end">
+            <InputAdornment>
               <Button
                 onClick={sendEmailCodeClick}
                 disabled={authFin ? true : false}
@@ -349,11 +370,15 @@ const Signup = () => {
               </Button>
             </InputAdornment>
           }
-        />
+        /> */}
+
+        <div className="text-red-500">
+          {errorData["email"] !== true ? ERROR_MSG[errorData["email"]] : ""}
+        </div>
         <>
           {showEmailCodeCheck ? (
             <CheckEmailCode
-              changeHandle={handleChange}
+              changeHandle={changeHandles}
               email={inputState.email}
             />
           ) : (
@@ -365,9 +390,7 @@ const Signup = () => {
             이메일 변경 및 인증 다시 받기
           </Button>
         ) : null}
-        <div className="text-red-500">
-          {errorData["email"] !== true ? ERROR_MSG[errorData["email"]] : ""}
-        </div>
+
         <input
           id="nickname"
           type="text"
@@ -379,6 +402,7 @@ const Signup = () => {
           }}
           onBlur={() => checkRegex("nickname")}
         />
+
         {/* {404는 쿼리없이 호출했을때, 401은 2-12글자 아닐때 402는 닉넴중복} */}
         {nicknameCheckRes.code == 404 ? (
           <div className="text-red-500"> 비어있소 </div>
@@ -557,6 +581,10 @@ const SpanWrp = styled.span`
   margin-top: 5px;
   margin-left: 10px;
   margin-right: 5px;
+`;
+
+const EmailWrp = styled.div`
+  display: flex;
 `;
 
 export default Signup;

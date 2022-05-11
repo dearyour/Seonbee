@@ -1,43 +1,70 @@
-import React, { useState } from "react";
+import React, { ReactEventHandler, useState } from "react";
 
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Swal from "sweetalert2";
-
+import styled from "@emotion/styled";
 // import { checkEmailCodeAPI, checkEmailPWAPI } from "../../pages/api/user";
 import CountdownTimer from "./CountdownTimer";
+import axios from "axios";
 
 // 회원가입시 이메일로 인증번호 보내기
-export async function SendEmailCodeAPI(email) {
-  return await api
-    .post("/api/email/send", email)
-    .then((res) => res.data)
-    .catch((err) => err.response.data);
-}
-// 비밀번호 재설정 위해 이메일로 인증번호 보내기
-export async function checkEmailCodeAPI(data) {
-  return await api
-    .post("/api/email/code", {
-      email: data.email,
-      code: data.code,
-    })
-    .then((res) => res.data)
-    .catch((err) => err.response.data);
-}
-// 비밀번호 재설정 위해 받은 인증번호 확인하기
-export async function checkEmailPWAPI(data) {
-  return await api
-    .post("/api/email/passcode", {
-      code: data.code,
-      email: data.email,
-    })
-    .then((res) => res.data)
-    .catch((err) => err.response.data);
+export async function SendEmailCodeAPI(email: any) {
+  return await axios({
+    method: "POST",
+    url: process.env.NEXT_PUBLIC_BACK + "email/send",
+    headers: {
+      "Content-Type": `application/json;charset=UTF-8`,
+      // "Access-Control-Allow-Origin": "*",
+      // Accept: "application/json",
+    },
+    data: email,
+  })
+    .then((res: any) => res.data)
+    .catch((err: any) => err.response.data);
 }
 
-export default function CheckEmailCode(props) {
+// 회원가입 이메일 인증 받은것 코드내용 인증하기
+export async function checkEmailCodeAPI(datas: any) {
+  return await axios({
+    method: "POST",
+    url: process.env.NEXT_PUBLIC_BACK + "email/check",
+    headers: {
+      "Content-Type": `application/json;charset=UTF-8`,
+      // "Access-Control-Allow-Origin": "*",
+      // Accept: "application/json",
+    },
+    data: {
+      email: datas.email,
+      code: datas.code,
+    },
+  })
+    .then((res) => res.data)
+    .catch((err) => err.response.data);
+}
+// 비밀번호 재설정 위해 이메일 인증번호 받은것 인증하기
+export async function checkEmailPWAPI(data: any) {
+  return await axios({
+    method: "POST",
+    url: process.env.NEXT_PUBLIC_BACK + "email/passcheck",
+    headers: {
+      "Content-Type": `application/json;charset=UTF-8`,
+      // "Access-Control-Allow-Origin": "*",
+      // Accept: "application/json",
+    },
+    data: {
+      email: data.email,
+      code: data.code,
+    },
+  })
+    .then((res) => res.data)
+    .catch((err) => err.response.data);
+}
+/////////////////////////////////////////////////////////////////
+// 시작점
+export default function CheckEmailCode(props: any) {
   const [inputValue, setInputValue] = useState({
     code: "",
     email: props.email,
@@ -46,12 +73,12 @@ export default function CheckEmailCode(props) {
   const [authFin, setAuthFin] = useState(false);
   const [timer, setTimer] = useState(true);
 
-  const codeHandleChange = (e) => {
+  const codeHandleChange = (e: any) => {
     const value = e.target.value; // 입력한 값
     setCode(value);
   };
 
-  const changeTimerHandle = (value, name) => {
+  const changeTimerHandle = (value: any, name: any) => {
     setTimer(value);
     props.changeHandle(false, "code");
     Swal.fire({
@@ -63,8 +90,8 @@ export default function CheckEmailCode(props) {
     });
   };
 
-  const compareEmailCodeClick = (e) => {
-    // 이메일로 받은 인증번호 입력해서 확인하기 + 확인 완료되면 폼 닫고 이메일 입력 못 받게 바꾸기
+  // 이메일로 받은 인증번호 입력해서 확인하기 + 확인 완료되면 폼 닫고 이메일 입력 못 받게 바꾸기
+  const compareEmailCodeClick = (e: any) => {
     e.preventDefault();
     const value = code;
     inputValue.code = code;
@@ -117,7 +144,7 @@ export default function CheckEmailCode(props) {
             Swal.showLoading();
 
             checkEmailCodeAPI(inputValue).then((res) => {
-              if (res.statusCode == 200) {
+              if (res.status == 200) {
                 Swal.fire({
                   title: "이메일 인증에 성공했습니다",
                   icon: "success",
@@ -126,7 +153,7 @@ export default function CheckEmailCode(props) {
                 });
                 props.changeHandle(true, "code");
                 setAuthFin(true);
-              } else if (res.statusCode == 401) {
+              } else if (res.status == 401) {
                 Swal.fire({
                   icon: "error",
                   title: "인증번호를 잘못 입력했습니다",
@@ -147,6 +174,9 @@ export default function CheckEmailCode(props) {
       }
     }
   };
+  const EmailWrp = styled.div`
+    display: flex;
+  `;
 
   return (
     <div>
@@ -159,7 +189,25 @@ export default function CheckEmailCode(props) {
           </Typography>
           <CountdownTimer changeTimerHandle={changeTimerHandle} />
           <br />
-          <OutlinedInput
+          <EmailWrp>
+            <input
+              id="email"
+              type="text"
+              placeholder="이메일"
+              value={code || ""}
+              disabled={authFin ? true : false}
+              onChange={codeHandleChange}
+            />
+            <Button
+              onClick={compareEmailCodeClick}
+              disabled={authFin ? true : false}
+              sx={{ width: 100, height: 47 }}
+            >
+              확인
+            </Button>
+          </EmailWrp>
+
+          {/* <OutlinedInput
             type="text"
             id="code"
             placeholder="이메일 인증번호"
@@ -172,7 +220,7 @@ export default function CheckEmailCode(props) {
                 <Button onClick={compareEmailCodeClick}>확인</Button>
               </InputAdornment>
             }
-          />
+          /> */}
         </>
       )}
     </div>
