@@ -20,6 +20,7 @@ const TagLabel = styled.span`
   &:hover {
     text-decoration: underline;
   }
+  white-space: nowrap;
 `;
 
 const FiDeleteWrp = styled.span`

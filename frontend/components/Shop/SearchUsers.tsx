@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Button, InputAdornment, TextField } from "@mui/material";
@@ -15,13 +15,11 @@ class SearchedMember {
   memberId: number;
   nickname: string;
   imageString: string;
-  friend: boolean;
 
   constructor(data: any) {
     this.memberId = data.memberId || 0;
     this.nickname = data.nickname || "";
     this.imageString = data.imageString || "";
-    this.friend = data.friend || false;
   }
 }
 function SearchList(data: Array<SearchedMember>): SearchedMember[] {
@@ -41,21 +39,33 @@ const SearchUser = (props: Props) => {
     // console.log(event.target.value);
     setKeyword(event.target.value);
   };
+  // const applyFilters = () => {
+  //   let updatedList = keyword;
+  //   if (keyword) {
+  //     updatedList = updatedList.filter(
+  //       (item) =>
+  //         item.title.toLowerCase().search(keyword.toLowerCase().trim()) !== -1
+  //     );
+  //   }
+  // };
 
   const Search = () => {
     axiosConnector({
       method: "GET",
-      url: "member/search/" + keyword,
+      url: "shop/friend",
     })
       .then((res) => {
-        //console.log(res);
-        setMembers(SearchList(res.data.members));
-        //console.log(members);
+        console.log(res);
+        setMembers(SearchList(res.data.friends));
+        // console.log(members);
       })
       .catch((err) => {
         console.log(err.response);
       });
   };
+  useEffect(() => {
+    Search();
+  }, []);
 
   const FriendRequest: Function = (id: number) => {
     // console.log("asd");
@@ -70,7 +80,6 @@ const SearchUser = (props: Props) => {
         console.log(err.response);
       });
   };
-
   return (
     <div className="px-2">
       <Card className="background-image-1">
@@ -78,7 +87,7 @@ const SearchUser = (props: Props) => {
           <>
             <TextField
               id="outlined-basic"
-              // value={keyword}
+              value={keyword}
               onChange={handleChange}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
@@ -111,17 +120,13 @@ const SearchUser = (props: Props) => {
                     </div>
                     <div className="col-4">
                       <div className="d-flex align-items-center h-100">
-                        {member.friend ? (
-                          <Btn filled={true}>삭제</Btn>
-                        ) : (
-                          <Btn
-                            className=""
-                            onClick={FriendRequest}
-                            param={member.memberId}
-                          >
-                            주고싶소
-                          </Btn>
-                        )}
+                        <Btn
+                          className=""
+                          onClick={FriendRequest}
+                          param={member.memberId}
+                        >
+                          주고싶소
+                        </Btn>
                       </div>
                     </div>
                   </div>
