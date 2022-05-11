@@ -280,7 +280,7 @@ const Signup = () => {
         />
         {/* {404는 쿼리없이 호출했을때, 401은 2-12글자 아닐때 402는 닉넴중복} */}
         {nicknameCheckRes.code == 404 ? (
-          <div className="text-red-500"> "비어있소" </div>
+          <div className="text-red-500"> 비어있소 </div>
         ) : nicknameCheckRes.code == 401 ? (
           <div className="text-red-500"> {nicknameCheckRes.msg}</div>
         ) : nicknameCheckRes.code == 402 ? (
