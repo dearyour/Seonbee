@@ -181,6 +181,8 @@
   color: red;
 }
 .text-green-500 {
+  margin-top: -25px;
+  margin-bottom: 10px;
   color: green;
 }
 
