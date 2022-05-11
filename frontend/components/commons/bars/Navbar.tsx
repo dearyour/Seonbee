@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
+import React, { useEffect, useState } from 'react';
+import { FaBars } from 'react-icons/fa';
 import {
   Nav,
   NavbarContainer,
@@ -7,16 +7,17 @@ import {
   NavMenu,
   NavItem,
   NavLinks,
-} from "styles/main/NavbarElements";
-import Image from "next/image";
-import TextLogo from "public/textLogo2.png";
-import Link from "next/link";
-import Router, { useRouter } from "next/router";
-import Sidebar from "./Sidebar";
-import Swal from "sweetalert2";
-import { useSelector, useDispatch } from "react-redux";
-import { memberActions } from "store/slice/member";
-import { RootState } from "store/slice";
+} from 'styles/main/NavbarElements';
+import Image from 'next/image';
+import TextLogo from 'public/textLogo2.png';
+import Link from 'next/link';
+import Router, { useRouter } from 'next/router';
+import Sidebar from './Sidebar';
+import Swal from 'sweetalert2';
+import { useSelector, useDispatch } from 'react-redux';
+import { memberActions } from 'store/slice/member';
+import { RootState } from 'store/slice';
+import AudioPlayer from 'components/commons/AudioPlayer';
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ function Navbar() {
   const router = useRouter();
 
   useEffect(() => {
-    if (router.pathname === "/") {
+    if (router.pathname === '/') {
       setIsMain(true);
     } else {
       setIsMain(false);
@@ -55,15 +56,18 @@ function Navbar() {
           <MobileIcon onClick={toggle}>
             <FaBars />
           </MobileIcon>
-          <NavMenu className={isMain ? "isMain" : ""}>
+          <NavMenu className={isMain ? 'isMain' : ''}>
             <NavItem>
-              <NavLinks onClick={() => Router.push("/")}>대문</NavLinks>
+              <AudioPlayer />
             </NavItem>
             <NavItem>
-              <NavLinks onClick={() => Router.push("/shop")}>저잣거리</NavLinks>
+              <NavLinks onClick={() => Router.push('/')}>대문</NavLinks>
             </NavItem>
             <NavItem>
-              <NavLinks onClick={() => Router.push("/social")}>사랑방</NavLinks>
+              <NavLinks onClick={() => Router.push('/shop')}>저잣거리</NavLinks>
+            </NavItem>
+            <NavItem>
+              <NavLinks onClick={() => Router.push('/social')}>사랑방</NavLinks>
             </NavItem>
             <NavItem>
               <NavLinks onClick={() => Router.push(`/profile/${uid}`)}>
@@ -71,26 +75,26 @@ function Navbar() {
               </NavLinks>
             </NavItem>
             <NavItem>
-              {sessionStorage.getItem("Token") != null &&
-              sessionStorage.getItem("Token") != "undefined" ? (
+              {sessionStorage.getItem('Token') != null &&
+              sessionStorage.getItem('Token') != 'undefined' ? (
                 <NavLinks
                   onClick={() => {
                     sessionStorage.clear();
-                    localStorage.removeItem("persist:root");
+                    localStorage.removeItem('persist:root');
                     dispatch(memberActions.reset());
                     Swal.fire({
-                      title: "로그아웃 되었습니다",
-                      text: "메인페이지로 이동합니다",
-                      icon: "success",
+                      title: '로그아웃 되었습니다',
+                      text: '메인페이지로 이동합니다',
+                      icon: 'success',
                       showConfirmButton: false,
                     });
-                    Router.push("/");
+                    Router.push('/');
                   }}
                 >
                   떠나겠소
                 </NavLinks>
               ) : (
-                <NavLinks onClick={() => Router.push("/login")}>
+                <NavLinks onClick={() => Router.push('/login')}>
                   납시오
                 </NavLinks>
               )}
