@@ -20,7 +20,7 @@ interface GiveResponse {
 }
 
 const Give = (props: Props) => {
-  return <div>testesssdasdtt</div>;
+  return <div>testessasdsdasdtt</div>;
 };
 
 export default Give;
