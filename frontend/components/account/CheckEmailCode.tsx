@@ -1,14 +1,13 @@
-import React, { ReactEventHandler, useState } from "react";
-
+import React, { useState } from "react";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Swal from "sweetalert2";
 import styled from "@emotion/styled";
-// import { checkEmailCodeAPI, checkEmailPWAPI } from "../../pages/api/user";
 import CountdownTimer from "./CountdownTimer";
 import axios from "axios";
+// import { checkEmailCodeAPI, checkEmailPWAPI } from "../../pages/api/user";
 
 // 회원가입시 이메일로 인증번호 보내기
 export async function SendEmailCodeAPI(email: any) {
