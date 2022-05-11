@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Avatar from '@mui/material/Avatar';
-import { InputBase } from '@mui/material';
-import { FiSend } from 'react-icons/fi';
-import axios from 'axios';
-import Messages from './Messages';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Avatar from "@mui/material/Avatar";
+import { InputBase } from "@mui/material";
+import { FiSend } from "react-icons/fi";
+import axios from "axios";
+import Messages from "./Messages";
 import {
   ChatbotWidget,
   ChatbotHeader,
@@ -23,9 +23,10 @@ function Chatbot() {
   //   });
   //   console.log('response from dialogflow', response);
   // };
+  const baseUrl = process.env.NEXT_PUBLIC_CHAT;
 
   const dispatch = useDispatch();
-  const [currInput, setCurrInput] = useState<string>('');
+  const [currInput, setCurrInput] = useState<string>("");
   // const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLInputElement>(null);
 
@@ -57,7 +58,7 @@ function Chatbot() {
     try {
       // textQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        "http://localhost:5000/api/dialogflow/textQuery",
+        baseUrl + "dialogflow/textQuery",
         textQueryVariables
       );
       // const content = response.data.fulfillmentMessages[0];
@@ -114,7 +115,7 @@ function Chatbot() {
     try {
       // eventQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        "http://localhost:5000/api/dialogflow/eventQuery",
+        baseUrl + "dialogflow/eventQuery",
         eventQueryVariables
       );
 
@@ -147,7 +148,7 @@ function Chatbot() {
         // we will send text query route
         textQuery(e.target.value);
 
-        e.target.value = '';
+        e.target.value = "";
         // setCurrInput('');
 
         console.log(scrollRef == null);
@@ -163,7 +164,7 @@ function Chatbot() {
     if (currInput) {
       textQuery(currInput);
 
-      setCurrInput('');
+      setCurrInput("");
 
       // if (inputRef.current) {
       //   inputRef.current.value = '';
