@@ -24,27 +24,28 @@ public class EmailServiceImpl implements EmailService{
     static String code;
 
     @Override
-    public void sendMessage(String email, String tagKor, String tag)throws Exception {
+    public void sendMessage(String email, String tagKor, String tag) throws Exception {
         MimeMessage message = createMessage(email, tagKor);
         try{
             emailSender.send(message);
-            EmailCode emailCode=new EmailCode();
-            emailCode.setEmail(email);
+            EmailCode emailCode=emailRepository.findByEmailAndTag(email, tag);
+            if (emailCode==null)    {
+                emailCode=new EmailCode();
+                emailCode.setEmail(email);
+                emailCode.setTag(tag);
+            }
             emailCode.setCode(code);
-            emailCode.setTag(tag);
             emailRepository.save(emailCode);
         } catch(MailException es){
             es.printStackTrace();
-            throw new IllegalArgumentException();
         }
 
     }
 
     @Override
     public int confirmCode(String email, String code, String tag) {
-        if (emailRepository.findByEmailAndCodeAndTagAndIsDeleted(email, code, tag, false)==null){
-            return 402;
-        }
+        if (emailRepository.findByEmailAndCodeAndTag(email, code, tag)==null)   return 402;
+
         return 200;
     }
 

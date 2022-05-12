@@ -15,4 +15,5 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     Product findByNaverId(Long naverId);
     List<Product> findAllByIsDeleted(boolean isDeleted);
     List<Product> findAllByNameContains(String keyword);
+    List<Product> findTop500ByOrderByRecommendDesc();
 }
