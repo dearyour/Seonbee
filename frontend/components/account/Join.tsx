@@ -28,7 +28,7 @@ const Join: any = () => {
       <div className="containers">
         <div className="blueBg">
           <div className="box signin">
-            <h2>Already Have an Account ?</h2>
+            <h2>Login</h2>
             <button
               className="signinBtn"
               onClick={() => {
@@ -39,7 +39,7 @@ const Join: any = () => {
             </button>
           </div>
           <div className="box signup">
-            <h2>Don_t Have an Account ?</h2>
+            <h2>Sign up</h2>
             <button
               className="signupBtn"
               onClick={() => {

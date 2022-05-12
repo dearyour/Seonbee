@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { stringify } from "querystring";
 import React from "react";
 import { useSelector } from "react-redux";
 import { LanternType } from "store/interface/lantern";
@@ -47,7 +46,6 @@ const LanternList = (props: Props) => {
         styleList[index] = style;
         result[index] = (
           <div
-            key={top}
             style={style}
             onClick={() =>
               props.mode === "create" ? props.onClickLantern(index) : null
@@ -62,7 +60,6 @@ const LanternList = (props: Props) => {
       const lantern = lanternList[i];
       result[lantern.position] = (
         <div
-          key={String(i)}
           style={styleList[lantern.position]}
           onClick={() =>
             props.mode === "read" ? props.onClickLantern(lantern) : null

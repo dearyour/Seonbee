@@ -32,7 +32,7 @@ const Redux = (props: Props) => {
     <div style={{ textAlign: "center" }}>
       <div>nickname : {nickname}</div>
       <div>memberId : {memberId}</div>
-      <div>imageId : {"data:image/png;base64," + imageString}</div>
+      <div>imageId : {`data:image/png;base64,` + imageString}</div>
     </div>
   ) : (
     <div></div>

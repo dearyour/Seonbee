@@ -12,6 +12,7 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_BACK: process.env.NEXT_PUBLIC_BACK,
     KAKAO_LOGIN: process.env.KAKAO_LOGIN,
+    NEXT_PUBLIC_CHAT: process.env.NEXT_PUBLIC_CHAT,
   },
 };
 

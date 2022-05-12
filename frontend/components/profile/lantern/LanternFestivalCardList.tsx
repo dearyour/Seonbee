@@ -16,7 +16,9 @@ const LanternFestivalCardList = (props: Props) => {
   );
   const lanternFestivalsLen = lanternFestivals ? lanternFestivals.length : 0;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(profileActions.getLanternFestivals(hostId));
+  }, []);
 
   const lanternFestivalCards = () => {
     const result = new Array(lanternFestivalsLen).fill(null);

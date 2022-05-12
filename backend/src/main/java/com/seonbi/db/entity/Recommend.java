@@ -24,13 +24,13 @@ public class Recommend extends BaseEntity{
     private Long receiverId;
     private Long memberId;
     private Boolean isSaved=false;    // false: 추천서, true: 주고싶소
-    private Boolean isFriend=false;         // 받는 사람이 회원인지
+    private Boolean isMember=false;         // 받는 사람이 회원인지
 
-    public Recommend(Long productId, Long receiverId, Long memberId, Boolean isSaved, Boolean isFriend) {
+    public Recommend(Long productId, Long receiverId, Long memberId, Boolean isSaved, Boolean isMember) {
         this.productId = productId;
         this.receiverId = receiverId;
         this.memberId = memberId;
         this.isSaved = isSaved;
-        this.isFriend = isFriend;
+        this.isMember = isMember;
     }
 }

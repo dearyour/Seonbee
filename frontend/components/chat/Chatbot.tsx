@@ -26,6 +26,7 @@ function Chatbot() {
   //   });
   //   console.log('response from dialogflow', response);
   // };
+  const baseUrl = process.env.NEXT_PUBLIC_CHAT;
 
   const dispatch = useDispatch();
   const [currInput, setCurrInput] = useState<string>('');
@@ -64,7 +65,7 @@ function Chatbot() {
     try {
       // textQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        'http://localhost:5000/api/dialogflow/textQuery',
+        baseUrl + "dialogflow/textQuery",
         textQueryVariables
       );
       // const content = response.data.fulfillmentMessages[0];
@@ -135,7 +136,7 @@ function Chatbot() {
     try {
       // eventQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        'http://localhost:5000/api/dialogflow/eventQuery',
+        baseUrl + "dialogflow/eventQuery",
         eventQueryVariables
       );
 
@@ -184,7 +185,7 @@ function Chatbot() {
     if (currInput) {
       textQuery(currInput);
 
-      setCurrInput('');
+      setCurrInput("");
 
       // if (inputRef.current) {
       //   inputRef.current.value = '';

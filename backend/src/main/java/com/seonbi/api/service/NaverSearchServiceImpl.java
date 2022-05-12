@@ -29,8 +29,8 @@ import java.util.List;
 public class NaverSearchServiceImpl implements NaverSearchService {
 
 
-    @Autowired
-    ProductRepository productRepository;
+//    @Autowired
+//    ProductRepository productRepository;
 
     HashSet<Product> set=new HashSet<>();
 
@@ -38,6 +38,7 @@ public class NaverSearchServiceImpl implements NaverSearchService {
     public void saveResults() {
 
         List<String> keyword = txtRead();
+        HashSet<Long> set=new HashSet<>();
 
         for (int i = 0; i < keyword.size(); i++) {
 
@@ -91,29 +92,17 @@ public class NaverSearchServiceImpl implements NaverSearchService {
     @Override
     public List<String> txtRead() {
         List<String> keywordList = new ArrayList<>();
-        File csv = new File("C:\\Users\\multicampus\\Desktop\\썸트렌드 데이터\\seonbee_keyword.txt");
-        BufferedReader br = null;
+        File csv = new File("C:\\ssafy\\project3\\database\\sometrend\\썸트렌드 데이터\\seonbee_keyword.txt");
         String line = "";
 
         try {
-            br = new BufferedReader(new FileReader(csv));
+            BufferedReader br = new BufferedReader(new FileReader(csv));
             while ((line = br.readLine()) != null) { // readLine()은 파일에서 개행된 한 줄의 데이터를 읽어온다.
-
-                //System.out.println(line);
                 keywordList.add(line);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (br != null) {
-                    br.close(); // 사용 후 BufferedReader를 닫아준다.
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return keywordList;
     }
