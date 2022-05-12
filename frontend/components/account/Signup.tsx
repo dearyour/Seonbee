@@ -145,7 +145,7 @@ const Signup = () => {
       });
     }
   };
-  //이메일 유효성을 위한 true false
+  //이메일 다시받기 위해 true false
   const sendEmailCodeAgainClick = () => {
     setShowEmailCodeCheck(false);
     setAuthFin(false);
@@ -348,29 +348,6 @@ const Signup = () => {
             인증받기
           </Button>
         </EmailWrp>
-        {/* <OutlinedInput
-          type="text"
-          id="email"
-          placeholder="이메일"
-          value={inputState.email || ""}
-          onChange={handleChange}
-          disabled={authFin ? true : false}
-          // style={{ border: "3px" }}
-          onBlur={() => checkRegex("email")}
-          // sx={{ width: 370, fontSize: 14 }}
-          // sx={{ height: 30 }}
-
-          endAdornment={
-            <InputAdornment>
-              <Button
-                onClick={sendEmailCodeClick}
-                disabled={authFin ? true : false}
-              >
-                인증받기
-              </Button>
-            </InputAdornment>
-          }
-        /> */}
 
         <div className="text-red-500">
           {errorData["email"] !== true ? ERROR_MSG[errorData["email"]] : ""}

@@ -224,7 +224,7 @@ const Signin = (props: Props) => {
     setShowEmailCodeCheck(false);
     setAuthFin(false);
   };
-
+  // 새로운 패스워드
   return (
     <div className="form signinForm">
       <ImageWrapper src={seonbee} alt={`image`} height={170} width={200} />
@@ -308,28 +308,6 @@ const Signin = (props: Props) => {
               <Button onClick={sendEmailCodeAgainClick}>
                 이메일 변경 및 인증 다시 받기
               </Button>
-            ) : null}
-            {authFin ? (
-              <EmailWrp>
-                <input
-                  type="password"
-                  id="newPassword"
-                  placeholder="새로운 비밀번호 입력"
-                  // disabled={showEmailCodeCheck ? false : true}
-                  value={inputState.newPassword || ""}
-                  onChange={(e) => {
-                    handleChange(e);
-                    checkRegex("password");
-                  }}
-                />
-                <Button
-                  onClick={sendEmailCodeClick}
-                  disabled={authFin ? false : true}
-                  sx={{ width: 100, height: 47 }}
-                >
-                  제출
-                </Button>
-              </EmailWrp>
             ) : null}
           </div>
         )}

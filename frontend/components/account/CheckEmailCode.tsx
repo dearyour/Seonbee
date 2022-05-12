@@ -82,6 +82,7 @@ export default function CheckEmailCode(props: any) {
   const [inputValue, setInputValue] = useState({
     code: "",
     email: props.email,
+    newPassword: "",
   });
   const [code, setCode] = useState("");
   const [authFin, setAuthFin] = useState(false);
@@ -219,21 +220,26 @@ export default function CheckEmailCode(props: any) {
               확인
             </Button>
           </EmailWrp>
-
-          {/* <OutlinedInput
-            type="text"
-            id="code"
-            placeholder="이메일 인증번호"
-            value={code}
-            onChange={codeHandleChange}
-            sx={{ width: 370 }}
-            disabled={authFin ? true : false}
-            endAdornment={
-              <InputAdornment position="end">
-                <Button onClick={compareEmailCodeClick}>확인</Button>
-              </InputAdornment>
-            }
-          /> */}
+          {/* {새로운 비번 등록칸} */}
+          {props.lostpw ? (
+            <EmailWrp>
+              <input
+                type="password"
+                id="newPassword"
+                placeholder="새로운 비밀번호 입력"
+                // disabled={showEmailCodeCheck ? false : true}
+                value={inputValue.newPassword || ""}
+                onChange={codeHandleChange}
+              />
+              <Button
+                disabled={authFin ? false : true}
+                sx={{ width: 100, height: 47 }}
+                onClick={compareEmailCodeClick}
+              >
+                제출
+              </Button>
+            </EmailWrp>
+          ) : null}
         </>
       )}
     </div>
