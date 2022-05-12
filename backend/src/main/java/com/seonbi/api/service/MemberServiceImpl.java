@@ -225,6 +225,15 @@ public class MemberServiceImpl implements MemberService {
         return memberSearchDtos;
     }
 
+    @Override
+    public int updatePassword(String email, String password) {
+        Member member=memberRepository.findByEmailAndIsDeleted(email, false);
+        if (member==null)   return 401;
+        member.setPassword(passwordEncoder.encode(password));
+        memberRepository.save(member);
+        return 200;
+    }
+
 
     @Override
     public String kakaoToken(String code) {
