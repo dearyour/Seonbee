@@ -76,6 +76,24 @@ export async function checkEmailPWAPI(datas: any) {
     .then((res) => res.data)
     .catch((err) => err.response.data);
 }
+export async function newpassAPI(datas: any) {
+  return await axios({
+    method: "POST",
+    url: process.env.NEXT_PUBLIC_BACK + "email/newpass",
+    headers: {
+      "Content-Type": `application/json;charset=UTF-8`,
+      // "Access-Control-Allow-Origin": "*",
+      // Accept: "application/json",
+    },
+    data: {
+      email: datas.email,
+      code: datas.code,
+      password: datas.newPassword,
+    },
+  })
+    .then((res) => res.data)
+    .catch((err) => err.response.data);
+}
 /////////////////////////////////////////////////////////////////
 // 시작점
 export default function CheckEmailCode(props: any) {
@@ -85,12 +103,25 @@ export default function CheckEmailCode(props: any) {
     newPassword: "",
   });
   const [code, setCode] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [authFin, setAuthFin] = useState(false);
   const [timer, setTimer] = useState(true);
 
+  const handleChange = (e: any) => {
+    const { id, value } = e.target;
+    setInputValue((prevState: any) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
+
   const codeHandleChange = (e: any) => {
     const value = e.target.value; // 입력한 값
-    setCode(value);
+    setCode(() => value);
+  };
+  const passHandleChange = (e: any) => {
+    const value = e.target.value; // 입력한 값
+    setNewPassword(() => value);
   };
 
   const changeTimerHandle = (value: any, name: any) => {
@@ -104,8 +135,7 @@ export default function CheckEmailCode(props: any) {
   };
 
   // 이메일로 받은 인증번호 입력해서 확인하기 + 확인 완료되면 폼 닫고 이메일 입력 못 받게 바꾸기
-  const compareEmailCodeClick = (e: any) => {
-    e.preventDefault();
+  const compareEmailCodeClick = () => {
     const value = code;
     inputValue.code = code;
     inputValue.email = props.email;
@@ -188,6 +218,52 @@ export default function CheckEmailCode(props: any) {
       }
     }
   };
+  const __newPass = () => {
+    const value = newPassword;
+    inputValue.code = code;
+    inputValue.email = props.email;
+    inputValue.newPassword = newPassword;
+
+    if (!value) {
+      Swal.fire({
+        icon: "error",
+        title: "새로운 비밀번호를 입력해주세요",
+        confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+      });
+    } else {
+      Swal.fire({
+        title: "새로운 비밀번호 설정 중입니다",
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+
+          newpassAPI(inputValue).then((res) => {
+            console.log(res);
+            if (res.status == 200) {
+              Swal.fire({
+                title: "인증에 성공했습니다",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 500,
+              });
+              props.changeHandle(true, "code");
+              setAuthFin(true);
+            } else if (res.status == 402) {
+              Swal.fire({
+                icon: "error",
+                title: "인증번호를 잘못 입력했습니다",
+                text: "다시 확인해주세요",
+                confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+              });
+            } else {
+              props.changeHandle(false, "code");
+            }
+          });
+        },
+      });
+    }
+  };
+
   const EmailWrp = styled.div`
     display: flex;
   `;
@@ -205,7 +281,7 @@ export default function CheckEmailCode(props: any) {
           <br />
           <EmailWrp>
             <input
-              id="email"
+              id="code"
               type="text"
               placeholder="인증번호"
               value={code || ""}
@@ -220,28 +296,29 @@ export default function CheckEmailCode(props: any) {
               확인
             </Button>
           </EmailWrp>
-          {/* {새로운 비번 등록칸} */}
-          {props.lostpw ? (
-            <EmailWrp>
-              <input
-                type="password"
-                id="newPassword"
-                placeholder="새로운 비밀번호 입력"
-                // disabled={showEmailCodeCheck ? false : true}
-                value={inputValue.newPassword || ""}
-                onChange={codeHandleChange}
-              />
-              <Button
-                disabled={authFin ? false : true}
-                sx={{ width: 100, height: 47 }}
-                onClick={compareEmailCodeClick}
-              >
-                제출
-              </Button>
-            </EmailWrp>
-          ) : null}
         </>
       )}
+      {/* {새로운 비번 등록칸} */}
+      {props.lostpw ? (
+        <EmailWrp>
+          <input
+            id="newPassword"
+            type="password"
+            placeholder="새로운 비밀번호 입력"
+            value={newPassword || ""}
+            onChange={passHandleChange}
+            // disabled={showEmailCodeCheck ? false : true}
+            // disabled={authFin ? false : true}
+          />
+          <Button
+            // disabled={authFin ? false : true}
+            sx={{ width: 100, height: 47 }}
+            onClick={__newPass}
+          >
+            제출
+          </Button>
+        </EmailWrp>
+      ) : null}
     </div>
   );
 }
