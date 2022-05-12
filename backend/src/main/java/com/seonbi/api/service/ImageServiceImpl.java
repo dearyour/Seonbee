@@ -63,6 +63,7 @@ public class ImageServiceImpl implements ImageService{
     public String getImage(Long imageId) {
         String imagePath="";
         Image image=imageRepository.findByImageIdAndIsDeleted(imageId, false);
+        System.out.println(realPath);
         if (image==null){
             imagePath=realPath+File.separator+"default_image.png";
         } else {

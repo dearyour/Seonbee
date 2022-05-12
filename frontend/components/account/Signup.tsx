@@ -22,7 +22,7 @@ const ERROR_MSG: any = {
   required: "비어있소.",
   invalidId: "Ex) Email@naver.com",
   validId: "허가한다.",
-  invalidPw: "대,소문자 and 숫자 구성 8~16 글자",
+  invalidPw: "대,소문자 and 숫자 포함 8~16 글자",
   validPw: "허가한다.",
   invalidNick: "한글 or 대,소문자 or 숫자 2~12 글자",
   invalidConfirmPw: "비밀번호가 일치하지 않습니다.",
@@ -145,7 +145,7 @@ const Signup = () => {
       });
     }
   };
-  //이메일 유효성을 위한 true false
+  //이메일 다시받기 위해 true false
   const sendEmailCodeAgainClick = () => {
     setShowEmailCodeCheck(false);
     setAuthFin(false);
@@ -348,29 +348,6 @@ const Signup = () => {
             인증받기
           </Button>
         </EmailWrp>
-        {/* <OutlinedInput
-          type="text"
-          id="email"
-          placeholder="이메일"
-          value={inputState.email || ""}
-          onChange={handleChange}
-          disabled={authFin ? true : false}
-          // style={{ border: "3px" }}
-          onBlur={() => checkRegex("email")}
-          // sx={{ width: 370, fontSize: 14 }}
-          // sx={{ height: 30 }}
-
-          endAdornment={
-            <InputAdornment>
-              <Button
-                onClick={sendEmailCodeClick}
-                disabled={authFin ? true : false}
-              >
-                인증받기
-              </Button>
-            </InputAdornment>
-          }
-        /> */}
 
         <div className="text-red-500">
           {errorData["email"] !== true ? ERROR_MSG[errorData["email"]] : ""}

@@ -26,4 +26,5 @@ public interface MemberService {
     void deleteMember(Long memberId);
     boolean isMemberValid(Long hostId);
     List<MemberSearchDto> searchByNickname(Long memberId, String nickname);
+    int updatePassword(String email, String password);
 }

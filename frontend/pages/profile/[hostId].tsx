@@ -108,7 +108,7 @@ const Profile = (props: Props) => {
                 ) : selectedBtn === "주고 싶소" ? (
                   <Give />
                 ) : selectedBtn === "갖고 싶소" ? (
-                  <Wish />
+                  <Wish props={hostId} />
                 ) : selectedBtn === "추천 내역" ? (
                   <Chat />
                 ) : selectedBtn === "설정" ? (

@@ -4,7 +4,7 @@ import {
   LanternType,
   LanternFestivalType,
   DdayType,
-  LanternFestivalTypeList,
+  // LanternFestivalTypeList,
 } from "../interface/lantern";
 import { calDday } from "utils/utils";
 

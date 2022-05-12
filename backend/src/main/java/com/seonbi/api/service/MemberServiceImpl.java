@@ -225,6 +225,15 @@ public class MemberServiceImpl implements MemberService {
         return memberSearchDtos;
     }
 
+    @Override
+    public int updatePassword(String email, String password) {
+        Member member=memberRepository.findByEmailAndIsDeleted(email, false);
+        if (member==null)   return 401;
+        member.setPassword(passwordEncoder.encode(password));
+        memberRepository.save(member);
+        return 200;
+    }
+
 
     @Override
     public String kakaoToken(String code) {
@@ -232,7 +241,10 @@ public class MemberServiceImpl implements MemberService {
         String access_Token= "";
         String refresh_Token="";
         String requestURL="https://kauth.kakao.com/oauth/token";
-        String redirectURI="http://localhost:3000/auth/kakao/callback";
+//        String redirectURI="http://localhost:3000/auth/kakao/callback"; // 로컬시
+//        String redirectURI="https://k6a406.p.ssafy.io/auth/kakao/callback"; // 배포시
+        String redirectURI="https://seonbee.com/auth/kakao/callback"; // 도메인 변경
+
 
         try {
             URL url=new URL(requestURL);
