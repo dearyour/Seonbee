@@ -40,6 +40,7 @@ const SearchUser = (props: Props) => {
   ) => {
     // console.log(event.target.value);
     setKeyword(event.target.value);
+    Search();
   };
 
   const Search = () => {
