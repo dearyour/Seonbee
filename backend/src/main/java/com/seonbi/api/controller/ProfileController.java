@@ -103,8 +103,9 @@ public class ProfileController {
     public ResponseEntity<? extends BaseResponseBody> getMemberByMemberId(
             @ApiIgnore Authentication authentication, @PathVariable("memberId") Long memberId) {
         Member member = memberAuthService.memberAuthorize(authentication);
-        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-
+        if (member == null) {
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
         MemberDto memberDto = memberService.getMemberByMemberId(memberId);
         if (memberDto == null) {
             return ResponseEntity.status(401).body(MemberGetRes.of(401, "존재하지 않는 회원입니다.", null));
@@ -118,8 +119,9 @@ public class ProfileController {
     public ResponseEntity<? extends BaseResponseBody> updateNicknameCheck(
             @ApiIgnore Authentication authentication, @PathVariable("nickname") String nickname) {
         Member member = memberAuthService.memberAuthorize(authentication);
-        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-
+        if (member == null) {
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
         int nicknameCode = memberService.nicknameCheckExceptMe(nickname, member.getNickname());
         if (nicknameCode == 401) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
@@ -134,7 +136,9 @@ public class ProfileController {
             @PathVariable("memberId") Long memberId,
             @ApiIgnore Authentication authentication) {
         Member member = memberAuthService.memberAuthorize(authentication);
-        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        if (member == null || !member.getMemberId().equals(memberId)) {     // 사용자가 본인이 아니면
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
 
         memberService.deleteMember(memberId);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));

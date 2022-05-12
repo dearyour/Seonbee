@@ -75,7 +75,7 @@
   z-index: 11;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   box-shadow: 0 5px 45px rgba(0, 0, 0, 0.25);
   transition: 0.5s ease-in-out;
   /* overflow: hidden; */
@@ -95,6 +95,7 @@
 }
 .formBx .signinForm {
   transition-delay: 0.25s;
+  /* margin-top: 40px; */
 }
 .formBx.active .signinForm {
   left: -100%;
@@ -181,6 +182,8 @@
   color: red;
 }
 .text-green-500 {
+  margin-top: -25px;
+  margin-bottom: 10px;
   color: green;
 }
 
