@@ -21,7 +21,7 @@ import static com.google.common.collect.Lists.newArrayList;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-
+    // http://localhost:8000/swagger-ui/
     public static final String SECURITY_SCHEMA_NAME = "JWT";
     public static final String AUTHORIZATION_SCOPE_GLOBAL = "global";
     public static final String AUTHORIZATION_SCOPE_GLOBAL_DESC = "accessEverything";
