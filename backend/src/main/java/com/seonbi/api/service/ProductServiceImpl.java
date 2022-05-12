@@ -40,15 +40,15 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductDto> getProductAll() {
         long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
 
-        List<Product> products=productRepository.findAllByIsDeleted(false);
-//        System.out.println("db에서 가져오기 시간차이(m) : "+(System.currentTimeMillis()-beforeTime)/1000);
+        List<Product> products=productRepository.findTop1000ByOrderByRecommendDesc();
+//        System.out.println("db에서 가져오기 시간차이(m) : "+(System.currentTimeMillis()-beforeTime)/1000.0);
         List<ProductDto> productDtoList=modelMapper.map(products, new TypeToken<List<ProductDto>>() {}.getType());
 //        List<ProductDto> productDtoList2=new ArrayList<>();
 //        for (Product product:products){
 //            ProductDto productDto=modelMapper.map(product, ProductDto.class);
 //            productDtoList2.add(productDto);
 //        }
-//        System.out.println("dto 변환 시간차이(m) : "+(System.currentTimeMillis()-beforeTime)/1000);
+//        System.out.println("dto 변환 시간차이(m) : "+(System.currentTimeMillis()-beforeTime)/1000.0);
 //        System.out.println(productDtoList.size());
         return productDtoList;
     }
