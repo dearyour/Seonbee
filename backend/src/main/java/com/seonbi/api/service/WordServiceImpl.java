@@ -14,13 +14,17 @@ import java.util.Optional;
 @Service
 public class WordServiceImpl implements WordService {
 
-    static String list[] ={"감사","개업","결혼","결혼축하","기념일","돌선물","백일","생일","서프라이즈"
-    ,"위로","응원","임신","집들이","창업","출산","enfj","enfp","entj","entp","esfj","esfp","estj","estp",
-            "infj","infp","intj","intp","isfj","isfp","istj","istp","가족","남자친구","남자형제","남편",
-            "멘토","배우자","부모님","사촌","스승","아내","아버지","어머니","여자친구","여자형제","연인","지인",
-            "친구","친인척","친한친구","회사동기","회사동료","회사선배","회사후배","sns","가족","건강","게임","공예",
-            "교육","동물","뷰티","쇼핑","엔터테인먼트","여행","연예인","요리","운동","음식","음악","음주","인테리어",
-            "전자제품","캠핑","패션","10대","20대","30대","남자","여자"
+//    static String list[] ={"감사","개업","결혼","결혼축하","기념일","돌선물","백일","생일","서프라이즈"
+//    ,"위로","응원","임신","집들이","창업","출산","enfj","enfp","entj","entp","esfj","esfp","estj","estp",
+//            "infj","infp","intj","intp","isfj","isfp","istj","istp","가족","남자친구","남자형제","남편",
+//            "멘토","배우자","부모님","사촌","스승","아내","아버지","어머니","여자친구","여자형제","연인","지인",
+//            "친구","친인척","친한친구","회사동기","회사동료","회사선배","회사후배","sns","가족","건강","게임","공예",
+//            "교육","동물","뷰티","쇼핑","엔터테인먼트","여행","연예인","요리","운동","음식","음악","음주","인테리어",
+//            "전자제품","캠핑","패션","10대","20대","30대","남자","여자"
+//    };
+
+
+    static String list[] ={"남자형제"
     };
 
 
@@ -63,6 +67,7 @@ public class WordServiceImpl implements WordService {
 
     }
 
+
     @Override
     public void updateData() {
 
@@ -77,7 +82,10 @@ public class WordServiceImpl implements WordService {
 
     }
 
+/*
+    썸트렌드 데이터 저장
 
+ */
     public static List<List<String>> readCSV(String subject) {
         List<List<String>> csvList = new ArrayList<List<String>>();
         File csv = new File("C:\\Users\\multicampus\\Desktop\\썸트렌드 데이터\\용도csv\\(썸트렌드) "+subject+"_연관어_210503-220502.csv");

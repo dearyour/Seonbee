@@ -1,6 +1,4 @@
 package com.seonbi.db.repository;
-
-
 import com.seonbi.db.entity.Product;
 import com.seonbi.db.entity.Receiver;
 import org.springframework.data.jpa.repository.JpaRepository;

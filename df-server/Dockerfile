@@ -1,13 +1,20 @@
-# base image (npm을 갖고 있는 baseimage 중 하나)
+# base image
 FROM node:16.13.1
 
-# Working Directory 지정
+# set working directory
 WORKDIR /app
 
-# COPY package.json ./
-COPY ./ ./
+EXPOSE 5000
 
-# node의 종속성 다운로드
+# permission
+RUN chmod -R 777 /app
+
+# app dependencies, install 및 caching
+COPY package.json /app/package.json
+
 RUN npm install
 
+COPY . ./
+
+# 앱 실행
 CMD ["npm", "start"]

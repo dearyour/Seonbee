@@ -1,0 +1,233 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 60%;
+  margin: 0 auto;
+}
+.home_panelList-wrap,
+.home_panel-wrap,
+.home_list-wrap {
+  /* overflow-y: auto; */
+}
+
+.home_panelList-wrap {
+  flex: 1;
+  display: flex;
+}
+.home_panel-wrap {
+  /* flex-basis: 280px; */
+  flex-basis: 30%;
+  padding: 1rem;
+}
+.home_list-wrap {
+  flex: 1;
+  padding: 1rem;
+}
+/* {FilterPanel} */
+.label {
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+.label-range {
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+.input-group {
+  margin-bottom: 2rem;
+}
+.label-range {
+  margin-bottom: 2.5rem;
+}
+
+/* {SearchBar} */
+.searchBar-wrap {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.26);
+  padding: 1rem 1rem;
+  width: 100%;
+}
+.searchBar-icon {
+  color: rgba(0, 0, 0, 0.26);
+  margin-right: 2rem;
+}
+
+.searchBar-wrap input {
+  font-size: 1.5rem;
+  outline: none;
+  border: none;
+  width: 40%;
+}
+
+.searchBar-wrap input::placeholder {
+  color: rgba(0, 0, 0, 0.26);
+}
+
+/* {EmptyView} */
+.emptyView-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.emptyView-wrap img {
+  max-width: 500px;
+  width: 100%;
+}
+
+/* {List} */
+.list-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+}
+.listItem-wrap img {
+  width: 100%;
+  border-radius: 15px;
+  height: 200px;
+  object-fit: cover;
+}
+.listItem-wrap header {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0 1rem 0;
+  align-items: center;
+}
+
+.listItem-wrap header span {
+  font-size: 0.7rem;
+  background-color: #97ffff;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+.listItem-wrap footer {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.listItem-wrap footer p:first-child span {
+  color: rgba(0, 0, 0, 0.26);
+  font-weight: 600;
+}
+/* {카테고리 아이템} */
+.category_list_wrapper {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+  gap: 2%;
+}
+.CategoryItem {
+  cursor: pointer;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.CategoryItem img {
+  width: 50%;
+  margin-bottom: 10px;
+}
+
+.CategoryItem span {
+  font-size: 16px;
+}
+
+.CategoryItem_off {
+  background-color: #ececec;
+}
+
+.CategoryItem_on_1 {
+  background-color: #64c964;
+  color: white;
+}
+
+.CategoryItem_on_2 {
+  background-color: #9dd772;
+  color: white;
+}
+.CategoryItem_on_3 {
+  background-color: #fdce17;
+  color: white;
+}
+.CategoryItem_on_4 {
+  background-color: #fd8446;
+  color: white;
+}
+.CategoryItem_on_5 {
+  background-color: #fd565f;
+  color: white;
+}
+.CategoryItem_on_6 {
+  background-color: #2572c9;
+  color: white;
+}
+.CategoryItem_on_7 {
+  background-color: #afa9d4;
+  color: white;
+}
+.CategoryItem_on_8 {
+  background-color: #70125c;
+  color: white;
+}
+.CategoryItem_on_9 {
+  background-color: #52cbcf;
+  color: white;
+}
+.CategoryItem_on_10 {
+  background-color: #ce7124;
+  color: white;
+}
+.btns {
+  width: 140px;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.4s;
+  /* color:#F7F3F0 */
+  /* color:#EAE0DA */
+  /* color:#F7DCD8 */
+  /* color:#590805 */
+  /* color:#333 */
+}
+.btns:hover {
+  background-color: #333;
+  color: #fff;
+}
+.btng--gold {
+  width: 140px;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.4s;
+  color: #fff;
+  background-color: #a39788;
+  margin-left: 30px;
+}
+/* .btns.btns--gold:hover {
+  color: #fff;
+  background-color: #a39788;
+} */
+@media (max-width: 991px) {
+  .home_panelList-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+}
