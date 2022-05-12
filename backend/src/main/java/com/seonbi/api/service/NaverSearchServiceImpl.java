@@ -52,11 +52,11 @@ public class NaverSearchServiceImpl implements NaverSearchService {
             {
                 Product product=productList.get(j);
                 product.setKeyword(keyword.get(i));
-                set.add(product);
+                set.add(product.getProductId());
             }
         }
 
-        List<Product> products = new ArrayList<>(set);
+        List<Product> products = new ArrayList(set);
         writeCSV(products);
        // productRepository.saveAll(products);
     }
