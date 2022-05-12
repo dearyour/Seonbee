@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
@@ -7,6 +8,8 @@ import Swal from "sweetalert2";
 import styled from "@emotion/styled";
 import CountdownTimer from "./CountdownTimer";
 import axios from "axios";
+import Router from "next/router";
+import { memberActions } from "store/slice/member";
 // import { checkEmailCodeAPI, checkEmailPWAPI } from "../../pages/api/user";
 
 // 회원가입시 이메일로 인증번호 보내기
@@ -96,7 +99,9 @@ export async function newpassAPI(datas: any) {
 }
 /////////////////////////////////////////////////////////////////
 // 시작점
+const PW_REGEX = /^[a-zA-Z0-9]{7,16}$/;
 export default function CheckEmailCode(props: any) {
+  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState({
     code: "",
     email: props.email,
@@ -148,7 +153,7 @@ export default function CheckEmailCode(props: any) {
       });
     } else {
       if (props.lostpw) {
-        // console.log('비밀번호 잃어버려서 온 것')
+        // console.log('비밀번호 잃어버려서 온 것') //////////////////
         Swal.fire({
           title: "인증번호를 확인 중입니다",
           showConfirmButton: false,
@@ -166,7 +171,7 @@ export default function CheckEmailCode(props: any) {
                 });
                 props.changeHandle(true, "code");
                 setAuthFin(true);
-              } else if (res.status == 401) {
+              } else if (res.status == 402) {
                 Swal.fire({
                   icon: "error",
                   title: "인증번호를 잘못 입력했습니다",
@@ -180,7 +185,7 @@ export default function CheckEmailCode(props: any) {
           },
         });
       } else {
-        // console.log('회원가입하다가 온 것')
+        // console.log('회원가입하다가 온 것') ///////////////////////
         Swal.fire({
           title: "인증번호를 확인 중입니다",
           showConfirmButton: false,
@@ -218,16 +223,44 @@ export default function CheckEmailCode(props: any) {
       }
     }
   };
+  // 자동로그인
+  const __SignIn = () => {
+    const data = {
+      email: inputValue.email,
+      password: inputValue.newPassword,
+    };
+    console.log(data);
+    axios({
+      method: "POST",
+      url: process.env.NEXT_PUBLIC_BACK + "member/login",
+      data: data,
+    })
+      .then((res) => {
+        sessionStorage.setItem("Token", res.data.jwt);
+        dispatch(memberActions.getMember());
+        Router.push(`/`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  //비밀번호 변경
   const __newPass = () => {
-    const value = newPassword;
     inputValue.code = code;
     inputValue.email = props.email;
     inputValue.newPassword = newPassword;
 
-    if (!value) {
+    if (!newPassword) {
       Swal.fire({
         icon: "error",
         title: "새로운 비밀번호를 입력해주세요",
+        confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+      });
+    } else if (!PW_REGEX.test(newPassword)) {
+      Swal.fire({
+        icon: "error",
+        title: "대,소문자 and 숫자 포함 8글자 입력해주세요",
         confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
       });
     } else {
@@ -241,17 +274,18 @@ export default function CheckEmailCode(props: any) {
             console.log(res);
             if (res.status == 200) {
               Swal.fire({
-                title: "인증에 성공했습니다",
+                title: "비밀번호 변경을 성공했습니다",
                 icon: "success",
                 showConfirmButton: false,
                 timer: 500,
               });
               props.changeHandle(true, "code");
               setAuthFin(true);
+              __SignIn();
             } else if (res.status == 402) {
               Swal.fire({
                 icon: "error",
-                title: "인증번호를 잘못 입력했습니다",
+                title: "잘 못된 비밀번호를 입력했습니다",
                 text: "다시 확인해주세요",
                 confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
               });
@@ -263,10 +297,6 @@ export default function CheckEmailCode(props: any) {
       });
     }
   };
-
-  const EmailWrp = styled.div`
-    display: flex;
-  `;
 
   return (
     <div>
@@ -308,10 +338,10 @@ export default function CheckEmailCode(props: any) {
             value={newPassword || ""}
             onChange={passHandleChange}
             // disabled={showEmailCodeCheck ? false : true}
-            // disabled={authFin ? false : true}
+            disabled={authFin ? false : true}
           />
           <Button
-            // disabled={authFin ? false : true}
+            disabled={authFin ? false : true}
             sx={{ width: 100, height: 47 }}
             onClick={__newPass}
           >
@@ -322,3 +352,8 @@ export default function CheckEmailCode(props: any) {
     </div>
   );
 }
+
+// 스타일컴포넌트 함수안에쓰면 리렌더링 일어나서 인풋 끊겨서 입력됨
+const EmailWrp = styled.div`
+  display: flex;
+`;
