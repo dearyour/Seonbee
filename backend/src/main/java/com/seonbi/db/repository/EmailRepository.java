@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmailRepository extends JpaRepository<EmailCode, Long> {
-    EmailCode findByEmailAndCodeAndTagAndIsDeleted(String email, String code, String tag, boolean isDeleted);
+    EmailCode findByEmailAndCodeAndTag(String email, String code, String tag);
+    EmailCode findByEmailAndTag(String email, String tag);
 }

@@ -43,7 +43,7 @@ public class EmailController {
     @PostMapping("/check")
     public ResponseEntity<? extends BaseResponseBody> createCheckCode(@RequestBody EmailCodeReq emailCodeReq) {
         int verifyCode=emailService.confirmCode(emailCodeReq.getEmail(), emailCodeReq.getCode(), "CREATE");
-        if (verifyCode==402)    return ResponseEntity.status(402).body(BaseResponseBody.of(401, "인증번호가 불일치합니다."));
+        if (verifyCode==402)    return ResponseEntity.status(402).body(BaseResponseBody.of(402, "인증번호가 불일치합니다."));
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -61,7 +61,7 @@ public class EmailController {
     @PostMapping("/passcheck")
     public ResponseEntity<? extends BaseResponseBody> findpassCheckCode(@RequestBody EmailCodeReq emailCodeReq) {
         int verifyCode=emailService.confirmCode(emailCodeReq.getEmail(), emailCodeReq.getCode(), "FINDPASS");
-        if (verifyCode==401)     return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증번호가 불일치합니다."));
+        if (verifyCode==402)     return ResponseEntity.status(402).body(BaseResponseBody.of(402, "인증번호가 불일치합니다."));
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
