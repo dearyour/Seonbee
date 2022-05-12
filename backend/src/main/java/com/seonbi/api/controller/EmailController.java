@@ -69,7 +69,7 @@ public class EmailController {
     @PostMapping("/newpass")
     public ResponseEntity<? extends BaseResponseBody> newPasswordCode(@RequestBody EmailCodePassReq emailCodePassReq) {
         int verifyCode=emailService.confirmCode(emailCodePassReq.getEmail(), emailCodePassReq.getCode(), "FINDPASS");
-        if (verifyCode==401)     return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증번호가 불일치합니다."));
+        if (verifyCode==402)     return ResponseEntity.status(402).body(BaseResponseBody.of(402, "인증번호가 불일치합니다."));
         int updatePasswordCode=memberService.updatePassword(emailCodePassReq.getEmail(), emailCodePassReq.getPassword());
         if (updatePasswordCode==401)     return ResponseEntity.status(401).body(BaseResponseBody.of(401, "존재하지 않는 계정입니다."));
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
