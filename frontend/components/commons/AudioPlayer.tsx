@@ -16,10 +16,8 @@ import {
 } from 'react-icons/bs';
 import { FaPlay, FaPause } from 'react-icons/fa';
 
-type Props = {};
-
-function AudioPlayer({}: Props) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+function AudioPlayer() {
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [duration, setDuration] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -43,8 +41,9 @@ function AudioPlayer({}: Props) {
 
   useEffect(() => {
     console.log('audioPlayer.current', audioPlayer.current);
-
     if (audioPlayer.current) {
+      audioPlayer.current.volume = 0.1;
+
       const seconds = Math.floor(audioPlayer.current.duration);
       setDuration(seconds);
       if (progressBar.current) {
@@ -121,42 +120,40 @@ function AudioPlayer({}: Props) {
   };
 
   return (
-    !isLoading && (
-      <AudioPlayerWidget>
-        <audio ref={audioPlayer} src={Arche} preload="metadata" />
-        <ForwardBackward onClick={backTen}>
-          <BsArrowLeftShort /> 10
-        </ForwardBackward>
-        <PlayPause onClick={togglePlayPause}>
-          {isPlaying ? (
-            <FaPause />
-          ) : (
-            <FaPlay style={{ position: 'relative', left: '1px' }} />
-          )}
-        </PlayPause>
-        <ForwardBackward onClick={forwardTen}>
-          10
-          <BsArrowRightShort />
-        </ForwardBackward>
+    <AudioPlayerWidget>
+      <audio ref={audioPlayer} src={Arche} preload="metadata" />
+      <ForwardBackward onClick={backTen}>
+        <BsArrowLeftShort /> 10
+      </ForwardBackward>
+      <PlayPause onClick={togglePlayPause}>
+        {isPlaying ? (
+          <FaPause />
+        ) : (
+          <FaPlay style={{ position: 'relative', left: '1px' }} />
+        )}
+      </PlayPause>
+      <ForwardBackward onClick={forwardTen}>
+        10
+        <BsArrowRightShort />
+      </ForwardBackward>
 
-        {/* current time */}
-        {/* <CurrentTime>{calculateTime(currentTime)}</CurrentTime> */}
+      {/* current time */}
+      {/* <CurrentTime>{calculateTime(currentTime)}</CurrentTime> */}
 
-        {/* progress bar */}
+      {/* progress bar */}
 
-        <ProgressBar
-          type="range"
-          defaultValue={0}
-          ref={progressBar}
-          onChange={changeRange}
-        />
+      <ProgressBar
+        type="range"
+        defaultValue={0}
+        ref={progressBar}
+        onChange={changeRange}
+      />
 
-        {/* duration */}
-        {/* <Duration>
+      {/* duration */}
+      {/* <Duration>
           {duration && !isNaN(duration) && calculateTime(duration)}
         </Duration> */}
-      </AudioPlayerWidget>
-    )
+    </AudioPlayerWidget>
   );
 }
 
