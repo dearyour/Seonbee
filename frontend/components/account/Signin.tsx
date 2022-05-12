@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import Login from "./kakaoLogin";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
+import CheckEmailCode, { sendEmailPWCodeAPI } from "./CheckEmailCode";
 type Props = {};
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
@@ -27,10 +28,14 @@ const ERROR_MSG: any = {
 
 const Signin = (props: Props) => {
   const dispatch = useDispatch();
+  const [promotion, setPromotion] = useState<boolean>(false);
+  const [authFin, setAuthFin] = useState<boolean>(false); //인증버튼 막기
+  const [showEmailCodeCheck, setShowEmailCodeCheck] = useState<boolean>(false); //이메일인증
   const [inputState, setInputState] = useState<any>({
     email: "",
     password: "",
-    showPassword: false,
+    newPassword: "",
+    code: false,
   });
   const [errorData, setErrorData] = useState<any>({
     email: false,
@@ -151,6 +156,75 @@ const Signin = (props: Props) => {
     // __getMemberInfo();
   };
 
+  const sendEmailCodeClick = (e: any) => {
+    // 이메일로 인증번호 보내기 + 인증번호 입력 받을 수 있게 폼 열기
+    e.preventDefault();
+    let isNormal = true;
+    let msg = "";
+
+    if (!inputState.email) {
+      isNormal = false;
+      msg = "이메일을 입력해주세요.";
+    } else if (!ID_REGEX.test(inputState.email)) {
+      isNormal = false;
+      Swal.fire({
+        title: "이메일 양식을 확인해주세요",
+        icon: "error",
+        confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+      });
+      msg = "이메일 양식을 확인해주세요.";
+    } else {
+      // 인증코드 보내기
+      setShowEmailCodeCheck(true); //인증 인풋창 열기
+      setAuthFin(true); // 우선 인증버튼 누르자마자 막기
+      Swal.fire({
+        title: "인증번호를 전송중입니다",
+        text: "전송에 시간이 조금 걸릴 수 있으니 조금만 기다려주세요",
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+          sendEmailPWCodeAPI(inputState.email).then((res: any) => {
+            if (res?.status == 200) {
+              Swal.fire({
+                title: "이메일로 인증번호를 전송했습니다",
+                text: "이메일 수신에 시간이 조금 걸릴 수 있습니다",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 800,
+              });
+            } else if (res?.status == 401) {
+              Swal.fire({
+                title: "존재하지 않는 이메일입니다.",
+                icon: "error",
+                confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+              });
+              setShowEmailCodeCheck(false); // 인증 인풋창 닫기
+              setAuthFin(false); // 인증버튼 누르자마자 열기
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "이메일 인증에 문제가 발생했습니다",
+                text: "지속적으로 같은 문제 발생시 관리자에게 문의하세요",
+                confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
+              });
+            }
+          });
+        },
+      });
+    }
+  };
+  const changeHandles = (value: any, name: any) => {
+    inputState[name] = value;
+    if (value == false) {
+      setAuthFin(false);
+    }
+  };
+  //이메일 다시받기 위해 true false
+  const sendEmailCodeAgainClick = () => {
+    setShowEmailCodeCheck(false);
+    setAuthFin(false);
+  };
+
   return (
     <div className="form signinForm">
       <ImageWrapper src={seonbee} alt={`image`} height={170} width={200} />
@@ -176,19 +250,90 @@ const Signin = (props: Props) => {
             handleChange(e);
             // checkRegex("password");
           }}
-          onBlur={() => checkRegex("password")}
+          // onBlur={() => checkRegex("password")}
         />
-        <div className="text-red-500">
+        {/* <div className="text-red-500">
           {errorData["password"] !== true
             ? ERROR_MSG[errorData["password"]]
             : ""}
-        </div>
+        </div> */}
         <input type="submit" name="" value="등장" />
         <LoginWrapper>
           <Login />
         </LoginWrapper>
-        <Button className="forgot">비밀스러운 번호를 까먹었소?</Button>
+        <Button
+          className="toggle-signin"
+          onClick={() => setPromotion((prevCheck) => !prevCheck)}
+        >
+          비밀스러운 번호를 까먹었소?
+        </Button>
       </form>
+      <div className="promotion_signinWrp">
+        {promotion && (
+          <div className="promotion_signin">
+            {" "}
+            <EmailWrp>
+              <input
+                id="email"
+                type="text"
+                placeholder="이메일"
+                value={inputState.email || ""}
+                disabled={authFin ? true : false}
+                // onChange={(e) => {
+                //   handleChange(e);
+                //   checkRegex("email");
+                // }}
+                onChange={handleChange}
+              />
+              <Button
+                onClick={sendEmailCodeClick}
+                disabled={authFin ? true : false}
+                sx={{ width: 100, height: 47 }}
+              >
+                인증받기
+              </Button>
+            </EmailWrp>
+            <>
+              {showEmailCodeCheck ? (
+                <CheckEmailCode
+                  changeHandle={changeHandles}
+                  email={inputState.email}
+                  lostpw={true}
+                />
+              ) : (
+                <></>
+              )}
+            </>
+            {authFin ? (
+              <Button onClick={sendEmailCodeAgainClick}>
+                이메일 변경 및 인증 다시 받기
+              </Button>
+            ) : null}
+            {authFin ? (
+              <EmailWrp>
+                <input
+                  type="password"
+                  id="newPassword"
+                  placeholder="새로운 비밀번호 입력"
+                  // disabled={showEmailCodeCheck ? false : true}
+                  value={inputState.newPassword || ""}
+                  onChange={(e) => {
+                    handleChange(e);
+                    checkRegex("password");
+                  }}
+                />
+                <Button
+                  onClick={sendEmailCodeClick}
+                  disabled={authFin ? false : true}
+                  sx={{ width: 100, height: 47 }}
+                >
+                  제출
+                </Button>
+              </EmailWrp>
+            ) : null}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
@@ -197,6 +342,9 @@ const ImageWrapper = styled(Image)`
 `;
 const LoginWrapper = styled.div`
   margin-top: -20px;
+`;
+const EmailWrp = styled.div`
+  display: flex;
 `;
 
 export default Signin;

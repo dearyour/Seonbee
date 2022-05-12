@@ -24,7 +24,6 @@ export async function SendEmailCodeAPI(email: any) {
     .then((res: any) => res.data)
     .catch((err: any) => err.response.data);
 }
-
 // 회원가입 이메일 인증 받은것 코드내용 인증하기
 export async function checkEmailCodeAPI(datas: any) {
   return await axios({
@@ -43,8 +42,24 @@ export async function checkEmailCodeAPI(datas: any) {
     .then((res) => res.data)
     .catch((err) => err.response.data);
 }
+// 비밀번호 재설정 위해 이메일로 인증번호 보내기
+export async function sendEmailPWCodeAPI(email: any) {
+  return await axios({
+    method: "POST",
+    url: process.env.NEXT_PUBLIC_BACK + "email/findpass",
+    headers: {
+      "Content-Type": `application/json;charset=UTF-8`,
+      // "Access-Control-Allow-Origin": "*",
+      // Accept: "application/json",
+    },
+    data: email,
+  })
+    .then((res: any) => res.data)
+    .catch((err: any) => err.response.data);
+}
+
 // 비밀번호 재설정 위해 이메일 인증번호 받은것 인증하기
-export async function checkEmailPWAPI(data: any) {
+export async function checkEmailPWAPI(datas: any) {
   return await axios({
     method: "POST",
     url: process.env.NEXT_PUBLIC_BACK + "email/passcheck",
@@ -54,8 +69,8 @@ export async function checkEmailPWAPI(data: any) {
       // Accept: "application/json",
     },
     data: {
-      email: data.email,
-      code: data.code,
+      email: datas.email,
+      code: datas.code,
     },
   })
     .then((res) => res.data)
@@ -84,9 +99,7 @@ export default function CheckEmailCode(props: any) {
       icon: "error",
       title: "시간이 만료되었습니다! 인증코드를 재발급해 주세요",
       confirmButtonText: "&nbsp&nbsp확인&nbsp&nbsp",
-    }).then(() => {
-      setAuthFin(true);
-    });
+    }).then(() => {});
   };
 
   // 이메일로 받은 인증번호 입력해서 확인하기 + 확인 완료되면 폼 닫고 이메일 입력 못 받게 바꾸기
@@ -112,7 +125,8 @@ export default function CheckEmailCode(props: any) {
             Swal.showLoading();
 
             checkEmailPWAPI(inputValue).then((res) => {
-              if (res.statusCode == 200) {
+              console.log(res);
+              if (res.status == 200) {
                 Swal.fire({
                   title: "인증에 성공했습니다",
                   icon: "success",
@@ -121,7 +135,7 @@ export default function CheckEmailCode(props: any) {
                 });
                 props.changeHandle(true, "code");
                 setAuthFin(true);
-              } else if (res.statusCode == 401) {
+              } else if (res.status == 401) {
                 Swal.fire({
                   icon: "error",
                   title: "인증번호를 잘못 입력했습니다",
@@ -192,7 +206,7 @@ export default function CheckEmailCode(props: any) {
             <input
               id="email"
               type="text"
-              placeholder="이메일"
+              placeholder="인증번호"
               value={code || ""}
               disabled={authFin ? true : false}
               onChange={codeHandleChange}

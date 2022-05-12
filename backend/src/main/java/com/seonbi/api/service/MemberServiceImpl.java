@@ -232,7 +232,7 @@ public class MemberServiceImpl implements MemberService {
         String access_Token= "";
         String refresh_Token="";
         String requestURL="https://kauth.kakao.com/oauth/token";
-//        String redirectURI="http://localhost:3000/auth/kakao/callback"; // 배포시
+//        String redirectURI="http://localhost:3000/auth/kakao/callback"; // 로컬시
         String redirectURI="https://k6a406.p.ssafy.io/auth/kakao/callback"; // 배포시
 
         try {
