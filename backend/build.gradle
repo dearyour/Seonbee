@@ -155,6 +155,9 @@ dependencies {
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.14.3'
 
 
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20211205'
+
 }
 
 test {
