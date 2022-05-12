@@ -29,7 +29,6 @@ const Profile = (props: Props) => {
     console.log("hostId", hostId);
     dispatch(profileActions.setHostId(hostId));
     dispatch(profileActions.getProfile(hostId));
-    dispatch(profileActions.getLanternFestivals(hostId));
   }, [router.isReady]);
 
   // useEffect(() => {
@@ -56,7 +55,6 @@ const Profile = (props: Props) => {
       const sideBtnName = sideBtnNames[i];
       result[i] = (
         <div
-          key={i}
           className={
             (selectedBtn === sideBtnName
               ? styles.selected_btn

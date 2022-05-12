@@ -9,12 +9,13 @@ import Router from "next/router";
 import Swal from "sweetalert2";
 import Login from "./kakaoLogin";
 import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
 type Props = {};
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
-const PW_REGEX = /^[a-zA-Z0-9]{7,16}$/;
-// // 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
-// const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{8,16}$/;
+// const PW_REGEX = /^[a-zA-Z0-9]{7,16}$/;
+// 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
+const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{7,16}$/;
 
 const ERROR_MSG: any = {
   required: "비어있소.",
@@ -175,7 +176,7 @@ const Signin = (props: Props) => {
             handleChange(e);
             // checkRegex("password");
           }}
-          // onBlur={() => checkRegex("password")}
+          onBlur={() => checkRegex("password")}
         />
         <div className="text-red-500">
           {errorData["password"] !== true
@@ -186,9 +187,7 @@ const Signin = (props: Props) => {
         <LoginWrapper>
           <Login />
         </LoginWrapper>
-        {/* <a href="/shop" className="forgot"> */}
-        {/* 비밀스러운 번호를 까먹었소? */}
-        {/* </a> */}
+        <Button className="forgot">비밀스러운 번호를 까먹었소?</Button>
       </form>
     </div>
   );

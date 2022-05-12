@@ -42,7 +42,9 @@ public class GiveController {
     public ResponseEntity<? extends BaseResponseBody> getGiveAll(@ApiIgnore Authentication authentication){
 
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
 
         RecommendReceiverDto receiverList=recommendService.getGiveAll(member.getMemberId());
 
@@ -54,8 +56,9 @@ public class GiveController {
             @RequestBody ReceiverIsMemberReq receiverIsMemberReq, @ApiIgnore Authentication authentication){
 
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-
+        if (member==null){
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        }
         List<ReceiverProductDto> productDtoList = recommendService.getGiveProductAll(
                 member.getMemberId(), receiverIsMemberReq.getReceiverId(), receiverIsMemberReq.getIsMember());
         return ResponseEntity.status(200).body(ReceiverProductAllRes.of(200, "success", productDtoList));

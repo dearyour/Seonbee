@@ -49,7 +49,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 //        System.out.println("token=" + token);
         // 비어있거나  Bearer로 시작하지 않는다면?
         if (token == null || !token.startsWith("Bearer ")) {
-            System.out.println("token==null || !token.startsWith(\"Bearer \")");
             chain.doFilter(request, response);
             return;
         }
@@ -63,14 +62,12 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         // 디코딩한 jwt로부터  토큰 subject(email)을 받았으면 db로 해당 이메일을 가진 멤버가 있는지 조회한다
 
         if (email == null) {
-            System.out.println("email == null");
             chain.doFilter(request, response);
             return;
         }
 
         Member member = memberRepository.findByEmailAndIsDeleted(email, false); // 해당 이메일을 가진 유저가 db에 존재하는지 조회
         if (member == null) {
-            System.out.println("해당 이메일을 가진 유저가 db에 없음");
             chain.doFilter(request, response);
             return;
         }

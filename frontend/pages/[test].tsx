@@ -1,11 +1,10 @@
 import Join from "components/account/Join";
-import Wish from "components/profile/wish/Wish";
 import React from "react";
 
 type Props = {};
 
 const test = (props: Props) => {
-  return <div>{/* <Wish></Wish> */}</div>;
+  return <div style={{ textAlign: "center" }}>올바르지 못한 경로 입니다</div>;
 };
 
 export default test;
