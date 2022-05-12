@@ -23,6 +23,7 @@ public class ProductDto {
     private Long wish;
     private Long give;
     private Long hit;
+    private Long recommend;
     private String buyUrl;
     private String imageUrl;
 }
