@@ -51,7 +51,7 @@ public class NaverSearchServiceImpl implements NaverSearchService {
             {
                 Product product=productList.get(j);
                 product.setKeyword(keyword.get(i));
-                set.add(product.getProductId());
+                set.add(product);
             }
         }
 
