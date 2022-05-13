@@ -135,6 +135,7 @@
   color: #fff;
   max-width: 100px;
   cursor: pointer;
+  margin-top: -15px;
 }
 .formBx .signupForm form input[type="submit"] {
   background: #f43648;
@@ -175,6 +176,16 @@
   margin: auto;
   /* margin-top: 10px; */
   margin-bottom: 10px;
+}
+.promotion_signinWrp {
+}
+.promotion_signin input {
+  padding: 6px 6px;
+  margin-top: 5px;
+  height: 80%;
+  width: 80%;
+}
+.toggle-signin {
 }
 .text-red-500 {
   margin-top: -25px;

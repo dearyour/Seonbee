@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 import { useSelector, useDispatch } from "react-redux";
 import { memberActions } from "store/slice/member";
 import { RootState } from "store/slice";
+import AudioPlayer from "components/commons/AudioPlayer";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ function Navbar() {
     setIsOpen(!isOpen);
   };
 
-  const uid = useSelector((state: RootState) => state.member.info.memberId);
+  const uid = useSelector((state: RootState) => state.member.info?.memberId);
 
   return (
     <>
@@ -56,6 +57,9 @@ function Navbar() {
             <FaBars />
           </MobileIcon>
           <NavMenu className={isMain ? "isMain" : ""}>
+            <NavItem>
+              <AudioPlayer />
+            </NavItem>
             <NavItem>
               <NavLinks onClick={() => Router.push("/")}>대문</NavLinks>
             </NavItem>

@@ -1,5 +1,6 @@
 package com.seonbi.api.service;
 
+import com.seonbi.api.model.RecommendDto;
 import com.seonbi.api.request.ReceiverInfoReq;
 import com.seonbi.db.entity.Product;
 import com.seonbi.db.entity.Receiver;
@@ -40,7 +41,7 @@ public class RecommendServiceImpl implements RecommendService {
     @Autowired
     WordRepository wordRepository;
 
-
+    @Autowired
     ModelMapper modelMapper;
 
     @Autowired
@@ -293,18 +294,23 @@ public class RecommendServiceImpl implements RecommendService {
 
     @Override
     public RecommendReceiverDto getGiveAll(Long memberId) {
-        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndIsSavedAndIsDeleted(memberId, false, false);
-        List<ReceiverDto> memberList = new ArrayList<>();
-        List<ReceiverDto> noneMemberList = new ArrayList<>();
-        for (Recommend recommend : recommends) {
+        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndIsSavedAndIsDeleted(memberId, true, false);
+        System.out.println(recommends.size());
+        List<ReceiverDto> memberList=new ArrayList<>();
+        List<ReceiverDto> noneMemberList=new ArrayList<>();
+        for (Recommend recommend: recommends){
+            System.out.println(recommend);
             Receiver receiver = receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
             if (receiver == null) {
                 continue;
             }
-            ReceiverDto receiverDto = modelMapper.map(receiver, ReceiverDto.class);
-            if (recommend.getIsMember()) {
-                Member receiverMember = memberRepository.findByMemberIdAndIsDeleted(recommend.getReceiverId(), false);
-                if (receiverMember != null && friendService.isFriend(memberId, receiverMember.getMemberId())) {  // 추천받은 사람이 친구인 경우
+            System.out.println(receiver);
+            ReceiverDto receiverDto=modelMapper.map(receiver, ReceiverDto.class);
+            receiverDto.setName(receiver.getName());
+            System.out.println(receiverDto);
+            if (recommend.getIsFriend()){
+                Member receiverMember=memberRepository.findByMemberIdAndIsDeleted(recommend.getReceiverId(), false);
+                if (receiverMember!=null && friendService.isFriend(memberId, receiverMember.getMemberId())){  // 추천받은 사람이 친구인 경우
                     receiverDto.setImageString(imageService.getImage(receiverMember.getImageId()));
                     memberList.add(receiverDto);
                 }
@@ -317,12 +323,12 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
     @Override
-    public List<ReceiverProductDto> getGiveProductAll(Long memberId, Long receiverId, Boolean isMember) {
-        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndReceiverIdAndIsSavedAndIsMemberAndIsDeleted(
-                memberId, receiverId, true, isMember, false);
-        List<ReceiverProductDto> productDtoList = new ArrayList<>();
-        for (Recommend recommend : recommends) {
-            ReceiverProductDto receiverProductDto = modelMapper.map(
+    public List<ReceiverProductDto> getGiveProductAll(Long memberId, Long receiverId, Boolean isFriend) {
+        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndReceiverIdAndIsSavedAndIsFriendAndIsDeleted(
+                memberId, receiverId, true, isFriend,false);
+        List<ReceiverProductDto> productDtoList=new ArrayList<>();
+        for (Recommend recommend: recommends){
+            ReceiverProductDto receiverProductDto=modelMapper.map(
                     productRepository.findByProductIdAndIsDeleted(recommend.getProductId(), false), ReceiverProductDto.class);
             productDtoList.add(receiverProductDto);
         }
@@ -344,4 +350,41 @@ public class RecommendServiceImpl implements RecommendService {
 
         return 200;
     }
+    @Override
+    public List<RecommendDto> getRecommendAll(Long memberId) {
+        List<Recommend> recommends=recommendRepository.findAllByMemberIdAndIsDeleted(memberId, false);
+        List<RecommendDto> recommendList=new ArrayList<>();
+        for (Recommend recommend: recommends){
+            Product product=productRepository.findByProductIdAndIsDeleted(recommend.getProductId(), false);
+            if (product==null)  continue;
+            RecommendDto recommendDto = modelMapper.map(product, RecommendDto.class);    // 상품 정보 넣기
+            recommendDto.setRecommendId(recommend.getRecommendId());
+            recommendDto.setIsSaved(recommend.getIsSaved());
+            Receiver receiver=receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
+            System.out.println(receiver);
+            if (receiver==null)     continue;
+            if (recommend.getIsFriend()){   // 친구인 경우 회원 닉네임
+                Member member=memberRepository.findByMemberIdAndIsDeleted(receiver.getReceiverId(), false);
+                System.out.println(member);
+                if (member==null)   continue;
+                recommendDto.setReceiverName(member.getNickname());
+            } else {    // 친구가 아닌 경우 receiver name
+                recommendDto.setReceiverName(receiver.getName());
+            }
+
+            recommendList.add(recommendDto);
+        }
+        return recommendList;
+    }
+
+    @Override
+    public int saveRecommendGive(Long memberId, Long recommendId) {
+        Recommend recommend = recommendRepository.findByRecommendIdAndIsDeleted(recommendId, false);
+        if (recommend==null)    return 401;
+        if (!recommend.getMemberId().equals(memberId))  return 403;
+        recommend.setIsSaved(true);
+        recommendRepository.save(recommend);
+        return 200;
+    }
+
 }
