@@ -61,9 +61,9 @@ const ProductCard = (props: Props) => {
           <div className="imgBx d-flex justify-content-center">
             <Image
               alt="cards"
-              width={"100%"}
-              height={"100%"}
-              //   layout="fill"
+              width={250}
+              height={400}
+              // layout="fill"
               src={props.imageUrl}
               className="rounded"
             />

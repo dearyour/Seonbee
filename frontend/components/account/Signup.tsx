@@ -10,8 +10,6 @@ import Btn from "components/commons/Btn";
 import ControlMenu from "./ControlMenu";
 import CheckEmailCode, { SendEmailCodeAPI } from "./CheckEmailCode";
 import Button from "@mui/material/Button";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@material-ui/core/InputAdornment";
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
 const NICK_REGEX = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,12}$/;

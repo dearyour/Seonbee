@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Swal from "sweetalert2";
@@ -34,8 +32,6 @@ export async function checkEmailCodeAPI(datas: any) {
     url: process.env.NEXT_PUBLIC_BACK + "email/check",
     headers: {
       "Content-Type": `application/json;charset=UTF-8`,
-      // "Access-Control-Allow-Origin": "*",
-      // Accept: "application/json",
     },
     data: {
       email: datas.email,
@@ -52,8 +48,6 @@ export async function sendEmailPWCodeAPI(email: any) {
     url: process.env.NEXT_PUBLIC_BACK + "email/findpass",
     headers: {
       "Content-Type": `application/json;charset=UTF-8`,
-      // "Access-Control-Allow-Origin": "*",
-      // Accept: "application/json",
     },
     data: email,
   })
@@ -68,8 +62,6 @@ export async function checkEmailPWAPI(datas: any) {
     url: process.env.NEXT_PUBLIC_BACK + "email/passcheck",
     headers: {
       "Content-Type": `application/json;charset=UTF-8`,
-      // "Access-Control-Allow-Origin": "*",
-      // Accept: "application/json",
     },
     data: {
       email: datas.email,
@@ -85,8 +77,6 @@ export async function newpassAPI(datas: any) {
     url: process.env.NEXT_PUBLIC_BACK + "email/newpass",
     headers: {
       "Content-Type": `application/json;charset=UTF-8`,
-      // "Access-Control-Allow-Origin": "*",
-      // Accept: "application/json",
     },
     data: {
       email: datas.email,
@@ -202,7 +192,7 @@ export default function CheckEmailCode(props: any) {
                 });
                 props.changeHandle(true, "code");
                 setAuthFin(true);
-              } else if (res.status == 401) {
+              } else if (res.status == 402) {
                 Swal.fire({
                   icon: "error",
                   title: "인증번호를 잘못 입력했습니다",
