@@ -64,4 +64,12 @@ public class RecommendController {
     }
 
 
+     @PostMapping("/receiver")
+    public ResponseEntity<? extends BaseResponseBody> recommend(@RequestBody ReceiverInfoReq receiverInfoReq)
+    {
+
+        recommendService.ProductRecommend(receiverInfoReq);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
 }
