@@ -38,7 +38,7 @@ function Navbar() {
     setIsOpen(!isOpen);
   };
 
-  const uid = useSelector((state: RootState) => state.member.info.memberId);
+  const uid = useSelector((state: RootState) => state.member.info?.memberId);
 
   return (
     <>

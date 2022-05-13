@@ -330,10 +330,12 @@ public class MemberServiceImpl implements MemberService {
 
             boolean hasEmail = (boolean) kakao_account.get("has_email");
 
+            System.out.println(kakao_account);
 
             if(hasEmail) {
                 email = kakao_account.get("email").toString();
             }
+
 
             response.put("email",email);
 
