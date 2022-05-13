@@ -1,5 +1,6 @@
 package com.seonbi.api.service;
 
+import com.seonbi.api.model.RecommendDto;
 import com.seonbi.api.request.ReceiverInfoReq;
 import com.seonbi.db.entity.Product;
 import com.seonbi.db.entity.Receiver;
@@ -371,4 +372,41 @@ public class RecommendServiceImpl implements RecommendService{
 
         return 200;
     }
+    @Override
+    public List<RecommendDto> getRecommendAll(Long memberId) {
+        List<Recommend> recommends=recommendRepository.findAllByMemberIdAndIsDeleted(memberId, false);
+        List<RecommendDto> recommendList=new ArrayList<>();
+        for (Recommend recommend: recommends){
+            Product product=productRepository.findByProductIdAndIsDeleted(recommend.getProductId(), false);
+            if (product==null)  continue;
+            RecommendDto recommendDto = modelMapper.map(product, RecommendDto.class);    // 상품 정보 넣기
+            recommendDto.setRecommendId(recommend.getRecommendId());
+            recommendDto.setIsSaved(recommend.getIsSaved());
+            Receiver receiver=receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
+            System.out.println(receiver);
+            if (receiver==null)     continue;
+            if (recommend.getIsFriend()){   // 친구인 경우 회원 닉네임
+                Member member=memberRepository.findByMemberIdAndIsDeleted(receiver.getReceiverId(), false);
+                System.out.println(member);
+                if (member==null)   continue;
+                recommendDto.setReceiverName(member.getNickname());
+            } else {    // 친구가 아닌 경우 receiver name
+                recommendDto.setReceiverName(receiver.getName());
+            }
+
+            recommendList.add(recommendDto);
+        }
+        return recommendList;
+    }
+
+    @Override
+    public int saveRecommendGive(Long memberId, Long recommendId) {
+        Recommend recommend = recommendRepository.findByRecommendIdAndIsDeleted(recommendId, false);
+        if (recommend==null)    return 401;
+        if (!recommend.getMemberId().equals(memberId))  return 403;
+        recommend.setIsSaved(true);
+        recommendRepository.save(recommend);
+        return 200;
+    }
+
 }
