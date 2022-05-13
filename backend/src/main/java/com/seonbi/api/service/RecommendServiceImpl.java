@@ -351,7 +351,7 @@ public class RecommendServiceImpl implements RecommendService {
         return 200;
     }
     @Override
-    public List<RecommendDto> getRecommendAll(Long memberId) {
+    public List<RecommendDto> getRecommendAll(Long memberId) {  // 주소싶소 말고 챗봇으로 받은 추천 내역만
         List<Recommend> recommends=recommendRepository.findAllByMemberIdAndIsDeleted(memberId, false);
         List<RecommendDto> recommendList=new ArrayList<>();
         for (Recommend recommend: recommends){
@@ -361,11 +361,9 @@ public class RecommendServiceImpl implements RecommendService {
             recommendDto.setRecommendId(recommend.getRecommendId());
             recommendDto.setIsSaved(recommend.getIsSaved());
             Receiver receiver=receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
-            System.out.println(receiver);
             if (receiver==null)     continue;
-            if (recommend.getIsFriend()){   // 친구인 경우 회원 닉네임
+            if (recommend.getIsFriend()){   // 친구인 경우 회원 닉네임    // 이렇게 들어오는 경우 아직 없을듯
                 Member member=memberRepository.findByMemberIdAndIsDeleted(receiver.getReceiverId(), false);
-                System.out.println(member);
                 if (member==null)   continue;
                 recommendDto.setReceiverName(member.getNickname());
             } else {    // 친구가 아닌 경우 receiver name
