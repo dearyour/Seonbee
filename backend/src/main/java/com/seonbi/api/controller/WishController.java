@@ -38,15 +38,12 @@ public class WishController {
             @PathVariable Long hostId, @ApiIgnore Authentication authentication){
 
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null){
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
-        if (!memberService.isMemberValid(hostId)){   // hostId가 없는 경우
+        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        if (!memberService.isMemberValid(hostId))   // hostId가 없는 경우
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 사용자입니다."));
-        }
-        if (member.getMemberId()!=hostId && !friendService.isFriend(hostId, member.getMemberId())){     // 자기 자신이 아니고 친구도 아닌 경우
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+
+//        if (!friendService.isFriend(hostId, member.getMemberId()))    // 친구가 아닌 경우
+//            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
         List<WishlistDto> wishes=wishlistService.getWishlist(hostId);
 

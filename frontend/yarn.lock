@@ -1075,6 +1075,11 @@
     "path-type" "^4.0.0"
     "yaml" "^1.7.2"
 
+"cropperjs@^1.5.12":
+  "integrity" "sha512-re7UdjE5UnwdrovyhNzZ6gathI4Rs3KGCBSc8HCIjUo5hO42CtzyblmWLj6QWVw7huHyDMfpKxhiO2II77nhDw=="
+  "resolved" "https://registry.npmjs.org/cropperjs/-/cropperjs-1.5.12.tgz"
+  "version" "1.5.12"
+
 "cross-spawn@^7.0.2":
   "integrity" "sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w=="
   "resolved" "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.3.tgz"
@@ -1662,6 +1667,16 @@
   "integrity" "sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ=="
   "resolved" "https://registry.npmjs.org/functions-have-names/-/functions-have-names-1.2.3.tgz"
   "version" "1.2.3"
+
+"fuse.js@^6.6.2":
+  "integrity" "sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA=="
+  "resolved" "https://registry.npmjs.org/fuse.js/-/fuse.js-6.6.2.tgz"
+  "version" "6.6.2"
+
+"gensync@^1.0.0-beta.2":
+  "integrity" "sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg=="
+  "resolved" "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz"
+  "version" "1.0.0-beta.2"
 
 "get-intrinsic@^1.0.2", "get-intrinsic@^1.1.0", "get-intrinsic@^1.1.1":
   "integrity" "sha512-kWZrnVM42QCiEA2Ig1bG8zjoIMOgxWwYCEeNdwY6Tv/cOSeGpcoX4pXHfKUxNKVoArnrEr2e9srnAxxGIraS9Q=="
@@ -2554,7 +2569,14 @@
     "merge-class-names" "^1.1.1"
     "prop-types" "^15.6.0"
 
-"react-dom@^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.3.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^16.8.0 || ^17.0.0", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^18.0.0-0", "react-dom@>=16.6.0", "react-dom@18.0.0":
+"react-cropper@^2.1.8":
+  "integrity" "sha512-QEj6CE9et/gMRqpaKMgZQdBgtzLjjq+zj1pmHwtoWG6GqscDl4QpTwoEElWN2pieYxkwFaZa0lPiD2b9nwqLKQ=="
+  "resolved" "https://registry.npmjs.org/react-cropper/-/react-cropper-2.1.8.tgz"
+  "version" "2.1.8"
+  dependencies:
+    "cropperjs" "^1.5.12"
+
+"react-dom@^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.3.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^17.0.2 || ^18.0.0-0", "react-dom@>= 16.8.0", "react-dom@>=16.6.0", "react-dom@18.0.0":
   "integrity" "sha512-XqX7uzmFo0pUceWFCt7Gff6IyIMzFUn7QMZrbrQfGxtaxXZIcGQzoNpRLE3fQLnS4XzLLPMZX2T9TRcSrasicw=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.0.0.tgz"
   "version" "18.0.0"
