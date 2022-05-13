@@ -1,5 +1,6 @@
 package com.seonbi.api.service;
 
+import com.seonbi.api.model.RecommendDto;
 import com.seonbi.api.request.ReceiverInfoReq;
 import com.seonbi.db.entity.Product;
 import com.seonbi.db.entity.Receiver;
@@ -14,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
 import java.util.*;
+
 import com.seonbi.api.model.ReceiverDto;
 import com.seonbi.api.model.ReceiverProductDto;
 import com.seonbi.api.model.RecommendReceiverDto;
@@ -30,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RecommendServiceImpl implements RecommendService{
+public class RecommendServiceImpl implements RecommendService {
 
     @Autowired
     ReceiverRepository receiverRepository;
@@ -38,8 +41,8 @@ public class RecommendServiceImpl implements RecommendService{
     @Autowired
     WordRepository wordRepository;
 
-
-      ModelMapper modelMapper;
+    @Autowired
+    ModelMapper modelMapper;
 
     @Autowired
     WishlistRepository wishlistRepository;
@@ -65,7 +68,7 @@ public class RecommendServiceImpl implements RecommendService{
     @Override
     public void ProductRecommend(ReceiverInfoReq req) {
 
-        List<String> list1 = new ArrayList<>(); //관심사 ,용도 넣는 곳
+        List<String> list1 = new ArrayList<>(); //관심사 ,용도 넣는 곳 ( 교집합)
         List<String> list2 = new ArrayList<>(); //  나머지 (mbti,성별,나이대,관계)
 
         //  1. receiverInfoReq의 정보를 receiver에 저장하고 기본키를 가지고 있는다
@@ -93,10 +96,9 @@ public class RecommendServiceImpl implements RecommendService{
 
         if (req.getInterest() != null) {
 
-            StringTokenizer st= new StringTokenizer(req.getInterest(),",");
+            StringTokenizer st = new StringTokenizer(req.getInterest(), ",");
 
-            while(st.hasMoreTokens())
-            {
+            while (st.hasMoreTokens()) {
                 list1.add(st.nextToken());
             }
 
@@ -124,77 +126,91 @@ public class RecommendServiceImpl implements RecommendService{
 
         //2. receiverInfoReq의 정보로 키워드 하나를 뽑아낸다 ( map에 저장 후 가장 높은 키워드를 조회한다)
 
-        Map<String, Long> map = new HashMap<>();
+        Map<String, Long> map = new HashMap<>(); // 키워드 , 누적 값
+
+        HashSet<String> keyword[] = new HashSet[list1.size()]; // 관심사,용도 키워드 교집합
 
 
-        for (int i = 0; i < list1.size(); i++)
-        {
+        List<String> list = new ArrayList<>(); // 키워드 교집합 (관심사 , 용도)
+        for (int i = 0; i < list1.size(); i++) {  //관심사 용도
+
+            keyword[i] = new HashSet<>(); // set생성
 
             List<Word> result = wordRepository.findAllBySubject(list1.get(i)); //현재 500개
 
-            Long total= 0l;
-            for(int j=0; j<result.size(); j++) {
-                 total+=result.get(j).getAmount();
+            Long total = 0l;
+            for (int j = 0; j < result.size(); j++) {
+                total += result.get(j).getAmount();
             }
 
 
-            //System.out.println("total="+total);
-
-            double sum=0;
             for (int j = 0; j < result.size(); j++) {
                 Word word = result.get(j);
 
+                keyword[i].add(word.getKeyword());
+
+                double value = (double) word.getAmount() / total;
                 if (!map.containsKey(word.getKeyword())) //map에 해당키워드가 없다면 추가
                 {
-                    double value= (double) word.getAmount()/total ; //
 
+                    map.put(word.getKeyword(), (long) (value * 10000));
+                } else { //해당 키워드가 이미 존재한다면?
 
-                 // System.out.println((value*100));
+                    map.replace(word.getKeyword(), map.get(word.getKeyword()) + (long) (value * 10000));
 
-                  sum+=(value*100);
-
-
-
-//                    System.out.println(Math.round(value));
-                   map.put(word.getKeyword(), (long) (value*10000));
-                    //map.put(word.getKeyword(), 1l);
                 }
+
             }
-            //System.out.println("sum="+sum);
         }
 
 
-        //관심사 용도 외 나머지
-        //////////////////////////////////////////////////////////////////////////////////////
-
-        for (int i = 0; i < list2.size(); i++)
+        for(int i=1; i<list1.size(); i++)
         {
+            keyword[0].retainAll(keyword[i]); //교집합
+        }
+
+
+
+
+
+        //관심사 용도 외 나머지  이미 만들어진 교집합에 속하는 단어만 amount값을 추가해준다
+        for (int i = 0; i < list2.size(); i++) {
 
             List<Word> result = wordRepository.findAllBySubject(list2.get(i)); //현재 500개
 
-            Long total= 0l;
-            for(int j=0; j<result.size(); j++) {
-                total+=result.get(j).getAmount();
+            Long total = 0l;
+            for (int j = 0; j < result.size(); j++) {
+                total += result.get(j).getAmount();
             }
+
 
             for (int j = 0; j < result.size(); j++) {
                 Word word = result.get(j);
-
-                if (map.containsKey(word.getKeyword())) //map에 해당키워드가 없다면 추가
+                double value = (double) word.getAmount() / total;
+                if(keyword[0].contains(word.getKeyword())) //해당 교집합에 있다면?
                 {
-
-                    double value= (double) word.getAmount()/total ;
-                    map.replace(word.getKeyword(), map.get(word.getKeyword()) +(long) (value*10000));
-                    //map.put(word.getKeyword(), 1l);
+                    map.replace(word.getKeyword(), map.get(word.getKeyword()) + (long) (value * 10000));
                 }
             }
+        }
 
+        Map<String, Long> result = new HashMap<>();
+        System.out.println("------------교집합에 속하는 단어들------------------");
+        for(String word : keyword[0] )
+        {
 
+            System.out.println(word);
+
+            if(map.containsKey(word))
+            {
+                result.put(word,map.get(word));
+            }
         }
 
 
+
         //값(amount)기준 내림차순으로 map정렬
-        LinkedList<Map.Entry<String, Long>> entries = new LinkedList<>(map.entrySet());
+        LinkedList<Map.Entry<String, Long>> entries = new LinkedList<>(result.entrySet());
 
         entries.sort(new Comparator<Map.Entry<String, Long>>() {
             @Override
@@ -203,51 +219,15 @@ public class RecommendServiceImpl implements RecommendService{
             }
         });
 
-        for(int i=0; i<=30; i++) { //상위 10개
+        for (int i = 0; i <= 30; i++) { //상위 10개
 
-            String keyword = entries.get(i).getKey(); // 가장 amount가 많은 keyword
-            Long amount=entries.get(i).getValue();
-            System.out.println("키워드 ="+keyword  + " amount="+amount);
+            String keyword1 = entries.get(i).getKey(); // 가장 amount가 많은 keyword
+            Long amount = entries.get(i).getValue();
+            System.out.println("키워드 =" + keyword1 + " amount=" + amount);
         }
 
 
-
-
-
-
-
-        //3. 해당 키워드에 속하는 상품을 다 조회하고 그중에서 랜덤값으로 3개를 보내준다?
-
-
-
-
-
-
-
-  /*
-  피그마상에는 추천페이지에 상품마다 저장하기 버튼이 있는데 ??
-   */
-
-
-        //저장한 정보들을 이용해서 keyword를 뽑아내고  (이과정에서 어떻게 키워드를 처리할지..?)   네이버 쇼핑 api로 요청한다
-
-
-        // 100 개의 상품정보를 상품 테이블에 저장 (jpa보다 빠르게 저장하는게 필요함..)
-        /*
-                이미 같은 키워드에 대한 상품 100개를 상품 테이블에 저장했으면?? 이 처리는 어떻게 할것인가?
-
-
-                입력받은 가격대를 통해서 필터링해서 상위 3or 5개를 뽑아낸다
-
-                회원일 경우에는? recommend     receiver 기본키와  회원 기본키로   추천상품을 저장한다
-
-
-                회원이 아닌경우에는 생략
-
-
-
-                응답값으로 추천상품을 보내준다
-         */
+        //3. 해당 키워드에 속하는 상품을 다 조회하고 그중에서 랜덤값으로 3개를 보내준다? (가격 범위 확인)
 
 
     }
@@ -311,20 +291,24 @@ public class RecommendServiceImpl implements RecommendService{
         return null;
     }
 
-  
 
     @Override
     public RecommendReceiverDto getGiveAll(Long memberId) {
-        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndIsSavedAndIsDeleted(memberId, false, false);
+        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndIsSavedAndIsDeleted(memberId, true, false);
+        System.out.println(recommends.size());
         List<ReceiverDto> memberList=new ArrayList<>();
         List<ReceiverDto> noneMemberList=new ArrayList<>();
         for (Recommend recommend: recommends){
+            System.out.println(recommend);
             Receiver receiver = receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
-            if (receiver==null){
+            if (receiver == null) {
                 continue;
             }
+            System.out.println(receiver);
             ReceiverDto receiverDto=modelMapper.map(receiver, ReceiverDto.class);
-            if (recommend.getIsMember()){
+            receiverDto.setName(receiver.getName());
+            System.out.println(receiverDto);
+            if (recommend.getIsFriend()){
                 Member receiverMember=memberRepository.findByMemberIdAndIsDeleted(recommend.getReceiverId(), false);
                 if (receiverMember!=null && friendService.isFriend(memberId, receiverMember.getMemberId())){  // 추천받은 사람이 친구인 경우
                     receiverDto.setImageString(imageService.getImage(receiverMember.getImageId()));
@@ -339,9 +323,9 @@ public class RecommendServiceImpl implements RecommendService{
     }
 
     @Override
-    public List<ReceiverProductDto> getGiveProductAll(Long memberId, Long receiverId, Boolean isMember) {
-        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndReceiverIdAndIsSavedAndIsMemberAndIsDeleted(
-                memberId, receiverId, true, isMember,false);
+    public List<ReceiverProductDto> getGiveProductAll(Long memberId, Long receiverId, Boolean isFriend) {
+        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndReceiverIdAndIsSavedAndIsFriendAndIsDeleted(
+                memberId, receiverId, true, isFriend,false);
         List<ReceiverProductDto> productDtoList=new ArrayList<>();
         for (Recommend recommend: recommends){
             ReceiverProductDto receiverProductDto=modelMapper.map(
@@ -354,16 +338,53 @@ public class RecommendServiceImpl implements RecommendService{
 
     @Override
     public int addGiveProduct(Long memberId, Long friendId, Long productId) {
-        if (!memberService.isMemberValid(friendId)){
+        if (!memberService.isMemberValid(friendId)) {
             return 401;
         }
-        if (!friendService.isFriend(memberId, friendId)){
+        if (!friendService.isFriend(memberId, friendId)) {
             return 403;
         }
 
-        Recommend recommend=new Recommend(productId, friendId, memberId, true, true);
+        Recommend recommend = new Recommend(productId, friendId, memberId, true, true);
         recommendRepository.save(recommend);
 
         return 200;
     }
+    @Override
+    public List<RecommendDto> getRecommendAll(Long memberId) {
+        List<Recommend> recommends=recommendRepository.findAllByMemberIdAndIsDeleted(memberId, false);
+        List<RecommendDto> recommendList=new ArrayList<>();
+        for (Recommend recommend: recommends){
+            Product product=productRepository.findByProductIdAndIsDeleted(recommend.getProductId(), false);
+            if (product==null)  continue;
+            RecommendDto recommendDto = modelMapper.map(product, RecommendDto.class);    // 상품 정보 넣기
+            recommendDto.setRecommendId(recommend.getRecommendId());
+            recommendDto.setIsSaved(recommend.getIsSaved());
+            Receiver receiver=receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
+            System.out.println(receiver);
+            if (receiver==null)     continue;
+            if (recommend.getIsFriend()){   // 친구인 경우 회원 닉네임
+                Member member=memberRepository.findByMemberIdAndIsDeleted(receiver.getReceiverId(), false);
+                System.out.println(member);
+                if (member==null)   continue;
+                recommendDto.setReceiverName(member.getNickname());
+            } else {    // 친구가 아닌 경우 receiver name
+                recommendDto.setReceiverName(receiver.getName());
+            }
+
+            recommendList.add(recommendDto);
+        }
+        return recommendList;
+    }
+
+    @Override
+    public int saveRecommendGive(Long memberId, Long recommendId) {
+        Recommend recommend = recommendRepository.findByRecommendIdAndIsDeleted(recommendId, false);
+        if (recommend==null)    return 401;
+        if (!recommend.getMemberId().equals(memberId))  return 403;
+        recommend.setIsSaved(true);
+        recommendRepository.save(recommend);
+        return 200;
+    }
+
 }

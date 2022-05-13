@@ -53,11 +53,10 @@ public class MemberServiceImpl implements MemberService {
     ScheduleRepository scheduleRepository;
 
 
-
     @Override
     public MemberDto getMemberByNickname(String nickname) {
-        Member member=memberRepository.findByNicknameAndIsDeleted(nickname, false);
-        if (member==null){
+        Member member = memberRepository.findByNicknameAndIsDeleted(nickname, false);
+        if (member == null) {
             return null;
         }
         return modelMapper.map(member, MemberDto.class);
@@ -65,8 +64,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDto getMemberByEmail(String email) {
-        Member member=memberRepository.findByEmailAndIsDeleted(email, false);
-        if (member==null){
+        Member member = memberRepository.findByEmailAndIsDeleted(email, false);
+        if (member == null) {
             return null;
         }
         return modelMapper.map(member, MemberDto.class);
@@ -74,11 +73,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDto getMemberByMemberId(Long memberId) {
-        Member member=memberRepository.findByMemberIdAndIsDeleted(memberId, false);
-        if (member==null){
+        Member member = memberRepository.findByMemberIdAndIsDeleted(memberId, false);
+        if (member == null) {
             return null;
         }
-        MemberDto memberDto=modelMapper.map(member, MemberDto.class);
+        MemberDto memberDto = modelMapper.map(member, MemberDto.class);
         memberDto.setImageString(imageService.getImage(member.getImageId()));
         return memberDto;
     }
@@ -90,13 +89,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member createMember(Member member) {
-        Member newMember=memberRepository.save(member);
+        Member newMember = memberRepository.save(member);
 
         // 생일 일정에 추가
-        if (member.getBirthday()!=null){
-            String[] birthday=member.getBirthday().split("\\.");
-            if (birthday.length==3) {
-                Schedule schedule=new Schedule();
+        if (member.getBirthday() != null) {
+            String[] birthday = member.getBirthday().split("\\.");
+            if (birthday.length == 3) {
+                Schedule schedule = new Schedule();
                 schedule.setMemberId(newMember.getMemberId());
                 schedule.setTitle("생일");
                 schedule.setBirthday(true);
@@ -111,13 +110,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void updateMember(Member member) {
-        if (member.getBirthday()!=null){
-            String[] birthday=member.getBirthday().split("\\.");
-            if (birthday.length==3) {
+        if (member.getBirthday() != null) {
+            String[] birthday = member.getBirthday().split("\\.");
+            if (birthday.length == 3) {
                 // 생일 일정에서 변경
                 Schedule schedule = scheduleRepository.findByMemberIdAndIsBirthdayAndIsDeleted(member.getMemberId(), true, false);
-                if (schedule==null){    // 기존 등록된 생일이 없으면 새로 생성
-                    schedule=new Schedule();
+                if (schedule == null) {    // 기존 등록된 생일이 없으면 새로 생성
+                    schedule = new Schedule();
                 }
                 schedule.setMemberId(member.getMemberId());
                 schedule.setTitle("생일");
@@ -133,14 +132,14 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int emailCheck(String email) {
-        if(email==null)
+        if (email == null)
             return 401;
         Pattern emailPattern = Pattern.compile("^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\\.[a-zA-Z]{2,6}$");
         Matcher emailMatcher = emailPattern.matcher(email);
-        if(!emailMatcher.find()){        // 유효성 검사
+        if (!emailMatcher.find()) {        // 유효성 검사
             return 401;
         }
-        if (memberRepository.findByEmailAndIsDeleted(email, false)!=null) {      // 중복 검사
+        if (memberRepository.findByEmailAndIsDeleted(email, false) != null) {      // 중복 검사
             return 402;
         }
 
@@ -149,12 +148,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int passwordCheck(String password) {
-        if(password == null)
+        if (password == null)
             return 401;
         // 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
         Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d).{8,16}$");
         Matcher passMatcher = passPattern.matcher(password);
-        if(!passMatcher.find()){
+        if (!passMatcher.find()) {
             return 401;
         }
         return 200;
@@ -162,10 +161,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int nicknameCheck(String nickname) {
-        if (nickname.length()<2 || nickname.length()>12){
+        if (nickname.length() < 2 || nickname.length() > 12) {
             return 401;
         }
-        if (memberRepository.existsByNicknameAndIsDeleted(nickname, false)){
+        if (memberRepository.existsByNicknameAndIsDeleted(nickname, false)) {
             return 402;
         }
         return 200;
@@ -175,12 +174,12 @@ public class MemberServiceImpl implements MemberService {
     public int loginCheck(MemberLoginReq memberLoginReq) {
         String email = memberLoginReq.getEmail();
         String password = memberLoginReq.getPassword();
-        Member member=memberRepository.findByEmailAndIsDeleted(email, false);
-        if (member==null) {
+        Member member = memberRepository.findByEmailAndIsDeleted(email, false);
+        if (member == null) {
             return 401;
         }
 
-        if (passwordEncoder.matches(password,member.getPassword())) {
+        if (passwordEncoder.matches(password, member.getPassword())) {
             return 200;
         }
         return 402;
@@ -188,13 +187,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int nicknameCheckExceptMe(String nickname, String curNickname) {
-        if (nickname.length()<2 || nickname.length()>12){
+        if (nickname.length() < 2 || nickname.length() > 12) {
             return 401;
         }
 
-        Member member=memberRepository.findByNicknameAndIsDeleted(nickname, false);
+        Member member = memberRepository.findByNicknameAndIsDeleted(nickname, false);
 //        System.out.println(curNickname+" "+member.getNickname());
-        if (member==null || curNickname.equals(member.getNickname())){      // 닉네임 중복이 없거나 본인인 경우
+        if (member == null || curNickname.equals(member.getNickname())) {      // 닉네임 중복이 없거나 본인인 경우
             return 200;
         }
         return 402;
@@ -213,9 +212,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<MemberSearchDto> searchByNickname(Long memberId, String nickname) {
         List<Member> members = memberRepository.findAllByNicknameContainsAndIsDeleted(nickname, false);
-        List<MemberSearchDto> memberSearchDtos=new ArrayList<>();
-        for (Member member: members){
-            MemberSearchDto memberSearchDto=modelMapper.map(member, MemberSearchDto.class);
+        List<MemberSearchDto> memberSearchDtos = new ArrayList<>();
+        for (Member member : members) {
+            MemberSearchDto memberSearchDto = modelMapper.map(member, MemberSearchDto.class);
             // 나와 해당 닉네임이 포함된 회원이 친구인지 아닌지
             memberSearchDto.setFriend(friendService.isFriend(memberId, member.getMemberId()));
             memberSearchDto.setImageString(imageService.getImage(member.getImageId()));
@@ -247,37 +246,36 @@ public class MemberServiceImpl implements MemberService {
 
 
         try {
-            URL url=new URL(requestURL);
+            URL url = new URL(requestURL);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
-            BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-            StringBuilder sb=new StringBuilder();
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            StringBuilder sb = new StringBuilder();
 
             sb.append("grant_type=authorization_code");
-            sb.append("&client_id="+restapiKey);
-            sb.append("&redirect_uri="+redirectURI);
-            sb.append("&code="+code);
+            sb.append("&client_id=" + restapiKey);
+            sb.append("&redirect_uri=" + redirectURI);
+            sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();
 
 
-            BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line="";
-            String result="";
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
 
-            while((line=br.readLine())!=null)
-            {
-                result+=line;
+            while ((line = br.readLine()) != null) {
+                result += line;
             }
             System.out.println("응답값이 잘 넘어오는가?");
             System.out.println(result);
             JSONParser parser = new JSONParser();
             JSONObject element = (JSONObject) parser.parse(result);
             access_Token = element.get("access_token").toString();
-            refresh_Token= element.get("refresh_token").toString();
+            refresh_Token = element.get("refresh_token").toString();
 
 
             br.close();
@@ -287,8 +285,8 @@ public class MemberServiceImpl implements MemberService {
             e.printStackTrace();
         }
 
-        System.out.println("access_token="+access_Token);
-        System.out.println("refresh_token="+refresh_Token);
+        System.out.println("access_token=" + access_Token);
+        System.out.println("refresh_token=" + refresh_Token);
         return access_Token;
 
     }
@@ -296,12 +294,16 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String getKakaoUserInfo(String accessToken) {
 
-        String requestURL="https://kapi.kakao.com/v2/user/me";
+        String requestURL = "https://kapi.kakao.com/v2/user/me";
         Map<String, String> response = new HashMap<>();
-        String email=null;
-        String token=null;
+        String email = null;
+        String gender = null;
+        String nickname = null;
+        String token = null;
+        String image = null;
+        String birthday = null;
         try {
-            URL url=new URL(requestURL);
+            URL url = new URL(requestURL);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -309,17 +311,16 @@ public class MemberServiceImpl implements MemberService {
             conn.setDoOutput(true);
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 
-            BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             bw.flush();
 
 
-            BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line="";
-            String result="";
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
 
-            while((line=br.readLine())!=null)
-            {
-                result+=line;
+            while ((line = br.readLine()) != null) {
+                result += line;
             }
 
             System.out.println("--------------사용자 정보-----------------------");
@@ -327,17 +328,54 @@ public class MemberServiceImpl implements MemberService {
             JSONParser parser = new JSONParser();
             JSONObject element = (JSONObject) parser.parse(result);
             JSONObject kakao_account = (JSONObject) element.get("kakao_account");
+            JSONObject profile = (JSONObject) kakao_account.get("profile");
+
+
+            nickname = profile.get("nickname").toString();
+            image = profile.get("profile_image_url").toString();
 
             boolean hasEmail = (boolean) kakao_account.get("has_email");
+            boolean hasGender = (boolean) kakao_account.get("has_gender");
+            boolean hasBirthday = (boolean) kakao_account.get("has_birthday");
 
-
-            if(hasEmail) {
+            if (hasEmail) {
                 email = kakao_account.get("email").toString();
             }
 
-            response.put("email",email);
+            if (hasBirthday) {
 
-            System.out.println("받아온 이메일 정보="+email);
+                birthday = kakao_account.get("birthday").toString();
+
+                birthday = birthday.substring(0, 2) + "." + birthday.substring(2, 4);
+            }
+
+
+            if (hasGender) {
+                gender = kakao_account.get("gender").toString();
+
+                if (gender.equals("male")) {
+                    gender = "M";
+                } else if (gender.equals("female")) {
+                    gender = "F";
+                }
+
+
+            }
+
+            nickname = null;
+
+            if (nickname == null) {
+                String[] array = email.split("@");
+                nickname = array[0];
+            }
+
+
+            response.put("email", email);
+            System.out.println("받아온 닉네임 정보=" + nickname);
+            System.out.println("받아온 이메일 정보=" + email);
+            System.out.println("받아온 성별 정보=" + gender);
+            System.out.println("받아온 이미지 정보=" + image);
+            System.out.println("받아온 생일정보 =" + birthday);
 
             br.close();
             bw.close();
@@ -348,17 +386,50 @@ public class MemberServiceImpl implements MemberService {
         }
 
 
-        if(email!=null) //카카오 유저정보로 이메일을 받아옴
+        if (email != null) //카카오 유저정보로 이메일을 받아옴
         {
             //이미 가입된 회원인지 확인
             Member member = memberRepository.findByEmailAndIsDeletedAndIsKakao(email, false, true);
 
-            if(member==null) // 처음 온 유저라면 db에 저장
+
+            //닉네임 있으면 저장 없으면 앞자리 짤라서 오기
+
+            if (member == null) // 처음 온 유저라면 db에 저장
             {
 
-                member= new Member();
+
+                //닉네임 중복체크 후  중복이라면 난수생성
+                String newNickname = nickname;
+                while (true) {
+                    Member m = memberRepository.findByNicknameAndIsDeleted(newNickname, false);
+
+                    if (m == null) {
+                        break;
+                    }
+
+                    String num = "";
+                    Random random = new Random();
+
+                    for (int i = 1; i <= 3; i++) {
+                        String val = Integer.toString(random.nextInt(10));
+
+                        if (!num.contains(val)) {
+                            num += val;
+                        } else {
+                            i = i - 1;
+                        }
+                    }
+
+                    newNickname = nickname + num;
+                }
+
+
+                member = new Member();
                 member.setEmail(email);
                 member.setIsKakao(true);
+                member.setGender(gender);
+                member.setNickname(newNickname);
+                member.setBirthday(birthday);
                 memberRepository.save(member);
 
 
@@ -366,16 +437,13 @@ public class MemberServiceImpl implements MemberService {
                 System.out.println(member.getMemberId());
             }
 
-           token=JwtTokenProvider.getToken(email);
-            System.out.println("access token="+token);
-
-
+            token = JwtTokenProvider.getToken(email);
+            System.out.println("access token=" + token);
 
 
         }
 
-
-      return token;
+        return token;
     }
 
 

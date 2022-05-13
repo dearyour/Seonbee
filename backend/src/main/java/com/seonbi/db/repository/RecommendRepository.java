@@ -14,7 +14,8 @@ public interface RecommendRepository extends JpaRepository<Recommend,Long> {
 
     List<Recommend> findAllByMemberIdAndIsSavedAndIsDeleted(
             Long memberId, boolean isSaved, boolean isDeleted);
-    List<Recommend> findAllByMemberIdAndReceiverIdAndIsSavedAndIsMemberAndIsDeleted(
+    List<Recommend> findAllByMemberIdAndReceiverIdAndIsSavedAndIsFriendAndIsDeleted(
             Long memberId, Long receiverId, boolean isSaved, boolean isMember, boolean isDeleted);
-
+    Recommend findByRecommendIdAndIsDeleted(Long recommendId, boolean isDeleted);
+    List<Recommend> findAllByMemberIdAndIsDeleted(Long memberId, boolean isDeleted);
 }
