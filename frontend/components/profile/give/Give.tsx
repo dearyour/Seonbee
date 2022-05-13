@@ -1,7 +1,5 @@
 import { Card, InputAdornment, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import axiosConnector from "utils/axios-connector";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slice";
@@ -10,6 +8,7 @@ import { BsSearch } from "react-icons/bs";
 import Image from "next/image";
 import GetImage from "utils/GetImage";
 import styled from "@emotion/styled";
+import Fuse from "fuse.js";
 
 type Props = {};
 interface Member {
@@ -39,6 +38,8 @@ interface Selected {
 const Give = (props: Props) => {
   const [members, setMembers] = useState<Member[]>([]);
   const [nonmembers, setNonMembers] = useState<Member[]>([]);
+  const [searchmembers, setSearchMembers] = useState<Member[]>([]);
+  const [searchnonmembers, setSearchNonMembers] = useState<Member[]>([]);
   const [selected, setSelected] = useState<Selected>();
   const [products, setProducts] = useState<Product[]>([]);
   const temp = {
@@ -55,20 +56,22 @@ const Give = (props: Props) => {
   };
   const tempL = [tempP, tempP, tempP, tempP];
   useEffect(() => {
-    //   axiosConnector({
-    //     method: "GET",
-    //     url: "profile/give/",
-    //   })
-    //     .then((res) => {
-    //       console.log(res);
-    //       setMembers(res.data.receiverList.memberList);
-    //       setNonMembers(res.data.receiverList.nonMemberList);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.response);
-    //     });
-    setMembers([temp, temp]);
-    setNonMembers([temp, temp]);
+    axiosConnector({
+      method: "GET",
+      url: "profile/give/",
+    })
+      .then((res) => {
+        console.log(res);
+        setMembers(res.data.receiverList.memberList);
+        setNonMembers(res.data.receiverList.noneMemberList);
+        setSearchMembers(res.data.receiverList.memberList);
+        setSearchNonMembers(res.data.receiverList.noneMemberList);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+    // setMembers([temp, temp]);
+    // setNonMembers([temp, temp]);
   }, []);
 
   const FriendSelect: Function = (id: number) => {
@@ -77,6 +80,38 @@ const Give = (props: Props) => {
   const NonFriendSelect: Function = (id: number) => {
     setSelected({ receiverId: id, isFriend: false });
   };
+
+  useEffect(() => {
+    if (!selected) {
+      return;
+    }
+    axiosConnector({
+      method: "POST",
+      url: "profile/give",
+      data: selected,
+    })
+      .then((res) => {
+        console.log(res);
+        setProducts(res.data.productList);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, [selected]);
+
+  const SearchChange: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    const options = {
+      // Search in `author` and in `tags` array
+      keys: ["name"],
+    };
+
+    const fuseM = new Fuse(members, options);
+    const fuseNM = new Fuse(nonmembers, options);
+
+    const resultM = fuseM.search(e.target.value);
+    const resultNM = fuseNM.search(e.target.value);
+    console.log(resultM, resultNM);
+  };
   return (
     <div className="row w-100">
       {/* 왼쪽 유저 선택 부분 */}
@@ -84,6 +119,7 @@ const Give = (props: Props) => {
         <TextField
           id="input-with-icon-textfield"
           className="my-1"
+          onChange={SearchChange}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -97,8 +133,8 @@ const Give = (props: Props) => {
         <div className="w-100 bg-secondary bg-opacity-50 rounded my-1 p-1 text-white">
           비회원
         </div>
-        {nonmembers &&
-          nonmembers.map((now, index) => {
+        {searchnonmembers &&
+          searchnonmembers.map((now, index) => {
             return (
               <MemberWrap
                 key={index}
@@ -124,8 +160,8 @@ const Give = (props: Props) => {
         <div className="w-100 bg-secondary bg-opacity-50 rounded my-1 p-1 text-white">
           회원
         </div>
-        {members &&
-          members.map((now, index) => {
+        {searchmembers &&
+          searchmembers.map((now, index) => {
             return (
               <MemberWrap
                 key={index}
@@ -153,7 +189,7 @@ const Give = (props: Props) => {
       <div className="col-9">
         <ProductWrap>
           <div className="d-flex flex-nowrap p-3">
-            {tempL.map((now, index) => {
+            {products.map((now, index) => {
               return (
                 <div className="mx-2" key={index}>
                   <ProductCard {...now}></ProductCard>

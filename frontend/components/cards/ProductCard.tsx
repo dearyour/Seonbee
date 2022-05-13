@@ -63,7 +63,7 @@ const ProductCard = (props: Props) => {
               alt="cards"
               width={"100%"}
               height={"100%"}
-              //   layout="fill"
+              // layout="fill"
               src={props.imageUrl}
               className="rounded"
             />

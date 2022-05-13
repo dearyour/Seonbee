@@ -33,10 +33,10 @@ const Wish = ({ props }: { props: any }) => {
   };
   const tempL = [temp, temp, temp, temp, temp, temp];
   useEffect(() => {
-    setProducts(tempL);
+    // setProducts(tempL);
     axiosConnector({
       method: "GET",
-      url: "profile/wish/" + props.hostId,
+      url: "profile/wish/" + props,
     })
       .then((res) => {
         console.log(res);
@@ -62,7 +62,7 @@ const Wish = ({ props }: { props: any }) => {
 
     <ProductWrap>
       <div className="d-flex flex-nowrap p-3">
-        {tempL.map((now, index) => {
+        {products.map((now, index) => {
           return (
             <div className="mx-2" key={index}>
               <ProductCard {...now}></ProductCard>

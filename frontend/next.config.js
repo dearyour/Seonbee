@@ -3,7 +3,7 @@ var CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["picsum.photos"],
+    domains: ["picsum.photos", "shopping-phinf.pstatic.net"],
   },
   webpack: (config, options) => {
     config.plugins.push(new CaseSensitivePathsPlugin());

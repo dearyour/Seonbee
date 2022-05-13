@@ -55,7 +55,7 @@ const Signup = () => {
   const [searchTags, setSearchTags] = useState<any>([]);
   const [banTags, setBanTags] = useState<any>([]);
   const [nicknameCheckRes, setNicknameCheckRes] = useState<any>({}); // 닉네임 중복검사
-  console.log(nicknameCheckRes);
+  // console.log(nicknameCheckRes);
   const onSearch = (e: any) => {
     if (inputRef.current.value.length > 0 && inputRef.current.value.trim()) {
       if (e.key === "Enter") {
