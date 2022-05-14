@@ -26,7 +26,7 @@ const Home = () => {
   );
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedRating, setSelectedRating] = useState(null);
-  const [selectedPrice, setSelectedPrice] = useState([1000, 5000]);
+  const [selectedPrice, setSelectedPrice] = useState([100, 1000000]);
   //카테고리 상태
   const [categoryTag, setCategoryTag] = useState(1);
   const [categoryTags, setCategoryTags] = useState(1);
@@ -199,7 +199,7 @@ const Home = () => {
 
     // updatedList = updatedList.sort(compare);
 
-    setList(updatedList);
+    setShopItem(updatedList);
 
     !updatedList.length ? setResultsFound(false) : setResultsFound(true);
   };

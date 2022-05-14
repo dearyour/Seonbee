@@ -46,7 +46,7 @@
 .input-groups {
   margin-bottom: 0.5rem;
   display: flex;
-  /* justify-content: center; */
+  justify-content: space-between;
 }
 
 /* {SearchBar} */
