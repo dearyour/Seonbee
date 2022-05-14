@@ -46,6 +46,7 @@ public class ImageServiceImpl implements ImageService{
         Image newImage = new Image();
         String originalFileName = image.getOriginalFilename();
         if (!originalFileName.isEmpty()) {
+            System.out.println(originalFileName);
             String saveFileName = UUID.randomUUID().toString()
                     + originalFileName.substring(originalFileName.lastIndexOf('.'));
             newImage.setSaveFolder(today);
