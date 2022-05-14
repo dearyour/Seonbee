@@ -1,10 +1,9 @@
 package com.seonbi.api.controller;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-import com.seonbi.api.model.*;
+import com.seonbi.api.model.RecommendDto;
 import com.seonbi.api.request.ReceiverInfoReq;
-import com.seonbi.api.request.ReceiverIsMemberReq;
-import com.seonbi.api.response.*;
+import com.seonbi.api.response.BaseResponseBody;
+import com.seonbi.api.response.RecommendAllRes;
 import com.seonbi.api.service.MemberAuthService;
 import com.seonbi.api.service.MemberService;
 import com.seonbi.api.service.ReceiverService;

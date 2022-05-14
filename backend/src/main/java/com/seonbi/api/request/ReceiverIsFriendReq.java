@@ -9,11 +9,11 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class ReceiverIsMemberReq {
+public class ReceiverIsFriendReq {
     /**
      * 주소 싶소 - 개인 목록
      */
     private Long receiverId;
-    private Boolean isMember;
+    private Boolean isFriend;
 
 }

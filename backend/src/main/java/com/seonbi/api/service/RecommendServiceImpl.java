@@ -410,22 +410,20 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
     @Override
-    public List<RecommendDto> getRecommendAll(Long memberId) {
-        List<Recommend> recommends = recommendRepository.findAllByMemberIdAndIsDeleted(memberId, false);
-        List<RecommendDto> recommendList = new ArrayList<>();
-        for (Recommend recommend : recommends) {
-            Product product = productRepository.findByProductIdAndIsDeleted(recommend.getProductId(), false);
-            if (product == null) continue;
+    public List<RecommendDto> getRecommendAll(Long memberId) {  // 주소싶소 말고 챗봇으로 받은 추천 내역만
+        List<Recommend> recommends=recommendRepository.findAllByMemberIdAndIsDeleted(memberId, false);
+        List<RecommendDto> recommendList=new ArrayList<>();
+        for (Recommend recommend: recommends){
+            Product product=productRepository.findByProductIdAndIsDeleted(recommend.getProductId(), false);
+            if (product==null)  continue;
             RecommendDto recommendDto = modelMapper.map(product, RecommendDto.class);    // 상품 정보 넣기
             recommendDto.setRecommendId(recommend.getRecommendId());
             recommendDto.setIsSaved(recommend.getIsSaved());
-            Receiver receiver = receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
-            System.out.println(receiver);
-            if (receiver == null) continue;
-            if (recommend.getIsFriend()) {   // 친구인 경우 회원 닉네임
-                Member member = memberRepository.findByMemberIdAndIsDeleted(receiver.getReceiverId(), false);
-                System.out.println(member);
-                if (member == null) continue;
+            Receiver receiver=receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
+            if (receiver==null)     continue;
+            if (recommend.getIsFriend()){   // 친구인 경우 회원 닉네임    // 이렇게 들어오는 경우 아직 없을듯
+                Member member=memberRepository.findByMemberIdAndIsDeleted(receiver.getReceiverId(), false);
+                if (member==null)   continue;
                 recommendDto.setReceiverName(member.getNickname());
             } else {    // 친구가 아닌 경우 receiver name
                 recommendDto.setReceiverName(receiver.getName());
