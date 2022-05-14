@@ -1,6 +1,6 @@
 package com.seonbi.api.service;
 
-import com.seonbi.api.model.RecommendDto;
+import com.seonbi.api.model.*;
 import com.seonbi.api.request.ReceiverInfoReq;
 import com.seonbi.db.entity.Product;
 import com.seonbi.db.entity.Receiver;
@@ -11,16 +11,15 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
-import com.seonbi.api.model.ReceiverDto;
-import com.seonbi.api.model.ReceiverProductDto;
-import com.seonbi.api.model.RecommendReceiverDto;
 import com.seonbi.db.entity.Member;
 import com.seonbi.db.entity.Receiver;
 import com.seonbi.db.entity.Recommend;
@@ -66,10 +65,19 @@ public class RecommendServiceImpl implements RecommendService {
     FriendService friendService;
 
     @Override
-    public void ProductRecommend(ReceiverInfoReq req) {
+    public List<RecommendProductDto> ProductRecommend(ReceiverInfoReq req, Long memberId) {
 
         List<String> list1 = new ArrayList<>(); //관심사 ,용도 넣는 곳 ( 교집합)
         List<String> list2 = new ArrayList<>(); //  나머지 (mbti,성별,나이대,관계)
+        Set<String> set= new HashSet<>();
+        String keywords[]={"코로나","밥","간식","핸드폰","술","밥상"};
+
+        for(String k : keywords )
+        {
+            set.add(k);
+        }
+
+
 
         //  1. receiverInfoReq의 정보를 receiver에 저장하고 기본키를 가지고 있는다
         Receiver receiver = new Receiver();
@@ -121,7 +129,7 @@ public class RecommendServiceImpl implements RecommendService {
         Long price = req.getPrice();
         receiver.setUpPrice((long) (price * 1.2));  // 범위는 임의로 지정한것 어떤식으로 처리할지 이야기해보자
         receiver.setDownPrice((long) (price * 0.8));
-        // Receiver save = receiverRepository.save(receiver); // db에 저장
+        Receiver save = receiverRepository.save(receiver); // db에 저장
 
 
         //2. receiverInfoReq의 정보로 키워드 하나를 뽑아낸다 ( map에 저장 후 가장 높은 키워드를 조회한다)
@@ -147,6 +155,8 @@ public class RecommendServiceImpl implements RecommendService {
             for (int j = 0; j < result.size(); j++) {
                 Word word = result.get(j);
 
+                if(set.contains(word.getKeyword())) continue;
+
                 keyword[i].add(word.getKeyword());
 
                 double value = (double) word.getAmount() / total;
@@ -164,13 +174,9 @@ public class RecommendServiceImpl implements RecommendService {
         }
 
 
-        for(int i=1; i<list1.size(); i++)
-        {
+        for (int i = 1; i < list1.size(); i++) {
             keyword[0].retainAll(keyword[i]); //교집합
         }
-
-
-
 
 
         //관심사 용도 외 나머지  이미 만들어진 교집합에 속하는 단어만 amount값을 추가해준다
@@ -187,7 +193,7 @@ public class RecommendServiceImpl implements RecommendService {
             for (int j = 0; j < result.size(); j++) {
                 Word word = result.get(j);
                 double value = (double) word.getAmount() / total;
-                if(keyword[0].contains(word.getKeyword())) //해당 교집합에 있다면?
+                if (keyword[0].contains(word.getKeyword())) //해당 교집합에 있다면?
                 {
                     map.replace(word.getKeyword(), map.get(word.getKeyword()) + (long) (value * 10000));
                 }
@@ -196,17 +202,14 @@ public class RecommendServiceImpl implements RecommendService {
 
         Map<String, Long> result = new HashMap<>();
         System.out.println("------------교집합에 속하는 단어들------------------");
-        for(String word : keyword[0] )
-        {
+        for (String word : keyword[0]) {
 
             System.out.println(word);
 
-            if(map.containsKey(word))
-            {
-                result.put(word,map.get(word));
+            if (map.containsKey(word)) {
+                result.put(word, map.get(word));
             }
         }
-
 
 
         //값(amount)기준 내림차순으로 map정렬
@@ -229,6 +232,61 @@ public class RecommendServiceImpl implements RecommendService {
 
         //3. 해당 키워드에 속하는 상품을 다 조회하고 그중에서 랜덤값으로 3개를 보내준다? (가격 범위 확인)
 
+
+        System.out.println("db접근 전");
+        List<RecommendProductDto> productDtoList = modelMapper.map(productRepository.findAllByNameContains(entries.get(0).getKey()), new TypeToken<List<RecommendProductDto>>() {
+        }.getType());
+        System.out.println("db접근 후");
+
+        int count = 0;
+
+
+        List<RecommendProductDto> productDtos = new ArrayList<>();
+        for (int i = 0; i < productDtoList.size(); i++) {
+            RecommendProductDto p = productDtoList.get(i);
+
+
+            if (receiver.getDownPrice() <= p.getPrice() && p.getPrice() <= receiver.getUpPrice()) {
+                count++;
+
+                productDtos.add(p);
+
+                if (count == 3) {
+                    break;
+                }
+
+
+            }
+
+
+        }
+
+        //로그인 된 상태라면? recommend 테이블에 저장
+        if (memberId != 0l) {
+
+
+            for (int i = 0; i < productDtos.size(); i++) {
+                Recommend recommend = new Recommend();
+
+                recommend.setReceiverId(receiver.getReceiverId()); // 받는사람 번호
+                recommend.setProductId(productDtos.get(i).getProductId()); //상품 번호
+                recommend.setMemberId(memberId); // 회원 번호
+
+
+                //삭제여부 기본 0
+                //저장여부 기본 0
+                //친구인지 기본 0
+
+
+                Recommend recommend1 = recommendRepository.save(recommend);
+                productDtos.get(i).setRecommendId(recommend1.getRecommendId());
+            }
+
+
+        }
+
+
+        return productDtos;
 
     }
 
@@ -296,21 +354,21 @@ public class RecommendServiceImpl implements RecommendService {
     public RecommendReceiverDto getGiveAll(Long memberId) {
         List<Recommend> recommends = recommendRepository.findAllByMemberIdAndIsSavedAndIsDeleted(memberId, true, false);
         System.out.println(recommends.size());
-        List<ReceiverDto> memberList=new ArrayList<>();
-        List<ReceiverDto> noneMemberList=new ArrayList<>();
-        for (Recommend recommend: recommends){
+        List<ReceiverDto> memberList = new ArrayList<>();
+        List<ReceiverDto> noneMemberList = new ArrayList<>();
+        for (Recommend recommend : recommends) {
             System.out.println(recommend);
             Receiver receiver = receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
             if (receiver == null) {
                 continue;
             }
             System.out.println(receiver);
-            ReceiverDto receiverDto=modelMapper.map(receiver, ReceiverDto.class);
+            ReceiverDto receiverDto = modelMapper.map(receiver, ReceiverDto.class);
             receiverDto.setName(receiver.getName());
             System.out.println(receiverDto);
-            if (recommend.getIsFriend()){
-                Member receiverMember=memberRepository.findByMemberIdAndIsDeleted(recommend.getReceiverId(), false);
-                if (receiverMember!=null && friendService.isFriend(memberId, receiverMember.getMemberId())){  // 추천받은 사람이 친구인 경우
+            if (recommend.getIsFriend()) {
+                Member receiverMember = memberRepository.findByMemberIdAndIsDeleted(recommend.getReceiverId(), false);
+                if (receiverMember != null && friendService.isFriend(memberId, receiverMember.getMemberId())) {  // 추천받은 사람이 친구인 경우
                     receiverDto.setImageString(imageService.getImage(receiverMember.getImageId()));
                     memberList.add(receiverDto);
                 }
@@ -325,10 +383,10 @@ public class RecommendServiceImpl implements RecommendService {
     @Override
     public List<ReceiverProductDto> getGiveProductAll(Long memberId, Long receiverId, Boolean isFriend) {
         List<Recommend> recommends = recommendRepository.findAllByMemberIdAndReceiverIdAndIsSavedAndIsFriendAndIsDeleted(
-                memberId, receiverId, true, isFriend,false);
-        List<ReceiverProductDto> productDtoList=new ArrayList<>();
-        for (Recommend recommend: recommends){
-            ReceiverProductDto receiverProductDto=modelMapper.map(
+                memberId, receiverId, true, isFriend, false);
+        List<ReceiverProductDto> productDtoList = new ArrayList<>();
+        for (Recommend recommend : recommends) {
+            ReceiverProductDto receiverProductDto = modelMapper.map(
                     productRepository.findByProductIdAndIsDeleted(recommend.getProductId(), false), ReceiverProductDto.class);
             productDtoList.add(receiverProductDto);
         }
@@ -350,6 +408,7 @@ public class RecommendServiceImpl implements RecommendService {
 
         return 200;
     }
+
     @Override
     public List<RecommendDto> getRecommendAll(Long memberId) {  // 주소싶소 말고 챗봇으로 받은 추천 내역만
         List<Recommend> recommends=recommendRepository.findAllByMemberIdAndIsDeleted(memberId, false);
@@ -378,8 +437,8 @@ public class RecommendServiceImpl implements RecommendService {
     @Override
     public int saveRecommendGive(Long memberId, Long recommendId) {
         Recommend recommend = recommendRepository.findByRecommendIdAndIsDeleted(recommendId, false);
-        if (recommend==null)    return 401;
-        if (!recommend.getMemberId().equals(memberId))  return 403;
+        if (recommend == null) return 401;
+        if (!recommend.getMemberId().equals(memberId)) return 403;
         recommend.setIsSaved(true);
         recommendRepository.save(recommend);
         return 200;
