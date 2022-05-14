@@ -134,6 +134,7 @@ public class FriendServiceImpl implements FriendService{
         List<FriendDto> friendDtoList=new ArrayList<>();
         List<Long> friendIdList=getFriendIdAll(memberId);
         for (Long friendId: friendIdList){
+
             Member member=memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
             if (member==null)   continue;
             List<Schedule> schedules=scheduleRepository.findAllByMemberIdAndIsDeletedOrderByScheduleDate(friendId, false);  // 친구 일정
@@ -150,7 +151,8 @@ public class FriendServiceImpl implements FriendService{
             for (Wishlist wishlist: wishlists) {
                 imageUrls.add(productService.getProductImage(wishlist.getProductId()));
             }
-
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println(member);
             FriendDto friendDto=new FriendDto(friendId, member.getNickname(), imageService.getImage(member.getImageId()),
                     member.getVerse(), imageUrls, scheduleDtoList);
             friendDtoList.add(friendDto);
