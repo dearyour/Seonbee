@@ -30,7 +30,6 @@ class Data {
   imageString: string;
   image?: File;
   verse: string;
-  password: string;
   constructor(data: any) {
     this.banlist = data.banlist || "";
     this.birthday = data.birthday || "";
@@ -46,7 +45,6 @@ class Data {
     this.isKakao = data.isKakao || false;
     this.verse = data.verse || "";
     this.image = data.image || new File([], "");
-    this.password = data.password || "";
   }
 }
 
@@ -125,6 +123,7 @@ const Setting = (props: Props) => {
     for (const key in mydata) {
       data.append(key, (mydata as any)[key]);
     }
+    data.append("password", "aaa123123");
     axiosConnector({
       method: "POST",
       url: "profile/update",
@@ -202,7 +201,7 @@ const Setting = (props: Props) => {
         </Box>
       </Modal>
 
-      <SettingWrap className="h-100 d-flex flex-column">
+      <SettingWrap className="w-100 h-100 d-flex flex-column">
         {/* 프로필 이미지, verse */}
         <div className="row my-2 w-100 ps-3">
           {viewimage ? (
@@ -322,17 +321,6 @@ const Setting = (props: Props) => {
             type="text"
             name="banlist"
             value={mydata.banlist}
-            onChange={onChange}
-            className="form-control"
-            aria-describedby="basic-addon1"
-          />
-        </div>
-        <div className="d-flex my-2">
-          <Btn className="me-2">비밀번호</Btn>
-          <input
-            type="text"
-            name="password"
-            value={mydata.password}
             onChange={onChange}
             className="form-control"
             aria-describedby="basic-addon1"
