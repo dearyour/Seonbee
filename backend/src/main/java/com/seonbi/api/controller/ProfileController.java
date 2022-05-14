@@ -99,8 +99,10 @@ public class ProfileController {
         member.setBanlist(banlist);
         member.setVerse(verse);
 
-        Long imageId = imageService.saveImage(image);
-        member.setImageId(imageId);
+        if (image!=null) {
+            Long imageId = imageService.saveImage(image);
+            member.setImageId(imageId);
+        }
 
         memberService.updateMember(member);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
