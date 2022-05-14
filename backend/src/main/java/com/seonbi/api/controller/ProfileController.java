@@ -14,6 +14,7 @@ import com.seonbi.api.service.ImageService;
 import com.seonbi.api.service.MemberAuthService;
 import com.seonbi.api.service.MemberService;
 import com.seonbi.db.entity.Member;
+import com.seonbi.db.repository.MemberRepository;
 import com.seonbi.util.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,9 @@ public class ProfileController {
     MemberService memberService;
 
     @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
     ImageService imageService;
 
     @Autowired
@@ -48,7 +52,7 @@ public class ProfileController {
     public ResponseEntity<? extends BaseResponseBody> updateMember(
             @ApiIgnore Authentication authentication,
             @RequestParam("memberId") Long memberId,
-            @RequestParam("password") String password,
+            @RequestParam(required = false, value="password") String password,
             @RequestParam("nickname") String nickname,
             @RequestParam(required = false, value = "gender") String gender,
             @RequestParam(required = false, value = "birthday") String birthday,
@@ -60,12 +64,12 @@ public class ProfileController {
             @RequestParam(required = false, value = "job") String job,
             @RequestParam(required = false, value = "image") MultipartFile image) throws IOException {
 
-        Member curMember = memberAuthService.memberAuthorize(authentication);
-        if (curMember == null || !curMember.getMemberId().equals(memberId)) {
+        Member member = memberAuthService.memberAuthorize(authentication);
+        if (member == null || !member.getMemberId().equals(memberId)) {
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         }
         // 닉네임 중복 검사
-        int nicknameCode = memberService.nicknameCheckExceptMe(nickname, curMember.getNickname());
+        int nicknameCode = memberService.nicknameCheckExceptMe(nickname, member.getNickname());
         if (nicknameCode == 401)
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
         if (nicknameCode == 402)
@@ -78,10 +82,14 @@ public class ProfileController {
         else if (passwordCode == 402)
             return ResponseEntity.status(402).body(BaseResponseBody.of(402, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
 
-        Member member = new Member();
-        member.setMemberId(memberId);
-        member.setEmail(curMember.getEmail());
-        member.setPassword(passwordEncoder.encode(password));
+//        Member member = memberRepository.findByMemberIdAndIsDeleted(memberId, false);
+//        member.setMemberId(memberId);
+        member.setEmail(member.getEmail());
+        if (password!=null) {
+            member.setPassword(passwordEncoder.encode(password));
+        } else {
+            System.out.println("null");
+        }
         member.setNickname(nickname);
         member.setGender(gender);
         member.setBirthday(birthday);
