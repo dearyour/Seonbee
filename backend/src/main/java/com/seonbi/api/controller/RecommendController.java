@@ -60,7 +60,6 @@ public class RecommendController {
 
     @PostMapping("/recommend/receiver")
     public ResponseEntity<? extends BaseResponseBody> recommend(@RequestBody ReceiverInfoReq receiverInfoReq, @ApiIgnore Authentication authentication) {
-
         Member member=null;
         Long memberId=0l;
         if (authentication != null) {
