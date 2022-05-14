@@ -47,8 +47,19 @@ const dummyProductList = [
   },
 ];
 
+interface ProductType {
+  recommendId: number;
+  productId: number;
+  name: string;
+  price: number;
+  buyUrl: string;
+  imageUrl: string;
+}
+
 function Recommend() {
   const router = useRouter();
+
+  const [productList, setProductList] = useState<ProductType[]>([]);
   const [isSaved, setIsSaved] = useState<{ rid: number; state: boolean }[]>([
     {
       rid: dummyProductList[0].recommendId,
@@ -93,7 +104,7 @@ function Recommend() {
       },
     })
       .then((res) => {
-        console.log(res);
+        setProductList(res.data.productList);
       })
       .catch((err) => {
         console.log(err.response);
@@ -103,8 +114,8 @@ function Recommend() {
   const saveAll = () => {
     console.log('saved all');
 
-    for (let i = 0; i < dummyProductList.length; i++) {
-      const rid = dummyProductList[i].recommendId;
+    for (let i = 0; i < productList.length; i++) {
+      const rid = productList[i].recommendId;
 
       for (let j = 0; j < isSaved.length; j++) {
         if (rid === isSaved[j].rid && !isSaved[j].state) {
@@ -242,7 +253,7 @@ function Recommend() {
           &nbsp; 로그인하고 추천 내역 저장하기
         </Btn>
       )}
-      <>{renderProducts(dummyProductList)}</>
+      <>{renderProducts(productList)}</>
     </Stack>
   );
 }
