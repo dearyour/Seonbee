@@ -1,14 +1,27 @@
-import { Card, InputAdornment, TextField } from "@mui/material";
+import { Card, InputAdornment, Stack, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axiosConnector from "utils/axios-connector";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slice";
-import ProductCard from "components/cards/ProductCard";
+import ProductCard from "../ProductCard";
 import { BsSearch } from "react-icons/bs";
 import Image from "next/image";
 import GetImage from "utils/GetImage";
 import styled from "@emotion/styled";
 import Fuse from "fuse.js";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y, Mousewheel } from "swiper";
+import {
+  ProductsContent,
+  Card as CardP,
+  CardImg,
+  CardContent,
+  Price,
+} from "styles/chat/ProductsElements";
+import EllipsisText from "react-ellipsis-text";
+import Btn from "components/commons/Btn";
+import { useRouter } from "next/router";
+import useProfile from "store/hook/profileHooks";
 
 type Props = {};
 interface Member {
@@ -42,19 +55,9 @@ const Give = (props: Props) => {
   const [searchnonmembers, setSearchNonMembers] = useState<Member[]>([]);
   const [selected, setSelected] = useState<Selected>();
   const [products, setProducts] = useState<Product[]>([]);
-  const temp = {
-    receiverId: 1,
-    name: "test",
-    imageString: "asd",
-  };
-  const tempP = {
-    productId: 1,
-    name: "test",
-    imageUrl: "https://picsum.photos/250/250",
-    buyUrl: "",
-    price: 10000,
-  };
-  const tempL = [tempP, tempP, tempP, tempP];
+  const { hostId, memberId } = useProfile();
+  const router = useRouter();
+
   useEffect(() => {
     axiosConnector({
       method: "GET",
@@ -76,9 +79,13 @@ const Give = (props: Props) => {
 
   const FriendSelect: Function = (id: number) => {
     setSelected({ receiverId: id, isFriend: true });
+    const gw = document.getElementById("give_wrap");
+    gw?.scrollTo(0, 0);
   };
   const NonFriendSelect: Function = (id: number) => {
     setSelected({ receiverId: id, isFriend: false });
+    const gw = document.getElementById("give_wrap");
+    gw?.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -125,7 +132,7 @@ const Give = (props: Props) => {
     setSearchNonMembers(nonmem);
   };
   return (
-    <div className="row w-100 h-100">
+    <Wrap id="give_wrap" className="row w-100 h-100">
       {/* 왼쪽 유저 선택 부분 */}
       <div className="col-3 overflow-scroll">
         <TextField
@@ -204,8 +211,8 @@ const Give = (props: Props) => {
         )}
       </div>
       {/* 오른쪽 제품목록 표시부분 */}
-      <div className="col-9">
-        <ProductWrap>
+      <div className="col-9 h-100">
+        {/* <ProductWrap>
           <div className="d-flex flex-nowrap p-3">
             {products.map((now, index) => {
               return (
@@ -214,16 +221,60 @@ const Give = (props: Props) => {
                 </div>
               );
             })}
-            {/* <ProductCard {...products[0]}></ProductCard> */}
           </div>
-        </ProductWrap>
+        </ProductWrap> */}
+        <Swiper
+          modules={[Pagination, Navigation]}
+          slidesPerView={3}
+          spaceBetween={50}
+          navigation={{
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          }}
+          className="h-100 "
+          pagination
+        >
+          {products.map((now, index) => {
+            return (
+              <SwiperSlide className="h-100 mt-3" key={index}>
+                <CardP className="background-image-1 w-100 mt-5">
+                  <CardImg>
+                    <Image
+                      src={
+                        now.imageUrl
+                          ? now.imageUrl
+                          : "https://picsum.photos/250/250"
+                      }
+                      alt="item-imageUrl"
+                      width={150}
+                      height={150}
+                      style={{ borderRadius: "5px" }}
+                    />
+                  </CardImg>
+                  <CardContent>
+                    <h2>
+                      <EllipsisText text={now.name} length={"15"} />
+                    </h2>
+                    {/* <p>{item.name}</p> */}
+                    <Price>{now.price} 원</Price>
+                    <Stack direction="row" spacing={2}>
+                      <a href={now.buyUrl}>
+                        <Btn>상품 구경하기</Btn>
+                      </a>
+                    </Stack>
+                  </CardContent>
+                </CardP>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
       </div>
-    </div>
+    </Wrap>
   );
 };
 
-const ProductWrap = styled.div`
-  overflow-x: scroll;
+const Wrap = styled.div`
+  overflow-y: scroll;
 `;
 
 const Profile = styled(Image)`
