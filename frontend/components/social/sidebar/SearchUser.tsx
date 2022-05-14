@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Button, InputAdornment, TextField } from "@mui/material";
@@ -8,6 +8,7 @@ import GetImage from "utils/GetImage";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import Btn from "components/commons/Btn";
+import Swal from "sweetalert2";
 
 // interface
 type Props = {};
@@ -15,13 +16,13 @@ class SearchedMember {
   memberId: number;
   nickname: string;
   imageString: string;
-  friend: boolean;
+  friend: "friend" | "unfriend" | "requesting";
 
   constructor(data: any) {
     this.memberId = data.memberId || 0;
     this.nickname = data.nickname || "";
     this.imageString = data.imageString || "";
-    this.friend = data.friend || false;
+    this.friend = data.friend || "unfriend";
   }
 }
 function SearchList(data: Array<SearchedMember>): SearchedMember[] {
@@ -40,16 +41,38 @@ const SearchUser = (props: Props) => {
   ) => {
     // console.log(event.target.value);
     setKeyword(event.target.value);
-    Search();
   };
 
-  const Search = () => {
+  useEffect(() => {
+    if (!keyword) {
+      setMembers([]);
+      return;
+    }
     axiosConnector({
       method: "GET",
       url: "member/search/" + keyword,
     })
       .then((res) => {
-        //console.log(res);
+        console.log(res);
+        setMembers(SearchList(res.data.members));
+        //console.log(members);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, [keyword]);
+
+  const Search = () => {
+    if (!keyword) {
+      setMembers([]);
+      return;
+    }
+    axiosConnector({
+      method: "GET",
+      url: "member/search/" + keyword,
+    })
+      .then((res) => {
+        console.log(res);
         setMembers(SearchList(res.data.members));
         //console.log(members);
       })
@@ -65,7 +88,11 @@ const SearchUser = (props: Props) => {
       url: "friend/follow/" + String(id),
     })
       .then((res) => {
-        console.log(res);
+        Swal.fire({
+          icon: "success",
+          title: "성공적으로 처리되었습니다.",
+        });
+        Search();
       })
       .catch((err) => {
         console.log(err.response);
@@ -112,8 +139,9 @@ const SearchUser = (props: Props) => {
                     </div>
                     <div className="col-4">
                       <div className="d-flex align-items-center h-100">
-                        {member.friend ? (
-                          <Btn filled={true}>삭제</Btn>
+                        {member.friend === "friend" ? null : member.friend ===
+                          "requesting" ? (
+                          <Btn isDisabled>추가</Btn> // <Btn filled={true}>삭제</Btn>
                         ) : (
                           <Btn
                             className=""

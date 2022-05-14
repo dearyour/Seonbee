@@ -9,7 +9,7 @@ const Blue = styled.span`
   color: #38508c;
 `;
 const SidebarWrap = styled.div`
-  border: #c0b4a5 solid 2px;
+  border: 1.6px solid #64543e;
   padding: 5px;
   border-radius: 5px;
 `;

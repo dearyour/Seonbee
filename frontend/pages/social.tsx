@@ -32,7 +32,7 @@ const Social = (props: Props) => {
       url: "friend",
     })
       .then((res) => {
-        //console.log(res);
+        console.log(res);
         setMembers(res.data.friends);
       })
       .catch((err) => {
@@ -55,16 +55,21 @@ const Social = (props: Props) => {
             벗의 <Blue>안부</Blue> 확인하기
           </div>
           <div className="row">
-            {members.map((now: any, index: any) => {
-              return (
-                <div className="col-24 col-md-6 mt-2" key={index}>
-                  <UserCard {...now}></UserCard>
-                </div>
-              );
-            })}
+            {members.length > 0 ? (
+              members.map((now: any, index: any) => {
+                return (
+                  <div className="col-24 col-md-6 mt-2" key={index}>
+                    <UserCard {...now}></UserCard>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="m-4 p-5">비어있어요</div>
+            )}
           </div>
         </div>
       </div>
+      <div className="my-5 py-5"></div>
     </div>
   );
 };
