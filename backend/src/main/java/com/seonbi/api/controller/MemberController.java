@@ -80,9 +80,6 @@ public class MemberController {
         String email = memberCreateReq.getEmail();
         String nickname = memberCreateReq.getNickname();
         String password = memberCreateReq.getPassword();
-        System.out.println(email);
-        System.out.println(nickname);
-        System.out.println(password);
 
         int emailCode = memberService.emailCheck(email);
         if (emailCode == 401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "올바른 이메일 형식으로 입력해주세요."));
@@ -96,7 +93,6 @@ public class MemberController {
         // 비밀번호 유효성 검사
         int passwordCode = memberService.passwordCheck(password);
         if (passwordCode == 401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
-
 
         Member member = new Member();
         member.setEmail(email);
