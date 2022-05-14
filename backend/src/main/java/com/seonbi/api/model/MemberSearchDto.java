@@ -17,5 +17,5 @@ public class MemberSearchDto {
     private Long memberId;
     private String nickname;
     private String imageString;
-    boolean friend=false;
+    private String friend;
 }

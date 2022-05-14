@@ -69,19 +69,14 @@ public class ProfileController {
         }
         // 닉네임 중복 검사
         int nicknameCode = memberService.nicknameCheckExceptMe(nickname, member.getNickname());
-        if (nicknameCode == 401)
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
-        if (nicknameCode == 402)
-            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
+        if (nicknameCode == 401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
+        if (nicknameCode == 402)    return ResponseEntity.status(402).body(BaseResponseBody.of(402, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
 
         // 비밀번호 유효성 검사
         if (password!=null) {
             int passwordCode = memberService.passwordCheck(password);
-            if (passwordCode == 401)
-                return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 입력해주세요."));
-            else if (passwordCode == 402)
-                return ResponseEntity.status(402).body(BaseResponseBody.of(402, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
-
+            if (passwordCode == 401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 입력해주세요."));
+            if (passwordCode == 402)    return ResponseEntity.status(402).body(BaseResponseBody.of(402, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
             member.setPassword(passwordEncoder.encode(password));
         }
         member.setNickname(nickname);
@@ -107,13 +102,11 @@ public class ProfileController {
     public ResponseEntity<? extends BaseResponseBody> getMemberByMemberId(
             @ApiIgnore Authentication authentication, @PathVariable("memberId") Long memberId) {
         Member member = memberAuthService.memberAuthorize(authentication);
-        if (member == null) {
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (member == null)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+
         MemberDto memberDto = memberService.getMemberByMemberId(memberId);
-        if (memberDto == null) {
-            return ResponseEntity.status(401).body(MemberGetRes.of(401, "존재하지 않는 회원입니다.", null));
-        }
+        if (memberDto == null)    return ResponseEntity.status(401).body(MemberGetRes.of(401, "존재하지 않는 회원입니다.", null));
+
         String friendStatus=friendService.getFriendStatus(member.getMemberId(), memberDto.getMemberId());
         memberDto.setFriendStatus(friendStatus);
         return ResponseEntity.status(200).body(MemberGetRes.of(200, "Success", memberDto));
@@ -123,15 +116,12 @@ public class ProfileController {
     public ResponseEntity<? extends BaseResponseBody> updateNicknameCheck(
             @ApiIgnore Authentication authentication, @PathVariable("nickname") String nickname) {
         Member member = memberAuthService.memberAuthorize(authentication);
-        if (member == null) {
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (member == null)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+
         int nicknameCode = memberService.nicknameCheckExceptMe(nickname, member.getNickname());
-        if (nicknameCode == 401) {
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
-        } else if (nicknameCode == 402) {
-            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
-        }
+        if (nicknameCode == 401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "2자 이상 12자 미만으로 입력해주세요."));
+        if (nicknameCode == 402)    return ResponseEntity.status(402).body(BaseResponseBody.of(402, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "사용가능한 닉네임입니다."));
     }
 
@@ -140,9 +130,8 @@ public class ProfileController {
             @PathVariable("memberId") Long memberId,
             @ApiIgnore Authentication authentication) {
         Member member = memberAuthService.memberAuthorize(authentication);
-        if (member == null || !member.getMemberId().equals(memberId)) {     // 사용자가 본인이 아니면
+        if (member == null || !member.getMemberId().equals(memberId))     // 사용자가 본인이 아니면
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
 
         memberService.deleteMember(memberId);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));

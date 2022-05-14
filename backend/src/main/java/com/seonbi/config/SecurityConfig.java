@@ -33,11 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    // DAO 기반으로 Authentication Provider를 생성
-    // BCrypt Password Encoder와 UserDetailService 구현체를 설정
-//    @Bean
-//        auth.authenticationProvider(authenticationProvider());
-//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         /*
