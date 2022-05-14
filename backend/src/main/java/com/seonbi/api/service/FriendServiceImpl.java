@@ -44,18 +44,11 @@ public class FriendServiceImpl implements FriendService{
 
     @Override
     public int followFriend(Long memberId, Long friendId) {
-        if (memberId.equals(friendId)){     // 자기 자신에게
-            return 406;
-        }
-        if (memberRepository.findByMemberIdAndIsDeleted(friendId, false)==null){    // 벗 요청받은 사람 계정이 없음
-            return 401;
-        }
+        if (memberId.equals(friendId))  return 406;     // 자기 자신에게
+        if (memberRepository.findByMemberIdAndIsDeleted(friendId, false)==null)    return 401;  // 벗 요청받은 사람 계정이 없음
         Friend before=friendRepository.findByFollowerIdAndFolloweeIdAndIsDeleted(memberId, friendId, false);
-        if (before!=null&&"BEFORE".equals(before.getIsAllowed())){
-            return 402;
-        } else if (before!=null&&"OK".equals(before.getIsAllowed())){
-            return 405;
-        }
+        if (before!=null&&"BEFORE".equals(before.getIsAllowed()))   return 402;
+        if (before!=null&&"OK".equals(before.getIsAllowed()))    return 405;
 
         // before==null 이거나 요청을 한번 거절한 경우
         Friend friend = new Friend();
@@ -69,9 +62,8 @@ public class FriendServiceImpl implements FriendService{
     @Override
     public int followFriendAllow(Long followeeId, Long followerId, String allow) {
         Friend friend = friendRepository.findByFollowerIdAndFolloweeIdAndIsAllowedAndIsDeleted(followerId, followeeId, "BEFORE", false);
-        if (friend==null){
-            return 401;
-        }
+        if (friend==null)   return 401;
+
         friend.setIsAllowed(allow);
         friendRepository.save(friend);
         return 200;
@@ -83,9 +75,7 @@ public class FriendServiceImpl implements FriendService{
         List<FriendFollowDto> friendFollowDtoList=new ArrayList<>();
         for (Friend friend: friends){
             Member member= memberRepository.findByMemberIdAndIsDeleted(friend.getFollowerId(), false);
-            if (member==null){
-                continue;
-            }
+            if (member==null)    continue;
             String imageString=imageService.getImage(member.getImageId());
             FriendFollowDto friendFollowDto=new FriendFollowDto(member.getMemberId(), member.getNickname(), imageString);
             friendFollowDtoList.add(friendFollowDto);
@@ -109,12 +99,11 @@ public class FriendServiceImpl implements FriendService{
         List<Long> friendIdList=getFriendIdAll(memberId);
         for (Long friendId: friendIdList){
             Member member= memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
+            if (member==null)   continue;
             List<Schedule> schedules=scheduleRepository.findAllByMemberIdAndIsDeletedOrderByScheduleDate(friendId, false);  // 친구 일정
             for (Schedule schedule: schedules) {    // 같은 친구라도 일정별로 따로 넣기
                 String dday=DdayUtil.Dday(schedule.getScheduleDate());
-                if (dday==null){    // 일주일 지난 경우
-                    continue;
-                }
+                if (dday==null)     continue;   // 일주일 지난 경우
                 FriendDdayDto friendDdayDto = new FriendDdayDto(friendId, member.getNickname(),
                         imageService.getImage(member.getImageId()), dday, schedule.getTitle());
                 friendDdayDtoList.add(friendDdayDto);
@@ -147,14 +136,13 @@ public class FriendServiceImpl implements FriendService{
         for (Long friendId: friendIdList){
 
             Member member=memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
-            if (member ==null) {continue;}
+            if (member==null)   continue;
             List<Schedule> schedules=scheduleRepository.findAllByMemberIdAndIsDeletedOrderByScheduleDate(friendId, false);  // 친구 일정
             List<FriendScheduleDto> scheduleDtoList=new ArrayList<>();
             for (Schedule schedule: schedules) {    // 한 친구의 일정을 여러개 리스트로 담기
                 String dday=DdayUtil.Dday(schedule.getScheduleDate());
-                if (dday==null){    // 일주일 지난 경우
-                    continue;
-                }
+                if (dday==null)    continue;    // 일주일이 지난 경우
+
                 FriendScheduleDto scheduleDto=new FriendScheduleDto(dday, schedule.getTitle());
                 scheduleDtoList.add(scheduleDto);
             }
@@ -178,6 +166,7 @@ public class FriendServiceImpl implements FriendService{
         List<Long> friendIdList=getFriendIdAll(memberId);
         for (Long friendId: friendIdList){
             Member member= memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
+            if (member==null)   continue;
             List<Schedule> schedules=scheduleRepository.findAllByMemberIdAndIsDeletedOrderByScheduleDate(friendId, false);  // 친구 일정
             for (Schedule schedule: schedules) {    // 같은 친구라도 일정별로 따로 넣기
                 FriendCalendarDto friendCalendarDto = new FriendCalendarDto(friendId, member.getNickname(),
@@ -207,18 +196,11 @@ public class FriendServiceImpl implements FriendService{
     public String getFriendStatus(Long memberId1, Long memberId2) {     // 로그인한 회원, 상대 회원
         Friend friend1 = friendRepository.findByFollowerIdAndFolloweeIdAndIsDeleted(memberId1, memberId2, false);
         Friend friend2 = friendRepository.findByFollowerIdAndFolloweeIdAndIsDeleted(memberId2, memberId1, false);
-        if (friend1==null && friend2==null){
-            return "unfriend";
-        }
-        if ((friend1!=null && "OK".equals(friend1.getIsAllowed())) || (friend2!=null && "OK".equals(friend2.getIsAllowed()))){
-            return "friend";
-        }
-        if (friend1!=null && "BEFORE".equals(friend1.getIsAllowed())){  // 로그인한 회원이 친구 요청 보낸 경우
-            return "requesting";
-        }
-        if (friend2!=null && "BEFORE".equals(friend2.getIsAllowed())){  // 로그인한 회원이 친구 요청 받은 경우
-            return "requested";
-        }
+        if (friend1==null && friend2==null) return "unfriend";
+        if ((friend1!=null && "OK".equals(friend1.getIsAllowed())) || (friend2!=null && "OK".equals(friend2.getIsAllowed())))   return "friend";
+        if (friend1!=null && "BEFORE".equals(friend1.getIsAllowed()))  return "requesting";     // 로그인한 회원이 친구 요청 보낸 경우
+        if (friend2!=null && "BEFORE".equals(friend2.getIsAllowed()))    return "requested";  // 로그인한 회원이 친구 요청 받은 경우
+
         return "unfriend";
     }
 

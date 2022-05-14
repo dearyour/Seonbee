@@ -56,25 +56,21 @@ public class WishController {
             @RequestBody ReserveProductReq reserveProductReq, @ApiIgnore Authentication authentication){
 
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null){
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (member==null)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+
         Long receiverId=reserveProductReq.getReceiverId();
-        if (!memberService.isMemberValid(receiverId)){   // receiverId가 없는 경우
+        if (!memberService.isMemberValid(receiverId))  // receiverId가 없는 경우
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 사용자입니다."));
-        }
-        if (!friendService.isFriend(receiverId, member.getMemberId())){     // 친구가 아닌 경우
+
+        if (!friendService.isFriend(receiverId, member.getMemberId()))    // 친구가 아닌 경우
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
 
         int reserveWishlistCode=wishlistService.reserveWishlist(
                 member.getMemberId(), receiverId, reserveProductReq.getWishlistId());
 
-        if (reserveWishlistCode==401){
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 상품입니다."));
-        } else if (reserveWishlistCode==402){
-            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "이미 예약된 상품입니다."));
-        }
+        if (reserveWishlistCode==401)   return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 상품입니다."));
+        if (reserveWishlistCode==402)   return ResponseEntity.status(402).body(BaseResponseBody.of(402, "이미 예약된 상품입니다."));
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
@@ -84,16 +80,12 @@ public class WishController {
             @PathVariable Long wishlistId, @ApiIgnore Authentication authentication){
 
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null){
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (member==null)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
         int deleteWishlistCode=wishlistService.deleteWishlist(member.getMemberId(), wishlistId);
-        if (deleteWishlistCode==401){
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 상품입니다."));
-        } else if (deleteWishlistCode==403){
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (deleteWishlistCode==401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 상품입니다."));
+        if (deleteWishlistCode==403)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
