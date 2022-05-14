@@ -24,6 +24,10 @@ import "swiper/css/scrollbar";
 const Asd: NextPage = () => {
   const [imgtest, setImageUrl] = useState<string>("");
   const [imgfile, setimgfile] = useState<any>();
+  const [check, setCheck] = useState<boolean>(false);
+  useEffect(() => {
+    console.log(check);
+  }, [check]);
   // const image = (id: number) => {
   //   axios({
   //     method: 'get',
@@ -119,6 +123,17 @@ const Asd: NextPage = () => {
         <SwiperSlide>Slide 3</SwiperSlide>
         <SwiperSlide>Slide 4</SwiperSlide>
       </Swiper>
+      <div>zxcasdasd</div>
+      {/* <div>{check ? "asd" : "zxc"}</div> */}
+      <Button
+        onClick={() => {
+          console.log(check);
+          setCheck((check) => !check);
+          console.log(check);
+        }}
+      >
+        체크체크
+      </Button>
     </div>
   );
 };

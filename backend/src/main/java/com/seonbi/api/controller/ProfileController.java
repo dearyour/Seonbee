@@ -76,11 +76,11 @@ public class ProfileController {
             return ResponseEntity.status(402).body(BaseResponseBody.of(402, "닉네임이 중복됩니다. 다른 닉네임으로 가입해주세요."));
 
         // 비밀번호 유효성 검사
-        int passwordCode = memberService.passwordCheck(password);
-        if (passwordCode == 401)
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 입력해주세요."));
-        else if (passwordCode == 402)
-            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
+//        int passwordCode = memberService.passwordCheck(password);
+//        if (passwordCode == 401)
+//            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 입력해주세요."));
+//        else if (passwordCode == 402)
+//            return ResponseEntity.status(402).body(BaseResponseBody.of(402, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
 
 //        Member member = memberRepository.findByMemberIdAndIsDeleted(memberId, false);
 //        member.setMemberId(memberId);
