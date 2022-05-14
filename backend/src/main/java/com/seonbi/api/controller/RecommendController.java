@@ -18,7 +18,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/profile/recommend")
+@RequestMapping("/api")
 public class RecommendController {
 
     @Autowired
@@ -33,38 +33,48 @@ public class RecommendController {
     @Autowired
     ReceiverService receiverService;
 
-    @GetMapping()
-    public ResponseEntity<? extends BaseResponseBody> getRecommendAll(@ApiIgnore Authentication authentication){
+    @GetMapping("/profile/recommend")
+    public ResponseEntity<? extends BaseResponseBody> getRecommendAll(@ApiIgnore Authentication authentication) {
 
-        Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        Member member = memberAuthService.memberAuthorize(authentication);
+        if (member == null) return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
-        List<RecommendDto> recommendList=recommendService.getRecommendAll(member.getMemberId());
+        List<RecommendDto> recommendList = recommendService.getRecommendAll(member.getMemberId());
 
         return ResponseEntity.status(200).body(RecommendAllRes.of(200, "success", recommendList));
     }
 
-    @GetMapping("/give/{recommendId}")
+    @GetMapping("/profile/recommend/give/{recommendId}")
     public ResponseEntity<? extends BaseResponseBody> saveRecommendGive(
-            @PathVariable Long recommendId, @ApiIgnore Authentication authentication){
+            @PathVariable Long recommendId, @ApiIgnore Authentication authentication) {
 
-        Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        Member member = memberAuthService.memberAuthorize(authentication);
+        if (member == null) return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
-        int saveRecommendGiveCode=recommendService.saveRecommendGive(member.getMemberId(), recommendId);
-        if (saveRecommendGiveCode==401) return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 정보입니다."));
-        else if (saveRecommendGiveCode==403)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
+        int saveRecommendGiveCode = recommendService.saveRecommendGive(member.getMemberId(), recommendId);
+        if (saveRecommendGiveCode == 401)
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 정보입니다."));
+        else if (saveRecommendGiveCode == 403)
+            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
 
-     @PostMapping("/receiver")
-    public ResponseEntity<? extends BaseResponseBody> recommend(@RequestBody ReceiverInfoReq receiverInfoReq)
-    {
+    @PostMapping("/recommend/receiver")
+    public ResponseEntity<? extends BaseResponseBody> recommend(@RequestBody ReceiverInfoReq receiverInfoReq, @ApiIgnore Authentication authentication) {
 
-        recommendService.ProductRecommend(receiverInfoReq);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        Member member=null;
+        Long memberId=0l;
+        if (authentication != null) {
+             member = memberAuthService.memberAuthorize(authentication);
+             memberId =member.getMemberId();
+        }
+
+
+        List<RecommendProductDto> productDtos = recommendService.ProductRecommend(receiverInfoReq, memberId);
+
+        return ResponseEntity.status(200).body(RecommendProductAllRes.of(200, "Success", productDtos));
     }
 
 }
