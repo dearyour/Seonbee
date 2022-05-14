@@ -33,11 +33,20 @@
   margin-bottom: 0.8rem;
   font-weight: 600;
 }
-.input-group {
+.input-groupShop {
   margin-bottom: 2rem;
+}
+.input-groupr {
+  margin-left: 2rem;
+  /* justify-content: start; */
 }
 .label-range {
   margin-bottom: 2.5rem;
+}
+.input-groups {
+  margin-bottom: 0.5rem;
+  display: flex;
+  /* justify-content: center; */
 }
 
 /* {SearchBar} */
