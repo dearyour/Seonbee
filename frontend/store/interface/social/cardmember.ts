@@ -8,6 +8,7 @@ interface Product {
 }
 
 export default class CardMember {
+  friendId: number;
   nickname: string;
   scheduleList: Array<Schedule>;
   imageString: string;
@@ -20,5 +21,6 @@ export default class CardMember {
     this.scheduleList = data.scheduleList || [];
     this.wishlist = data.wishlist || [];
     this.verse = data.verse || "";
+    this.friendId = data.friendId || 0;
   }
 }

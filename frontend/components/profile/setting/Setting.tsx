@@ -8,6 +8,7 @@ import Image from "next/image";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { Box, Modal, Typography } from "@mui/material";
+import seonbee from "public/seonbee.png";
 
 type Props = {};
 
@@ -53,6 +54,24 @@ function getBase64(img: Blob, callback: any) {
   reader.addEventListener("load", () => callback(reader.result));
   reader.readAsDataURL(img);
 }
+const mbti = [
+  "ISTJ",
+  "ISFJ",
+  "INFJ",
+  "INTJ",
+  "ISTP",
+  "ISFP",
+  "INFP",
+  "INTP",
+  "ESTP",
+  "ESFP",
+  "ENFP",
+  "ENTP",
+  "ESTJ",
+  "ESFJ",
+  "ENFJ",
+  "ENTJ",
+];
 
 const Setting = (props: Props) => {
   const [mydata, setMydata] = useState<Data>(new Data({}));
@@ -97,6 +116,14 @@ const Setting = (props: Props) => {
   }, []);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { name, value } = e.target;
+    const now = {
+      ...mydata,
+      [name]: value,
+    };
+    setMydata(new Data(now));
+  };
+  const onChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const { name, value } = e.target;
     const now = {
       ...mydata,
@@ -181,7 +208,15 @@ const Setting = (props: Props) => {
                     alt="preview"
                     className="rounded-circle border border-2"
                   ></Image>
-                ) : null}
+                ) : (
+                  <Image
+                    src={seonbee}
+                    width={160}
+                    height={160}
+                    alt="preview"
+                    className="rounded-circle border border-2"
+                  ></Image>
+                )}
                 <Btn onClick={onCrop} className="my-3">
                   적용
                 </Btn>
@@ -273,25 +308,34 @@ const Setting = (props: Props) => {
         </div>
         <div className="d-flex my-2">
           <Btn className="me-2">성별</Btn>
-          <input
-            type="text"
+          <select
             name="gender"
             value={mydata.gender}
-            onChange={onChange}
-            className="form-control"
+            onChange={onChangeSelect}
+            className="form-select"
             aria-describedby="basic-addon1"
-          />
+          >
+            <option value="M">남성</option>
+            <option value="F">여성</option>
+          </select>
         </div>
         <div className="d-flex my-2">
           <Btn className="me-2">mbti</Btn>
-          <input
-            type="text"
+          <select
             name="mbti"
             value={mydata.mbti}
-            onChange={onChange}
-            className="form-control"
+            onChange={onChangeSelect}
+            className="form-select"
             aria-describedby="basic-addon1"
-          />
+          >
+            {mbti.map((now, index) => {
+              return (
+                <option value={now} key={index}>
+                  {now}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <div className="d-flex my-2">
           <Btn className="me-2">관심</Btn>
