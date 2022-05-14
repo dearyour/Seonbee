@@ -125,7 +125,7 @@ const Give = (props: Props) => {
     setSearchNonMembers(nonmem);
   };
   return (
-    <div className="row w-100">
+    <div className="row w-100 h-100">
       {/* 왼쪽 유저 선택 부분 */}
       <div className="col-3 overflow-scroll">
         <TextField
@@ -145,7 +145,7 @@ const Give = (props: Props) => {
         <div className="w-100 bg-secondary bg-opacity-50 rounded my-1 p-1 text-white">
           비회원
         </div>
-        {searchnonmembers &&
+        {searchnonmembers && searchnonmembers.length > 0 ? (
           searchnonmembers.map((now, index) => {
             return (
               <MemberWrap
@@ -168,11 +168,14 @@ const Give = (props: Props) => {
                 </div>
               </MemberWrap>
             );
-          })}
+          })
+        ) : (
+          <div className="p-3">비어있어요</div>
+        )}
         <div className="w-100 bg-secondary bg-opacity-50 rounded my-1 p-1 text-white">
           회원
         </div>
-        {searchmembers &&
+        {searchmembers && searchmembers.length > 0 ? (
           searchmembers.map((now, index) => {
             return (
               <MemberWrap
@@ -195,7 +198,10 @@ const Give = (props: Props) => {
                 </div>
               </MemberWrap>
             );
-          })}
+          })
+        ) : (
+          <div className="p-3">비어있어요</div>
+        )}
       </div>
       {/* 오른쪽 제품목록 표시부분 */}
       <div className="col-9">

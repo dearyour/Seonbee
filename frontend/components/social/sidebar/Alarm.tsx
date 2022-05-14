@@ -5,6 +5,7 @@ import axiosConnector from "utils/axios-connector";
 import Image from "next/image";
 import GetImage from "utils/GetImage";
 import Btn from "components/commons/Btn";
+import Swal from "sweetalert2";
 
 type Props = {};
 
@@ -27,6 +28,7 @@ function MemberList(data: Array<Member>): Member[] {
 
 const Alarm = (props: Props) => {
   const [members, setMembers] = useState<Member[]>([]);
+  const [reset, setReset] = useState<boolean>(false);
   // WsAlarm.activate();
   useEffect(() => {
     axiosConnector({
@@ -39,7 +41,7 @@ const Alarm = (props: Props) => {
       .catch((err) => {
         console.log(err.response);
       });
-  }, []);
+  }, [reset]);
 
   interface Allow {
     id: number;
@@ -51,6 +53,12 @@ const Alarm = (props: Props) => {
       method: "POST",
       url: "friend/follow/allow",
       data: { friendId: data.id, allow: data.allow },
+    }).then((res) => {
+      Swal.fire({
+        icon: "success",
+        title: "성공적으로 처리되었습니다.",
+      });
+      setReset(!reset);
     });
   };
   return (
@@ -60,17 +68,19 @@ const Alarm = (props: Props) => {
           <div className="row">
             {members.map((now, index) => {
               return (
-                <div key={index} className="row">
-                  <div className="col-2">
+                <div key={index} className="d-flex align-items-center">
+                  <div className="d-flex flex-column justify-content-center align-items-center me-4">
                     <Image
                       src={GetImage(now.imageString)}
+                      className="rounded-circle"
                       alt="profile"
                       width={"100%"}
                       height={"100%"}
                     ></Image>
+                    <div className="">{now.nickname}</div>
                   </div>
-                  <div className="col-4">{now.nickname}</div>
-                  <div className="col-3">
+
+                  <div className=" mx-3">
                     <Btn
                       onClick={FriendRes}
                       param={{ id: now.friendId, allow: "OK" }}
@@ -78,7 +88,7 @@ const Alarm = (props: Props) => {
                       수락
                     </Btn>
                   </div>
-                  <div className="col-3">
+                  <div className="">
                     <Btn
                       onClick={FriendRes}
                       param={{ id: now.friendId, allow: "NO" }}

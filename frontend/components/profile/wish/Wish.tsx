@@ -62,13 +62,17 @@ const Wish = ({ props }: { props: any }) => {
 
     <ProductWrap>
       <div className="d-flex flex-nowrap p-3">
-        {products.map((now, index) => {
-          return (
-            <div className="mx-2" key={index}>
-              <ProductCard {...now}></ProductCard>
-            </div>
-          );
-        })}
+        {products.length > 0 ? (
+          products.map((now, index) => {
+            return (
+              <div className="mx-2" key={index}>
+                <ProductCard {...now}></ProductCard>
+              </div>
+            );
+          })
+        ) : (
+          <div className="p-5 m-5">비어있어요</div>
+        )}
         {/* <ProductCard {...products[0]}></ProductCard> */}
       </div>
     </ProductWrap>
