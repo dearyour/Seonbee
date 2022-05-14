@@ -100,6 +100,11 @@ const Give = (props: Props) => {
   }, [selected]);
 
   const SearchChange: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    if (!e.target.value) {
+      setSearchMembers(members);
+      setSearchNonMembers(nonmembers);
+      return;
+    }
     const options = {
       // Search in `author` and in `tags` array
       keys: ["name"],
@@ -110,7 +115,14 @@ const Give = (props: Props) => {
 
     const resultM = fuseM.search(e.target.value);
     const resultNM = fuseNM.search(e.target.value);
-    console.log(resultM, resultNM);
+    const mem = resultM.map((now) => {
+      return now.item;
+    });
+    const nonmem = resultNM.map((now) => {
+      return now.item;
+    });
+    setSearchMembers(mem);
+    setSearchNonMembers(nonmem);
   };
   return (
     <div className="row w-100">
