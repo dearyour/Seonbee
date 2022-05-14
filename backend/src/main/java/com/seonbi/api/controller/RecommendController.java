@@ -1,12 +1,13 @@
 package com.seonbi.api.controller;
 
 import com.seonbi.api.model.RecommendDto;
+import com.seonbi.api.model.RecommendProductDto;
 import com.seonbi.api.request.ReceiverInfoReq;
 import com.seonbi.api.response.BaseResponseBody;
 import com.seonbi.api.response.RecommendAllRes;
+import com.seonbi.api.response.RecommendProductAllRes;
 import com.seonbi.api.service.MemberAuthService;
 import com.seonbi.api.service.MemberService;
-import com.seonbi.api.service.ReceiverService;
 import com.seonbi.api.service.RecommendService;
 import com.seonbi.db.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,6 @@ public class RecommendController {
     @Autowired
     RecommendService recommendService;
 
-    @Autowired
-    ReceiverService receiverService;
-
     @GetMapping("/profile/recommend")
     public ResponseEntity<? extends BaseResponseBody> getRecommendAll(@ApiIgnore Authentication authentication) {
 
@@ -40,7 +38,6 @@ public class RecommendController {
         if (member == null) return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
         List<RecommendDto> recommendList = recommendService.getRecommendAll(member.getMemberId());
-
         return ResponseEntity.status(200).body(RecommendAllRes.of(200, "success", recommendList));
     }
 
@@ -70,8 +67,6 @@ public class RecommendController {
              member = memberAuthService.memberAuthorize(authentication);
              memberId =member.getMemberId();
         }
-
-
         List<RecommendProductDto> productDtos = recommendService.ProductRecommend(receiverInfoReq, memberId);
 
         return ResponseEntity.status(200).body(RecommendProductAllRes.of(200, "Success", productDtos));

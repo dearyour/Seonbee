@@ -30,9 +30,6 @@ public class ShopController {
     RecommendService recommendService;
 
     @Autowired
-    ReceiverService receiverService;
-
-    @Autowired
     WishlistService wishlistService;
 
     @Autowired
@@ -44,14 +41,12 @@ public class ShopController {
     @GetMapping()
     public ResponseEntity<? extends BaseResponseBody> getProductAll(){
         List<ProductDto> productDtoList=productService.getProductAll();
-
         return ResponseEntity.status(200).body(ProductAllRes.of(200, "success", productDtoList));
     }
 
     @GetMapping("/{keyword}")
     public ResponseEntity<? extends BaseResponseBody> getProductAllByKeyword(@PathVariable String keyword){
         List<ProductDto> productDtoList=productService.getProductAllByKeyword(keyword);
-
         return ResponseEntity.status(200).body(ProductAllRes.of(200, "success", productDtoList));
     }
 
@@ -60,9 +55,7 @@ public class ShopController {
             @RequestBody GiveFriendProductReq giveProductReq, @ApiIgnore Authentication authentication){
 
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null){
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (member==null)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
         int addGiveProductCode=recommendService.addGiveProduct(member.getMemberId(), giveProductReq.getFriendId(), giveProductReq.getProductId());
         if (addGiveProductCode==401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 사용자입니다."));
@@ -76,9 +69,7 @@ public class ShopController {
             @PathVariable Long productId, @ApiIgnore Authentication authentication){
 
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null){
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (member==null)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
         wishlistService.addWishlist(member.getMemberId(), productId);
         productService.addWishProduct(productId, 1);
@@ -88,9 +79,7 @@ public class ShopController {
     @GetMapping("/friend")
     public ResponseEntity<? extends BaseResponseBody> getFriendAll(@ApiIgnore Authentication authentication){
         Member member=memberAuthService.memberAuthorize(authentication);
-        if (member==null){
-            return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        }
+        if (member==null)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
         List<FriendFollowDto> friends=friendService.shopGetFriendAll(member.getMemberId());
         return ResponseEntity.status(200).body(FriendFollowGetAllRes.of(200, "success", friends));
@@ -102,8 +91,5 @@ public class ShopController {
         if (addHitProductCode==401)     return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 상품입니다."));
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
-
-
-
 
 }

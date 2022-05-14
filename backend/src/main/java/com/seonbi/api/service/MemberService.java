@@ -15,7 +15,7 @@ public interface MemberService {
     MemberDto getMemberByNickname(String nickname);
     MemberDto getMemberByEmail(String email);
     MemberDto getMemberByMemberId(Long memberId);
-    List<MemberDto> getMemberList();
+//    List<MemberDto> getMemberList();
     Member createMember(Member member);
     void updateMember(Member member);
     int emailCheck(String email);
