@@ -55,6 +55,14 @@ function AudioPlayer() {
     audioPlayer?.current?.readyState,
   ]);
 
+  useEffect(() => {
+    if (currentTime == duration) {
+      // togglePlayPause();
+      if (progressBar.current) progressBar.current.value = '0';
+      changeRange();
+    }
+  }, [currentTime]);
+
   const calculateTime = (secs: number) => {
     const minutes = Math.floor(secs / 60);
     const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
