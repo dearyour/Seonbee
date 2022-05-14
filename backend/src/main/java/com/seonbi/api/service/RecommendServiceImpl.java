@@ -64,6 +64,9 @@ public class RecommendServiceImpl implements RecommendService {
     @Autowired
     FriendService friendService;
 
+    @Autowired
+    ProductService productService;
+
     @Override
     public List<RecommendProductDto> ProductRecommend(ReceiverInfoReq req, Long memberId) {
 
@@ -205,6 +208,7 @@ public class RecommendServiceImpl implements RecommendService {
             if (receiver.getDownPrice() <= p.getPrice() && p.getPrice() <= receiver.getUpPrice()) {
                 count++;
                 productDtos.add(p);
+                productService.addRecommendProduct(p.getProductId());   // 추천수 올리기
                 if (count == 3) break;
             }
         }
@@ -216,15 +220,11 @@ public class RecommendServiceImpl implements RecommendService {
                 recommend.setReceiverId(receiver.getReceiverId()); // 받는사람 번호
                 recommend.setProductId(productDtos.get(i).getProductId()); //상품 번호
                 recommend.setMemberId(memberId); // 회원 번호
-                //삭제여부 기본 0
-                //저장여부 기본 0
-                //친구인지 기본 0
                 Recommend recommend1 = recommendRepository.save(recommend);
                 productDtos.get(i).setRecommendId(recommend1.getRecommendId());
             }
         }
         return productDtos;
-
     }
 
     @Override
