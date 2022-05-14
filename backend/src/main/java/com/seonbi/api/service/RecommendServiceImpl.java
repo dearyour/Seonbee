@@ -64,6 +64,9 @@ public class RecommendServiceImpl implements RecommendService {
     @Autowired
     FriendService friendService;
 
+    @Autowired
+    ProductService productService;
+
     @Override
     public List<RecommendProductDto> ProductRecommend(ReceiverInfoReq req, Long memberId) {
 
@@ -205,6 +208,7 @@ public class RecommendServiceImpl implements RecommendService {
             if (receiver.getDownPrice() <= p.getPrice() && p.getPrice() <= receiver.getUpPrice()) {
                 count++;
                 productDtos.add(p);
+                productService.addRecommendProduct(p.getProductId());   // 추천수 올리기
                 if (count == 3) break;
             }
         }
@@ -216,15 +220,11 @@ public class RecommendServiceImpl implements RecommendService {
                 recommend.setReceiverId(receiver.getReceiverId()); // 받는사람 번호
                 recommend.setProductId(productDtos.get(i).getProductId()); //상품 번호
                 recommend.setMemberId(memberId); // 회원 번호
-                //삭제여부 기본 0
-                //저장여부 기본 0
-                //친구인지 기본 0
                 Recommend recommend1 = recommendRepository.save(recommend);
                 productDtos.get(i).setRecommendId(recommend1.getRecommendId());
             }
         }
         return productDtos;
-
     }
 
     @Override
@@ -271,20 +271,27 @@ public class RecommendServiceImpl implements RecommendService {
     @Override
     public RecommendReceiverDto getGiveAll(Long memberId) {
         List<Recommend> recommends = recommendRepository.findAllByMemberIdAndIsSavedAndIsDeleted(memberId, true, false);
+        HashSet<Long> memberIdList=new HashSet<>();
+        HashSet<Long> noneMemberIdList=new HashSet<>();
         List<ReceiverDto> memberList = new ArrayList<>();
         List<ReceiverDto> noneMemberList = new ArrayList<>();
         for (Recommend recommend : recommends) {
-            Receiver receiver = receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
-            if (receiver == null)   continue;
-            ReceiverDto receiverDto = modelMapper.map(receiver, ReceiverDto.class);
-            receiverDto.setName(receiver.getName());
-            if (recommend.getIsFriend()) {
+            ReceiverDto receiverDto=new ReceiverDto();
+            if (recommend.getIsFriend()) {  // 친구인 경우   member table 에서 조회
                 Member receiverMember = memberRepository.findByMemberIdAndIsDeleted(recommend.getReceiverId(), false);
-                if (receiverMember!=null && friendService.isFriend(memberId, receiverMember.getMemberId())) {  // 추천받은 사람이 친구인 경우
-                    receiverDto.setImageString(imageService.getImage(receiverMember.getImageId()));
-                    memberList.add(receiverDto);
-                }
-            } else {      // 친구가 아닌 경우
+                if (receiverMember==null)   continue;
+                if (!friendService.isFriend(memberId, receiverMember.getMemberId()))    continue;
+                if (!memberIdList.add(receiverMember.getMemberId()))  continue;      // member 중복 제거
+                receiverDto.setReceiverId(receiverMember.getMemberId());
+                receiverDto.setName(receiverMember.getNickname());
+                receiverDto.setImageString(imageService.getImage(receiverMember.getImageId()));
+                memberList.add(receiverDto);
+            } else {      // 친구가 아닌 경우 receiver table에서 조회
+                Receiver receiver = receiverRepository.findByReceiverIdAndIsDeleted(recommend.getReceiverId(), false);
+                if (receiver == null)   continue;
+                if (!noneMemberIdList.add(receiver.getReceiverId()))  continue;      // noneMember 중복 제거
+                receiverDto.setReceiverId(receiver.getReceiverId());
+                receiverDto.setName(receiver.getName());
                 receiverDto.setImageString(imageService.getImage(0l));
                 noneMemberList.add(receiverDto);
             }
