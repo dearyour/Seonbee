@@ -92,6 +92,7 @@
   text-decoration: none;
   margin-right: 10px;
   white-space: nowrap;
+  cursor: pointer;
 }
 .post_ctas {
   display: inline-block;
@@ -106,6 +107,7 @@
   text-decoration: none;
   margin-right: 10px;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .post_cta:hover {

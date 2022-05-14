@@ -116,16 +116,6 @@ export const categoryList = [
     value: "dish",
     label: "🍕 Dishes",
   },
-  {
-    id: 1,
-    value: "place",
-    label: "🚩 Places",
-  },
-  {
-    id: 2,
-    value: "dish",
-    label: "🍕 Dishes",
-  },
 ];
 
 export const ratingList = [

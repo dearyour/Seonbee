@@ -1,6 +1,7 @@
 import React from "react";
 import { categoryList, ratingList } from "../../constants";
 import CheckboxProton from "components/ShopComponent/CheckboxProton";
+import CheckboxProtons from "components/ShopComponent/CheckboxProtons";
 import FilterListToggle from "components/ShopComponent/FilterListToggle";
 import SliderProton from "components/ShopComponent/SliderProton";
 
@@ -11,7 +12,9 @@ const FilterPanel = ({
   selectedPrice,
   selectRating,
   cuisines,
+  cuisined,
   changeChecked,
+  changeCheckedd,
   changePrice,
 }) => (
   <div>
@@ -25,7 +28,7 @@ const FilterPanel = ({
     </div>
     <div className="input-groups">
       <div className="input-groupShop">
-        <p className="label">Cuisine</p>
+        <p className="label">셀렉1</p>
         {cuisines.map((cuisine) => (
           <CheckboxProton
             key={cuisine.id}
@@ -35,12 +38,12 @@ const FilterPanel = ({
         ))}
       </div>
       <div className="input-groupr">
-        <p className="label">Cuisine</p>
-        {cuisines.map((cuisine) => (
-          <CheckboxProton
+        <p className="label">셀렉2</p>
+        {cuisined.map((cuisine) => (
+          <CheckboxProtons
             key={cuisine.id}
-            cuisine={cuisine}
-            changeChecked={changeChecked}
+            cuisined={cuisine}
+            changeCheckedd={changeCheckedd}
           />
         ))}
       </div>

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import EmptyView from "components/ShopComponent/EmptyView";
 import FilterPanel from "components/ShopContainer/FilterPanel";
 import List from "components/ShopContainer/List";
@@ -9,6 +10,9 @@ import SearchUsers from "./SearchUsers";
 import styled from "@emotion/styled";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { layoutAction } from "store/slice/layout";
+import { RootState } from "store/slice";
+import { IoMdGitMerge } from "react-icons/io";
 const sortOptionList = [
   { value: "ratingDesc", name: "최다 조회 수" },
   { value: "ratingAsc", name: "최대 평점 순" },
@@ -16,6 +20,10 @@ const sortOptionList = [
   { value: "oldest", name: "낮은 가격 순" },
 ];
 const Home = () => {
+  const dispatch = useDispatch();
+  const ShopReduxState = useSelector(
+    (state: RootState) => state.layout.detailData
+  );
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedRating, setSelectedRating] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState([1000, 5000]);
@@ -33,6 +41,14 @@ const Home = () => {
   const [cuisines, setCuisines] = useState([
     { id: 1, checked: false, label: "American" },
     { id: 2, checked: false, label: "Chinese" },
+    { id: 3, checked: false, label: "Italian" },
+    { id: 4, checked: false, label: "American" },
+    { id: 5, checked: false, label: "Chinese" },
+    { id: 6, checked: false, label: "Italian" },
+  ]);
+  const [cuisined, setCuisined] = useState([
+    { id: 1, checked: false, label: "Cabernet Sauvignon" },
+    { id: 2, checked: false, label: "Cabernet Sauvignon" },
     { id: 3, checked: false, label: "Italian" },
     { id: 4, checked: false, label: "American" },
     { id: 5, checked: false, label: "Chinese" },
@@ -56,18 +72,32 @@ const Home = () => {
     }, 1000);
     setLoading(false);
   };
-
-  const __GetShopState = useCallback(() => {
-    return axios({
+  //검색 상품 상태
+  const __getSearchShop = (e: any) => {
+    e.preventDefault();
+    axios({
       method: "GET",
-      // url: process.env.BACK_EC2 + "wine",
-      url: process.env.NEXT_PUBLIC_BACK + "shop",
-      // url: "https://localhost:8080/api/wine",
-      // url: "http://j6a101.p.ssafy.io:8080/api/wine",
+      url: process.env.NEXT_PUBLIC_BACK + "shop/" + searchInput,
     })
       .then((res) => {
         console.log(res);
         setShopItem(res.data.productList);
+        dispatch(layoutAction.updateDetailData(res.data.productList));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // 처음 상품 상태
+  const __GetShopState = useCallback(() => {
+    return axios({
+      method: "GET",
+      url: process.env.NEXT_PUBLIC_BACK + "shop",
+    })
+      .then((res) => {
+        console.log(res);
+        setShopItem(res.data.productList);
+        dispatch(layoutAction.updateDetailData(res.data.productList));
         return res.data;
       })
       .catch((err) => {
@@ -76,7 +106,7 @@ const Home = () => {
   }, []);
   useEffect(() => {
     __GetShopState();
-  }, [__GetShopState]);
+  }, []);
 
   const compare = useCallback(
     (a: any, b: any) => {
@@ -111,25 +141,31 @@ const Home = () => {
     );
     setCuisines(changeCheckedCuisines);
   };
+  const handleChangeCheckedd = (id: React.MouseEvent) => {
+    const cusinesStateList = cuisined;
+    const changeCheckedCuisines = cusinesStateList.map((item: any) =>
+      item.id === id ? { ...item, checked: !item.checked } : item
+    );
+    setCuisined(changeCheckedCuisines);
+  };
 
   const handleChangePrice = (event: React.MouseEvent, value: any) => {
     setSelectedPrice(value);
   };
 
   const applyFilters = () => {
-    let updatedList = dataList;
-
+    let updatedList = ShopReduxState;
     // Rating Filter
     if (selectedRating) {
       updatedList = updatedList.filter(
-        (item) => Number(item.rating) === parseInt(selectedRating)
+        (item: any) => Number(item.rating) === parseInt(selectedRating)
       );
     }
 
     // Category Filter
     if (selectedCategory) {
       updatedList = updatedList.filter(
-        (item) => item.category === selectedCategory
+        (item: any) => item.category === selectedCategory
       );
     }
 
@@ -139,26 +175,26 @@ const Home = () => {
       .map((item) => item.label.toLowerCase());
 
     if (cuisinesChecked.length) {
-      updatedList = updatedList.filter((item) =>
+      updatedList = updatedList.filter((item: any) =>
         cuisinesChecked.includes(item.cuisine)
       );
     }
 
     // Search Filter
-    if (searchInput) {
-      updatedList = updatedList.filter(
-        (item) =>
-          item.title.toLowerCase().search(searchInput.toLowerCase().trim()) !==
-          -1
-      );
-    }
+    // if (searchInput) {
+    //   updatedList = updatedList.filter(
+    //     (item) =>
+    //       item.title.toLowerCase().search(searchInput.toLowerCase().trim()) !==
+    //       -1
+    //   );
+    // }
 
     // Price Filter
     const minPrice = selectedPrice[0];
     const maxPrice = selectedPrice[1];
 
     updatedList = updatedList.filter(
-      (item) => item.price >= minPrice && item.price <= maxPrice
+      (item: any) => item.price >= minPrice && item.price <= maxPrice
     );
 
     // updatedList = updatedList.sort(compare);
@@ -180,6 +216,7 @@ const Home = () => {
         changeInput={(e: any) => setSearchInput(e.target.value)}
         searchOption={searchOption}
         setSearchOption={setSearchOption}
+        getSearchShop={__getSearchShop}
       />
       {searchOption && (
         <section>
@@ -217,7 +254,9 @@ const Home = () => {
               selectedPrice={selectedPrice}
               changePrice={handleChangePrice}
               cuisines={cuisines}
+              cuisined={cuisined}
               changeChecked={handleChangeChecked}
+              changeCheckedd={handleChangeCheckedd}
             />
             <Blue>친구 검색</Blue>
             <SearchUsers />

@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import Router from "next/router";
 import styled from "@emotion/styled";
-const SearchBar = ({ value, changeInput, searchOption, setSearchOption }) => {
+import axios from "axios";
+const SearchBar = ({
+  value,
+  changeInput,
+  searchOption,
+  setSearchOption,
+  getSearchShop,
+}) => {
   const __Routing = () => {
     // location.reload();
     Router.push(`/`);
@@ -16,7 +23,7 @@ const SearchBar = ({ value, changeInput, searchOption, setSearchOption }) => {
   };
 
   return (
-    <div className="searchBar-wrap">
+    <form className="searchBar-wrap" onSubmit={getSearchShop}>
       <SearchIcon className="searchBar-icon" />
       <input
         type="text"
@@ -37,7 +44,7 @@ const SearchBar = ({ value, changeInput, searchOption, setSearchOption }) => {
       <SearchOptionButton onClick={toggleSearchOption}>
         검색 옵션 {searchOption ? "닫기" : "열기"}
       </SearchOptionButton>
-    </div>
+    </form>
   );
 };
 
