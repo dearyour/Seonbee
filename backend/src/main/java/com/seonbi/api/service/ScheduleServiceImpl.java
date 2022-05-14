@@ -56,9 +56,7 @@ public class ScheduleServiceImpl implements ScheduleService{
             for (Lantern lantern: lanterns){
                 LanternDto lanternDto=modelMapper.map(lantern, LanternDto.class);
                 Member guest=memberRepository.findByMemberIdAndIsDeleted(lantern.getGuestId(), false);
-                if (guest==null){   // 글 쓴 사람이 없는 경우 null
-                    continue;
-                }
+                if (guest==null) continue;  // 글 쓴 사람이 없는 경우 null
                 lanternDto.setNickname(guest.getNickname());
                 lanternDtos.add(lanternDto);
             }
