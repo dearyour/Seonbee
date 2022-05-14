@@ -169,7 +169,6 @@ public class FriendServiceImpl implements FriendService{
                         schedule.getScheduleDate(), schedule.getTitle());
                 friendCalendarDtoList.add(friendCalendarDto);
             }
-
         }
         return friendCalendarDtoList;
     }
@@ -180,7 +179,6 @@ public class FriendServiceImpl implements FriendService{
         List<Long> friendIdList=getFriendIdAll(memberId);
         for (Long friendId: friendIdList){
             Member member=memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
-
             FriendFollowDto friendDto=new FriendFollowDto(
                     friendId, member.getNickname(), imageService.getImage(member.getImageId()));
             friendDtoList.add(friendDto);
