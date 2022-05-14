@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const ProductsContent = styled.div`
   display: flex;
@@ -35,7 +35,6 @@ export const Card = styled.div`
   &:hover {
     background-color: #edbaba;
     transform: scale(1.1);
-    cursor: pointer;
   }
 `;
 
