@@ -44,7 +44,7 @@ class Data {
     this.isAdmin = data.isAdmin || false;
     this.isKakao = data.isKakao || false;
     this.verse = data.verse || "";
-    this.image = data.image || new File([], "");
+    this.image = data.image;
   }
 }
 
@@ -68,7 +68,7 @@ const Setting = (props: Props) => {
     cropper.getCroppedCanvas().toBlob((blob: any) => {
       const now = {
         ...mydata,
-        image: new File([blob], "profileimage"),
+        image: new File([blob], "profileimage.png"),
       };
       setMydata(now);
     });
@@ -123,7 +123,7 @@ const Setting = (props: Props) => {
     for (const key in mydata) {
       data.append(key, (mydata as any)[key]);
     }
-    data.append("password", "aaa123123");
+    // data.append("password", "aaa123123");
     axiosConnector({
       method: "POST",
       url: "profile/update",
