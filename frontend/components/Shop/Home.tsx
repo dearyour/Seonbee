@@ -13,6 +13,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { layoutAction } from "store/slice/layout";
 import { RootState } from "store/slice";
 import { IoMdGitMerge } from "react-icons/io";
+import CartList from "components/ShopContainer/List/CartList";
+import Swal from "sweetalert2";
 const sortOptionList = [
   { value: "ratingDesc", name: "최다 조회 수" },
   { value: "ratingAsc", name: "최대 평점 순" },
@@ -22,7 +24,11 @@ const sortOptionList = [
 const Home = () => {
   const dispatch = useDispatch();
   const ShopReduxState = useSelector(
-    (state: RootState) => state.layout.detailData
+    (state: RootState) => state.layout?.detailData
+  );
+  const CartData = useSelector((state: RootState) => state.layout?.cartData);
+  const { friendId } = useSelector(
+    (state: RootState) => state.layout?.giveUser
   );
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedRating, setSelectedRating] = useState(null);
@@ -31,7 +37,10 @@ const Home = () => {
   const [categoryTag, setCategoryTag] = useState(1);
   const [categoryTags, setCategoryTags] = useState(1);
   const [sortType, setSortType] = useState<String>("ratingDesc");
-
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const toggleCart = () => {
+    setIsCartOpen((prev) => !prev);
+  };
   const handleClickTag = useCallback((tag: number) => {
     setCategoryTag(tag);
   }, []);
@@ -71,6 +80,42 @@ const Home = () => {
       setNowFeedsNum(nowFeedsnum + 5);
     }, 1000);
     setLoading(false);
+  };
+  // 주고싶소
+  const __postGiveUser = (e: any) => {
+    const token = sessionStorage.getItem("Token");
+    e.preventDefault();
+    axios({
+      method: "POST",
+      url: process.env.NEXT_PUBLIC_BACK + "shop/give",
+      headers: { Authorization: "Bearer " + token },
+      data: {
+        friendId,
+        productId: CartData.productId,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.status == 200) {
+          Swal.fire({
+            title: "주고싶소에 추가 되었습니다.",
+            text: "",
+            icon: "success",
+            showConfirmButton: false,
+          });
+        }
+        toggleCart();
+      })
+      .catch((err) => {
+        console.log(err.response);
+        Swal.fire({
+          title: "이미 주고싶소에 추가된 상품입니다.",
+          text: "",
+          icon: "error",
+          showConfirmButton: false,
+        });
+        toggleCart();
+      });
   };
   //검색 상품 상태
   const __getSearchShop = (e: any) => {
@@ -155,53 +200,57 @@ const Home = () => {
 
   const applyFilters = () => {
     let updatedList = ShopReduxState;
-    // Rating Filter
-    if (selectedRating) {
-      updatedList = updatedList.filter(
-        (item: any) => Number(item.rating) === parseInt(selectedRating)
-      );
+    if (updatedList) {
+      // Rating Filter
+      if (selectedRating) {
+        updatedList = updatedList.filter(
+          (item: any) => Number(item.rating) === parseInt(selectedRating)
+        );
+      }
+
+      // Category Filter
+      if (selectedCategory) {
+        updatedList = updatedList.filter(
+          (item: any) => item.category === selectedCategory
+        );
+      }
+
+      // Cuisine Filter
+      const cuisinesChecked = cuisines
+        .filter((item) => item.checked)
+        .map((item) => item.label.toLowerCase());
+
+      if (cuisinesChecked.length) {
+        updatedList = updatedList.filter((item: any) =>
+          cuisinesChecked.includes(item.cuisine)
+        );
+      }
+
+      // Search Filter
+      // if (searchInput) {
+      //   updatedList = updatedList.filter(
+      //     (item) =>
+      //       item.title.toLowerCase().search(searchInput.toLowerCase().trim()) !==
+      //       -1
+      //   );
+      // }
+
+      // Price Filter
+      const minPrice = selectedPrice[0];
+      const maxPrice = selectedPrice[1];
+
+      if (shopItem.length) {
+        updatedList = updatedList.filter(
+          (item: any) => item.price >= minPrice && item.price <= maxPrice
+        );
+      }
+
+      // updatedList = updatedList.sort(compare);
+
+      setShopItem(updatedList);
+
+      !updatedList.length ? setResultsFound(false) : setResultsFound(true);
     }
-
-    // Category Filter
-    if (selectedCategory) {
-      updatedList = updatedList.filter(
-        (item: any) => item.category === selectedCategory
-      );
-    }
-
-    // Cuisine Filter
-    const cuisinesChecked = cuisines
-      .filter((item) => item.checked)
-      .map((item) => item.label.toLowerCase());
-
-    if (cuisinesChecked.length) {
-      updatedList = updatedList.filter((item: any) =>
-        cuisinesChecked.includes(item.cuisine)
-      );
-    }
-
-    // Search Filter
-    // if (searchInput) {
-    //   updatedList = updatedList.filter(
-    //     (item) =>
-    //       item.title.toLowerCase().search(searchInput.toLowerCase().trim()) !==
-    //       -1
-    //   );
-    // }
-
-    // Price Filter
-    const minPrice = selectedPrice[0];
-    const maxPrice = selectedPrice[1];
-
-    updatedList = updatedList.filter(
-      (item: any) => item.price >= minPrice && item.price <= maxPrice
-    );
-
-    // updatedList = updatedList.sort(compare);
-
-    setShopItem(updatedList);
-
-    !updatedList.length ? setResultsFound(false) : setResultsFound(true);
   };
 
   useEffect(() => {
@@ -218,7 +267,93 @@ const Home = () => {
         setSearchOption={setSearchOption}
         getSearchShop={__getSearchShop}
         data={shopItem}
+        toggleCart={toggleCart}
       />
+      {/* {isCartOpen && (
+        <div id="backdrop" className="toggleBtn" onClick={toggleCart}></div>
+      )} */}
+      {isCartOpen && (
+        <aside className="dropPage">
+          {/* 장바구니의 가시성은 아래 div의 (id="shopping-cart") class명으로 제어합니다. 
+        translate-x-full: 장바구니 닫힘 translate-x-0: 장바구니 열림 */}
+          <section
+            className={`dropSection translate-x-${isCartOpen ? 0 : "full"}`}
+            id="shopping-cart"
+          >
+            <div className="dropSide">
+              <div className="dropTop">
+                <div className="dropHeader">
+                  <div className="dropHe">
+                    <button
+                      type="button"
+                      className="dropTopBtn"
+                      onClick={toggleCart}
+                    >
+                      <svg
+                        id="close-cart-btn"
+                        className="ImageXBtn"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                    </button>
+                  </div>
+                  <h2 className="dropHead">주고싶소</h2>
+                </div>
+                {/* 아래 하드코딩 되어있는 장바구니 목록들을 유저 상호작용에 맞게 렌더링 되도록 변경해주세요.  */}
+                <div id="cart-list">
+                  <ul className="cartList">
+                    <Blue>친구 검색</Blue>
+                    <SearchUsers />
+                    <CartList />
+                    {/* <CartList
+                                      cartItems={cartItems}
+                                      setCartItems={setCartItems}
+                                  /> */}
+                  </ul>
+                </div>
+              </div>
+              <div className="dropBottom">
+                <div className="bottomPrice">
+                  <p>선물 금액</p>
+                  <p className="priceBold" id="total-count">
+                    {/* {cartItems
+                                      .reduce(
+                                          (acc, cur) =>
+                                              cur.price * cur.count + acc,
+                                          0
+                                      )
+                                      .toLocaleString() + '원'} */}
+                    {CartData.price
+                      ? CartData.price.toLocaleString() + `원`
+                      : `0 원`}
+                  </p>
+                </div>
+                <p
+                  id="payment-btn"
+                  className="checkPay"
+                  onClick={__postGiveUser}
+                >
+                  벗에게 주고 싶소
+                </p>
+                <div className="dropBtnWrp">
+                  <p>
+                    <button
+                      type="button"
+                      className="shopBtn"
+                      onClick={toggleCart}
+                    >
+                      계속 저잣거리 둘러보기
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </aside>
+      )}
       {searchOption && (
         <section>
           <div className="input_box category_list_wrapper">
@@ -259,14 +394,13 @@ const Home = () => {
               changeChecked={handleChangeChecked}
               changeCheckedd={handleChangeCheckedd}
             />
-            <Blue>친구 검색</Blue>
-            <SearchUsers />
           </div>
         )}
+
         {/* List & Empty View */}
         <div className="home_list-wrap">
           {/* {resultsFound ? <List list={list} /> : <EmptyView />} */}
-          {shopItem ? (
+          {shopItem.length ? (
             <InfiniteScroll
               dataLength={shopItem.slice(0, nowFeedsnum).length} //This is important field to render the next data
               next={loadmoredata}
@@ -281,11 +415,14 @@ const Home = () => {
             >
               {shopItem &&
                 shopItem.slice(0, nowFeedsnum).map((item: any, idx: number) => {
-                  // console.log(feeds);
-                  // console.log(feedstate.length)
-                  // console.log(nowFeedsnum)
-
-                  return <List list={item} key={idx} />;
+                  return (
+                    <List
+                      list={item}
+                      key={idx}
+                      toggleCart={toggleCart}
+                      isCartOpen={isCartOpen}
+                    />
+                  );
                 })}
             </InfiniteScroll>
           ) : (

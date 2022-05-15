@@ -10,6 +10,7 @@ const SearchBar = ({
   setSearchOption,
   getSearchShop,
   data,
+  toggleCart,
 }) => {
   const __Routing = () => {
     // location.reload();
@@ -45,9 +46,33 @@ const SearchBar = ({
       <SearchOptionButton onClick={toggleSearchOption}>
         검색 옵션 {searchOption ? "닫기" : "열기"}
       </SearchOptionButton>
+      <ToggleBtnCart
+        id="open-cart-btn"
+        className="fill-gray-400 hover:fill-gray-500"
+        onClick={toggleCart}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="36"
+          height="36"
+          viewBox="0 0 24 24"
+        >
+          <path d="M10 19.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5zm3.5-1.5c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm6.304-15l-3.431 12h-2.102l2.542-9h-16.813l4.615 11h13.239l3.474-12h1.929l.743-2h-4.196z" />
+        </svg>
+      </ToggleBtnCart>
     </form>
   );
 };
+
+const ToggleBtnCart = styled.button`
+  border-color: transparent;
+  border-radius: 10px;
+  margin-left: 30px;
+  fill: #9ca3af;
+  &:hover {
+    fill: #6b7280;
+  }
+`;
 const SearchOptionButton = styled.div`
   cursor: pointer;
   font-size: 16px;
