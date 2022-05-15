@@ -1,6 +1,6 @@
 import { style } from "@mui/system";
 import styles from "styles/profile/profilePage.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ProfileInfo from "components/profile/ProfileInfo";
 import ProfileMain from "components/profile/main/ProfileMain";
 import Wish from "components/profile/wish/Wish";
@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { profileActions } from "store/slice/profile";
 import { RootState } from "store/slice";
+import useProfile from "store/hook/profileHooks";
 
 type Props = {};
 
@@ -19,6 +20,7 @@ const Profile = (props: Props) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { hostId } = router.query;
+  const { memberId } = useProfile();
   const profile = useSelector((state: RootState) => state.profile.profile);
 
   useEffect(() => {
@@ -38,15 +40,23 @@ const Profile = (props: Props) => {
   //   };
   // });
 
-  const sideBtnNames = [
-    "호패",
-    "연등회 모음",
-    "갖고 싶소",
-    "주고 싶소",
-    "추천 내역",
-    "설정",
-  ];
   const [selectedBtn, setSelectedBtn] = useState<string>("호패");
+  const [sideBtnNames, setsideBtnNames] = useState<string[]>([]);
+  useEffect(() => {
+    console.log(hostId, memberId, hostId === String(memberId));
+    if (hostId === String(memberId)) {
+      setsideBtnNames([
+        "호패",
+        "연등회 모음",
+        "갖고 싶소",
+        "주고 싶소",
+        "추천 내역",
+        "설정",
+      ]);
+    } else {
+      setsideBtnNames(["호패", "갖고 싶소"]);
+    }
+  }, [hostId, memberId]);
 
   const sideBtns = () => {
     const sideBtnNamesLen = sideBtnNames.length;
@@ -117,7 +127,27 @@ const Profile = (props: Props) => {
               </div>
             </div>
             {/* 버튼 영역 */}
-            <div className={styles.side_btns + " font_3"}>{sideBtns()}</div>
+            <div className={styles.side_btns + " font_3"}>
+              {/* {sideBtnNames.map((now: string, index: number) => {
+                return (
+                  <div
+                    key={index}
+                    className={
+                      (selectedBtn === now
+                        ? styles.selected_btn
+                        : styles.side_btn) + " center_flex bold clickable"
+                    }
+                    onClick={(e) => {
+                      setSelectedBtn(now);
+                      dispatch(profileActions.reset());
+                    }}
+                  >
+                    {now}
+                  </div>
+                );
+              })} */}
+              {sideBtns()}
+            </div>
           </div>
         </div>
       ) : null}

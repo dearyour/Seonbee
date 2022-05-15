@@ -35,7 +35,7 @@ function Btn({
     color: fontColor,
     borderRadius: 30,
     backgroundColor: mainColor,
-    border: "2px solid " + mainColor,
+    border: "2px solid " + borderColor,
     fontFamily: "Pretendard",
     "&:hover": {
       backgroundColor: effectColor,
@@ -45,8 +45,8 @@ function Btn({
     },
     "&:active": {
       boxShadow: "none",
-      backgroundColor: effectColor,
-      borderColor: effectColor,
+      backgroundColor: mainColor,
+      borderColor: borderColor,
       color: effectFontColor,
     },
   });

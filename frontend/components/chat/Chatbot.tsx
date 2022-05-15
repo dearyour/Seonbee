@@ -17,6 +17,7 @@ import { useEffectOnce } from 'store/hook/useEffectOnce';
 import { chatbotActions } from 'store/slice/chatbot';
 import Btn from 'components/commons/Btn';
 import Router from 'next/router';
+import { RootState } from 'store/slice';
 
 function Chatbot() {
   // const textQuery = async () => {
@@ -28,12 +29,14 @@ function Chatbot() {
   // };
   const baseUrl = process.env.NEXT_PUBLIC_CHAT;
 
-  const dispatch = useDispatch();
   const [currInput, setCurrInput] = useState<string>('');
   const [isCompleted, setCompleted] = useState<boolean>(false);
 
   // const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLInputElement>(null);
+
+  const dispatch = useDispatch();
+  const messages = useSelector((state: RootState) => state.chatbot.messages);
 
   useEffectOnce(() => {
     dispatch(chatbotActions.resetMessage());
@@ -65,7 +68,7 @@ function Chatbot() {
     try {
       // textQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        baseUrl + "dialogflow/textQuery",
+        baseUrl + 'dialogflow/textQuery',
         textQueryVariables
       );
       // const content = response.data.fulfillmentMessages[0];
@@ -136,7 +139,7 @@ function Chatbot() {
     try {
       // eventQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        baseUrl + "dialogflow/eventQuery",
+        baseUrl + 'dialogflow/eventQuery',
         eventQueryVariables
       );
 
@@ -185,13 +188,70 @@ function Chatbot() {
     if (currInput) {
       textQuery(currInput);
 
-      setCurrInput("");
+      setCurrInput('');
 
       // if (inputRef.current) {
       //   inputRef.current.value = '';
       //   inputRef.current.focus();
       // }
     }
+  };
+
+  const routeToRecommend = () => {
+    const query = setRouterQueries();
+
+    Router.push(
+      { pathname: '/recommend', query: query },
+      { pathname: '/recommend' }
+    );
+  };
+
+  const setRouterQueries = () => {
+    const query = {
+      name: '',
+      gender: '',
+      age: 0,
+      mbti: '',
+      interest: '',
+      relation: '',
+      purpose: '',
+      price: 0,
+    };
+
+    for (let i = 2; i < messages.length; i++) {
+      if (messages[i].who === 'bot') {
+        switch (messages[i].question) {
+          case 'name':
+            query.name = messages[i].answer;
+            break;
+          case 'gender':
+            query.gender = messages[i].answer === '사내' ? 'M' : 'F';
+            break;
+          case 'age':
+            query.age = messages[i].answer.slice(0, 2);
+            break;
+          case 'mbti':
+            query.mbti = messages[i].answer;
+            break;
+          case 'interest':
+            query.interest = messages[i].answer;
+            break;
+          case 'relation':
+            query.relation = messages[i].answer;
+            break;
+          case 'purpose':
+            query.purpose = messages[i].answer;
+            break;
+          case 'price':
+            query.price = messages[i].answer;
+            break;
+          default:
+            break;
+        }
+      }
+    }
+
+    return query;
   };
 
   return (
@@ -206,15 +266,7 @@ function Chatbot() {
       <ChatbotFooter>
         {isCompleted ? (
           <>
-            <Btn
-              className="me-5"
-              onClick={() =>
-                Router.push(
-                  { pathname: '/recommend', query: { hi: '안녕' } },
-                  { pathname: '/recommend' }
-                )
-              }
-            >
+            <Btn className="me-5" onClick={routeToRecommend}>
               <AiOutlineGift />
               &nbsp; 추천 결과 보러가기
             </Btn>
