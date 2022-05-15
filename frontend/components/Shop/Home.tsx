@@ -217,6 +217,7 @@ const Home = () => {
         searchOption={searchOption}
         setSearchOption={setSearchOption}
         getSearchShop={__getSearchShop}
+        data={shopItem}
       />
       {searchOption && (
         <section>

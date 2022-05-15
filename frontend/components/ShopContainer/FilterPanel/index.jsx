@@ -49,7 +49,7 @@ const FilterPanel = ({
       </div>
     </div>
     <div className="input-groupShop">
-      <p className="label-range">Price Range</p>
+      <p className="label-range">가격 범위</p>
       <SliderProton value={selectedPrice} changePrice={changePrice} />
     </div>
     <div className="input-groupShop">

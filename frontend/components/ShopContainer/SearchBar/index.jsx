@@ -9,10 +9,11 @@ const SearchBar = ({
   searchOption,
   setSearchOption,
   getSearchShop,
+  data,
 }) => {
   const __Routing = () => {
     // location.reload();
-    Router.push(`/`);
+    Router.push(`/social`);
     Router.push(`/shop`);
     // setTimeout(() => {
     //   Router.push(`/wine`);
@@ -40,19 +41,19 @@ const SearchBar = ({
       >
         검색조건 초기화
       </div>
-      <div className="btng--gold">{}개 검색완료</div>
+      <div className="btng--gold">{data.length} 개 검색완료</div>
       <SearchOptionButton onClick={toggleSearchOption}>
         검색 옵션 {searchOption ? "닫기" : "열기"}
       </SearchOptionButton>
     </form>
   );
 };
-
 const SearchOptionButton = styled.div`
   cursor: pointer;
   font-size: 16px;
   text-decoration: underline;
   color: #5e5e5e;
-  margin-left: 100px;
+  margin-left: 50px;
+  // white-space: nowrap;
 `;
 export default SearchBar;

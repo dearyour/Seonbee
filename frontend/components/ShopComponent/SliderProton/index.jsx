@@ -44,12 +44,14 @@ const SliderProton = ({ value, changePrice }) => {
         <div>
           최저 가격 <br />
           [&nbsp;
-          {value[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}&nbsp;]
+          {value[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}&nbsp;
+          원&nbsp;]
         </div>
         <div>
           최대 가격 <br />
           [&nbsp;
-          {value[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}&nbsp;]
+          {value[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}&nbsp;
+          원&nbsp;]
         </div>
       </VV>
     </div>

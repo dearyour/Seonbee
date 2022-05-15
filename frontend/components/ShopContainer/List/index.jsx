@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import Router from "next/router";
 import axios from "axios";
+import Swal from "sweetalert2";
 const List = ({ list }) => {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
@@ -19,6 +20,26 @@ const List = ({ list }) => {
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+  const __Wishlist = () => {
+    const token = sessionStorage.getItem("Token");
+    axios({
+      method: "GET",
+      url: process.env.NEXT_PUBLIC_BACK + "shop/wish/" + list.productId,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        console.log(res);
+        Swal.fire({
+          title: "갖고싶소에 추가 되었습니다.",
+          text: "♥",
+          icon: "success",
+          showConfirmButton: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err.response);
       });
   };
   useEffect(() => {}, [list]);
@@ -66,7 +87,9 @@ const List = ({ list }) => {
             원
           </p>
           <div className="longCardBtnWrp">
-            <a className="post_cta">내가 갖고 싶소</a>
+            <a className="post_cta" onClick={__Wishlist}>
+              내가 갖고 싶소
+            </a>
 
             <a className="post_ctas">벗에게 주고 싶소</a>
           </div>
