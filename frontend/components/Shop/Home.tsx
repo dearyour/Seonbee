@@ -31,7 +31,10 @@ const Home = () => {
   const [categoryTag, setCategoryTag] = useState(1);
   const [categoryTags, setCategoryTags] = useState(1);
   const [sortType, setSortType] = useState<String>("ratingDesc");
-
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const toggleCart = () => {
+    setIsCartOpen((prev) => !prev);
+  };
   const handleClickTag = useCallback((tag: number) => {
     setCategoryTag(tag);
   }, []);
@@ -218,7 +221,85 @@ const Home = () => {
         setSearchOption={setSearchOption}
         getSearchShop={__getSearchShop}
         data={shopItem}
+        toggleCart={toggleCart}
       />
+      {/* {isCartOpen && (
+        <div id="backdrop" className="toggleBtn" onClick={toggleCart}></div>
+      )} */}
+      {isCartOpen && (
+        <aside className="dropPage">
+          {/* 장바구니의 가시성은 아래 div의 (id="shopping-cart") class명으로 제어합니다. 
+        translate-x-full: 장바구니 닫힘 translate-x-0: 장바구니 열림 */}
+          <section
+            className={`dropSection translate-x-${isCartOpen ? 0 : "full"}`}
+            id="shopping-cart"
+          >
+            <div className="dropSide">
+              <div className="dropTop">
+                <div className="dropHeader">
+                  <h2 className="dropHead">주고싶소</h2>
+                  <div className="dropHe">
+                    <button
+                      type="button"
+                      className="dropTopBtn"
+                      onClick={toggleCart}
+                    >
+                      <svg
+                        id="close-cart-btn"
+                        className="ImageXBtn"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                {/* 아래 하드코딩 되어있는 장바구니 목록들을 유저 상호작용에 맞게 렌더링 되도록 변경해주세요.  */}
+                <div id="cart-list">
+                  <ul className="cartList">
+                    <Blue>친구 검색</Blue>
+                    <SearchUsers />
+                    {/* <CartList
+                                      cartItems={cartItems}
+                                      setCartItems={setCartItems}
+                                  /> */}
+                  </ul>
+                </div>
+              </div>
+              <div className="dropBottom">
+                <div className="bottomPrice">
+                  <p>결제금액</p>
+                  <p className="priceBold" id="total-count">
+                    {/* {cartItems
+                                      .reduce(
+                                          (acc, cur) =>
+                                              cur.price * cur.count + acc,
+                                          0
+                                      )
+                                      .toLocaleString() + '원'} */}
+                  </p>
+                </div>
+                <p
+                  id="payment-btn"
+                  className="checkPay"
+                  // onClick={saveToLocalStorage}
+                >
+                  벗에게 주고 싶소
+                </p>
+                <div className="dropBtnWrp">
+                  <p>
+                    <button type="button" className="shopBtn">
+                      계속 저잣거리 둘러보기
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </aside>
+      )}
       {searchOption && (
         <section>
           <div className="input_box category_list_wrapper">
@@ -259,10 +340,9 @@ const Home = () => {
               changeChecked={handleChangeChecked}
               changeCheckedd={handleChangeCheckedd}
             />
-            <Blue>친구 검색</Blue>
-            <SearchUsers />
           </div>
         )}
+
         {/* List & Empty View */}
         <div className="home_list-wrap">
           {/* {resultsFound ? <List list={list} /> : <EmptyView />} */}
