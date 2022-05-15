@@ -164,7 +164,7 @@ function Recommend() {
             {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
           </Price>
           <Stack direction="row" spacing={2}>
-            <a href={item.buyUrl}>
+            <a href={item.buyUrl} target="_blank" rel="noopener noreferrer">
               <Btn>상품 구경하기</Btn>
             </a>
             {sessionStorage.getItem('Token') &&
