@@ -121,6 +121,29 @@
   font-weight: 600;
 }
 /* {카테고리 아이템} */
+
+.CartCategoryItem {
+  cursor: pointer;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.CartCategoryItem_on_1 {
+  background-color: #64c964;
+  color: white;
+}
+.CartCategoryItem_off {
+  background-color: #ececec;
+}
 .category_list_wrapper {
   margin-top: 10px;
   display: grid;
@@ -314,6 +337,7 @@
     0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  background-color: rgb(253, 252, 252);
 }
 
 .dropTop {
@@ -400,10 +424,14 @@
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   cursor: pointer;
+  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  color: black;
 }
 .checkPay:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(14 165 233 / var(--tw-bg-opacity));
+  background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
+  color: #fff;
 }
 .dropBtnWrp {
   margin-top: 1.5rem;
@@ -418,10 +446,19 @@
 .shopBtn {
   font-weight: 500;
   --tw-text-opacity: 1;
-  color: rgb(56 189 248 / var(--tw-text-opacity));
+  /* color: rgb(56 189 248 / var(--tw-text-opacity)); */
   border-color: transparent;
+  font-size: 1rem;
+  background-image: linear-gradient(to right, #f7cfa9 0%, #eb9b51 100%);
+  border-radius: 10px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
 }
 .shopBtn:hover {
   --tw-text-opacity: 1;
   color: rgb(14 165 233 / var(--tw-text-opacity));
+  background-image: linear-gradient(to right, #f7cfa9 0%, #eb9b51 100%);
+  color: #fff;
 }
