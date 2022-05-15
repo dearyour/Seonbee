@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Member } from "../interface/member";
 const initialState: Member | any = {
-  info: [],
+  info: { memberId: 0, nickname: "", imageString: "" },
   isLoading: false,
   error: null,
   session: "",

@@ -1,12 +1,10 @@
 package com.seonbi.config;
 
-import com.seonbi.api.service.MemberService;
 import com.seonbi.auth.JwtAuthenticationFilter;
 import com.seonbi.db.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,11 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    // DAO 기반으로 Authentication Provider를 생성
-    // BCrypt Password Encoder와 UserDetailService 구현체를 설정
-//    @Bean
-//        auth.authenticationProvider(authenticationProvider());
-//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         /*

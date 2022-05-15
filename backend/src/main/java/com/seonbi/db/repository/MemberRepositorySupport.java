@@ -14,9 +14,6 @@ public class MemberRepositorySupport {
     private JPAQueryFactory jpaQueryFactory;
     QMember qMember=QMember.member;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
-
     @Transactional
     public void deleteMember(Long memberId) {
         jpaQueryFactory.update(qMember)

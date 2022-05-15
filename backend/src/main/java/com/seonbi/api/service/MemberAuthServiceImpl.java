@@ -11,9 +11,7 @@ public class MemberAuthServiceImpl implements MemberAuthService{
     @Override
     public Member memberAuthorize(Authentication authentication) {
         SeonbiUserDetail details = (SeonbiUserDetail) authentication.getDetails();
-        if (details==null){
-            return null;
-        }
+        if (details==null)  return null;
         return details.getMember();
     }
 }

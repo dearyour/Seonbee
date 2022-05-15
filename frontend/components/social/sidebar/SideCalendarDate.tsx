@@ -1,8 +1,16 @@
+import styled from "@emotion/styled";
 import { Card, CardContent } from "@mui/material";
+import { useRouter } from "next/router";
 import React from "react";
 import FriendSchedule from "store/interface/social/friendschedule";
 
 const SideCalendarDate = ({ props }: { props: FriendSchedule[] }) => {
+  const router = useRouter();
+  const CardWrap = styled(Card)`
+    &:hover {
+      background-color: aliceblue;
+    }
+  `;
   return (
     <div className="mt-2">
       <Card>
@@ -10,10 +18,18 @@ const SideCalendarDate = ({ props }: { props: FriendSchedule[] }) => {
           {props.length > 0
             ? props.map((schedule: FriendSchedule, index: number) => {
                 return (
-                  <div key={index} className="row">
-                    <div className="col">{schedule.nickname}</div>
-                    <div className="col">{schedule.title}</div>
-                  </div>
+                  <CardWrap
+                    key={index}
+                    className="d-flex rounded my-2 p-2 border clickable"
+                    onClick={() => {
+                      router.push({
+                        pathname: "/profile/" + String(schedule.friendId),
+                      });
+                    }}
+                  >
+                    <div className="me-4">{schedule.nickname}</div>
+                    <div className="">{schedule.title}</div>
+                  </CardWrap>
                 );
               })
             : null}
