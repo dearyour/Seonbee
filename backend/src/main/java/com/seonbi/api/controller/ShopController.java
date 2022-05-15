@@ -59,8 +59,9 @@ public class ShopController {
 
         int addGiveProductCode=recommendService.addGiveProduct(member.getMemberId(), giveProductReq.getFriendId(), giveProductReq.getProductId());
         if (addGiveProductCode==401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 사용자입니다."));
+        if (addGiveProductCode==402)    return ResponseEntity.status(402).body(BaseResponseBody.of(402, "이미 등록한 상품입니다."));
         if (addGiveProductCode==403)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        productService.addGiveProduct(giveProductReq.getProductId(), 1);    // 갖고싶소 수 올리기
+        productService.addGiveProduct(giveProductReq.getProductId(), 1);    // 주고싶소 수 올리기
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
@@ -71,8 +72,9 @@ public class ShopController {
         Member member=memberAuthService.memberAuthorize(authentication);
         if (member==null)    return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 
-        wishlistService.addWishlist(member.getMemberId(), productId);
-        productService.addWishProduct(productId, 1);    // 주고싶소 수 올리기
+        int addWishProductCode=wishlistService.addWishlist(member.getMemberId(), productId);
+        if (addWishProductCode==402)    return ResponseEntity.status(402).body(BaseResponseBody.of(402, "이미 등록한 상품입니다."));
+        productService.addWishProduct(productId, 1);    // 갖고싶소 수 올리기
         return ResponseEntity.status(200).body(ReceiverProductAllRes.of(200, "success"));
     }
 

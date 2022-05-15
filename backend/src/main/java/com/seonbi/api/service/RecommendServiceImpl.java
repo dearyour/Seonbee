@@ -317,6 +317,8 @@ public class RecommendServiceImpl implements RecommendService {
     public int addGiveProduct(Long memberId, Long friendId, Long productId) {
         if (!memberService.isMemberValid(friendId))    return 401;
         if (!friendService.isFriend(memberId, friendId))    return 403;
+        if (recommendRepository.existsRecommendByProductIdAndMemberIdAndReceiverIdAndIsDeleted(     // 상품 중복
+                productId, memberId, friendId, false))  return 402;
         Recommend recommend=new Recommend(productId, friendId, memberId, true, true);
         recommendRepository.save(recommend);
         return 200;
