@@ -45,8 +45,8 @@ function Btn({
     },
     "&:active": {
       boxShadow: "none",
-      backgroundColor: effectColor,
-      borderColor: effectColor,
+      backgroundColor: mainColor,
+      borderColor: borderColor,
       color: effectFontColor,
     },
   });
