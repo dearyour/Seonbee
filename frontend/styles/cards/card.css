@@ -34,13 +34,13 @@
   clip-path: circle(300px at 80% -20%);
 }
 .containerc .card:after {
-  content: "선비";
+  /* content: "선비"; */
   position: absolute;
   top: 30%;
   left: -20%;
   font-size: 11em;
   /* color: rgba(255, 255, 255, 0.02); */
-  color: #4b4032;
+  color: #e9e5e1;
   font-weight: 800;
   font-style: italic;
   z-index: 1;
@@ -51,7 +51,7 @@
   transform: translateY(-50%);
   z-index: 1000;
   width: 100%;
-  height: 220px;
+  height: 160px;
   transition: 0.5s;
 }
 .containerc .card:hover .imgBx {
@@ -174,5 +174,23 @@
     background: #232323;
     border-radius: 10px;
     overflow: hidden;
+  }
+  .containerc .card .imgBx {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    width: 100%;
+    height: 80px;
+    transition: 0.5s;
+  }
+  .containerc .card .imgBx Image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    width: 150px;
+  }
+  .contentBx .mx-2 {
   }
 }

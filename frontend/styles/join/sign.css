@@ -135,6 +135,7 @@
   color: #fff;
   max-width: 100px;
   cursor: pointer;
+  margin-top: -15px;
 }
 .formBx .signupForm form input[type="submit"] {
   background: #f43648;
