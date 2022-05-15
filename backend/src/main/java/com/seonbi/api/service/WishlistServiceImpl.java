@@ -38,9 +38,7 @@ public class WishlistServiceImpl implements WishlistService{
             WishlistDto wishlistDto=modelMapper.map(
                     productRepository.findByProductIdAndIsDeleted(wish.getProductId(), false), WishlistDto.class);
             wishlistDto.setWishlistId(wish.getWishlistId());
-            if (giver!=null){
-                wishlistDto.setGiverName(giver.getNickname());
-            }
+            if (giver!=null)    wishlistDto.setGiverName(giver.getNickname());
             wishlistDtoList.add(wishlistDto);
         }
         return wishlistDtoList;
@@ -49,19 +47,12 @@ public class WishlistServiceImpl implements WishlistService{
     @Override
     public int reserveWishlist(Long giverId, Long receiverId, Long wishlistId) {
         Wishlist wish = wishlistRepository.findByWishlistIdAndIsDeleted(wishlistId, false);
-        if (wish==null || wish.getMemberId()!=receiverId){    // 유효하지 않음
-            return 401;
-        }
-        if (wish.getGiverId()!=0l && !wish.getGiverId().equals(giverId)){    // 다른 사람이 예약
-            return 402;
-        }
-        if (wish.getGiverId()==0l){     // 예약하기
-            wish.setGiverId(giverId);
-        } else {    // 예약 취소하기
-            wish.setGiverId(0l);
-        }
-        wishlistRepository.save(wish);
+        if (wish==null || wish.getMemberId()!=receiverId)    return 401;    // 유효하지 않음
+        if (wish.getGiverId()!=0l && !wish.getGiverId().equals(giverId))    return 402;    // 다른 사람이 예약
 
+        if (wish.getGiverId()==0l)    wish.setGiverId(giverId);     // 예약하기
+        else    wish.setGiverId(0l);    // 예약 취소하기
+        wishlistRepository.save(wish);
         return 200;
     }
 
@@ -72,13 +63,14 @@ public class WishlistServiceImpl implements WishlistService{
         if (!wish.getMemberId().equals(memberId))   return 403;
         wish.setIsDeleted(true);
         wishlistRepository.save(wish);
-
         return 200;
     }
 
     @Override
-    public void addWishlist(Long memberId, Long productId) {
+    public int addWishlist(Long memberId, Long productId) {
+        if (wishlistRepository.existsWishlistByProductIdAndIsDeleted(productId, false)) return 402;     // 상품 중복
         Wishlist wishlist=new Wishlist(productId, memberId);
         wishlistRepository.save(wishlist);
+        return 200;
     }
 }

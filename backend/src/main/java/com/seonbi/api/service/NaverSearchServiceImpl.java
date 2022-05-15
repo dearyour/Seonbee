@@ -1,29 +1,20 @@
 package com.seonbi.api.service;
 
 import com.seonbi.db.entity.Product;
-import com.seonbi.db.repository.ProductRepository;
-import org.hibernate.id.IntegralDataTypeHolder;
-import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
-import java.sql.Array;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class NaverSearchServiceImpl implements NaverSearchService {
@@ -38,7 +29,15 @@ public class NaverSearchServiceImpl implements NaverSearchService {
     public void saveResults() {
 
         List<String> keyword = txtRead();
-        HashSet<Long> set=new HashSet<>();
+        HashSet<Product> set=new HashSet<>();
+
+        // 현재 product.csv를 가져와서  읽으면서 set을 만든다
+
+
+
+
+
+
 
         for (int i = 0; i < keyword.size(); i++) {
 
@@ -52,7 +51,7 @@ public class NaverSearchServiceImpl implements NaverSearchService {
             {
                 Product product=productList.get(j);
                 product.setKeyword(keyword.get(i));
-                set.add(product.getProductId());
+                set.add(product);
             }
         }
 
@@ -174,6 +173,36 @@ public class NaverSearchServiceImpl implements NaverSearchService {
         url = list.get(1);
         System.out.println("상품 url" + url);
         return url;
+    }
+
+    @Override
+    public void csvRead(Set<Product> set) {
+//        File csv = new File("C:\\Users\\multicampus\\Desktop\\썸트렌드 데이터\\용도csv\\product.csv");
+//        BufferedReader br = null;
+//        String line = "";
+//
+//        try {
+//            br = new BufferedReader(new FileReader(csv));
+//            while ((line = br.readLine()) != null) {
+//                List<String> aLine = new ArrayList<String>();
+//                String[] lineArr = line.split("/t"); // 파일의 한 줄을 ,로 나누어 배열에 저장 후 리스트로 변환한다.
+//                aLine = Arrays.asList(lineArr);
+//                aLine.set(0,subject);  //맨첫번째는 주제로
+//                csvList.add(aLine);
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (br != null) {
+//                    br.close(); // 사용 후 BufferedReader를 닫아준다.
+//                }
+//            } catch(IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     public void writeCSV(List<Product> list)
