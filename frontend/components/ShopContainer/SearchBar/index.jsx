@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import Router from "next/router";
 import styled from "@emotion/styled";
-const SearchBar = ({ value, changeInput, searchOption, setSearchOption }) => {
+import axios from "axios";
+const SearchBar = ({
+  value,
+  changeInput,
+  searchOption,
+  setSearchOption,
+  getSearchShop,
+  data,
+}) => {
   const __Routing = () => {
     // location.reload();
-    Router.push(`/`);
+    Router.push(`/social`);
     Router.push(`/shop`);
     // setTimeout(() => {
     //   Router.push(`/wine`);
@@ -16,7 +24,7 @@ const SearchBar = ({ value, changeInput, searchOption, setSearchOption }) => {
   };
 
   return (
-    <div className="searchBar-wrap">
+    <form className="searchBar-wrap" onSubmit={getSearchShop}>
       <SearchIcon className="searchBar-icon" />
       <input
         type="text"
@@ -33,19 +41,19 @@ const SearchBar = ({ value, changeInput, searchOption, setSearchOption }) => {
       >
         검색조건 초기화
       </div>
-      <div className="btng--gold">{}개 검색완료</div>
+      <div className="btng--gold">{data.length} 개 검색완료</div>
       <SearchOptionButton onClick={toggleSearchOption}>
         검색 옵션 {searchOption ? "닫기" : "열기"}
       </SearchOptionButton>
-    </div>
+    </form>
   );
 };
-
 const SearchOptionButton = styled.div`
   cursor: pointer;
   font-size: 16px;
   text-decoration: underline;
   color: #5e5e5e;
-  margin-left: 100px;
+  margin-left: 50px;
+  // white-space: nowrap;
 `;
 export default SearchBar;

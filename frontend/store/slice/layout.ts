@@ -3,7 +3,7 @@ import { layoutParam } from "store/interface/layout.interface";
 
 const initialState: layoutParam = {
   isDetailOpen: false,
-  detailData: undefined,
+  detailData: [],
 };
 
 export const layoutSlice = createSlice({
