@@ -46,6 +46,7 @@
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.4.10",
     "swiper": "^8.1.4",
+    "tslib": "^2.4.0",
     "websocket": "^1.0.34"
   },
   "devDependencies": {
