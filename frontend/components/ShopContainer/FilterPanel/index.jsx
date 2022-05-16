@@ -19,6 +19,10 @@ const FilterPanel = ({
 }) => (
   <div>
     <div className="input-groupShop">
+      <p className="label-range">가격 범위</p>
+      <SliderProton value={selectedPrice} changePrice={changePrice} />
+    </div>
+    <div className="input-groupShop">
       <p className="label">Category</p>
       <FilterListToggle
         options={categoryList}
@@ -47,10 +51,6 @@ const FilterPanel = ({
           />
         ))}
       </div>
-    </div>
-    <div className="input-groupShop">
-      <p className="label-range">가격 범위</p>
-      <SliderProton value={selectedPrice} changePrice={changePrice} />
     </div>
     <div className="input-groupShop">
       <p className="label">Star Rating</p>

@@ -167,7 +167,7 @@
 .category_list_wrapper {
   margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(13, auto);
+  grid-template-columns: repeat(12, auto);
   gap: 0.7%;
 }
 .CategoryItem {
@@ -175,7 +175,6 @@
   border-radius: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;

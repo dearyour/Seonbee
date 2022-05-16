@@ -5,7 +5,7 @@ export const categoryRadio = [
     category_id: 1,
     category_img: process.env.PUBLIC_URL + `/assets/category1.png`,
     category_descript: "전체",
-    value: "전체",
+    value: "",
   },
   {
     category_id: 2,
@@ -73,12 +73,12 @@ export const categoryRadio = [
     category_descript: "스포츠/레저",
     value: "스포츠/레저",
   },
-  {
-    category_id: 13,
-    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
-    category_descript: "면세점",
-    value: "면세점",
-  },
+  // {
+  //   category_id: 13,
+  //   category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+  //   category_descript: "면세점",
+  //   value: "면세점",
+  // },
 ];
 export const categoryRadios = [
   {

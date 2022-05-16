@@ -122,7 +122,7 @@ const List = ({ list, toggleCart, isCartOpen }) => {
           <div className="post__date">
             <span>조회수 : {list.hit}</span>
             <br />
-            <span>추천 수 : {list.recommend}</span>
+            <span>선비 추천 수 : {list.recommend}</span>
             <br />
             <span>주고싶소 수 : {list.give}</span>
             <br />

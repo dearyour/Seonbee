@@ -23,6 +23,12 @@
   margin: 20px;
   /* overflow: auto; */
 }
+.signinBtn {
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
+}
+.signupBtn {
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
+}
 .containers .blueBg {
   position: absolute;
   top: 40px;

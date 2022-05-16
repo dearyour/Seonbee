@@ -11,6 +11,7 @@ const SearchBar = ({
   getSearchShop,
   data,
   toggleCart,
+  SearchRef,
 }) => {
   const __Routing = () => {
     // location.reload();
@@ -30,9 +31,10 @@ const SearchBar = ({
         <SearchIcon className="searchBar-icon" />
         <input
           type="text"
-          placeholder="상품 검색 입력 후 엔터"
+          placeholder="상품 명 입력 후 엔터"
           value={value}
           onChange={changeInput}
+          ref={SearchRef}
         />
         {/* <div
         className="btns"
@@ -72,7 +74,7 @@ const SearchBarWrp = styled.div`
 const ToggleBtnCart = styled.button`
   border-color: transparent;
   border-radius: 10px;
-  // margin-left: 30px;
+  // margin-right: 30px;
   padding: 0 15px;
   fill: #9ca3af;
   &:hover {
