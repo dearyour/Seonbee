@@ -1,9 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { layoutParam } from "store/interface/layout.interface";
+import { layoutParam, ShopType } from "store/interface/layout.interface";
+import { Member } from "store/interface/member";
 
-const initialState: layoutParam = {
+const initialState: any | layoutParam = {
   isDetailOpen: false,
-  detailData: undefined,
+  detailData: new ShopType({}),
+  cartData: new ShopType({}),
+  giveUser: { friendId: 0, nickname: "", imageString: "" },
 };
 
 export const layoutSlice = createSlice({
@@ -15,6 +18,15 @@ export const layoutSlice = createSlice({
     },
     updateDetailData: (state, { payload }) => {
       state.detailData = payload;
+    },
+    updateCartData: (state, { payload }) => {
+      state.cartData = payload;
+    },
+    updataGiveUser: (state, { payload }) => {
+      state.giveUser = payload;
+    },
+    reset: (state) => {
+      state = initialState;
     },
   },
 });
