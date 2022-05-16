@@ -14,6 +14,7 @@
 .home_panelList-wrap {
   flex: 1;
   display: flex;
+  justify-content: space-between;
 }
 .home_panel-wrap {
   /* flex-basis: 280px; */
@@ -54,8 +55,9 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.26);
-  padding: 1rem 1rem;
+  padding: 0.7rem 0.7rem;
   width: 100%;
+  justify-content: space-between;
 }
 .searchBar-icon {
   color: rgba(0, 0, 0, 0.26);
@@ -67,6 +69,7 @@
   outline: none;
   border: none;
   width: 40%;
+  margin-left: -150px;
 }
 
 .searchBar-wrap input::placeholder {
@@ -120,6 +123,22 @@
   color: rgba(0, 0, 0, 0.26);
   font-weight: 600;
 }
+/* 순서  */
+.ControlMenuShop {
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  /* background-color: #ececec; */
+  width: 100%;
+  text-align: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
+
+  cursor: pointer;
+  font-size: 18px;
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
+}
+
 /* {카테고리 아이템} */
 
 .CartCategoryItem {
@@ -142,20 +161,20 @@
   color: white;
 }
 .CartCategoryItem_off {
-  background-color: #ececec;
+  /* background-color: #ececec; */
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
 }
 .category_list_wrapper {
   margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(10, auto);
-  gap: 2%;
+  grid-template-columns: repeat(12, auto);
+  gap: 0.7%;
 }
 .CategoryItem {
   cursor: pointer;
   border-radius: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -173,6 +192,7 @@
 
 .CategoryItem_off {
   background-color: #ececec;
+  background-image: linear-gradient(to right, #ececec 0%, #e9e5e1 100%);
 }
 
 .CategoryItem_on_1 {
@@ -216,6 +236,18 @@
   background-color: #ce7124;
   color: white;
 }
+.CategoryItem_on_11 {
+  background-color: #9824ce;
+  color: white;
+}
+.CategoryItem_on_12 {
+  background-color: #ce244f;
+  color: white;
+}
+.CategoryItem_on_13 {
+  background-color: #b5ce24;
+  color: white;
+}
 .btns {
   width: 140px;
   padding: 10px;
@@ -242,8 +274,8 @@
 .btng--gold {
   width: 140px;
   padding: 10px;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 14px;
   font-weight: 700;
   text-align: center;
   box-sizing: border-box;
