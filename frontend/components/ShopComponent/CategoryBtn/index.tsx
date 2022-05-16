@@ -21,7 +21,7 @@ const CategoryBtn = ({
         isSelected ? `CategoryItem_on_${category_id}` : `CategoryItem_off`,
       ].join(" ")}
     >
-      {/* <img src={category_img} /> */}
+      <img src={category_img} />
       <span>{category_descript}</span>
       {/* <span>{value}</span> */}
     </div>

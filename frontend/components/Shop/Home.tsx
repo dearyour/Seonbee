@@ -74,9 +74,10 @@ const Home = () => {
 
   const [list, setList] = useState(dataList);
   const [resultsFound, setResultsFound] = useState(true);
+  const [shopItem, setShopItem] = useState([]);
+  const [shopSearchItem, setShopSearchItem] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchOption, setSearchOption] = useState(true); // 검색 옵션 토글버튼
-  const [shopItem, setShopItem] = useState([]);
   const [nowFeedsnum, setNowFeedsNum] = useState(10); //인피니트 스크롤
   const [loading, setLoading] = useState<boolean>(false);
   const loadmoredata = () => {
@@ -153,6 +154,21 @@ const Home = () => {
         console.log(err);
       });
   };
+
+  //검색 한글자 마다 호출
+  // useEffect(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: process.env.NEXT_PUBLIC_BACK + "shop/" + searchInput,
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setShopSearchItem(res.data.productList);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [searchInput]);
 
   // 처음 상품 상태
   const __GetShopState = useCallback(() => {
@@ -313,6 +329,7 @@ const Home = () => {
         data={shopItem}
         toggleCart={toggleCart}
         SearchRef={SearchRef}
+        shopSearchItem={shopSearchItem}
       />
       {/* {isCartOpen && (
         <div id="backdrop" className="toggleBtn" onClick={toggleCart}></div>
@@ -428,6 +445,18 @@ const Home = () => {
         {/* Filter Panel */}
         {searchOption && (
           <div className="home_panel-wrap">
+            <FilterPanel
+              selectedCategory={selectedCategory}
+              selectCategory={handleSelectCategory}
+              selectedRating={selectedRating}
+              selectRating={handleSelectRating}
+              selectedPrice={selectedPrice}
+              changePrice={handleChangePrice}
+              cuisines={cuisines}
+              cuisined={cuisined}
+              changeChecked={handleChangeChecked}
+              changeCheckedd={handleChangeCheckedd}
+            />
             <div className="menu_wrapper">
               <div className="left_col">
                 <ControlMenus
@@ -442,18 +471,6 @@ const Home = () => {
               /> */}
               </div>
             </div>
-            <FilterPanel
-              selectedCategory={selectedCategory}
-              selectCategory={handleSelectCategory}
-              selectedRating={selectedRating}
-              selectRating={handleSelectRating}
-              selectedPrice={selectedPrice}
-              changePrice={handleChangePrice}
-              cuisines={cuisines}
-              cuisined={cuisined}
-              changeChecked={handleChangeChecked}
-              changeCheckedd={handleChangeCheckedd}
-            />
           </div>
         )}
 
