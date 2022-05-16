@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EmptyView from "components/ShopComponent/EmptyView";
 import FilterPanel from "components/ShopContainer/FilterPanel";
@@ -26,6 +26,7 @@ const sortOptionList = [
 ];
 const Home = () => {
   const dispatch = useDispatch();
+  const SearchRef: any = useRef(null);
   const ShopReduxState = useSelector(
     (state: RootState) => state.layout?.detailData
   );
@@ -37,7 +38,8 @@ const Home = () => {
   const [selectedRating, setSelectedRating] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState([100, 1000000]);
   //카테고리 상태
-  const [categoryTag, setCategoryTag] = useState(1);
+  const [categoryTag, setCategoryTag] = useState(1); // 카테고리 숫자 찍힘
+  const [categoryTagData, setCategoryTagData] = useState(""); // 카고리 value 찍힘
   const [categoryTags, setCategoryTags] = useState(1);
   const [sortType, setSortType] = useState<String>("upperPrice");
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -46,6 +48,9 @@ const Home = () => {
   };
   const handleClickTag = useCallback((tag: number) => {
     setCategoryTag(tag);
+  }, []);
+  const handleClickTagData = useCallback((tag: string) => {
+    setCategoryTagData(tag);
   }, []);
   const handleClickTags = useCallback((tag: number) => {
     setCategoryTags(tag);
@@ -69,9 +74,10 @@ const Home = () => {
 
   const [list, setList] = useState(dataList);
   const [resultsFound, setResultsFound] = useState(true);
+  const [shopItem, setShopItem] = useState([]);
+  const [shopSearchItem, setShopSearchItem] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchOption, setSearchOption] = useState(true); // 검색 옵션 토글버튼
-  const [shopItem, setShopItem] = useState([]);
   const [nowFeedsnum, setNowFeedsNum] = useState(10); //인피니트 스크롤
   const [loading, setLoading] = useState<boolean>(false);
   const loadmoredata = () => {
@@ -121,7 +127,7 @@ const Home = () => {
           toggleCart();
         } else if (err.response.status === 402) {
           Swal.fire({
-            title: "이미 갖고싶소에 추가된 상품입니다.",
+            title: "이미 주고싶소에 추가된 상품입니다.",
             text: "",
             icon: "error",
             showConfirmButton: false,
@@ -141,11 +147,28 @@ const Home = () => {
         console.log(res);
         setShopItem(res.data.productList);
         dispatch(layoutAction.updateDetailData(res.data.productList));
+        SearchRef.current.value = "";
+        setSearchInput("");
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  //검색 한글자 마다 호출
+  // useEffect(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: process.env.NEXT_PUBLIC_BACK + "shop/" + searchInput,
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setShopSearchItem(res.data.productList);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [searchInput]);
 
   // 처음 상품 상태
   const __GetShopState = useCallback(() => {
@@ -231,9 +254,9 @@ const Home = () => {
       }
 
       // Category Filter
-      if (selectedCategory) {
+      if (categoryTagData) {
         updatedList = updatedList.filter(
-          (item: any) => item.category1.toLowerCase() === selectedCategory
+          (item: any) => item.category1.toLowerCase() === categoryTagData
         );
       }
       // // Category Filter
@@ -291,6 +314,7 @@ const Home = () => {
     selectedPrice,
     sortType,
     compare,
+    categoryTagData,
   ]);
 
   return (
@@ -304,6 +328,8 @@ const Home = () => {
         getSearchShop={__getSearchShop}
         data={shopItem}
         toggleCart={toggleCart}
+        SearchRef={SearchRef}
+        shopSearchItem={shopSearchItem}
       />
       {/* {isCartOpen && (
         <div id="backdrop" className="toggleBtn" onClick={toggleCart}></div>
@@ -398,11 +424,12 @@ const Home = () => {
                 key={it.category_id}
                 {...it}
                 onClick={handleClickTag}
+                onClickData={handleClickTagData}
                 isSelected={it.category_id === categoryTag}
               />
             ))}
           </div>
-          <div className="input_box category_list_wrapper">
+          {/* <div className="input_box category_list_wrapper">
             {categoryRadios.map((it: any) => (
               <CategoryBtn
                 key={it.category_id}
@@ -411,13 +438,25 @@ const Home = () => {
                 isSelected={it.category_id === categoryTags}
               />
             ))}
-          </div>
+          </div> */}
         </section>
       )}
       <div className="home_panelList-wrap">
         {/* Filter Panel */}
         {searchOption && (
           <div className="home_panel-wrap">
+            <FilterPanel
+              selectedCategory={selectedCategory}
+              selectCategory={handleSelectCategory}
+              selectedRating={selectedRating}
+              selectRating={handleSelectRating}
+              selectedPrice={selectedPrice}
+              changePrice={handleChangePrice}
+              cuisines={cuisines}
+              cuisined={cuisined}
+              changeChecked={handleChangeChecked}
+              changeCheckedd={handleChangeCheckedd}
+            />
             <div className="menu_wrapper">
               <div className="left_col">
                 <ControlMenus
@@ -432,18 +471,6 @@ const Home = () => {
               /> */}
               </div>
             </div>
-            <FilterPanel
-              selectedCategory={selectedCategory}
-              selectCategory={handleSelectCategory}
-              selectedRating={selectedRating}
-              selectRating={handleSelectRating}
-              selectedPrice={selectedPrice}
-              changePrice={handleChangePrice}
-              cuisines={cuisines}
-              cuisined={cuisined}
-              changeChecked={handleChangeChecked}
-              changeCheckedd={handleChangeCheckedd}
-            />
           </div>
         )}
 
@@ -455,7 +482,7 @@ const Home = () => {
               dataLength={shopItem.slice(0, nowFeedsnum).length} //This is important field to render the next data
               next={loadmoredata}
               hasMore={nowFeedsnum < shopItem.length}
-              loader={<div style={{ textAlign: "center" }}>🌟Loading...🌟</div>}
+              loader={<div style={{ textAlign: "center" }}>🌟Loading🌟</div>}
               endMessage={
                 <EmptyView />
                 // <div className="btns" style={{ textAlign: "center" }}>

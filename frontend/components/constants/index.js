@@ -3,9 +3,9 @@ env.PUBLIC_URL = env.PUBLIC_URL || "";
 export const categoryRadio = [
   {
     category_id: 1,
-    category_img: process.env.PUBLIC_URL + `/assets/category1.png`,
+    category_img: process.env.PUBLIC_URL + `/characters/hobee_face.png`,
     category_descript: "전체",
-    value: "전체",
+    value: "",
   },
   {
     category_id: 2,
@@ -33,52 +33,52 @@ export const categoryRadio = [
   },
   {
     category_id: 6,
-    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_img: process.env.PUBLIC_URL + `/assets/category6.png`,
     category_descript: "화장품/미용",
     value: "화장품/미용",
   },
   {
     category_id: 7,
-    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_img: process.env.PUBLIC_URL + `/assets/category7.png`,
     category_descript: "패션잡화",
     value: "패션잡화",
   },
   {
     category_id: 8,
-    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_img: process.env.PUBLIC_URL + `/assets/category8.png`,
     category_descript: "여가/생활편의",
     value: "여가/생활편의",
   },
   {
     category_id: 9,
-    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_img: process.env.PUBLIC_URL + `/assets/category9.png`,
     category_descript: "디지털/가전",
     value: "디지털/가전",
   },
   {
     category_id: 10,
-    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_img: process.env.PUBLIC_URL + `/assets/category10.png`,
     category_descript: "가구/인테리어",
     value: "가구/인테리어",
   },
   {
     category_id: 11,
-    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_img: process.env.PUBLIC_URL + `/assets/category11.png`,
     category_descript: "출산/육아",
     value: "출산/육아",
   },
   {
     category_id: 12,
-    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+    category_img: process.env.PUBLIC_URL + `/assets/category12.png`,
     category_descript: "스포츠/레저",
     value: "스포츠/레저",
   },
-  {
-    category_id: 13,
-    category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
-    category_descript: "면세점",
-    value: "면세점",
-  },
+  // {
+  //   category_id: 13,
+  //   category_img: process.env.PUBLIC_URL + `/assets/category5.png`,
+  //   category_descript: "면세점",
+  //   value: "면세점",
+  // },
 ];
 export const categoryRadios = [
   {
