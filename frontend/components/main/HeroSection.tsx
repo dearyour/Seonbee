@@ -6,7 +6,7 @@ import Btn from 'components/commons/Btn';
 import HobeeTobee from 'public/characters/hobeetobee.png';
 import { useRouter } from 'next/router';
 import TitleOnly from 'public/logowop2.png';
-import MainBg from 'public/mainbg2.jpg';
+import MainBg from 'public/mainbg2.png';
 import styled from '@emotion/styled';
 import { Container, MainHeading } from 'styles/main/MainGlobalElements';
 
