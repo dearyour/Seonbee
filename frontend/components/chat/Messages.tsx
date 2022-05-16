@@ -1,8 +1,9 @@
-import { Chip, Stack } from '@mui/material';
+import { Avatar, Chip, Stack } from '@mui/material';
 import axios from 'axios';
 import Btn from 'components/commons/Btn';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { css } from '@emotion/react';
 import { RootState } from 'store/slice';
 import { chatbotActions } from 'store/slice/chatbot';
 import {
@@ -13,6 +14,9 @@ import {
   MessagesTextDF,
   QuickReplies,
 } from 'styles/chat/MessageElements';
+import HobeeFace from 'public/characters/hobee_face.png';
+import TobeeFace from 'public/characters/tobee_face.png';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 function Messages() {
   const dispatch = useDispatch();
@@ -20,7 +24,17 @@ function Messages() {
   const baseUrl = process.env.NEXT_PUBLIC_CHAT;
   // const [isLoaded, setLoaded] = useState<boolean>(false);
 
+  const [character, setCharacter] = useState<number>(
+    Math.floor(2 * Math.random())
+  );
+  const [characterTyping, setCharacterTyping] = useState<boolean>(false);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   const textQuery = async (text: string) => {
+    // messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    setCharacterTyping(true);
+
     // 1. 유저가 입력한 메시지 처리
     let conversation = {
       who: 'user',
@@ -100,37 +114,12 @@ function Messages() {
 
       dispatch(chatbotActions.saveMessage(conversation));
     }
+
+    setCharacterTyping(false);
   };
 
   const renderQuickReplies = (replies: any) => {
     const result = [];
-
-    // for (let i = 0; i < replies.length; i += 4) {
-    //   result.push(
-    //     <div className="row" key={i}>
-    //       <div className="col">
-    //         <Btn filled={false} onClick={() => console.log('hihi')}>
-    //           {replies[i].stringValue}
-    //         </Btn>
-    //       </div>
-    //       <div className="col">
-    //         {i + 1 < replies.length && (
-    //           <Btn filled={false}>{replies[i + 1].stringValue}</Btn>
-    //         )}
-    //       </div>
-    //       <div className="col">
-    //         {i + 2 < replies.length && (
-    //           <Btn filled={false}>{replies[i + 2].stringValue}</Btn>
-    //         )}
-    //       </div>
-    //       <div className="col">
-    //         {i + 3 < replies.length && (
-    //           <Btn filled={false}>{replies[i + 3].stringValue}</Btn>
-    //         )}
-    //       </div>
-    //     </div>
-    //   );
-    // }
 
     for (let i = 0; i < replies.length; i += 6) {
       result.push(
@@ -211,16 +200,23 @@ function Messages() {
         // <MessagesDF key={i} style={{ paddingBottom: '1rem' }}>
         //   <MessagesTextDF>{message.content.text.text}</MessagesTextDF>
         // </MessagesDF>
-        <>
-          <MessagesDF key={i}>
-            <MessagesTextDF>{message.content.text.text}</MessagesTextDF>
-          </MessagesDF>
-          <QuickReplies>
-            {/* {message.quick_replies[0].stringValue} */}
-            {message.quick_replies !== undefined &&
-              renderQuickReplies(message.quick_replies)}
-          </QuickReplies>
-        </>
+        <Stack direction="row" spacing={2}>
+          <Avatar
+            alt="Hobee"
+            src={character == 0 ? HobeeFace.src : TobeeFace.src}
+            sx={{ width: 96, height: 96 }}
+          />
+          <div>
+            <MessagesDF key={i}>
+              <MessagesTextDF>{message.content.text.text}</MessagesTextDF>
+            </MessagesDF>
+            <QuickReplies>
+              {/* {message.quick_replies[0].stringValue} */}
+              {message.quick_replies !== undefined &&
+                renderQuickReplies(message.quick_replies)}
+            </QuickReplies>
+          </div>
+        </Stack>
       );
     } else if (message.who === 'user') {
       return (
@@ -254,9 +250,16 @@ function Messages() {
     }
   };
 
+  const override = css`
+    display: block;
+    margin-left: 10rem;
+  `;
+
   return (
     <StyledMessages>
       {renderMessages(messages)}
+      {characterTyping && <BeatLoader color="#c0b4a5" css={override} />}
+      {/* <div style={{ backgroundColor: 'palevioletred' }} ref={messagesEndRef} /> */}
       {/* <MessagesUser>
         <MessagesTextUser>Hi</MessagesTextUser>
       </MessagesUser>
