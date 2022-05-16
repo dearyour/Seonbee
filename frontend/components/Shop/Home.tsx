@@ -15,11 +15,14 @@ import { RootState } from "store/slice";
 import { IoMdGitMerge } from "react-icons/io";
 import CartList from "components/ShopContainer/List/CartList";
 import Swal from "sweetalert2";
+import ControlMenus from "components/Shop/ControlMenus";
 const sortOptionList = [
-  { value: "ratingDesc", name: "최다 조회 수" },
-  { value: "ratingAsc", name: "최대 평점 순" },
-  { value: "latest", name: "높은 가격 순" },
-  { value: "oldest", name: "낮은 가격 순" },
+  { value: "upperPrice", name: "높은 가격 순" },
+  { value: "downPrice", name: "낮은 가격 순" },
+  { value: "hitMany", name: "최다 조회수 순" },
+  { value: "recommendMany", name: "최다 추천수 순" },
+  { value: "giveMany", name: "최다 주고싶소 순" },
+  { value: "wishMany", name: "최다 갖고싶소 순" },
 ];
 const Home = () => {
   const dispatch = useDispatch();
@@ -36,7 +39,7 @@ const Home = () => {
   //카테고리 상태
   const [categoryTag, setCategoryTag] = useState(1);
   const [categoryTags, setCategoryTags] = useState(1);
-  const [sortType, setSortType] = useState<String>("ratingDesc");
+  const [sortType, setSortType] = useState<String>("upperPrice");
   const [isCartOpen, setIsCartOpen] = useState(false);
   const toggleCart = () => {
     setIsCartOpen((prev) => !prev);
@@ -107,14 +110,24 @@ const Home = () => {
         toggleCart();
       })
       .catch((err) => {
-        console.log(err.response);
-        Swal.fire({
-          title: "이미 주고싶소에 추가된 상품입니다.",
-          text: "",
-          icon: "error",
-          showConfirmButton: false,
-        });
-        toggleCart();
+        if (err.response.status === 500) {
+          console.log(err.response);
+          Swal.fire({
+            title: "로그인 후 이용 하실 수 있습니다.",
+            text: "",
+            icon: "error",
+            showConfirmButton: false,
+          });
+          toggleCart();
+        } else if (err.response.status === 402) {
+          Swal.fire({
+            title: "이미 갖고싶소에 추가된 상품입니다.",
+            text: "",
+            icon: "error",
+            showConfirmButton: false,
+          });
+          toggleCart();
+        }
       });
   };
   //검색 상품 상태
@@ -133,6 +146,7 @@ const Home = () => {
         console.log(err);
       });
   };
+
   // 처음 상품 상태
   const __GetShopState = useCallback(() => {
     return axios({
@@ -155,17 +169,25 @@ const Home = () => {
 
   const compare = useCallback(
     (a: any, b: any) => {
-      if (sortType === "latest") {
+      if (sortType === "upperPrice") {
         return parseInt(b.price) - parseInt(a.price);
-      } else if (sortType === "oldest") {
+      } else if (sortType === "downPrice") {
         return parseInt(a.price) - parseInt(b.price);
-      } else if (sortType === "ratingDesc") {
+      } else if (sortType === "hitMany") {
         {
-          return parseInt(a.price) - parseInt(b.price);
+          return parseInt(b.hit) - parseInt(a.hit);
         }
-      } else if (sortType === "ratingAsc") {
+      } else if (sortType === "recommendMany") {
         {
-          return parseInt(a.price) - parseInt(b.price);
+          return parseInt(b.recommend) - parseInt(a.recommend);
+        }
+      } else if (sortType === "giveMany") {
+        {
+          return parseInt(b.give) - parseInt(a.give);
+        }
+      } else if (sortType === "wishMany") {
+        {
+          return parseInt(b.wish) - parseInt(a.wish);
         }
         // parseFloat(a.ratingAvg.toFixed(1)) -
         // parseFloat(b.ratingAvg.toFixed(1))
@@ -211,9 +233,15 @@ const Home = () => {
       // Category Filter
       if (selectedCategory) {
         updatedList = updatedList.filter(
-          (item: any) => item.category === selectedCategory
+          (item: any) => item.category1.toLowerCase() === selectedCategory
         );
       }
+      // // Category Filter
+      // if (selectedCategory) {
+      //   updatedList = updatedList.filter(
+      //     (item: any) => item.category === selectedCategory
+      //   );
+      // }
 
       // Cuisine Filter
       const cuisinesChecked = cuisines
@@ -244,9 +272,9 @@ const Home = () => {
           (item: any) => item.price >= minPrice && item.price <= maxPrice
         );
       }
-
-      // updatedList = updatedList.sort(compare);
-
+      if (shopItem.length) {
+        updatedList = updatedList.sort(compare);
+      }
       setShopItem(updatedList);
 
       !updatedList.length ? setResultsFound(false) : setResultsFound(true);
@@ -255,7 +283,15 @@ const Home = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [selectedRating, selectedCategory, cuisines, searchInput, selectedPrice]);
+  }, [
+    selectedRating,
+    selectedCategory,
+    cuisines,
+    searchInput,
+    selectedPrice,
+    sortType,
+    compare,
+  ]);
 
   return (
     <div className="home">
@@ -382,6 +418,20 @@ const Home = () => {
         {/* Filter Panel */}
         {searchOption && (
           <div className="home_panel-wrap">
+            <div className="menu_wrapper">
+              <div className="left_col">
+                <ControlMenus
+                  value={sortType}
+                  onChange={setSortType}
+                  optionList={sortOptionList}
+                />
+                {/* <ControlMenu
+                value={filter}
+                onChange={setFilter}
+                optionList={filterOptionList}
+              /> */}
+              </div>
+            </div>
             <FilterPanel
               selectedCategory={selectedCategory}
               selectCategory={handleSelectCategory}

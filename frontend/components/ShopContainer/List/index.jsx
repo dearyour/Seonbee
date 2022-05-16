@@ -41,7 +41,19 @@ const List = ({ list, toggleCart, isCartOpen }) => {
             icon: "success",
             showConfirmButton: false,
           });
-        } else if (res.data.status == 402) {
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response.status === 500) {
+          Swal.fire({
+            title: "로그인 후 이용 하실 수 있습니다.",
+            text: "",
+            icon: "error",
+            showConfirmButton: false,
+          });
+        }
+        if (err.response.status === 402) {
           Swal.fire({
             title: "이미 갖고싶소에 추가된 상품입니다.",
             text: "",
@@ -49,14 +61,6 @@ const List = ({ list, toggleCart, isCartOpen }) => {
             showConfirmButton: false,
           });
         }
-      })
-      .catch((err) => {
-        Swal.fire({
-          title: "이미 갖고싶소에 추가된 상품입니다.",
-          text: "",
-          icon: "error",
-          showConfirmButton: false,
-        });
       });
   };
   const __giveList = () => {
@@ -88,22 +92,24 @@ const List = ({ list, toggleCart, isCartOpen }) => {
     <div className="postCardWrp">
       <div className="postCard">
         <div className="post__img" onClick={__getHitCount}>
-          <div
-            className="ImagecardWrp"
-            onClick={() => {
-              // Router.replace(`${list.buyUrl}`);
-              Router.push(`${list.buyUrl}`);
-            }}
-          >
-            <Image
-              src={list.imageUrl}
-              alt="cardImage"
-              width={500}
-              // width={200}
-              height={400}
-              // height={100}
-            />
-          </div>
+          <a href={list.buyUrl} target="_blank" rel="noopener noreferrer">
+            <div
+              className="ImagecardWrp"
+              onClick={() => {
+                // Router.replace(`${list.buyUrl}`);
+                // Router.push(`${list.buyUrl}`);
+              }}
+            >
+              <Image
+                src={list.imageUrl}
+                alt="cardImage"
+                width={500}
+                // width={200}
+                height={400}
+                // height={100}
+              />
+            </div>
+          </a>
         </div>
         <div className="post__info">
           <div className="post__date">

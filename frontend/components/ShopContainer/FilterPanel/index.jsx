@@ -4,7 +4,7 @@ import CheckboxProton from "components/ShopComponent/CheckboxProton";
 import CheckboxProtons from "components/ShopComponent/CheckboxProtons";
 import FilterListToggle from "components/ShopComponent/FilterListToggle";
 import SliderProton from "components/ShopComponent/SliderProton";
-
+import styled from "@emotion/styled";
 const FilterPanel = ({
   selectedCategory,
   selectCategory,
