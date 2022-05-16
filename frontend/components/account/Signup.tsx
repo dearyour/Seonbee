@@ -536,6 +536,7 @@ const SearchBoxContainer = styled.div`
   border-radius: 8px;
   background-color: #ffffff;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  background-color: #e9e5e1;
 `;
 
 const SearchInputContainer = styled.div`

@@ -30,7 +30,10 @@
   height: 420px;
   /*background: #61b9ff;*/
   /* background: rgba(255, 255, 255, 0.2); */
-  background: #c0b4a5;
+  /* background: #c0b4a5; */
+  /* background-image: linear-gradient(to right, #4facfe 0%, #e9e5e1 100%); */
+  background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
+  background-image: linear-gradient(to right, #64543e 0%, #e9e5e1 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +74,9 @@
   width: 50%;
   height: 100%;
   /* background: #fff; */
-  background: rgb(240, 234, 234);
+  /* background: rgb(240, 234, 234); */
+
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
   z-index: 11;
   display: flex;
   justify-content: center;
@@ -195,7 +200,7 @@
 .text-green-500 {
   margin-top: -25px;
   margin-bottom: 10px;
-  color: green;
+  color: darkgreen;
 }
 
 .dateSection {
