@@ -65,15 +65,30 @@ public class RecommendServiceImpl implements RecommendService {
     FriendService friendService;
 
     @Autowired
+    ProductRepositorySupport productRepositorySupport;
+
+    @Autowired
     ProductService productService;
 
     @Override
     public List<RecommendProductDto> ProductRecommend(ReceiverInfoReq req, Long memberId) {
 
+        //음식 (default)
+        // 추가할 subejct 코딩,독서
+
         List<String> list1 = new ArrayList<>(); //관심사 ,용도 넣는 곳 ( 교집합)
         List<String> list2 = new ArrayList<>(); //  나머지 (mbti,성별,나이대,관계)
         Set<String> set= new HashSet<>();
-        String keywords[]={"코로나","밥","간식","핸드폰","술","밥상"};
+        String keywords[]={"코로나","밥","간식","핸드폰","술","밥상","코치","컨디션","배","닭","리그","세종","성원","좋은사람들","회","클릭","테이블","야채","냉장고"
+        ,"밀","플라워","화이트","자동차","문구","드레스","바구니","조화","롯데","옷","책","술","시즌","tv","비스포크","제트봇ai","비스포크제트봇","신발","bespoke제트봇"
+        ,"박스","타임","리스트","골프","봉투","돼지","밀가루","전화","청주","포레스트","뷔페","현수막","인생네컷","놀이기구","한복","이름표","피규어"
+        ,"md","화환","소울","도장","신분증","저녁식사","수수","오마카세","다이소","현대","빵","돈봉투","다이아몬드","캠퍼","뷰","집밥","쇼핑백","쌀","타투","다산"
+        ,"포르쉐","람보르기니","ferrari","페라리","porsche","bentley","lamborghini","로렉스","플레르","웨딩부케","아이파크","롯데캐슬","벤츠","부케","결혼답례떡"
+                ,"미원","givenchy","유니콘","명함","순금","아이와","피앙세","시스템","모닝","cj","베베","큐티","힐스테이트","삼성전자","초대권","한일","레이"
+                ,"회원권","click","동산","시그니쳐","복권","쪽지","명품가방","line","프레임","zoom","서포터","대우","show","입장권","반도체","집사","현대자동차"
+                ,"문신","중문","랜선","국기","군것질","청풍","아리랑","엑스포","할인쿠폰","lee","qled","두산","진흥","스카이","간판","대교","학습지","종이"
+                ,"creative","트럭","테이프","알라딘"
+        };
 
         for(String k : keywords ){
             set.add(k);
@@ -100,12 +115,16 @@ public class RecommendServiceImpl implements RecommendService {
             list2.add(req.getMbti());
         }
 
-        receiver.setInterest(req.getInterest());//관심사
+        receiver.setInterest(req.getInterest());    //관심사
 
         if (req.getInterest() != null) {
             StringTokenizer st = new StringTokenizer(req.getInterest(), ",");
             while (st.hasMoreTokens()) {
-                list1.add(st.nextToken());
+                // 공백 처리 , 그리고  db에 있는 subject인지 조회하고 있는 경우에만 list에 넣어주고  list.size가 0일 경우 default로 음식
+                String interest = st.nextToken().trim(); //공백처리
+                List<Word> allBySubject = wordRepository.findAllBySubject(interest);
+                if (allBySubject.size()!=0) // 해당 관심사가 db에 존재하는 경우만
+                list1.add(interest);
             }
         }
 
@@ -119,13 +138,15 @@ public class RecommendServiceImpl implements RecommendService {
             list1.add(req.getPurpose());
         }
 
+        if (list1.size()==0) //현재 요청값으로 받은 관심사가 다 db에 없는 단어들이라면 기본값으로 음식을 준다.
+            list1.add("음식");
+
         Long price = req.getPrice();
         receiver.setUpPrice((long) (price * 1.2));  // 범위는 임의로 지정한것 어떤식으로 처리할지 이야기해보자
         receiver.setDownPrice((long) (price * 0.8));
         Receiver save = receiverRepository.save(receiver); // db에 저장
 
         //2. receiverInfoReq의 정보로 키워드 하나를 뽑아낸다 ( map에 저장 후 가장 높은 키워드를 조회한다)
-
         Map<String, Long> map = new HashMap<>(); // 키워드 , 누적 값
         HashSet<String> keyword[] = new HashSet[list1.size()]; // 관심사,용도 키워드 교집합
 
@@ -155,7 +176,7 @@ public class RecommendServiceImpl implements RecommendService {
             keyword[0].retainAll(keyword[i]); //교집합
         }
 
-        //관심사 용도 외 나머지  이미 만들어진 교집합에 속하는 단어만 amount값을 추가해준다
+        // 관심사 용도 외 나머지  이미 만들어진 교집합에 속하는 단어만 amount값을 추가해준다
         for (int i = 0; i < list2.size(); i++) {
             List<Word> result = wordRepository.findAllBySubject(list2.get(i)); //현재 500개
             Long total = 0l;
@@ -166,21 +187,22 @@ public class RecommendServiceImpl implements RecommendService {
             for (int j = 0; j < result.size(); j++) {
                 Word word = result.get(j);
                 double value = (double) word.getAmount() / total;
-                if (keyword[0].contains(word.getKeyword())){ //해당 교집합에 있다면?
+                if (keyword[0].contains(word.getKeyword())){    // 해당 교집합에 있다면?
                     map.replace(word.getKeyword(), map.get(word.getKeyword()) + (long) (value * 10000));
                 }
             }
         }
 
         Map<String, Long> result = new HashMap<>();
-        System.out.println("------------교집합에 속하는 단어들------------------");
+//        System.out.println("------------교집합에 속하는 단어들------------------");
         for (String word : keyword[0]) {
-            System.out.println(word);
+//            System.out.println(word);
             if (map.containsKey(word)) {
                 result.put(word, map.get(word));
             }
         }
-        //값(amount)기준 내림차순으로 map정렬
+//        System.out.println("-------------------------------------------------");
+        // 값(amount)기준 내림차순으로 map정렬
         LinkedList<Map.Entry<String, Long>> entries = new LinkedList<>(result.entrySet());
         entries.sort(new Comparator<Map.Entry<String, Long>>() {
             @Override
@@ -189,40 +211,54 @@ public class RecommendServiceImpl implements RecommendService {
             }
         });
 
-        for (int i = 0; i <= 30; i++) { //상위 10개
-            String keyword1 = entries.get(i).getKey(); // 가장 amount가 많은 keyword
-            Long amount = entries.get(i).getValue();
-            System.out.println("키워드 =" + keyword1 + " amount=" + amount);
-        }
+//        for (int i = 0; i <= 5; i++) { //상위 10개
+//            String keyword1 = entries.get(i).getKey(); // 가장 amount가 많은 keyword
+//            Long amount = entries.get(i).getValue();
+//            System.out.println("키워드 =" + keyword1 + " amount=" + amount);
+//        }
         //3. 해당 키워드에 속하는 상품을 다 조회하고 그중에서 랜덤값으로 3개를 보내준다? (가격 범위 확인)
 
-        System.out.println("db접근 전");
-        List<RecommendProductDto> productDtoList = modelMapper.map(productRepository.findAllByNameContains(entries.get(0).getKey()), new TypeToken<List<RecommendProductDto>>() {
-        }.getType());
-        System.out.println("db접근 후");
 
+        System.out.println("db접근 전");
         int count = 0;
+        long upPrice= receiver.getUpPrice();
+        long downPrice= receiver.getDownPrice();
+        List<RecommendProductDto> productDtoList=new ArrayList<>();
+        while(count<3) {    // 3개 이상 나올때 까지
+            productDtoList=modelMapper.map(productRepositorySupport.findAllByKeyword(
+                    entries.get(0).getKey(), upPrice, downPrice), new TypeToken<List<RecommendProductDto>>() {
+            }.getType());
+            count=productDtoList.size();
+            upPrice=(long)(upPrice*1.2);
+            downPrice=(long)(downPrice*0.8);
+
+        }
+        // 0 1 2 순서대로가 아니라 100개 중에 랜덤한 3개가 뽑히게 할것
         List<RecommendProductDto> productDtos = new ArrayList<>();
-        for (int i = 0; i < productDtoList.size(); i++) {
-            RecommendProductDto p = productDtoList.get(i);
-            if (receiver.getDownPrice() <= p.getPrice() && p.getPrice() <= receiver.getUpPrice()) {
-                count++;
+        String num = "";
+        Random random = new Random();
+
+        for (int i = 1; i <= 3; i++) {
+            int idx = random.nextInt(productDtoList.size()); // 번호 하나 생성
+            RecommendProductDto p = productDtoList.get(idx);
+            String val = Integer.toString(idx);
+            if (!num.contains(val)) {   // 중복되지 않았다면 상품 추가
                 productDtos.add(p);
                 productService.addRecommendProduct(p.getProductId());   // 추천수 올리기
-                if (count == 3) break;
+                num += val;
+            } else {    // 다시 돌기
+                i--;
             }
         }
 
-        //로그인 된 상태라면? recommend 테이블에 저장
-        if (memberId != 0l) {
-            for (int i = 0; i < productDtos.size(); i++) {
-                Recommend recommend = new Recommend();
-                recommend.setReceiverId(receiver.getReceiverId()); // 받는사람 번호
-                recommend.setProductId(productDtos.get(i).getProductId()); //상품 번호
-                recommend.setMemberId(memberId); // 회원 번호
-                Recommend recommend1 = recommendRepository.save(recommend);
-                productDtos.get(i).setRecommendId(recommend1.getRecommendId());
-            }
+        // 전부다 recommend 테이블에 저장
+        for (int i = 0; i < productDtos.size(); i++) {
+            Recommend recommend = new Recommend();
+            recommend.setReceiverId(receiver.getReceiverId()); // 받는사람 번호
+            recommend.setProductId(productDtos.get(i).getProductId()); //상품 번호
+            recommend.setMemberId(memberId); // 회원 번호
+            Recommend recommend1 = recommendRepository.save(recommend);
+            productDtos.get(i).setRecommendId(recommend1.getRecommendId());
         }
         return productDtos;
     }
@@ -240,7 +276,7 @@ public class RecommendServiceImpl implements RecommendService {
         HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
         // HttpEntity클래스는 http요청 또는 흥답에 해당하는 HttpHeader와 httpBody를 포함하는 클래스
 
-        //100개의 결과가 나오게 유사도순으로 해당 키워드를 검색
+        // 100개의 결과가 나오게 유사도순으로 해당 키워드를 검색
         ResponseEntity<String> responseEntity = rest.exchange("https://openapi.naver.com/v1/search/shop.json?query=" + keyword + "&display=100",
                 HttpMethod.GET, requestEntity, String.class);
         HttpStatus httpStatus = responseEntity.getStatusCode();
@@ -358,5 +394,4 @@ public class RecommendServiceImpl implements RecommendService {
         recommendRepository.save(recommend);
         return 200;
     }
-
 }
