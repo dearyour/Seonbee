@@ -57,7 +57,6 @@ public class MemberServiceImpl implements MemberService {
     public MemberDto getMemberByNickname(String nickname) {
         Member member=memberRepository.findByNicknameAndIsDeleted(nickname, false);
         if (member==null)   return null;
-
         return modelMapper.map(member, MemberDto.class);
     }
 
@@ -72,21 +71,14 @@ public class MemberServiceImpl implements MemberService {
     public MemberDto getMemberByMemberId(Long memberId) {
         Member member = memberRepository.findByMemberIdAndIsDeleted(memberId, false);
         if (member==null)   return null;
-
         MemberDto memberDto = modelMapper.map(member, MemberDto.class);
         memberDto.setImageString(imageService.getImage(member.getImageId()));
         return memberDto;
     }
 
-//    @Override
-//    public List<MemberDto> getMemberList() {
-//        return null;
-//    }
-
     @Override
     public Member createMember(Member member) {
         Member newMember = memberRepository.save(member);
-
         // 생일 일정에 추가
         if (member.getBirthday() != null) {
             String[] birthday = member.getBirthday().split("\\.");
@@ -158,8 +150,8 @@ public class MemberServiceImpl implements MemberService {
         String password = memberLoginReq.getPassword();
         Member member = memberRepository.findByEmailAndIsDeleted(email, false);
         if (member==null)    return 401;
-        if (passwordEncoder.matches(password, member.getPassword()))    return 200;
-        return 402;     // 비밀번호 다름
+        if (!passwordEncoder.matches(password, member.getPassword()))    return 402;     // 비밀번호 다름
+        return 200;
     }
 
     @Override

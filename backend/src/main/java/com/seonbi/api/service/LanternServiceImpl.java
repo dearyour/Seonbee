@@ -17,9 +17,6 @@ import org.springframework.stereotype.Service;
 public class LanternServiceImpl implements LanternService{
 
     @Autowired
-    FriendRepository friendRepository;
-
-    @Autowired
     MemberRepository memberRepository;
 
     @Autowired
@@ -34,14 +31,10 @@ public class LanternServiceImpl implements LanternService{
     @Override
     public LanternDto getLantern(Long lanternId) {
         Lantern lantern=lanternRepository.findByLanternIdAndIsDeleted(lanternId, false);
-        if (lantern==null){
-            return null;
-        }
+        if (lantern==null)    return null;
         LanternDto lanternDto=modelMapper.map(lantern, LanternDto.class);
         Member guest=memberRepository.findByMemberIdAndIsDeleted(lantern.getGuestId(), false);
-        if (guest==null){   // 글 쓴 사람이 없는 경우 null
-            return null;
-        }
+        if (guest==null)    return null;  // 글 쓴 사람이 없는 경우 null
         lanternDto.setNickname(guest.getNickname());
         return lanternDto;
     }
@@ -54,12 +47,8 @@ public class LanternServiceImpl implements LanternService{
     @Override
     public int deleteLantern(Long memberId, Long lanternId) {
         Lantern lantern = lanternRepository.findByLanternIdAndIsDeleted(lanternId, false);
-        if (lantern==null){
-            return 401;
-        }
-        if (!lantern.getGuestId().equals(memberId)){
-            return 403;
-        }
+        if (lantern==null)    return 401;
+        if (!lantern.getGuestId().equals(memberId))    return 403;
         lantern.setIsDeleted(true);
         lanternRepository.save(lantern);
         return 200;
@@ -68,12 +57,8 @@ public class LanternServiceImpl implements LanternService{
     @Override
     public int deleteSchedule(Long memberId, Long scheduleId) {
         Schedule schedule=scheduleRepository.findByScheduleIdAndIsDeleted(scheduleId, false);
-        if (schedule==null){
-            return 401;
-        }
-        if (!schedule.getMemberId().equals(memberId)){
-            return 403;
-        }
+        if (schedule==null)    return 401;
+        if (!schedule.getMemberId().equals(memberId))    return 403;
         schedule.setIsDeleted(true);
         scheduleRepository.save(schedule);
         return 200;

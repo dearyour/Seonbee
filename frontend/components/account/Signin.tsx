@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { memberActions } from "store/slice/member";
 import Image from "next/image";
-import seonbee from "../../public/seonbee.png";
+import seonbee from "../../public/characters/hobee_body.png";
 import styled from "@emotion/styled";
 import axios from "axios";
 import Router from "next/router";
@@ -227,7 +227,7 @@ const Signin = (props: Props) => {
   // 새로운 패스워드
   return (
     <div className="form signinForm">
-      <ImageWrapper src={seonbee} alt={`image`} height={170} width={200} />
+      <ImageWrapper src={seonbee} alt={`image`} height={190} width={130} />
       <form onSubmit={handleSubmit}>
         <h3>납시오</h3>
         <input

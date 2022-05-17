@@ -28,10 +28,10 @@ public class Product extends BaseEntity{
     private String category3;
     private String keyword;
     private String brand=null;
-    private Long hit=0l;
-    private Long wish=0l;
-    private Long give=0l;
-    private Long recommend=0l;
+    private Long hit=0l;    // buyUrl 눌러서 들어감
+    private Long wish=0l;   // 갖고싶소에 넣음
+    private Long give=0l;   // 주소싶소에 넣음
+    private Long recommend=0l;  // 추천된거
 
 
     @Override

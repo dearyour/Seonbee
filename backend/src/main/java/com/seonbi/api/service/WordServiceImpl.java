@@ -25,63 +25,36 @@ public class WordServiceImpl implements WordService {
             "전자제품","캠핑","패션","10대","20대","30대","40대","50대","60대","남자","여자"
     };
 
-
-
-
     @Autowired
     WordRepository wordRepository;
 
     @Override
     public void csvRead() {
-
-
-        for(int k=0; k< list.length; k++)
-        {
+        for(int k=0; k< list.length; k++){
             String sub = list[k];
-             System.out.println("현재 sub="+sub);
+            System.out.println("현재 sub="+sub);
             List<List<String>> result= WordServiceImpl.readCSV(sub);
-
-            for(int i=0; i<result.size(); i++)
-            {
+            for(int i=0; i<result.size(); i++){
                 List<String> line=result.get(i);
-
                 Word word = new Word();
                 word.setSubject(line.get(0));
                 word.setKeyword(line.get(1));
                 word.setAmount((long) Integer.parseInt(line.get(2)));
                 word.setCategory1(line.get(3));
                 word.setCategory2(line.get(4));
-
-
                 wordRepository.save(word);
 //                System.out.println(word.toString());
-
             }
-
         }
-
-
-
-
-
-
     }
-
 
     @Override
     public void updateData() {
-
         Optional<Word> byId = wordRepository.findById(1L);
-
         Word word = byId.get();
-
         word.setIsDeleted(true);
-
         wordRepository.save(word);
-
-
     }
-
 /*
     썸트렌드 데이터 저장
 
@@ -91,7 +64,6 @@ public class WordServiceImpl implements WordService {
         File csv = new File("C:\\Users\\multicampus\\Desktop\\썸트렌드 데이터\\용도csv\\(썸트렌드) "+subject+"_연관어_210503-220502.csv");
         BufferedReader br = null;
         String line = "";
-
         try {
             br = new BufferedReader(new FileReader(csv));
             while ((line = br.readLine()) != null) { // readLine()은 파일에서 개행된 한 줄의 데이터를 읽어온다.

@@ -47,8 +47,8 @@ public class FriendServiceImpl implements FriendService{
         if (memberId.equals(friendId))  return 406;     // 자기 자신에게
         if (memberRepository.findByMemberIdAndIsDeleted(friendId, false)==null)    return 401;  // 벗 요청받은 사람 계정이 없음
         Friend before=friendRepository.findByFollowerIdAndFolloweeIdAndIsDeleted(memberId, friendId, false);
-        if (before!=null&&"BEFORE".equals(before.getIsAllowed()))   return 402;
-        if (before!=null&&"OK".equals(before.getIsAllowed()))    return 405;
+        if (before!=null&&"BEFORE".equals(before.getIsAllowed()))   return 402;     // 이미 벗 요청 함
+        if (before!=null&&"OK".equals(before.getIsAllowed()))    return 405;    // 이미 벗
 
         // before==null 이거나 요청을 한번 거절한 경우
         Friend friend = new Friend();
@@ -61,9 +61,9 @@ public class FriendServiceImpl implements FriendService{
 
     @Override
     public int followFriendAllow(Long followeeId, Long followerId, String allow) {
-        Friend friend = friendRepository.findByFollowerIdAndFolloweeIdAndIsAllowedAndIsDeleted(followerId, followeeId, "BEFORE", false);
+        Friend friend = friendRepository.findByFollowerIdAndFolloweeIdAndIsAllowedAndIsDeleted(
+                followerId, followeeId, "BEFORE", false);
         if (friend==null)   return 401;
-
         friend.setIsAllowed(allow);
         friendRepository.save(friend);
         return 200;
@@ -134,7 +134,6 @@ public class FriendServiceImpl implements FriendService{
         List<FriendDto> friendDtoList=new ArrayList<>();
         List<Long> friendIdList=getFriendIdAll(memberId);
         for (Long friendId: friendIdList){
-
             Member member=memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
             if (member==null)   continue;
             List<Schedule> schedules=scheduleRepository.findAllByMemberIdAndIsDeletedOrderByScheduleDate(friendId, false);  // 친구 일정
@@ -142,7 +141,6 @@ public class FriendServiceImpl implements FriendService{
             for (Schedule schedule: schedules) {    // 한 친구의 일정을 여러개 리스트로 담기
                 String dday=DdayUtil.Dday(schedule.getScheduleDate());
                 if (dday==null)    continue;    // 일주일이 지난 경우
-
                 FriendScheduleDto scheduleDto=new FriendScheduleDto(dday, schedule.getTitle());
                 scheduleDtoList.add(scheduleDto);
             }
@@ -151,8 +149,6 @@ public class FriendServiceImpl implements FriendService{
             for (Wishlist wishlist: wishlists) {
                 imageUrls.add(productService.getProductImage(wishlist.getProductId()));
             }
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            System.out.println(member);
             FriendDto friendDto=new FriendDto(friendId, member.getNickname(), imageService.getImage(member.getImageId()),
                     member.getVerse(), imageUrls, scheduleDtoList);
             friendDtoList.add(friendDto);
@@ -173,7 +169,6 @@ public class FriendServiceImpl implements FriendService{
                         schedule.getScheduleDate(), schedule.getTitle());
                 friendCalendarDtoList.add(friendCalendarDto);
             }
-
         }
         return friendCalendarDtoList;
     }
@@ -184,7 +179,6 @@ public class FriendServiceImpl implements FriendService{
         List<Long> friendIdList=getFriendIdAll(memberId);
         for (Long friendId: friendIdList){
             Member member=memberRepository.findByMemberIdAndIsDeleted(friendId, false);    // 친구 정보
-
             FriendFollowDto friendDto=new FriendFollowDto(
                     friendId, member.getNickname(), imageService.getImage(member.getImageId()));
             friendDtoList.add(friendDto);

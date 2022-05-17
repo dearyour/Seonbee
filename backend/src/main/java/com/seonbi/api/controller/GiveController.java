@@ -51,5 +51,4 @@ public class GiveController {
         return ResponseEntity.status(200).body(ReceiverProductAllRes.of(200, "success", productDtoList));
     }
 
-
 }

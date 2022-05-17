@@ -8,16 +8,19 @@ import GetImage from "utils/GetImage";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import Btn from "components/commons/Btn";
-
+import { useDispatch, useSelector } from "react-redux";
+import { layoutAction } from "store/slice/layout";
+import CartBtnSelect from "./CartBtnSelect";
 // interface
 type Props = {};
+
 class SearchedMember {
-  memberId: number;
+  friendId: number;
   nickname: string;
   imageString: string;
 
   constructor(data: any) {
-    this.memberId = data.memberId || 0;
+    this.friendId = data.friendId || 0;
     this.nickname = data.nickname || "";
     this.imageString = data.imageString || "";
   }
@@ -29,7 +32,8 @@ function SearchList(data: Array<SearchedMember>): SearchedMember[] {
 }
 
 //
-const SearchUser = (props: Props) => {
+const SearchUser = (props: any) => {
+  const dispatch = useDispatch();
   const [members, setMembers] = useState<SearchedMember[]>([]);
   const [keyword, setKeyword] = useState<string>("");
 
@@ -67,31 +71,37 @@ const SearchUser = (props: Props) => {
     Search();
   }, []);
 
-  const FriendRequest: Function = (id: number) => {
-    // console.log("asd");
+  const SearchUser = () => {
+    if (!keyword) {
+      setMembers([]);
+      return;
+    }
     axiosConnector({
       method: "GET",
-      url: "friend/follow/" + String(id),
+      url: "member/search/" + keyword,
     })
       .then((res) => {
         console.log(res);
+        setMembers(SearchList(res.data.members));
+        //console.log(members);
       })
       .catch((err) => {
         console.log(err.response);
       });
   };
+
   return (
     <div className="px-2">
       <Card className="background-image-1">
         <CardContent>
           <>
-            <TextField
+            {/* <TextField
               id="outlined-basic"
               value={keyword}
               onChange={handleChange}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
-                  Search();
+                  SearchUser();
                 }
               }}
               InputProps={{
@@ -102,7 +112,7 @@ const SearchUser = (props: Props) => {
                 ),
               }}
               variant="standard"
-            />
+            /> */}
             {members.map((member, index) => {
               return (
                 <div key={index}>
@@ -120,13 +130,22 @@ const SearchUser = (props: Props) => {
                     </div>
                     <div className="col-4">
                       <div className="d-flex align-items-center h-100">
-                        <Btn
+                        {/* <Btn
                           className=""
-                          onClick={FriendRequest}
-                          param={member.memberId}
+                          onClick={() =>
+                            dispatch(layoutAction.updataGiveUser(member))
+                          }
+                          // param={() =>
+                          //   dispatch(layoutAction.updataGiveUser(member))
+                          // }
                         >
-                          주고싶소
-                        </Btn>
+                          벗 선택
+                        </Btn> */}
+                        <CartBtnSelect
+                          onClick={() =>
+                            dispatch(layoutAction.updataGiveUser(member))
+                          }
+                        />
                       </div>
                     </div>
                   </div>

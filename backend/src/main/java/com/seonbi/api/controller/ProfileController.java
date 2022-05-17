@@ -75,8 +75,7 @@ public class ProfileController {
         // 비밀번호 유효성 검사
         if (password!=null) {
             int passwordCode = memberService.passwordCheck(password);
-            if (passwordCode == 401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호를 입력해주세요."));
-            if (passwordCode == 402)    return ResponseEntity.status(402).body(BaseResponseBody.of(402, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
+            if (passwordCode == 401)    return ResponseEntity.status(401).body(BaseResponseBody.of(401, "비밀번호는 영문, 숫자 포함 8~16자로 입력해주세요."));
             member.setPassword(passwordEncoder.encode(password));
         }
         member.setNickname(nickname);

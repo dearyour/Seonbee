@@ -4,6 +4,8 @@ import Avatar from '@mui/material/Avatar';
 import { InputBase } from '@mui/material';
 import { FiSend } from 'react-icons/fi';
 import { AiOutlineGift, AiOutlineRedo } from 'react-icons/ai';
+import BeatLoader from 'react-spinners/BeatLoader';
+import { css } from '@emotion/react';
 import axios from 'axios';
 import Messages from './Messages';
 import {
@@ -31,9 +33,11 @@ function Chatbot() {
 
   const [currInput, setCurrInput] = useState<string>('');
   const [isCompleted, setCompleted] = useState<boolean>(false);
+  const [characterTyping, setCharacterTyping] = useState<boolean>(false);
 
   // const inputRef = useRef<HTMLInputElement>(null);
-  const scrollRef = useRef<HTMLInputElement>(null);
+  // const scrollRef = useRef<HTMLInputElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
   const messages = useSelector((state: RootState) => state.chatbot.messages);
@@ -43,7 +47,13 @@ function Chatbot() {
     eventQuery('WelcomeToSeonbee');
   });
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+  }, [messages]);
+
   const textQuery = async (text: string) => {
+    setCharacterTyping(true);
+
     // 1. 유저가 입력한 메시지 처리
     let conversation = {
       who: 'user',
@@ -128,6 +138,7 @@ function Chatbot() {
 
       dispatch(chatbotActions.saveMessage(conversation));
     }
+    setCharacterTyping(false);
   };
 
   const eventQuery = async (event: any) => {
@@ -175,9 +186,9 @@ function Chatbot() {
         e.target.value = '';
         setCurrInput('');
 
-        console.log(scrollRef == null);
+        // console.log(scrollRef == null);
 
-        console.log(scrollRef.current == null);
+        // console.log(scrollRef.current == null);
 
         // scrollRef.current?.scrollIntoView();
       }
@@ -254,14 +265,18 @@ function Chatbot() {
     return query;
   };
 
+  const override = css`
+    display: block;
+    margin-left: 10rem;
+  `;
+
   return (
     <ChatbotWidget>
-      {/* <ChatbotHeader>
-        <h1>Seonbee Bot</h1>
-      </ChatbotHeader> */}
-      <ChatbotBody ref={scrollRef}>
+      <ChatbotBody>
         {/* component messages */}
         <Messages />
+        {characterTyping && <BeatLoader color="#c0b4a5" css={override} />}
+        <div ref={messagesEndRef} />
       </ChatbotBody>
       <ChatbotFooter>
         {isCompleted ? (

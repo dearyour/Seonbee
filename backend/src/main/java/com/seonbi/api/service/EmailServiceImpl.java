@@ -67,26 +67,20 @@ public class EmailServiceImpl implements EmailService{
     public String createCode() {
         StringBuffer sb = new StringBuffer();
         Random rnd = new Random();
-
         for (int i = 0; i < 8; i++) { // 인증코드 8자리
             int index = rnd.nextInt(3); // 0~2 까지 랜덤
-
             switch (index) {
                 case 0:
-                    sb.append((char) ((int) (rnd.nextInt(26)) + 97));
-                    //  a~z  (ex. 1+97=98 => (char)98 = 'b')
+                    sb.append((char) ((int) (rnd.nextInt(26)) + 97));   //  a~z  (ex. 1+97=98 => (char)98 = 'b')
                     break;
                 case 1:
-                    sb.append((char) ((int) (rnd.nextInt(26)) + 65));
-                    //  A~Z
+                    sb.append((char) ((int) (rnd.nextInt(26)) + 65));   //  A~Z
                     break;
                 case 2:
-                    sb.append((rnd.nextInt(10)));
-                    // 0~9
+                    sb.append((rnd.nextInt(10)));   // 0~9
                     break;
             }
         }
-
         return sb.toString();
     }
 
