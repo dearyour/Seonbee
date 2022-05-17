@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 
-const CategoryBtn = ({ onClick }: any) => {
+const CategoryBtn = ({ onClick, onDelete }: any) => {
   const [loading, setLoading] = useState<boolean>(false);
   const toggleCart = () => {
-    setLoading((prev) => !prev);
-    onClick();
+    if (!loading) {
+      setLoading((prev) => !prev);
+      onClick();
+    } else {
+      setLoading((prev) => !prev);
+      onDelete();
+    }
   };
   return (
     <div

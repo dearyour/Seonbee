@@ -16,12 +16,9 @@ const FilterPanel = ({
   changeChecked,
   changeCheckedd,
   changePrice,
+  categoryTagData,
 }) => (
   <div>
-    <div className="input-groupShop">
-      <p className="label-range">가격 범위</p>
-      <SliderProton value={selectedPrice} changePrice={changePrice} />
-    </div>
     {/* <div className="input-groupShop">
       <p className="label">Category</p>
       <FilterListToggle
@@ -29,32 +26,36 @@ const FilterPanel = ({
         value={selectedCategory}
         selectToggle={selectCategory}
       />
-    </div>
-    <CommentWrap>
-      <div className="input-groups">
-        <div className="input-groupShop">
-          <p className="label">셀렉1</p>
-          {cuisines.map((cuisine) => (
-            <CheckboxProton
-              key={cuisine.id}
-              cuisine={cuisine}
-              changeChecked={changeChecked}
-            />
-          ))}
-        </div>
-        <div className="input-groupr">
-          <p className="label">셀렉2</p>
-          {cuisined.map((cuisine) => (
-            <CheckboxProtons
-              key={cuisine.id}
-              cuisined={cuisine}
-              changeCheckedd={changeCheckedd}
-            />
-          ))}
-        </div>
+    </div> */}
+    {/* <CommentWrap> */}
+    <div className="input-groups">
+      <div className="input-groupShop">
+        <p className="label">2. 세부 카테고리</p>
+        {cuisines.map((cuisine) => (
+          <CheckboxProton
+            key={cuisine.id}
+            cuisine={cuisine}
+            changeChecked={changeChecked}
+          />
+        ))}
       </div>
-    </CommentWrap>
+      <div className="input-groupr">
+        <p className="label">3. 세부 카테고리</p>
+        {cuisined.map((cuisine) => (
+          <CheckboxProtons
+            key={cuisine.id}
+            cuisined={cuisine}
+            changeCheckedd={changeCheckedd}
+          />
+        ))}
+      </div>
+    </div>
     <div className="input-groupShop">
+      <p className="label-range">가격 범위</p>
+      <SliderProton value={selectedPrice} changePrice={changePrice} />
+    </div>
+    {/* </CommentWrap> */}
+    {/* <div className="input-groupShop">
       <p className="label">Star Rating</p>
       <FilterListToggle
         options={ratingList}
