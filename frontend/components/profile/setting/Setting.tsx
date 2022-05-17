@@ -148,7 +148,10 @@ const Setting = (props: Props) => {
   const EditRequest = () => {
     const data = new FormData();
     for (const key in mydata) {
-      data.append(key, (mydata as any)[key]);
+      const now = (mydata as any)[key];
+      if (now) {
+        data.append(key, now);
+      }
     }
     // data.append("password", "aaa123123");
     axiosConnector({
@@ -318,6 +321,17 @@ const Setting = (props: Props) => {
             <option value="M">남성</option>
             <option value="F">여성</option>
           </select>
+        </div>
+        <div className="d-flex my-2">
+          <Btn className="me-2">생일</Btn>
+          <input
+            type="text"
+            name="birthday"
+            className="form-control"
+            aria-describedby="basic-addon1"
+            value={mydata.birthday}
+            onChange={onChange}
+          />
         </div>
         <div className="d-flex my-2">
           <Btn className="me-2">mbti</Btn>
