@@ -35,7 +35,7 @@ const Profile = (props: Props) => {
     console.log("hostId", hostId);
     dispatch(profileActions.setHostId(hostId));
     dispatch(profileActions.getProfile(hostId));
-  }, [router.isReady]);
+  }, [router.isReady, hostId]);
 
   // useEffect(() => {
   //   return function cleanup() {
