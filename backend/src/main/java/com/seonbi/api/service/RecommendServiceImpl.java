@@ -73,6 +73,7 @@ public class RecommendServiceImpl implements RecommendService {
     @Override
     public List<RecommendProductDto> ProductRecommend(ReceiverInfoReq req, Long memberId) {
 
+        System.out.println(req);
         //음식 (default)
         // 추가할 subejct 코딩,독서
 
@@ -128,18 +129,20 @@ public class RecommendServiceImpl implements RecommendService {
             }
         }
 
-        receiver.setRelation(req.getRelation());//관계
+        receiver.setRelation(req.getRelation());    // 관계
         if (req.getRelation() != null) {
             list2.add(req.getRelation());
         }
 
-        receiver.setPurpose(req.getPurpose()); //용도
+        receiver.setPurpose(req.getPurpose());      // 용도
         if (req.getPurpose() != null) {
             list1.add(req.getPurpose());
         }
 
-        if (list1.size()==0) //현재 요청값으로 받은 관심사가 다 db에 없는 단어들이라면 기본값으로 음식을 준다.
+//        if (list1.size()==0) // 현재 요청값으로 받은 관심사가 다 db에 없는 단어들이라면 기본값으로 음식을 준다.
             list1.add("음식");
+
+        System.out.println("list1: "+list1);
 
         Long price = req.getPrice();
         receiver.setUpPrice((long) (price * 1.2));  // 범위는 임의로 지정한것 어떤식으로 처리할지 이야기해보자
@@ -151,7 +154,7 @@ public class RecommendServiceImpl implements RecommendService {
         HashSet<String> keyword[] = new HashSet[list1.size()]; // 관심사,용도 키워드 교집합
 
         List<String> list = new ArrayList<>(); // 키워드 교집합 (관심사 , 용도)
-        for (int i = 0; i < list1.size(); i++) {  //관심사 용도
+        for (int i = 0; i < list1.size(); i++) {  // 관심사 용도
             keyword[i] = new HashSet<>(); // set생성
             List<Word> result = wordRepository.findAllBySubject(list1.get(i)); //현재 500개
             Long total = 0l;
@@ -164,13 +167,14 @@ public class RecommendServiceImpl implements RecommendService {
                 if (set.contains(word.getKeyword())) continue;
                 keyword[i].add(word.getKeyword());
                 double value = (double) word.getAmount() / total;
-                if (!map.containsKey(word.getKeyword())){ //map에 해당키워드가 없다면 추가
+                if (!map.containsKey(word.getKeyword())){       // map에 해당키워드가 없다면 추가
                     map.put(word.getKeyword(), (long) (value * 10000));
-                } else { //해당 키워드가 이미 존재한다면?
+                } else {        // 해당 키워드가 이미 존재한다면?
                     map.replace(word.getKeyword(), map.get(word.getKeyword()) + (long) (value * 10000));
                 }
             }
         }
+        System.out.println("list: "+list);
 
         for (int i = 1; i < list1.size(); i++) {
             keyword[0].retainAll(keyword[i]); //교집합
@@ -196,12 +200,11 @@ public class RecommendServiceImpl implements RecommendService {
         Map<String, Long> result = new HashMap<>();
 //        System.out.println("------------교집합에 속하는 단어들------------------");
         for (String word : keyword[0]) {
-//            System.out.println(word);
             if (map.containsKey(word)) {
                 result.put(word, map.get(word));
             }
         }
-//        System.out.println("-------------------------------------------------");
+        System.out.println(result);
         // 값(amount)기준 내림차순으로 map정렬
         LinkedList<Map.Entry<String, Long>> entries = new LinkedList<>(result.entrySet());
         entries.sort(new Comparator<Map.Entry<String, Long>>() {
@@ -211,13 +214,16 @@ public class RecommendServiceImpl implements RecommendService {
             }
         });
 
-//        for (int i = 0; i <= 5; i++) { //상위 10개
+//        for (int i = 0; i <= 5; i++) { // 상위 10개
 //            String keyword1 = entries.get(i).getKey(); // 가장 amount가 많은 keyword
 //            Long amount = entries.get(i).getValue();
-//            System.out.println("키워드 =" + keyword1 + " amount=" + amount);
+////            System.out.println("키워드 =" + keyword1 + " amount=" + amount);
 //        }
         //3. 해당 키워드에 속하는 상품을 다 조회하고 그중에서 랜덤값으로 3개를 보내준다? (가격 범위 확인)
 
+
+        System.out.println(entries);
+        System.out.println(entries.get(0));
 
         System.out.println("db접근 전");
         int count = 0;
