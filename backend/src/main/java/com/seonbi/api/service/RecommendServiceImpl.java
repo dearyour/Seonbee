@@ -259,12 +259,16 @@ public class RecommendServiceImpl implements RecommendService {
 
         // 전부다 recommend 테이블에 저장
         for (int i = 0; i < productDtos.size(); i++) {
+            Long receiverId=receiver.getReceiverId();
+            Long productId=productDtos.get(i).getProductId();
+            if (recommendRepository.existsRecommendByProductIdAndMemberIdAndReceiverIdAndIsDeleted(
+                    productId, memberId, receiverId, false))    continue;
             Recommend recommend = new Recommend();
-            recommend.setReceiverId(receiver.getReceiverId()); // 받는사람 번호
-            recommend.setProductId(productDtos.get(i).getProductId()); //상품 번호
+            recommend.setReceiverId(receiverId); // 받는사람 번호
+            recommend.setProductId(productId); //상품 번호
             recommend.setMemberId(memberId); // 회원 번호
-            Recommend recommend1 = recommendRepository.save(recommend);
-            productDtos.get(i).setRecommendId(recommend1.getRecommendId());
+            Recommend newRecommend = recommendRepository.save(recommend);
+            productDtos.get(i).setRecommendId(newRecommend.getRecommendId());
         }
         return productDtos;
     }
