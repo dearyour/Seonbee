@@ -214,32 +214,14 @@ public class RecommendServiceImpl implements RecommendService {
             }
         });
 
-//        for (int i = 0; i <= 5; i++) { // 상위 10개
-//            String keyword1 = entries.get(i).getKey(); // 가장 amount가 많은 keyword
-//            Long amount = entries.get(i).getValue();
-////            System.out.println("키워드 =" + keyword1 + " amount=" + amount);
-//        }
-        //3. 해당 키워드에 속하는 상품을 다 조회하고 그중에서 랜덤값으로 3개를 보내준다? (가격 범위 확인)
-
-
-        System.out.println(entries);
-        System.out.println(entries.get(0));
-
-        System.out.println("db접근 전");
-        int count = 0;
-        long upPrice= receiver.getUpPrice();
-        long downPrice= receiver.getDownPrice();
         List<RecommendProductDto> productDtoList=new ArrayList<>();
         List<RecommendProductDto> tmp=new ArrayList<>();
 
         // 5개가 넘어가면 종료
-         for(int i=0; i<entries.size(); i++)
-         {
+         for(int i=0; i<entries.size(); i++) {
              int count = 0;
              long upPrice= receiver.getUpPrice();
              long downPrice= receiver.getDownPrice();
-
-
              System.out.println("상위 키워드= "+entries.get(i).getKey());
 
              while(count<3) {    // 3개 이상 나올때 까지
@@ -251,16 +233,10 @@ public class RecommendServiceImpl implements RecommendService {
                  downPrice=(long)(downPrice*0.8);
 
              }
-
              System.out.println("해당 상품 개수="+tmp.size());
-
-             for(RecommendProductDto dto : tmp)
-             {
+             for(RecommendProductDto dto : tmp){
                  productDtoList.add(dto);
              }
-
-
-
              if(i==4) break;
          }
 
