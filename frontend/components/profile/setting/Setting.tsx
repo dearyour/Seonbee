@@ -7,8 +7,12 @@ import GetImage from "utils/GetImage";
 import Image from "next/image";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Modal, TextField, Typography } from "@mui/material";
 import seonbee from "public/seonbee.png";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import moment from "moment";
 
 type Props = {};
 
@@ -131,6 +135,17 @@ const Setting = (props: Props) => {
     };
     setMydata(new Data(now));
   };
+  const onChangeDate = (e: any) => {
+    console.log(e);
+    const value = moment(e).format("YYYY.MM.DD");
+    // const { value } = e.target;
+    const now = {
+      ...mydata,
+      birthday: value,
+    };
+    setMydata(new Data(now));
+  };
+
   // 이미지 input change
   const ImageChange = (e: any) => {
     const now = {
@@ -322,17 +337,7 @@ const Setting = (props: Props) => {
             <option value="F">여성</option>
           </select>
         </div>
-        <div className="d-flex my-2">
-          <Btn className="me-2">생일</Btn>
-          <input
-            type="text"
-            name="birthday"
-            className="form-control"
-            aria-describedby="basic-addon1"
-            value={mydata.birthday}
-            onChange={onChange}
-          />
-        </div>
+
         <div className="d-flex my-2">
           <Btn className="me-2">mbti</Btn>
           <select
@@ -383,6 +388,27 @@ const Setting = (props: Props) => {
             className="form-control"
             aria-describedby="basic-addon1"
           />
+        </div>
+        <div className="d-flex my-2">
+          <Btn className="me-2 my-auto">생일</Btn>
+          {/* <input
+            type="text"
+            name="birthday"
+            className="form-control"
+            aria-describedby="basic-addon1"
+            value={mydata.birthday}
+            onChange={onChange}
+          /> */}
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="생년월일"
+              inputFormat="yyyy.MM.dd"
+              value={mydata.birthday}
+              onChange={onChangeDate}
+              renderInput={(params) => <TextField {...params} />}
+              className="border"
+            />
+          </LocalizationProvider>
         </div>
         <EditBtn onClick={EditRequest}>수정</EditBtn>
       </SettingWrap>

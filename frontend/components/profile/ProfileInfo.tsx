@@ -128,11 +128,11 @@ const ProfileInfo = (props: Props) => {
                 벗 맺기 요청중
               </Btn>
             ) : null}
-            {profile.friendStatus !== "requested" ? (
+            {/* {profile.friendStatus !== "requested" ? (
               <Btn filled={true} className="ms-2 mb-3">
                 선물 추천
               </Btn>
-            ) : null}
+            ) : null} */}
           </div>
         ) : null}
       </div>
