@@ -117,7 +117,7 @@ public class MemberController {
         if (loginCode == 401)   return ResponseEntity.status(401).body(BaseResponseBody.of(401, "존재하지 않는 계정입니다."));
         if (loginCode == 402)   return ResponseEntity.status(402).body(BaseResponseBody.of(402, "비밀번호가 일치하지 않습니다."));
 
-        String token = JwtTokenProvider.getToken(memberLoginReq.getEmail());
+        String token = JwtTokenProvider.getToken(memberLoginReq.getEmail(),false);
         return ResponseEntity.status(200).body(MemberLoginRes.of(200, "Success", token));
 
     }

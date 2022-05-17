@@ -406,7 +406,7 @@ public class MemberServiceImpl implements MemberService {
                 System.out.println(member.getMemberId());
             }
 
-            token = JwtTokenProvider.getToken(email);
+            token = JwtTokenProvider.getToken(email,true);
             System.out.println("access token=" + token);
 
 

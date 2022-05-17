@@ -1,5 +1,6 @@
 package com.seonbi.auth;
 
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.seonbi.api.service.MemberService;
@@ -58,26 +59,26 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         JwtTokenProvider.handleError(token);
         DecodedJWT decodedJWT = verifier.verify(token.replace(JwtTokenProvider.TOKEN_PREFIX, ""));
         String email = decodedJWT.getSubject();
+        boolean isKakao = decodedJWT.getClaim("isKakao").asBoolean();
+
+
+        System.out.println("isKakao= "+isKakao);
 
         // 디코딩한 jwt로부터  토큰 subject(email)을 받았으면 db로 해당 이메일을 가진 멤버가 있는지 조회한다
-
         if (email == null) {
             chain.doFilter(request, response);
             return;
         }
-
-        Member member = memberRepository.findByEmailAndIsDeleted(email, false); // 해당 이메일을 가진 유저가 db에 존재하는지 조회
+        Member member= memberRepository.findByEmailAndIsDeletedAndIsKakao(email,false,isKakao); // 해당 이메일을 가진 유저가 db에 존재하는지 조회 (kakao 도 확인)
         if (member == null) {
             chain.doFilter(request, response);
             return;
         }
-
         SeonbiUserDetail seonbiUserDetail = new SeonbiUserDetail(member);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(seonbiUserDetail, null, seonbiUserDetail.getAuthorities());
         // 시큐리티 세션에 접근하여 Authentication 객체를 저장
         authentication.setDetails(seonbiUserDetail);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         chain.doFilter(request, response);
         return;
     }
