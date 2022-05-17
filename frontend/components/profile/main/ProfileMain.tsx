@@ -28,8 +28,11 @@ const ProfileMain = (props: Props) => {
       return;
     }
     dispatch(profileActions.getLanternFestivals(hostId));
-    for (let i = 0; i < ddaysLen; i++) {
-      if (lanternFestivals[i].scheduleId === ddays[0].scheduleId) {
+    for (let i = 0; i < lanternFestivals.length; i++) {
+      if (
+        ddays.length > 0 &&
+        lanternFestivals[i].scheduleId === ddays[0].scheduleId
+      ) {
         const newLanternFestival = lanternFestivals[i];
         dispatch(profileActions.setLanternFestival(newLanternFestival));
         break;
@@ -40,7 +43,7 @@ const ProfileMain = (props: Props) => {
   return (
     <>
       <div>
-        {lanternFestivals.length > 0 ? (
+        {ddays.length > 0 ? (
           <div>
             <DDays ddays={ddays} />
             <LanternFestival lanternFestival={lanternFestival} />

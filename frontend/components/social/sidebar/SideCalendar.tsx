@@ -82,14 +82,14 @@ const SideCalendar = (props: Props) => {
   };
 
   return (
-    <div className="px-2">
+    <div className="px-2 rounded">
       <Calendar
         onChange={date_change}
         value={value}
         formatMonthYear={(locale, date) => moment(date).format("YY.MM")}
         formatDay={(locale, date) => moment(date).format("DD")}
         tileContent={addDot}
-        className="mx-auto"
+        className="mx-auto rounded"
       />
       <SideCalendarDate props={showdate}></SideCalendarDate>
     </div>

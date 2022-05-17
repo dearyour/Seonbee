@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Container, Section } from 'styles/main/MainGlobalElements';
+import React, { useEffect } from "react";
+import { Container, Section } from "styles/main/MainGlobalElements";
 import {
   ContentRow,
   TextWrapper,
@@ -10,9 +10,9 @@ import {
   ImgWrapper,
   Img,
   ContentColumn,
-} from 'styles/main/introduce/ContentElements';
-import { useInView } from 'react-intersection-observer';
-import { useAnimation } from 'framer-motion';
+} from "styles/main/introduce/ContentElements";
+import { useInView } from "react-intersection-observer";
+import { useAnimation } from "framer-motion";
 
 type Props = {};
 

@@ -3,6 +3,7 @@ import axios from "axios";
 import FriendList from "components/social/carousel/FriendList";
 import SideBar from "components/social/sidebar/SideBar";
 import UserCard from "components/social/usercard/UserCard";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import CardMember from "store/interface/social/cardmember";
 import axiosConnector from "utils/axios-connector";
@@ -14,6 +15,7 @@ const Blue = styled.span`
 `;
 const Social = (props: Props) => {
   const [members, setMembers] = useState<CardMember[]>([]);
+  const router = useRouter();
 
   const temp_member = {
     nickname: "asd",
@@ -27,6 +29,17 @@ const Social = (props: Props) => {
   };
   useEffect(() => {
     // setMembers([temp_member, temp_member, temp_member, temp_member]);
+    if (!sessionStorage.getItem("Token")) {
+      router.push("/login");
+    }
+    // axiosConnector({
+    //   method: "GET",
+    //   url: "member/auth",
+    // })
+    //   .then((res) => {})
+    //   .catch((err) => {
+    //     router.push("/login");
+    //   });
     axiosConnector({
       method: "GET",
       url: "friend",

@@ -8,6 +8,7 @@ import GetImage from "utils/GetImage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const UserCard = ({
   nickname,
@@ -63,7 +64,12 @@ const UserCard = ({
                 {wishlist.map((now: any, index: number) => {
                   return (
                     <SwiperSlide className="" key={index}>
-                      <ProductImg src={now} alt="" />
+                      <ProductImg
+                        width={"100%"}
+                        height={"100%"}
+                        src={now}
+                        alt=""
+                      />
                     </SwiperSlide>
                   );
                 })}
@@ -99,16 +105,18 @@ const Profile = styled.img`
   object-fit: scale-down;
 `;
 
-const ProductImg = styled.img`
+const ProductImg = styled(Image)`
   border-radius: 10px;
   object-fit: cover;
-  width: 100%;
+  /* width: 100%; */
   opacity: 100%;
-  border: 1px solid #d3c084;
+  outline: 1px solid #64543e;
 `;
 
 const ProfileCard = styled(Card)`
+  border-radius: 10px;
   border: 1.6px solid #64543e;
+  height: 100%;
 `;
 
 export default UserCard;

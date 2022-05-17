@@ -4,7 +4,7 @@ import axiosConnector from "utils/axios-connector";
 import GetImage from "utils/GetImage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-
+import Image from "next/image";
 type Props = {};
 class DdayFriends {
   nickname: string;
