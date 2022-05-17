@@ -19,5 +19,5 @@ public interface RecommendService {
     int addGiveProduct(Long memberId, Long friendId, Long productId);
     List<RecommendDto> getRecommendAll(Long memberId);
     int saveRecommendGive(Long memberId, Long recommendId);
-
+    List<RecommendProductDto> FriendProductRecommend(Long memberId, Member friend);
 }

@@ -231,7 +231,6 @@ public class RecommendServiceImpl implements RecommendService {
                  count=tmp.size();
                  upPrice=(long)(upPrice*1.2);
                  downPrice=(long)(downPrice*0.8);
-
              }
              System.out.println("해당 상품 개수="+tmp.size());
              for(RecommendProductDto dto : tmp){
@@ -239,7 +238,6 @@ public class RecommendServiceImpl implements RecommendService {
              }
              if(i==4) break;
          }
-
 
         System.out.println("상품 개수="+productDtoList.size());
 
@@ -408,5 +406,20 @@ public class RecommendServiceImpl implements RecommendService {
         recommend.setIsSaved(true);
         recommendRepository.save(recommend);
         return 200;
+    }
+
+    @Override
+    public List<RecommendProductDto> FriendProductRecommend(Long memberId, Member friend) {
+//        0. 코딩, 독서 subject로 데이터 넣기
+//        1. 관심사, 좋아하는거 받아서 상품 키워드로 검색
+//        2. 관심사, 좋아하는거 받아서 상품 이름이 들어가는지 검색
+//        3. 검색된 상품에서 싫어하는거 키워드 또는 상품이름에 들어가면 제외
+//        4. 관심사, 좋아하는거 아예없으면 그냥 음식으로
+        friend.getInterest();
+        friend.getLikelist();
+        friend.getBanlist();
+
+
+        return null;
     }
 }
