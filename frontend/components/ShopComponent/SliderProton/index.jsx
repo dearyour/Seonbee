@@ -27,19 +27,7 @@ const SliderProton = ({ value, changePrice }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Slider
-        value={value}
-        onChange={changePrice}
-        valueLabelDisplay="on"
-        min={100}
-        max={1000000}
-        classes={{
-          thumb: classes.thumb,
-          rail: classes.rail,
-          track: classes.track,
-        }}
-      />
+    <>
       <VV>
         <div>
           최저 가격 <br />
@@ -54,7 +42,21 @@ const SliderProton = ({ value, changePrice }) => {
           원&nbsp;]
         </div>
       </VV>
-    </div>
+      <div className={classes.root}>
+        <Slider
+          value={value}
+          onChange={changePrice}
+          valueLabelDisplay="off"
+          min={100}
+          max={1000000}
+          classes={{
+            thumb: classes.thumb,
+            rail: classes.rail,
+            track: classes.track,
+          }}
+        />
+      </div>
+    </>
   );
 };
 

@@ -68,25 +68,28 @@ const SearchBar = ({
           </svg>
         </ToggleBtnCart>
       </SearchBarWrp>
-      <SearchResultWrapper>
+      {/* <SearchResultWrapper>
         <SearchResultList>
-          {/* {
-            searchResult?.results.map((searchResultItem) => (
-              <Link href={`/movie/${searchResultItem.id}`} key={searchResultItem.id}>
-                <SearchResultListItem>{searchResultItem.title}</SearchResultListItem>
-              </Link>
-            ))
-          } */}
-          {/* <SearchResultListItem>asd</SearchResultListItem>; */}
+          {searchResult?.results.map((searchResultItem) => (
+            <Link
+              href={`/movie/${searchResultItem.id}`}
+              key={searchResultItem.id}
+            >
+              <SearchResultListItem>
+                {searchResultItem.title}
+              </SearchResultListItem>
+            </Link>
+          ))}
+          <SearchResultListItem>asd</SearchResultListItem>;
           {shopSearchItem.map((item) => {
             <SearchResultListItem>{item.name}</SearchResultListItem>;
           })}
         </SearchResultList>
-      </SearchResultWrapper>
+      </SearchResultWrapper> */}
     </>
   );
 };
-
+// 이거 아래 상세검색어 뜨게하는건 실패했음 렌더 너무많이 불러와서
 const SearchResultWrapper = styled.div`
   // position: absolute;
   // top: 60px;

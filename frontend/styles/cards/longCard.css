@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   background-color: #eee;
-  padding: 0.7rem 1.5rem 0.7rem 2.5rem;
+  padding: 0.7rem 1rem 0.7rem 1.5rem;
 }
 .postCard {
   /* width: 100%; */
@@ -29,7 +29,7 @@
   min-width: 25rem;
   max-width: 25rem;
   height: 20rem;
-  transform: translateX(-2rem);
+  transform: translateX(-1.6rem);
   position: relative;
   background-color: gold;
   border-radius: 0.8rem;
@@ -43,11 +43,12 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to right,
     rgba(78, 172, 254, 8),
     rgba(0, 242, 254, 8)
-  );
+  ); */
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
   box-shadow: 0.5rem 0.5rem 3rem 1px rgba(0, 0, 0, 0.5);
   border-radius: 0.8rem;
 }
@@ -88,6 +89,7 @@
   color: #fff;
   font-weight: 600;
   background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  background-image: linear-gradient(to right, #c0b4a5 0%, #c0b4a5 100%);
   border-radius: 0.8rem;
   text-decoration: none;
   margin-right: 10px;
@@ -100,9 +102,11 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   font-size: 1rem;
-  color: black;
+  color: balck;
   font-weight: 600;
   background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  background-image: linear-gradient(to right, #03a9f4 0%, #4facfe 100%);
+  background-image: linear-gradient(to right, #f88e8e 0%, #ff7979 100%);
   border-radius: 0.8rem;
   text-decoration: none;
   margin-right: 10px;
@@ -112,9 +116,12 @@
 
 .post_cta:hover {
   background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
 }
 .post_ctas:hover {
   background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
+  background-image: linear-gradient(to right, #f88e8e 0%, #ff7979 100%);
   color: #fff;
 }
 

@@ -4,8 +4,14 @@ import EmptyView from "components/ShopComponent/EmptyView";
 import FilterPanel from "components/ShopContainer/FilterPanel";
 import List from "components/ShopContainer/List";
 import SearchBar from "components/ShopContainer/SearchBar";
-import { categoryRadio, categoryRadios, dataList } from "../constants";
+import {
+  categoryRadio,
+  categoryRadios,
+  categoryRadiod,
+  dataList,
+} from "../constants";
 import CategoryBtn from "components/ShopComponent/CategoryBtn";
+import CategoryBtns from "components/ShopComponent/CategoryBtns";
 import SearchUsers from "./SearchUsers";
 import styled from "@emotion/styled";
 import axios from "axios";
@@ -17,10 +23,10 @@ import CartList from "components/ShopContainer/List/CartList";
 import Swal from "sweetalert2";
 import ControlMenus from "components/Shop/ControlMenus";
 const sortOptionList = [
+  { value: "recommendMany", name: "최다 추천수 순" },
+  { value: "hitMany", name: "최다 조회수 순" },
   { value: "upperPrice", name: "높은 가격 순" },
   { value: "downPrice", name: "낮은 가격 순" },
-  { value: "hitMany", name: "최다 조회수 순" },
-  { value: "recommendMany", name: "최다 추천수 순" },
   { value: "giveMany", name: "최다 주고싶소 순" },
   { value: "wishMany", name: "최다 갖고싶소 순" },
 ];
@@ -39,9 +45,12 @@ const Home = () => {
   const [selectedPrice, setSelectedPrice] = useState([100, 1000000]);
   //카테고리 상태
   const [categoryTag, setCategoryTag] = useState(1); // 카테고리 숫자 찍힘
-  const [categoryTagData, setCategoryTagData] = useState(""); // 카고리 value 찍힘
-  const [categoryTags, setCategoryTags] = useState(1);
-  const [sortType, setSortType] = useState<String>("upperPrice");
+  const [categoryTagData, setCategoryTagData] = useState(""); // 카테고리 value 찍힘
+  const [categoryTags, setCategoryTags] = useState(1); // 카테고리 2단계숫자 찍힘
+  const [categoryTagDatas, setCategoryTagDatas] = useState(""); // 카테고리 2단계 value 찍힘
+  const [categoryTagd, setCategoryTagd] = useState(1); // 카테고리 2단계숫자 찍힘
+  const [categoryTagDatad, setCategoryTagDatad] = useState(""); // 카테고리 2단계 value 찍힘
+  const [sortType, setSortType] = useState<String>("recommendMany");
   const [isCartOpen, setIsCartOpen] = useState(false);
   const toggleCart = () => {
     setIsCartOpen((prev) => !prev);
@@ -49,27 +58,37 @@ const Home = () => {
   const handleClickTag = useCallback((tag: number) => {
     setCategoryTag(tag);
   }, []);
-  const handleClickTagData = useCallback((tag: string) => {
-    setCategoryTagData(tag);
-  }, []);
   const handleClickTags = useCallback((tag: number) => {
     setCategoryTags(tag);
   }, []);
+  const handleClickTagd = useCallback((tag: number) => {
+    setCategoryTagd(tag);
+  }, []);
+  const handleClickTagData = useCallback((tag: string) => {
+    setCategoryTagData(tag);
+  }, []);
+  const handleClickTagDatas = useCallback((tag: string) => {
+    setCategoryTagDatas(tag);
+  }, []);
+  const handleClickTagDatad = useCallback((tag: string) => {
+    setCategoryTagDatad(tag);
+  }, []);
+
   const [cuisines, setCuisines] = useState([
-    { id: 1, checked: false, label: "American" },
-    { id: 2, checked: false, label: "Chinese" },
-    { id: 3, checked: false, label: "Italian" },
-    { id: 4, checked: false, label: "American" },
-    { id: 5, checked: false, label: "Chinese" },
-    { id: 6, checked: false, label: "Italian" },
+    { id: 1, checked: false, label: "과자/베이커리" },
+    { id: 2, checked: false, label: "여성의류" },
+    { id: 3, checked: false, label: "음료" },
+    { id: 4, checked: false, label: "냉동/간편조리식품" },
+    { id: 5, checked: false, label: "문구/사무용품" },
+    { id: 6, checked: false, label: "주방용품" },
   ]);
   const [cuisined, setCuisined] = useState([
-    { id: 1, checked: false, label: "Cabernet Sauvignon" },
-    { id: 2, checked: false, label: "Cabernet Sauvignon" },
-    { id: 3, checked: false, label: "Italian" },
-    { id: 4, checked: false, label: "American" },
-    { id: 5, checked: false, label: "Chinese" },
-    { id: 6, checked: false, label: "Italian" },
+    { id: 1, checked: false, label: "e쿠폰" },
+    { id: 5, checked: false, label: "커피" },
+    { id: 4, checked: false, label: "이벤트/파티용품" },
+    { id: 3, checked: false, label: "빵" },
+    { id: 6, checked: false, label: "쿠키" },
+    { id: 2, checked: false, label: "케이크" },
   ]);
 
   const [list, setList] = useState(dataList);
@@ -133,6 +152,13 @@ const Home = () => {
             showConfirmButton: false,
           });
           toggleCart();
+        } else if (err.response.status === 401) {
+          Swal.fire({
+            title: "벗을 선택해 주세요",
+            text: "",
+            icon: "error",
+            showConfirmButton: false,
+          });
         }
       });
   };
@@ -148,7 +174,7 @@ const Home = () => {
         setShopItem(res.data.productList);
         dispatch(layoutAction.updateDetailData(res.data.productList));
         SearchRef.current.value = "";
-        setSearchInput("");
+        // setSearchInput("");
       })
       .catch((err) => {
         console.log(err);
@@ -254,17 +280,33 @@ const Home = () => {
       }
 
       // Category Filter
+      // if (categoryTagData) {
+      //   updatedList = updatedList.filter(
+      //     (item: any) => item.category1.toLowerCase() === categoryTagData
+      //   );
+      // }
       if (categoryTagData) {
         updatedList = updatedList.filter(
           (item: any) => item.category1.toLowerCase() === categoryTagData
         );
       }
-      // // Category Filter
-      // if (selectedCategory) {
-      //   updatedList = updatedList.filter(
-      //     (item: any) => item.category === selectedCategory
-      //   );
+      // if (categoryTagDatas) {
+      // setShopItem(
+      //   categoryTmp.filter(
+      //     (item: any) => item.category2.toLowerCase() === categoryTagDatas
+      //   )
+      // );
+      // updatedList = categoryTmp.filter(
+      //   (item: any) => item.category2.toLowerCase() === categoryTagDatas
+      // );
       // }
+
+      // Category Filter
+      if (selectedCategory) {
+        updatedList = updatedList.filter(
+          (item: any) => item.category === selectedCategory
+        );
+      }
 
       // Cuisine Filter
       const cuisinesChecked = cuisines
@@ -273,7 +315,18 @@ const Home = () => {
 
       if (cuisinesChecked.length) {
         updatedList = updatedList.filter((item: any) =>
-          cuisinesChecked.includes(item.cuisine)
+          cuisinesChecked.includes(item.category2.toLowerCase())
+        );
+      }
+
+      // Cuisine Filter
+      const cuisinesCheckedd = cuisined
+        .filter((item) => item.checked)
+        .map((item) => item.label.toLowerCase());
+
+      if (cuisinesCheckedd.length) {
+        updatedList = updatedList.filter((item: any) =>
+          cuisinesCheckedd.includes(item.category3.toLowerCase())
         );
       }
 
@@ -300,7 +353,7 @@ const Home = () => {
       }
       setShopItem(updatedList);
 
-      !updatedList.length ? setResultsFound(false) : setResultsFound(true);
+      // !updatedList.length ? setResultsFound(false) : setResultsFound(true);
     }
   };
 
@@ -310,11 +363,13 @@ const Home = () => {
     selectedRating,
     selectedCategory,
     cuisines,
+    cuisined,
     searchInput,
     selectedPrice,
     sortType,
     compare,
     categoryTagData,
+    categoryTagDatas,
   ]);
 
   return (
@@ -367,7 +422,7 @@ const Home = () => {
                 {/* 아래 하드코딩 되어있는 장바구니 목록들을 유저 상호작용에 맞게 렌더링 되도록 변경해주세요.  */}
                 <div id="cart-list">
                   <ul className="cartList">
-                    <Blue>친구 검색</Blue>
+                    <Blue>친구 목록</Blue>
                     <SearchUsers />
                     <CartList />
                     {/* <CartList
@@ -429,15 +484,35 @@ const Home = () => {
               />
             ))}
           </div>
-          {/* <div className="input_box category_list_wrapper">
-            {categoryRadios.map((it: any) => (
-              <CategoryBtn
-                key={it.category_id}
-                {...it}
-                onClick={handleClickTags}
-                isSelected={it.category_id === categoryTags}
-              />
-            ))}
+          {/* {추가 셀렉} */}
+          {/* <div>
+            {categoryTagData === "패션의류" ? (
+              <div className="input_box category_list_wrapper">
+                {categoryRadios.map((it: any) => (
+                  <CategoryBtns
+                    key={it.category_id}
+                    {...it}
+                    onClick={handleClickTags}
+                    onClickData={handleClickTagDatas}
+                    isSelected={it.category_id === categoryTags}
+                  />
+                ))}
+              </div>
+            ) : categoryTagData === "도서" ? (
+              <div className="input_box category_list_wrapper">
+                {categoryRadiod.map((it: any) => (
+                  <CategoryBtns
+                    key={it.category_id}
+                    {...it}
+                    onClick={handleClickTagd}
+                    onClickData={handleClickTagDatad}
+                    isSelected={it.category_id === categoryTagd}
+                  />
+                ))}
+              </div>
+            ) : (
+              ""
+            )}
           </div> */}
         </section>
       )}
@@ -456,6 +531,7 @@ const Home = () => {
               cuisined={cuisined}
               changeChecked={handleChangeChecked}
               changeCheckedd={handleChangeCheckedd}
+              categoryTagData={categoryTagData}
             />
             <div className="menu_wrapper">
               <div className="left_col">
@@ -484,10 +560,14 @@ const Home = () => {
               hasMore={nowFeedsnum < shopItem.length}
               loader={<div style={{ textAlign: "center" }}>🌟Loading🌟</div>}
               endMessage={
-                <EmptyView />
-                // <div className="btns" style={{ textAlign: "center" }}>
-                //   <div>🚩 검색 완료 🚩</div>
+                // <EmptyView />
+                // <div className="btn" style={{ textAlign: "center" }}>
+                //   <div> 검색 완료 </div>
                 // </div>
+                <div className="btnsss" style={{ textAlign: "center" }}>
+                  <div>🚩 검색 완료 🚩</div>
+                </div>
+                // <div className="btng--gold"> 검색완료</div>
               }
             >
               {shopItem &&
