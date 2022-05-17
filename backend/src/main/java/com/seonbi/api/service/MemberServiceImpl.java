@@ -314,11 +314,16 @@ public class MemberServiceImpl implements MemberService {
                 email = kakao_account.get("email").toString();
             }
 
+
+
+
             if (hasBirthday) {
 
                 birthday = kakao_account.get("birthday").toString();
 
                 birthday = birthday.substring(0, 2) + "." + birthday.substring(2, 4);
+
+                birthday= "1995."+birthday; // 임의로 출생년도 1995
             }
 
 
