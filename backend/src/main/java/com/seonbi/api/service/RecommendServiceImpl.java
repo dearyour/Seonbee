@@ -358,5 +358,4 @@ public class RecommendServiceImpl implements RecommendService {
         recommendRepository.save(recommend);
         return 200;
     }
-
 }
