@@ -18,6 +18,7 @@ import Btn from "components/commons/Btn";
 import useProfile from "store/hook/profileHooks";
 import { useRouter } from "next/router";
 import { BsX } from "react-icons/bs";
+import Swal from "sweetalert2";
 
 interface Props {
   hostId: any;
@@ -52,18 +53,26 @@ const Wish = ({ props }: { props: any }) => {
   };
 
   const ProductDelete = (id: number) => {
-    if (props.wishlistId) {
-      axiosConnector({
-        method: "DELETE",
-        url: "profile/wish/" + String(id),
-      })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err.response);
+    axiosConnector({
+      method: "DELETE",
+      url: "profile/wish/" + String(id),
+    })
+      .then((res) => {
+        Swal.fire({
+          title: "정상적으로 삭제되었습니다.",
+          text: "",
+          icon: "success",
+          showConfirmButton: false,
         });
-    }
+        setProducts(
+          products.filter((now) => {
+            return now.wishlistId != id;
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   useEffect(() => {
@@ -84,12 +93,13 @@ const Wish = ({ props }: { props: any }) => {
     <div className="w-100 h-100 ms-5 overflow-hidden">
       {products.length > 0 ? (
         <Swiper
-          modules={[Mousewheel, Pagination]}
+          modules={[Mousewheel, Pagination, Scrollbar]}
           mousewheel={true}
           slidesPerView={3.3}
           pagination
           spaceBetween={50}
           className="h-100 "
+          scrollbar={{ draggable: true }}
         >
           {products.map((now, index) => {
             return (
@@ -102,7 +112,7 @@ const Wish = ({ props }: { props: any }) => {
                       }}
                     ></Xicon>
                   )}
-                  <CardImg>
+                  <CardImg className="">
                     <Image
                       src={
                         now.imageUrl
@@ -113,6 +123,7 @@ const Wish = ({ props }: { props: any }) => {
                       width={150}
                       height={150}
                       style={{ borderRadius: "5px" }}
+                      className=""
                     />
                   </CardImg>
                   <CardContent>
@@ -120,9 +131,13 @@ const Wish = ({ props }: { props: any }) => {
                       <EllipsisText text={now.name} length={"15"} />
                     </h2>
                     {/* <p>{item.name}</p> */}
-                    <Price>{now.price} 원</Price>
+                    <Price>{now.price.toLocaleString()} 원</Price>
                     <Stack direction="row" spacing={2}>
-                      <a href={now.buyUrl}>
+                      <a
+                        href={now.buyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <Btn>상품 구경하기</Btn>
                       </a>
                       {String(memberId) === hostId ? null : now.giverId ===

@@ -64,8 +64,9 @@ const Chat = (props: Props) => {
   return (
     <div className="overflow-scroll w-100 h-100 ms-3">
       <Swiper
-        modules={[Mousewheel, Pagination]}
+        modules={[Mousewheel, Pagination, Scrollbar]}
         mousewheel={true}
+        scrollbar={{ draggable: true }}
         pagination
         slidesPerView={4}
         spaceBetween={50}
@@ -94,9 +95,13 @@ const Chat = (props: Props) => {
                     <EllipsisText text={now.name} length={"15"} />
                   </h2>
                   {/* <p>{item.name}</p> */}
-                  <Price>{now.price} 원</Price>
+                  <Price>{now.price.toLocaleString()} 원</Price>
                   <Stack direction="row" spacing={2}>
-                    <a href={now.buyUrl}>
+                    <a
+                      href={now.buyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <Btn>상품 구경하기</Btn>
                     </a>
                     {now.isSaved ? null : (

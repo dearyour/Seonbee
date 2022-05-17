@@ -38,7 +38,7 @@ const ProfileMain = (props: Props) => {
         break;
       }
     }
-  }, [router.isReady]);
+  }, [router.isReady, hostId]);
 
   return (
     <>
