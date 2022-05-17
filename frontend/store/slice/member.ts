@@ -20,7 +20,9 @@ export const memberSlice = createSlice({
     getKakaoKeySuccess: (state, { payload }) => {
       state.session = payload;
       state.isLoading = false;
-      sessionStorage.setItem("Token", payload);
+      if (payload) {
+        sessionStorage.setItem("Token", payload);
+      }
     },
     getKakaoKeyError: (state, { payload }) => {
       state.error = payload;
