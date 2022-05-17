@@ -230,15 +230,43 @@ public class RecommendServiceImpl implements RecommendService {
         long upPrice= receiver.getUpPrice();
         long downPrice= receiver.getDownPrice();
         List<RecommendProductDto> productDtoList=new ArrayList<>();
-        while(count<3) {    // 3개 이상 나올때 까지
-            productDtoList=modelMapper.map(productRepositorySupport.findAllByKeyword(
-                    entries.get(0).getKey(), upPrice, downPrice), new TypeToken<List<RecommendProductDto>>() {
-            }.getType());
-            count=productDtoList.size();
-            upPrice=(long)(upPrice*1.2);
-            downPrice=(long)(downPrice*0.8);
+        List<RecommendProductDto> tmp=new ArrayList<>();
 
-        }
+        // 5개가 넘어가면 종료
+         for(int i=0; i<entries.size(); i++)
+         {
+             int count = 0;
+             long upPrice= receiver.getUpPrice();
+             long downPrice= receiver.getDownPrice();
+
+
+             System.out.println("상위 키워드= "+entries.get(i).getKey());
+
+             while(count<3) {    // 3개 이상 나올때 까지
+                tmp=modelMapper.map(productRepositorySupport.findAllByKeyword(
+                         entries.get(i).getKey(), upPrice, downPrice), new TypeToken<List<RecommendProductDto>>() {
+                 }.getType());
+                 count=tmp.size();
+                 upPrice=(long)(upPrice*1.2);
+                 downPrice=(long)(downPrice*0.8);
+
+             }
+
+             System.out.println("해당 상품 개수="+tmp.size());
+
+             for(RecommendProductDto dto : tmp)
+             {
+                 productDtoList.add(dto);
+             }
+
+
+
+             if(i==4) break;
+         }
+
+
+        System.out.println("상품 개수="+productDtoList.size());
+
         // 0 1 2 순서대로가 아니라 100개 중에 랜덤한 3개가 뽑히게 할것
         List<RecommendProductDto> productDtos = new ArrayList<>();
         String num = "";
@@ -246,6 +274,7 @@ public class RecommendServiceImpl implements RecommendService {
 
         for (int i = 1; i <= 3; i++) {
             int idx = random.nextInt(productDtoList.size()); // 번호 하나 생성
+            System.out.println("생성되는 번호="+idx);
             RecommendProductDto p = productDtoList.get(idx);
             String val = Integer.toString(idx);
             if (!num.contains(val)) {   // 중복되지 않았다면 상품 추가
