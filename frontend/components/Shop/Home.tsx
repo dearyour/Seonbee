@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EmptyView from "components/ShopComponent/EmptyView";
 import FilterPanel from "components/ShopContainer/FilterPanel";
@@ -15,14 +15,18 @@ import { RootState } from "store/slice";
 import { IoMdGitMerge } from "react-icons/io";
 import CartList from "components/ShopContainer/List/CartList";
 import Swal from "sweetalert2";
+import ControlMenus from "components/Shop/ControlMenus";
 const sortOptionList = [
-  { value: "ratingDesc", name: "최다 조회 수" },
-  { value: "ratingAsc", name: "최대 평점 순" },
-  { value: "latest", name: "높은 가격 순" },
-  { value: "oldest", name: "낮은 가격 순" },
+  { value: "upperPrice", name: "높은 가격 순" },
+  { value: "downPrice", name: "낮은 가격 순" },
+  { value: "hitMany", name: "최다 조회수 순" },
+  { value: "recommendMany", name: "최다 추천수 순" },
+  { value: "giveMany", name: "최다 주고싶소 순" },
+  { value: "wishMany", name: "최다 갖고싶소 순" },
 ];
 const Home = () => {
   const dispatch = useDispatch();
+  const SearchRef: any = useRef(null);
   const ShopReduxState = useSelector(
     (state: RootState) => state.layout?.detailData
   );
@@ -34,15 +38,19 @@ const Home = () => {
   const [selectedRating, setSelectedRating] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState([100, 1000000]);
   //카테고리 상태
-  const [categoryTag, setCategoryTag] = useState(1);
+  const [categoryTag, setCategoryTag] = useState(1); // 카테고리 숫자 찍힘
+  const [categoryTagData, setCategoryTagData] = useState(""); // 카고리 value 찍힘
   const [categoryTags, setCategoryTags] = useState(1);
-  const [sortType, setSortType] = useState<String>("ratingDesc");
+  const [sortType, setSortType] = useState<String>("upperPrice");
   const [isCartOpen, setIsCartOpen] = useState(false);
   const toggleCart = () => {
     setIsCartOpen((prev) => !prev);
   };
   const handleClickTag = useCallback((tag: number) => {
     setCategoryTag(tag);
+  }, []);
+  const handleClickTagData = useCallback((tag: string) => {
+    setCategoryTagData(tag);
   }, []);
   const handleClickTags = useCallback((tag: number) => {
     setCategoryTags(tag);
@@ -66,9 +74,10 @@ const Home = () => {
 
   const [list, setList] = useState(dataList);
   const [resultsFound, setResultsFound] = useState(true);
+  const [shopItem, setShopItem] = useState([]);
+  const [shopSearchItem, setShopSearchItem] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchOption, setSearchOption] = useState(true); // 검색 옵션 토글버튼
-  const [shopItem, setShopItem] = useState([]);
   const [nowFeedsnum, setNowFeedsNum] = useState(10); //인피니트 스크롤
   const [loading, setLoading] = useState<boolean>(false);
   const loadmoredata = () => {
@@ -107,14 +116,24 @@ const Home = () => {
         toggleCart();
       })
       .catch((err) => {
-        console.log(err.response);
-        Swal.fire({
-          title: "이미 주고싶소에 추가된 상품입니다.",
-          text: "",
-          icon: "error",
-          showConfirmButton: false,
-        });
-        toggleCart();
+        if (err.response.status === 500) {
+          console.log(err.response);
+          Swal.fire({
+            title: "로그인 후 이용 하실 수 있습니다.",
+            text: "",
+            icon: "error",
+            showConfirmButton: false,
+          });
+          toggleCart();
+        } else if (err.response.status === 402) {
+          Swal.fire({
+            title: "이미 주고싶소에 추가된 상품입니다.",
+            text: "",
+            icon: "error",
+            showConfirmButton: false,
+          });
+          toggleCart();
+        }
       });
   };
   //검색 상품 상태
@@ -128,11 +147,29 @@ const Home = () => {
         console.log(res);
         setShopItem(res.data.productList);
         dispatch(layoutAction.updateDetailData(res.data.productList));
+        SearchRef.current.value = "";
+        setSearchInput("");
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  //검색 한글자 마다 호출
+  // useEffect(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: process.env.NEXT_PUBLIC_BACK + "shop/" + searchInput,
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setShopSearchItem(res.data.productList);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [searchInput]);
+
   // 처음 상품 상태
   const __GetShopState = useCallback(() => {
     return axios({
@@ -155,17 +192,25 @@ const Home = () => {
 
   const compare = useCallback(
     (a: any, b: any) => {
-      if (sortType === "latest") {
+      if (sortType === "upperPrice") {
         return parseInt(b.price) - parseInt(a.price);
-      } else if (sortType === "oldest") {
+      } else if (sortType === "downPrice") {
         return parseInt(a.price) - parseInt(b.price);
-      } else if (sortType === "ratingDesc") {
+      } else if (sortType === "hitMany") {
         {
-          return parseInt(a.price) - parseInt(b.price);
+          return parseInt(b.hit) - parseInt(a.hit);
         }
-      } else if (sortType === "ratingAsc") {
+      } else if (sortType === "recommendMany") {
         {
-          return parseInt(a.price) - parseInt(b.price);
+          return parseInt(b.recommend) - parseInt(a.recommend);
+        }
+      } else if (sortType === "giveMany") {
+        {
+          return parseInt(b.give) - parseInt(a.give);
+        }
+      } else if (sortType === "wishMany") {
+        {
+          return parseInt(b.wish) - parseInt(a.wish);
         }
         // parseFloat(a.ratingAvg.toFixed(1)) -
         // parseFloat(b.ratingAvg.toFixed(1))
@@ -209,11 +254,17 @@ const Home = () => {
       }
 
       // Category Filter
-      if (selectedCategory) {
+      if (categoryTagData) {
         updatedList = updatedList.filter(
-          (item: any) => item.category === selectedCategory
+          (item: any) => item.category1.toLowerCase() === categoryTagData
         );
       }
+      // // Category Filter
+      // if (selectedCategory) {
+      //   updatedList = updatedList.filter(
+      //     (item: any) => item.category === selectedCategory
+      //   );
+      // }
 
       // Cuisine Filter
       const cuisinesChecked = cuisines
@@ -244,9 +295,9 @@ const Home = () => {
           (item: any) => item.price >= minPrice && item.price <= maxPrice
         );
       }
-
-      // updatedList = updatedList.sort(compare);
-
+      if (shopItem.length) {
+        updatedList = updatedList.sort(compare);
+      }
       setShopItem(updatedList);
 
       !updatedList.length ? setResultsFound(false) : setResultsFound(true);
@@ -255,7 +306,16 @@ const Home = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [selectedRating, selectedCategory, cuisines, searchInput, selectedPrice]);
+  }, [
+    selectedRating,
+    selectedCategory,
+    cuisines,
+    searchInput,
+    selectedPrice,
+    sortType,
+    compare,
+    categoryTagData,
+  ]);
 
   return (
     <div className="home">
@@ -268,6 +328,8 @@ const Home = () => {
         getSearchShop={__getSearchShop}
         data={shopItem}
         toggleCart={toggleCart}
+        SearchRef={SearchRef}
+        shopSearchItem={shopSearchItem}
       />
       {/* {isCartOpen && (
         <div id="backdrop" className="toggleBtn" onClick={toggleCart}></div>
@@ -362,11 +424,12 @@ const Home = () => {
                 key={it.category_id}
                 {...it}
                 onClick={handleClickTag}
+                onClickData={handleClickTagData}
                 isSelected={it.category_id === categoryTag}
               />
             ))}
           </div>
-          <div className="input_box category_list_wrapper">
+          {/* <div className="input_box category_list_wrapper">
             {categoryRadios.map((it: any) => (
               <CategoryBtn
                 key={it.category_id}
@@ -375,7 +438,7 @@ const Home = () => {
                 isSelected={it.category_id === categoryTags}
               />
             ))}
-          </div>
+          </div> */}
         </section>
       )}
       <div className="home_panelList-wrap">
@@ -394,6 +457,20 @@ const Home = () => {
               changeChecked={handleChangeChecked}
               changeCheckedd={handleChangeCheckedd}
             />
+            <div className="menu_wrapper">
+              <div className="left_col">
+                <ControlMenus
+                  value={sortType}
+                  onChange={setSortType}
+                  optionList={sortOptionList}
+                />
+                {/* <ControlMenu
+                value={filter}
+                onChange={setFilter}
+                optionList={filterOptionList}
+              /> */}
+              </div>
+            </div>
           </div>
         )}
 
@@ -405,7 +482,7 @@ const Home = () => {
               dataLength={shopItem.slice(0, nowFeedsnum).length} //This is important field to render the next data
               next={loadmoredata}
               hasMore={nowFeedsnum < shopItem.length}
-              loader={<div style={{ textAlign: "center" }}>🌟Loading...🌟</div>}
+              loader={<div style={{ textAlign: "center" }}>🌟Loading🌟</div>}
               endMessage={
                 <EmptyView />
                 // <div className="btns" style={{ textAlign: "center" }}>

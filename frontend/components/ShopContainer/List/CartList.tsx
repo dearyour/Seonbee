@@ -65,24 +65,26 @@ const List = ({}) => {
       {/* {CartData.length && ( */}
       <div className="postCards">
         <div className="post__imgs" onClick={__getHitCount}>
-          <div
-            className="ImagecardWrp"
-            onClick={() => {
-              // Router.replace(`${list.buyUrl}`);
-              Router.push(`${CartData.buyUrl}`);
-            }}
-          >
-            {CartData.imageUrl && (
-              <Image
-                src={CartData.imageUrl}
-                alt="cardImage"
-                width={400}
-                // width={200}
-                height={520}
-                // height={100}
-              />
-            )}
-          </div>
+          <a href={CartData.buyUrl} target="_blank" rel="noopener noreferrer">
+            <div
+              className="ImagecardWrp"
+              onClick={() => {
+                // Router.replace(`${list.buyUrl}`);
+                // Router.push(`${CartData.buyUrl}`);
+              }}
+            >
+              {CartData.imageUrl && (
+                <Image
+                  src={CartData.imageUrl}
+                  alt="cardImage"
+                  width={400}
+                  // width={200}
+                  height={520}
+                  // height={100}
+                />
+              )}
+            </div>
+          </a>
         </div>
         <div className="post__info">
           <div className="post__date">

@@ -10,14 +10,16 @@ EXPOSE 3000
 RUN chmod -R 777 /app
 
 # `/app/node_modules/.bin`을 $PATH 에 추가
-ENV PATH /app/node_modules/.bin:$PATH
+# ENV PATH /app/node_modules/.bin:$PATH
 
 # app dependencies, install 및 caching
 COPY package.json /app/package.json
 
-RUN npm install -g npm@8.10.0
+RUN npm install -g npm@8.3.0
 # RUN npm --version
+# RUN npm i
 RUN npm install --legacy-peer-deps
+# RUN npm i tslib@2.1.0 -legacy-peer-deps
 # RUN npm install --legacy-peer-deps --production
 # RUN npm --version
 # RUN npm install react-scripts@5.0.0 -g
