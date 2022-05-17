@@ -7,6 +7,7 @@ const initialState: any | layoutParam = {
   detailData: new ShopType({}),
   cartData: new ShopType({}),
   giveUser: { friendId: 0, nickname: "", imageString: "" },
+  newUser: {},
 };
 
 export const layoutSlice = createSlice({
@@ -26,7 +27,7 @@ export const layoutSlice = createSlice({
       state.giveUser = payload;
     },
     reset: (state) => {
-      state = initialState;
+      state.giveUser = initialState.giveUser;
     },
   },
 });

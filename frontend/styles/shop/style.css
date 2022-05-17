@@ -35,14 +35,16 @@
   font-weight: 600;
 }
 .input-groupShop {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  white-space: nowrap;
 }
 .input-groupr {
-  margin-left: 2rem;
+  margin-left: 1rem;
+  white-space: nowrap;
   /* justify-content: start; */
 }
 .label-range {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 .input-groups {
   margin-bottom: 0.5rem;
@@ -125,7 +127,7 @@
 }
 /* 순서  */
 .ControlMenuShop {
-  margin-left: 10px;
+  /* margin-left: 10px; */
   border: none;
   border-radius: 5px;
   /* background-color: #ececec; */
@@ -136,7 +138,8 @@
 
   cursor: pointer;
   font-size: 18px;
-  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
+  /* background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%); */
+  background-image: linear-gradient(to right, #e0dada 0%, #e9e5e1 100%);
 }
 
 /* {카테고리 아이템} */
@@ -179,6 +182,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* white-space: nowrap; */
 }
 
 .CategoryItem img {
@@ -457,12 +461,14 @@
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   cursor: pointer;
   background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  background-image: linear-gradient(to right, #f88e8e 0%, #ff7979 100%);
   color: black;
 }
 .checkPay:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(14 165 233 / var(--tw-bg-opacity));
   background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
+  background-image: linear-gradient(to right, #ff7979 0%, #f88e8e 100%);
   color: #fff;
 }
 .dropBtnWrp {
@@ -482,6 +488,7 @@
   border-color: transparent;
   font-size: 1rem;
   background-image: linear-gradient(to right, #f7cfa9 0%, #eb9b51 100%);
+  background-image: linear-gradient(to right, #c0b4a5 0%, #c0b4a5 100%);
   border-radius: 10px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -492,5 +499,6 @@
   --tw-text-opacity: 1;
   color: rgb(14 165 233 / var(--tw-text-opacity));
   background-image: linear-gradient(to right, #f7cfa9 0%, #eb9b51 100%);
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
   color: #fff;
 }
