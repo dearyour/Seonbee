@@ -17,4 +17,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findAllByNameContains(String keyword);
     List<Product> findAllByKeyword(String keyword);
     List<Product> findTop1000ByOrderByRecommendDesc();
+    List<Product> findAllByKeywordContains(String keyword);
+    List<Product> findAllByKeywordContainsAndPriceBetween(String keyword, Long lowPrice, Long highPrice);
 }

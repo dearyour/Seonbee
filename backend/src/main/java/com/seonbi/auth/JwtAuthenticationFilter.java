@@ -70,6 +70,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             return;
         }
         Member member= memberRepository.findByEmailAndIsDeletedAndIsKakao(email,false,isKakao); // 해당 이메일을 가진 유저가 db에 존재하는지 조회 (kakao 도 확인)
+        System.out.println("member="+member);
         if (member == null) {
             chain.doFilter(request, response);
             return;
