@@ -1,6 +1,7 @@
 package com.seonbi.api.service;
 
 import com.seonbi.api.model.MemberSearchDto;
+import com.seonbi.common.util.DdayUtil;
 import com.seonbi.db.entity.Schedule;
 import com.seonbi.db.repository.*;
 import org.json.simple.JSONObject;
@@ -92,6 +93,14 @@ public class MemberServiceImpl implements MemberService {
                 scheduleRepository.save(schedule);
             }
         }
+
+        // 생성일 일정에 추가
+        Schedule schedule = new Schedule();
+        schedule.setMemberId(newMember.getMemberId());
+        schedule.setTitle("가입일");
+        schedule.setScheduleDate(DdayUtil.Date(member.getCreatedDate().toString()));
+        schedule.setBackground(8);
+        scheduleRepository.save(schedule);
 
         return newMember;
     }
