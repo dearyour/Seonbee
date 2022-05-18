@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useEffectOnce } from 'store/hook/useEffectOnce';
 import Image from 'next/image';
-import Hobee from 'public/seonbee.png';
+import Hobee from 'public/characters/hobee_body.png';
 import {
   LeftSpeechBubble,
   RecommendContainer,
@@ -16,9 +16,15 @@ import {
 } from 'styles/chat/ProductsElements';
 import { Button, Stack } from '@mui/material';
 import Btn from 'components/commons/Btn';
-import { AiOutlineLogin, AiOutlineSave } from 'react-icons/ai';
+import { RiKakaoTalkFill, RiArrowGoBackFill } from 'react-icons/ri';
 import EllipsisText from 'react-ellipsis-text';
 import axiosConnector from 'utils/axios-connector';
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 const dummyProductList = [
   {
@@ -76,16 +82,13 @@ function Recommend() {
   ]);
 
   useEffectOnce(() => {
+    // 챗봇을 통한 접근이 아니면 404로
     if (Object.keys(router.query).length === 0) {
       router.push('/404');
       return;
     }
 
-    console.log(router.query);
-    console.log('age', typeof router.query.age);
-    console.log('mbti', typeof router.query.mbti);
-    console.log('price', typeof router.query.price);
-
+    // 추천 상품 뿌려주기
     const { age, name, price, gender, mbti, interest, relation, purpose } =
       router.query;
 
@@ -109,7 +112,57 @@ function Recommend() {
       .catch((err) => {
         console.log(err.response);
       });
+
+    // 카카오톡 공유하기를 위한
+    const script = document.createElement('script');
+    script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
   });
+
+  const kakaoShare = () => {
+    console.log('카카오톡 공유하기');
+
+    if (window.Kakao) {
+      const kakao = window.Kakao;
+
+      // 중복 initialization 방지
+      if (!kakao.isInitialized()) {
+        // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
+        kakao.init('29238b0c437e1bd13d1681903254534f');
+        kakao.Link.sendCustom({
+          templateId: 76817,
+          templateArgs: {
+            product1_name: productList[0].name,
+            product1_price: productList[0].price
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            product1_image: productList[0].imageUrl,
+            product1_buy: productList[0].buyUrl.slice(34),
+
+            product2_name: productList[1].name,
+            product2_price: productList[1].price
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            product2_image: productList[1].imageUrl,
+            product2_buy: productList[1].buyUrl.slice(34),
+
+            product3_name: productList[2].name,
+            product3_price: productList[2].price
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            product3_image: productList[2].imageUrl,
+            product3_buy: productList[2].buyUrl.slice(34),
+          },
+        });
+      }
+    }
+  };
 
   const saveAll = () => {
     console.log('saved all');
@@ -228,7 +281,7 @@ function Recommend() {
       direction="column"
       justifyContent="flex-start"
       alignItems="center"
-      spacing={4}
+      spacing={3}
     >
       <Stack
         direction="row"
@@ -236,14 +289,14 @@ function Recommend() {
         alignItems="center"
         spacing={4}
       >
-        <Image src={Hobee} alt="hobee" width={100} height={100} />
+        <Image src={Hobee} alt="hobee" width={86} height={149} />
         <LeftSpeechBubble>
           엣헴, 오다 주웠소.
           <br />
           {router.query.name}님이 기뻐할 것이오.
         </LeftSpeechBubble>
       </Stack>
-      {sessionStorage.getItem('Token') ? (
+      {/* {sessionStorage.getItem('Token') ? (
         <Btn filled={true}>
           <AiOutlineSave /> &nbsp; 추천 내역 전체 저장하기
         </Btn>
@@ -252,7 +305,22 @@ function Recommend() {
           <AiOutlineLogin />
           &nbsp; 로그인하고 추천 내역 저장하기
         </Btn>
-      )}
+      )} */}
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+      >
+        <Btn filled={true} onClick={kakaoShare}>
+          <RiKakaoTalkFill />
+          &nbsp; 카카오톡 공유하기
+        </Btn>
+        <Btn filled={true} onClick={() => history.go(-1)}>
+          <RiArrowGoBackFill />
+          &nbsp;다시 추천받기
+        </Btn>
+      </Stack>
       <>{renderProducts(productList)}</>
     </Stack>
   );

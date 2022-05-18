@@ -63,7 +63,7 @@ function HeroSection() {
       <HeroImage src={MainBg.src} />
       <StyledContainer>
         <ReverseDiv className="row">
-          <div className="col-md-1" />
+          {/* <div className="col-md-1" /> */}
           <div className="col-md-7 col-sm-8">
             <div className="h-100 d-flex align-items-center">
               <div>
@@ -74,7 +74,7 @@ function HeroSection() {
                     alt="seonbee"
                     width={102}
                     height={60}
-                    style={{ marginBottom: '-0.7rem' }}
+                    style={{ margin: '0.75rem 0 0 0 !important' }}
                   />
                   가<br />
                   선물을 추천 해드립니다.
@@ -105,7 +105,7 @@ function HeroSection() {
             </div>
           </div>
 
-          <div className="col-md-4 col-sm-8">
+          <div className="col-md-5 col-sm-8">
             <Image src={HobeeTobee} alt="hobeetobee" layout="responsive" />
           </div>
         </ReverseDiv>
