@@ -39,8 +39,8 @@ export const blinkLanternImages = [
 ];
 
 import lanternBackground0 from "public/images/lanternBackground0.jpg";
-import lanternBackground1 from "public/images/lanternBackground1.jpg";
-import lanternBackground2 from "public/images/lanternBackground2.jpg";
+import lanternBackground1 from "public/images/lanternBackground1.png";
+import lanternBackground2 from "public/images/lanternBackground2.png";
 import lanternBackground3 from "public/images/lanternBackground3.jpg";
 import lanternBackground4 from "public/images/lanternBackground4.jpg";
 import lanternBackground5 from "public/images/lanternBackground5.jpeg";

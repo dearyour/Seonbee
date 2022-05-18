@@ -1,5 +1,5 @@
-import React from "react";
-import { Card } from "@mui/material";
+import React, { useState } from "react";
+import { Card, TextField } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import CardMember from "store/interface/social/cardmember";
 import Btn from "components/commons/Btn";
@@ -9,6 +9,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 3,
+};
 
 const UserCard = ({
   nickname,
@@ -19,11 +34,41 @@ const UserCard = ({
   friendId,
 }: CardMember) => {
   const router = useRouter();
+  const [price, setPrice] = useState<number>();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <ProfileCard className="shadow-none">
+      {/* 선물 추천받기 모달 */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} className="rounded">
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            선물 추천 받기
+          </Typography>
+          <div className="my-1">원하시는 가격을 입력해주세요. </div>
+          <Typography id="modal-modal-description" className="d-flex">
+            <TextField
+              id="outlined-basic"
+              label="ex) 10000"
+              variant="outlined"
+              onChange={(e) => {
+                setPrice(Number(e.target.value));
+              }}
+            />
+            <Btn className="my-auto ms-2">추천</Btn>
+          </Typography>
+        </Box>
+      </Modal>
+      {/* 본문 */}
       <CardContent>
         <div className="row">
-          <div className="col-4 py-auto">
+          <div className="col-4">
             <Profile src={GetImage(imageString)} alt="" />
             <div className="text-center">{nickname}</div>
           </div>
@@ -48,32 +93,37 @@ const UserCard = ({
               <div className="m-4"></div>
             )}
             {verse ? (
-              <div className="my-1">&quot;{verse}&quot;</div>
+              <Card className="my-1">
+                <div className="my-1 fw-bold p-1">&quot;{verse}&quot;</div>
+              </Card>
             ) : (
               <br></br>
             )}
-            <div className="my-1">
-              <span>{nickname}</span>님의 갖고싶소
-            </div>
             {wishlist.length > 0 ? (
-              <Swiper
-                modules={[Navigation, A11y]}
-                spaceBetween={20}
-                slidesPerView={4}
-              >
-                {wishlist.map((now: any, index: number) => {
-                  return (
-                    <SwiperSlide className="" key={index}>
-                      <ProductImg
-                        width={"100%"}
-                        height={"100%"}
-                        src={now}
-                        alt=""
-                      />
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
+              <Card className="">
+                <div className="my-1 p-1">
+                  <span>{nickname}</span>님의 갖고싶소
+                </div>
+                <Swiper
+                  modules={[Navigation, A11y]}
+                  spaceBetween={20}
+                  slidesPerView={4}
+                  className="p-1"
+                >
+                  {wishlist.map((now: any, index: number) => {
+                    return (
+                      <SwiperSlide className="" key={index}>
+                        <ProductImg
+                          width={"100%"}
+                          height={"100%"}
+                          src={now}
+                          alt=""
+                        />
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+              </Card>
             ) : (
               <div className="my-3 py-2"></div>
             )}
@@ -87,9 +137,11 @@ const UserCard = ({
                   });
                 }}
               >
+                연등회
+              </Btn>
+              <Btn filled={true} onClick={handleOpen}>
                 선물 추천받기
               </Btn>
-              <Btn filled={true}>축하 서신</Btn>
             </div>
           </div>
         </div>

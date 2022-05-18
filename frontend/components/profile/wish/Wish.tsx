@@ -1,4 +1,4 @@
-import { Card, Stack } from "@mui/material";
+import { Card, Skeleton, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ProductCard from "../ProductCard";
 import styled from "@emotion/styled";
@@ -19,6 +19,7 @@ import useProfile from "store/hook/profileHooks";
 import { useRouter } from "next/router";
 import { BsX } from "react-icons/bs";
 import Swal from "sweetalert2";
+import sad from "public/characters/sad.png";
 
 interface Props {
   hostId: any;
@@ -37,6 +38,7 @@ interface WishResponse {
 const Wish = ({ props }: { props: any }) => {
   const [products, setProducts] = useState<WishResponse[]>([]);
   const { hostId, memberId } = useProfile();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
   const wishReserve = (id: number) => {
     axiosConnector({
@@ -77,6 +79,7 @@ const Wish = ({ props }: { props: any }) => {
 
   useEffect(() => {
     // setProducts(tempL);
+    setIsLoading(true);
     axiosConnector({
       method: "GET",
       url: "profile/wish/" + props,
@@ -88,10 +91,11 @@ const Wish = ({ props }: { props: any }) => {
       .catch((err) => {
         console.log(err.response);
       });
+    setIsLoading(false);
   }, []);
   return (
     <div className="w-100 h-100 ms-5 overflow-hidden">
-      {products.length > 0 ? (
+      {!isLoading && products.length > 0 ? (
         <Swiper
           modules={[Mousewheel, Pagination, Scrollbar]}
           mousewheel={true}
@@ -170,8 +174,31 @@ const Wish = ({ props }: { props: any }) => {
             );
           })}
         </Swiper>
+      ) : !isLoading ? (
+        <Card className="w-50 ms-5">
+          <div className="p-5 m-3">
+            <Image src={sad} width={249} height={150} alt="nondata"></Image>
+            <div>등록된 물건이 없습니다</div>
+            <span
+              className="clickable text-primary "
+              onClick={() => {
+                router.push("/shop");
+              }}
+            >
+              저잣거리
+            </span>
+            에서 추가해보세요
+          </div>
+        </Card>
       ) : (
-        <div className="p-5 m-5">비어있어요</div>
+        <Skeleton
+          variant="rectangular"
+          width={"80%"}
+          height={"80%"}
+          className="rounded p-5 m-5 fw-bold"
+        >
+          Loading...
+        </Skeleton>
       )}
     </div>
 

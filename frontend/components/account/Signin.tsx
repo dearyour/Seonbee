@@ -20,7 +20,7 @@ const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
 const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{7,16}$/;
 
 const ERROR_MSG: any = {
-  required: "비어있소.",
+  required: "필수값입니다.",
   invalidId: "유효하지 않는 이메일 양식입니다.",
   validId: "허가한다.",
   invalidPw: "유효하지 않는 비밀번호 양식입니다.",
