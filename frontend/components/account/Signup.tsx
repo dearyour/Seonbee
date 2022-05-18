@@ -330,7 +330,7 @@ const Signup = () => {
             id="email"
             type="text"
             placeholder="이메일"
-            value={inputState.email || ""}
+            value={inputState.email}
             disabled={authFin ? true : false}
             // onChange={(e) => {
             //   handleChange(e);
