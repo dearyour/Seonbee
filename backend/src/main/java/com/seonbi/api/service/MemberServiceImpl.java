@@ -80,6 +80,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member createMember(Member member) {
         Member newMember = memberRepository.save(member);
+        Random random=new Random();
+        int backgroundSize=8;     // 배경번호 0~7
         // 생일 일정에 추가
         if (member.getBirthday() != null) {
             String[] birthday = member.getBirthday().split("\\.");
@@ -89,7 +91,7 @@ public class MemberServiceImpl implements MemberService {
                 schedule.setTitle("생일");
                 schedule.setBirthday(true);
                 schedule.setScheduleDate("2022." + birthday[1] + "." + birthday[2]);
-                schedule.setBackground(1);
+                schedule.setBackground(random.nextInt(backgroundSize));
                 scheduleRepository.save(schedule);
             }
         }
@@ -99,7 +101,7 @@ public class MemberServiceImpl implements MemberService {
         schedule.setMemberId(newMember.getMemberId());
         schedule.setTitle("가입일");
         schedule.setScheduleDate(DdayUtil.Date(member.getCreatedDate().toString()));
-        schedule.setBackground(8);
+        schedule.setBackground(random.nextInt(backgroundSize));
         scheduleRepository.save(schedule);
 
         return newMember;
