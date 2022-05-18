@@ -17,7 +17,7 @@ const NICK_REGEX = /^[a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,12}$/;
 // 비밀번호 포맷 확인(영문, 숫자포함 8~16자리)
 const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{7,16}$/;
 const ERROR_MSG: any = {
-  required: "비어있소.",
+  required: "필수값입니다.",
   invalidId: "Ex) Email@naver.com",
   validId: "허가한다.",
   invalidPw: "대,소문자 and 숫자 포함 8~16 글자",
@@ -47,7 +47,7 @@ const Signup = () => {
   });
   console.log(inputState.email);
   // const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
-  const [date, setDate] = useState("1995-05-05");
+  const [date, setDate] = useState("");
   const [sortType, setSortType] = useState("성별");
   const [errorData, setErrorData] = useState<any>({
     email: false,
@@ -179,6 +179,7 @@ const Signup = () => {
   const checkRegex = (inputId: any) => {
     let result: any;
     const value: any = inputState[inputId];
+    console.log(value);
     if (value.length === 0) {
       result = "required";
     } else {
@@ -395,10 +396,13 @@ const Signup = () => {
           value={inputState.password || ""}
           onChange={(e) => {
             handleChange(e);
-            checkRegex("password");
+            // checkRegex("password");
           }}
           // onBlur={() => checkRegex("password")}
-          onBlur={() => checkRegex("passwordConfirm")}
+          onBlur={() => {
+            checkRegex("password");
+            checkRegex("passwordConfirm");
+          }}
         />
         <div className="text-red-500">
           {errorData["password"] !== true

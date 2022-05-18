@@ -139,7 +139,8 @@
   cursor: pointer;
   font-size: 18px;
   /* background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%); */
-  background-image: linear-gradient(to right, #e0dada 0%, #e9e5e1 100%);
+  /* background-image: linear-gradient(to right, #e0dada 0%, #e9e5e1 100%); */
+  background-color: #e9e5e1;
 }
 
 /* {카테고리 아이템} */
@@ -196,7 +197,7 @@
 
 .CategoryItem_off {
   background-color: #ececec;
-  background-image: linear-gradient(to right, #ececec 0%, #e9e5e1 100%);
+  /* background-image: linear-gradient(to right, #ececec 0%, #e9e5e1 100%); */
 }
 
 .CategoryItem_on_1 {

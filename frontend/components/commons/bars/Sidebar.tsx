@@ -49,11 +49,11 @@ function Sidebar({ isOpen, toggle }: Props) {
                 Router.push("/");
               }}
             >
-              떠나겠소
+              로그아웃
             </SidebarLink>
           ) : (
             <SidebarLink onClick={() => Router.push("/login")}>
-              납시오
+              로그인
             </SidebarLink>
           )}
         </SidebarMenu>
