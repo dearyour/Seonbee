@@ -7,7 +7,7 @@ import GetImage from "utils/GetImage";
 import Image from "next/image";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { Box, Modal, TextField, Typography } from "@mui/material";
+import { Box, Modal, Skeleton, TextField, Typography } from "@mui/material";
 import seonbee from "public/seonbee.png";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -83,6 +83,7 @@ const Setting = (props: Props) => {
   const [originimage, setOriginImage] = useState();
   const [image, setImage] = useState<any>();
   const [showmodal, setShowModal] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const cropperRef = useRef<HTMLImageElement | null>(null);
 
   const onCrop = () => {
@@ -106,6 +107,7 @@ const Setting = (props: Props) => {
   const handleClose = () => setShowModal(false);
   const { hostId } = useProfile();
   useEffect(() => {
+    setIsLoading(true);
     axiosConnector({
       method: "GET",
       url: "profile/" + String(hostId),
@@ -117,6 +119,7 @@ const Setting = (props: Props) => {
       .catch((err) => {
         console.log(err.response);
       });
+    setIsLoading(false);
   }, []);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -258,13 +261,12 @@ const Setting = (props: Props) => {
         {/* 프로필 이미지, verse */}
         <div className="row my-2 w-100 ps-3">
           {viewimage ? (
-            <Image
-              src={viewimage}
-              className="rounded-circle col"
-              alt="profile"
-              width={"100%"}
-              height={"100%"}
-            ></Image>
+            <Skeleton
+              variant="rectangular"
+              width={"80%"}
+              height={"80%"}
+              className="rounded-circle p-5fw-bold"
+            ></Skeleton>
           ) : (
             <Image
               src={GetImage(mydata.imageString)}

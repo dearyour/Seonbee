@@ -7,6 +7,7 @@ import {
   NavMenu,
   NavItem,
   NavLinks,
+  NavLinksChat,
 } from "styles/main/NavbarElements";
 import Image from "next/image";
 import TextLogo from "public/textLogo2.png";
@@ -61,7 +62,9 @@ function Navbar() {
               <AudioPlayer />
             </NavItem>
             <NavItem>
-              <NavLinks onClick={() => Router.push("/")}>대문</NavLinks>
+              <NavLinksChat onClick={() => Router.push("/chat")}>
+                선물 추천
+              </NavLinksChat>
             </NavItem>
             <NavItem>
               <NavLinks onClick={() => Router.push("/shop")}>저잣거리</NavLinks>
