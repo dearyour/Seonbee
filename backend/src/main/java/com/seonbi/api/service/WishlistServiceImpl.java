@@ -22,7 +22,7 @@ public class WishlistServiceImpl implements WishlistService{
 
     @Autowired
     ModelMapper modelMapper;
-`
+
     @Autowired
     WishlistRepository wishlistRepository;
 
