@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import Link from 'next/link';
+import styled from "@emotion/styled";
+import Link from "next/link";
 
 export const Nav = styled.nav`
   background: transparent;
@@ -13,6 +13,7 @@ export const Nav = styled.nav`
   top: 0;
   z-index: 10;
   margin-bottom: 2rem;
+  /* background-color: #e9e5e1; */
 
   @media screen and (max-width: 960px) {
     transition: 0.8s all ease;

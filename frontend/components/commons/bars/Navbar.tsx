@@ -91,11 +91,11 @@ function Navbar() {
                     Router.push("/");
                   }}
                 >
-                  떠나겠소
+                  로그아웃
                 </NavLinks>
               ) : (
                 <NavLinks onClick={() => Router.push("/login")}>
-                  납시오
+                  로그인
                 </NavLinks>
               )}
             </NavItem>
