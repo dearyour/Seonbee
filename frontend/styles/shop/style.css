@@ -14,6 +14,7 @@
 .home_panelList-wrap {
   flex: 1;
   display: flex;
+  justify-content: space-between;
 }
 .home_panel-wrap {
   /* flex-basis: 280px; */
@@ -34,14 +35,16 @@
   font-weight: 600;
 }
 .input-groupShop {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  white-space: nowrap;
 }
 .input-groupr {
-  margin-left: 2rem;
+  margin-left: 1rem;
+  white-space: nowrap;
   /* justify-content: start; */
 }
 .label-range {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 .input-groups {
   margin-bottom: 0.5rem;
@@ -54,8 +57,9 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.26);
-  padding: 1rem 1rem;
+  padding: 0.7rem 0.7rem;
   width: 100%;
+  justify-content: space-between;
 }
 .searchBar-icon {
   color: rgba(0, 0, 0, 0.26);
@@ -67,6 +71,7 @@
   outline: none;
   border: none;
   width: 40%;
+  margin-left: -150px;
 }
 
 .searchBar-wrap input::placeholder {
@@ -120,6 +125,24 @@
   color: rgba(0, 0, 0, 0.26);
   font-weight: 600;
 }
+/* 순서  */
+.ControlMenuShop {
+  /* margin-left: 10px; */
+  border: none;
+  border-radius: 5px;
+  /* background-color: #ececec; */
+  width: 100%;
+  text-align: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
+
+  cursor: pointer;
+  font-size: 18px;
+  /* background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%); */
+  /* background-image: linear-gradient(to right, #e0dada 0%, #e9e5e1 100%); */
+  background-color: #e9e5e1;
+}
+
 /* {카테고리 아이템} */
 
 .CartCategoryItem {
@@ -142,24 +165,25 @@
   color: white;
 }
 .CartCategoryItem_off {
-  background-color: #ececec;
+  /* background-color: #ececec; */
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
 }
 .category_list_wrapper {
   margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(10, auto);
-  gap: 2%;
+  grid-template-columns: repeat(12, auto);
+  gap: 0.7%;
 }
 .CategoryItem {
   cursor: pointer;
   border-radius: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* white-space: nowrap; */
 }
 
 .CategoryItem img {
@@ -173,6 +197,7 @@
 
 .CategoryItem_off {
   background-color: #ececec;
+  /* background-image: linear-gradient(to right, #ececec 0%, #e9e5e1 100%); */
 }
 
 .CategoryItem_on_1 {
@@ -216,6 +241,18 @@
   background-color: #ce7124;
   color: white;
 }
+.CategoryItem_on_11 {
+  background-color: #9824ce;
+  color: white;
+}
+.CategoryItem_on_12 {
+  background-color: #ce244f;
+  color: white;
+}
+.CategoryItem_on_13 {
+  background-color: #b5ce24;
+  color: white;
+}
 .btns {
   width: 140px;
   padding: 10px;
@@ -242,8 +279,8 @@
 .btng--gold {
   width: 140px;
   padding: 10px;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 14px;
   font-weight: 700;
   text-align: center;
   box-sizing: border-box;
@@ -425,12 +462,14 @@
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   cursor: pointer;
   background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  background-image: linear-gradient(to right, #f88e8e 0%, #ff7979 100%);
   color: black;
 }
 .checkPay:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(14 165 233 / var(--tw-bg-opacity));
   background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
+  background-image: linear-gradient(to right, #ff7979 0%, #f88e8e 100%);
   color: #fff;
 }
 .dropBtnWrp {
@@ -450,6 +489,7 @@
   border-color: transparent;
   font-size: 1rem;
   background-image: linear-gradient(to right, #f7cfa9 0%, #eb9b51 100%);
+  background-image: linear-gradient(to right, #c0b4a5 0%, #c0b4a5 100%);
   border-radius: 10px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -460,5 +500,6 @@
   --tw-text-opacity: 1;
   color: rgb(14 165 233 / var(--tw-text-opacity));
   background-image: linear-gradient(to right, #f7cfa9 0%, #eb9b51 100%);
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
   color: #fff;
 }

@@ -11,7 +11,7 @@ export const GetProfileState = (memberId: any) => {
       return res.data.member;
     })
     .catch((err) => {
-      return console.log(err.response);
+      return 0;
     });
 };
 

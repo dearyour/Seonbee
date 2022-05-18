@@ -8,7 +8,6 @@ import java.util.Date;
 public class DdayUtil {
 
     public static String Dday(String dateString){
-
         // 마감일 계산
         Calendar todayDate = Calendar.getInstance();
         todayDate.setTime(new Date()); //금일 날짜
@@ -35,4 +34,10 @@ public class DdayUtil {
             return null;
         }
     }
+
+    public static String Date(String fullDate) {
+        String[] splits = fullDate.split("T");
+        return splits[0].replace('-', '.');
+    }
+
 }

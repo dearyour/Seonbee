@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { memberActions } from "store/slice/member";
 import Image from "next/image";
-import seonbee from "../../public/seonbee.png";
+import seonbee from "../../public/characters/hobee_body.png";
 import styled from "@emotion/styled";
 import axios from "axios";
 import Router from "next/router";
@@ -11,6 +11,7 @@ import Login from "./kakaoLogin";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import CheckEmailCode, { sendEmailPWCodeAPI } from "./CheckEmailCode";
+import Btn from "components/commons/Btn";
 type Props = {};
 //백에서 사용하는 되는 유효성
 const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
@@ -19,7 +20,7 @@ const ID_REGEX = /^[0-9a-zA-Z_-]+@[0-9a-zA-Z]+\.[a-zA-Z]{2,6}$/;
 const PW_REGEX = /^(?=.*[a-zA-Z])(?=.*\d).{7,16}$/;
 
 const ERROR_MSG: any = {
-  required: "비어있소.",
+  required: "필수값입니다.",
   invalidId: "유효하지 않는 이메일 양식입니다.",
   validId: "허가한다.",
   invalidPw: "유효하지 않는 비밀번호 양식입니다.",
@@ -72,7 +73,7 @@ const Signin = (props: Props) => {
   };
 
   useEffect(() => {
-    document.title = "납시오";
+    document.title = "로그인";
     // if(userLoginInfo.isLogin==true) {
     //   Swal.fire({
     //     title: '로그인된 상태입니다',
@@ -227,9 +228,9 @@ const Signin = (props: Props) => {
   // 새로운 패스워드
   return (
     <div className="form signinForm">
-      <ImageWrapper src={seonbee} alt={`image`} height={170} width={200} />
+      <ImageWrapper src={seonbee} alt={`image`} height={190} width={130} />
       <form onSubmit={handleSubmit}>
-        <h3>납시오</h3>
+        <h3>로그인</h3>
         <input
           id="email"
           type="text"
@@ -257,16 +258,16 @@ const Signin = (props: Props) => {
             ? ERROR_MSG[errorData["password"]]
             : ""}
         </div> */}
-        <input type="submit" name="" value="등장" />
-        <LoginWrapper>
+        <input type="submit" name="" value="로그인" className="mx-auto" />
+        <LoginWrapper className="mx-auto my-1">
           <Login />
         </LoginWrapper>
-        <Button
-          className="toggle-signin"
+        <Btn
+          className="toggle-signin mt-1"
           onClick={() => setPromotion((prevCheck) => !prevCheck)}
         >
-          비밀스러운 번호를 까먹었소?
-        </Button>
+          비밀번호 찾기
+        </Btn>
       </form>
       <div className="promotion_signinWrp">
         {promotion && (

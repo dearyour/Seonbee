@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Arche from 'public/music/Arche.mp3';
+import React, { useState, useRef, useEffect } from "react";
+import Arche from "public/music/Arche.mp3";
 import {
   AudioPlayerWidget,
   ForwardBackward,
@@ -7,14 +7,14 @@ import {
   CurrentTime,
   Duration,
   ProgressBar,
-} from 'styles/main/AudioPlayerElements';
+} from "styles/main/AudioPlayerElements";
 import {
   BsArrowLeftShort,
   BsArrowRightShort,
   BsPlayFill,
   BsPauseFill,
-} from 'react-icons/bs';
-import { FaPlay, FaPause } from 'react-icons/fa';
+} from "react-icons/bs";
+import { FaPlay, FaPause } from "react-icons/fa";
 
 function AudioPlayer() {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -40,7 +40,7 @@ function AudioPlayer() {
   // }, [isPlaying]);
 
   useEffect(() => {
-    console.log('audioPlayer.current', audioPlayer.current);
+    console.log("audioPlayer.current", audioPlayer.current);
     if (audioPlayer.current) {
       audioPlayer.current.volume = 0.1;
 
@@ -58,7 +58,7 @@ function AudioPlayer() {
   useEffect(() => {
     if (currentTime == duration) {
       // togglePlayPause();
-      if (progressBar.current) progressBar.current.value = '0';
+      if (progressBar.current) progressBar.current.value = "0";
       changeRange();
     }
   }, [currentTime]);
@@ -103,7 +103,7 @@ function AudioPlayer() {
 
   const changePlayerCurrentTime = () => {
     progressBar.current?.style.setProperty(
-      '--seek-before-width',
+      "--seek-before-width",
       `${(Number(progressBar.current.value) / duration) * 100}px`
     );
     setCurrentTime(Number(progressBar.current?.value));
@@ -129,7 +129,7 @@ function AudioPlayer() {
 
   return (
     <AudioPlayerWidget>
-      <audio ref={audioPlayer} src={Arche} preload="metadata" />
+      <audio ref={audioPlayer} src={"Arche"} preload="metadata" />
       <ForwardBackward onClick={backTen}>
         <BsArrowLeftShort /> 10
       </ForwardBackward>
@@ -137,7 +137,7 @@ function AudioPlayer() {
         {isPlaying ? (
           <FaPause />
         ) : (
-          <FaPlay style={{ position: 'relative', left: '1px' }} />
+          <FaPlay style={{ position: "relative", left: "1px" }} />
         )}
       </PlayPause>
       <ForwardBackward onClick={forwardTen}>

@@ -35,12 +35,13 @@ public class JwtTokenProvider {
     }
 
 
-    public static String getToken(String userEmail) {
+    public static String getToken(String userEmail, boolean isKakao) {
         Date expires = JwtTokenProvider.getTokenExpiration(expirationTime);
 
         return JWT.create()
 //                .withClaim("role", role)  //payload에 추가하기
                 .withSubject(userEmail)  //기본키 ( 이메일 )  중복이 안되니까..?
+                .withClaim("isKakao",isKakao) // 카카오 로그인이면 true 일반 로그인이면 false
                 .withExpiresAt(expires)  // 만료 시간
                 .withIssuer(ISSUER) // 발행자
                 .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant())) // 발행 시간

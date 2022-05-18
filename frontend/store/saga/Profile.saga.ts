@@ -25,10 +25,14 @@ function* getProfileState(memberId: any) {
       GetProfileState,
       memberId.payload
     );
+    if (!userdata) {
+      Router.push("/404");
+    }
     // console.log("마이페이지 통신후");
     yield put(profileActions.setProfile(userdata));
   } catch (err) {
     console.log(err);
+
     yield put(profileActions.setProfileFail(err));
   }
 }

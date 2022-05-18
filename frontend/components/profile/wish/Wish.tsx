@@ -1,4 +1,4 @@
-import { Card, Stack } from "@mui/material";
+import { Card, Skeleton, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ProductCard from "../ProductCard";
 import styled from "@emotion/styled";
@@ -18,6 +18,8 @@ import Btn from "components/commons/Btn";
 import useProfile from "store/hook/profileHooks";
 import { useRouter } from "next/router";
 import { BsX } from "react-icons/bs";
+import Swal from "sweetalert2";
+import sad from "public/characters/sad.png";
 
 interface Props {
   hostId: any;
@@ -36,6 +38,7 @@ interface WishResponse {
 const Wish = ({ props }: { props: any }) => {
   const [products, setProducts] = useState<WishResponse[]>([]);
   const { hostId, memberId } = useProfile();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
   const wishReserve = (id: number) => {
     axiosConnector({
@@ -52,22 +55,31 @@ const Wish = ({ props }: { props: any }) => {
   };
 
   const ProductDelete = (id: number) => {
-    if (props.wishlistId) {
-      axiosConnector({
-        method: "DELETE",
-        url: "profile/wish/" + String(id),
-      })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err.response);
+    axiosConnector({
+      method: "DELETE",
+      url: "profile/wish/" + String(id),
+    })
+      .then((res) => {
+        Swal.fire({
+          title: "정상적으로 삭제되었습니다.",
+          text: "",
+          icon: "success",
+          showConfirmButton: false,
         });
-    }
+        setProducts(
+          products.filter((now) => {
+            return now.wishlistId != id;
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   useEffect(() => {
     // setProducts(tempL);
+    setIsLoading(true);
     axiosConnector({
       method: "GET",
       url: "profile/wish/" + props,
@@ -79,17 +91,19 @@ const Wish = ({ props }: { props: any }) => {
       .catch((err) => {
         console.log(err.response);
       });
+    setIsLoading(false);
   }, []);
   return (
     <div className="w-100 h-100 ms-5 overflow-hidden">
-      {products.length > 0 ? (
+      {!isLoading && products.length > 0 ? (
         <Swiper
-          modules={[Mousewheel, Pagination]}
+          modules={[Mousewheel, Pagination, Scrollbar]}
           mousewheel={true}
           slidesPerView={3.3}
           pagination
           spaceBetween={50}
           className="h-100 "
+          scrollbar={{ draggable: true }}
         >
           {products.map((now, index) => {
             return (
@@ -102,7 +116,7 @@ const Wish = ({ props }: { props: any }) => {
                       }}
                     ></Xicon>
                   )}
-                  <CardImg>
+                  <CardImg className="">
                     <Image
                       src={
                         now.imageUrl
@@ -113,6 +127,7 @@ const Wish = ({ props }: { props: any }) => {
                       width={150}
                       height={150}
                       style={{ borderRadius: "5px" }}
+                      className=""
                     />
                   </CardImg>
                   <CardContent>
@@ -120,9 +135,13 @@ const Wish = ({ props }: { props: any }) => {
                       <EllipsisText text={now.name} length={"15"} />
                     </h2>
                     {/* <p>{item.name}</p> */}
-                    <Price>{now.price} 원</Price>
+                    <Price>{now.price.toLocaleString()} 원</Price>
                     <Stack direction="row" spacing={2}>
-                      <a href={now.buyUrl}>
+                      <a
+                        href={now.buyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <Btn>상품 구경하기</Btn>
                       </a>
                       {String(memberId) === hostId ? null : now.giverId ===
@@ -155,8 +174,31 @@ const Wish = ({ props }: { props: any }) => {
             );
           })}
         </Swiper>
+      ) : !isLoading ? (
+        <Card className="w-50 ms-5">
+          <div className="p-5 m-3">
+            <Image src={sad} width={249} height={150} alt="nondata"></Image>
+            <div>등록된 물건이 없습니다</div>
+            <span
+              className="clickable text-primary "
+              onClick={() => {
+                router.push("/shop");
+              }}
+            >
+              저잣거리
+            </span>
+            에서 추가해보세요
+          </div>
+        </Card>
       ) : (
-        <div className="p-5 m-5">비어있어요</div>
+        <Skeleton
+          variant="rectangular"
+          width={"80%"}
+          height={"80%"}
+          className="rounded p-5 m-5 fw-bold"
+        >
+          Loading...
+        </Skeleton>
       )}
     </div>
 

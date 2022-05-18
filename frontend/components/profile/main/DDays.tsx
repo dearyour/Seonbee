@@ -19,7 +19,9 @@ const DDays = (props: Props) => {
   const [selectedScheduleId, setSelectedScheduleId] = useState<number>(0);
 
   useEffect(() => {
-    setSelectedScheduleId(props.ddays[0].scheduleId);
+    if (props.ddays && props.ddays.length > 0) {
+      setSelectedScheduleId(props.ddays[0].scheduleId);
+    }
   }, [props.ddays]);
 
   const ddays = () => {
