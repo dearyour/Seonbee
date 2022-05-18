@@ -354,8 +354,9 @@ public class RecommendServiceImpl implements RecommendService {
                 memberId, receiverId, true, isFriend, false);
         List<ReceiverProductDto> productDtoList = new ArrayList<>();
         for (Recommend recommend : recommends) {
-            ReceiverProductDto receiverProductDto = modelMapper.map(
-                    productRepository.findByProductIdAndIsDeleted(recommend.getProductId(), false), ReceiverProductDto.class);
+            Product product=productRepository.findByProductIdAndIsDeleted(recommend.getProductId(), false);
+            if (product==null)  continue;
+            ReceiverProductDto receiverProductDto = modelMapper.map(product , ReceiverProductDto.class);
             productDtoList.add(receiverProductDto);
         }
 
