@@ -39,7 +39,10 @@ public class WishlistServiceImpl implements WishlistService{
             if (product==null)  continue;
             WishlistDto wishlistDto=modelMapper.map(product , WishlistDto.class);
             wishlistDto.setWishlistId(wish.getWishlistId());
-            if (giver!=null)    wishlistDto.setGiverName(giver.getNickname());
+            if (giver!=null)    {
+                wishlistDto.setGiverId(giver.getMemberId());
+                wishlistDto.setGiverName(giver.getNickname());
+            }
             wishlistDtoList.add(wishlistDto);
         }
         return wishlistDtoList;
@@ -50,7 +53,9 @@ public class WishlistServiceImpl implements WishlistService{
         Wishlist wish = wishlistRepository.findByWishlistIdAndIsDeleted(wishlistId, false);
         if (wish==null || wish.getMemberId()!=receiverId)    return 401;    // 유효하지 않음
         if (wish.getGiverId()!=0l && !wish.getGiverId().equals(giverId))    return 402;    // 다른 사람이 예약
-
+        System.out.println(wish.getGiverId());
+        System.out.println(wish.getGiverId()==0l);
+        System.out.println("!!!!!!!!!!!!!");
         if (wish.getGiverId()==0l)    wish.setGiverId(giverId);     // 예약하기
         else    wish.setGiverId(0l);    // 예약 취소하기
         wishlistRepository.save(wish);

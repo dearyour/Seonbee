@@ -17,6 +17,8 @@ import { Card, Skeleton, Stack } from "@mui/material";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import hobee from "public/characters/hobee_body.png";
+import { ClipLoader, BounceLoader } from "react-spinners";
+import styled from "@emotion/styled";
 
 type Props = {};
 
@@ -42,7 +44,8 @@ const Chat = (props: Props) => {
       url: "profile/recommend",
     })
       .then((res) => {
-        setProducts(res.data.recommendList);
+        console.log(res.data);
+        setProducts(res.data.recommendList.reverse());
         setIsLoading(false);
       })
       .catch((err) => {
@@ -57,8 +60,17 @@ const Chat = (props: Props) => {
       url: "profile/recommend/give/" + String(id),
     })
       .then((res) => {
-        console.log(res);
-        setReset(!reset);
+        // console.log(res);
+        // setReset(!reset);
+        setProducts(() => {
+          return products.map((now) => {
+            if (now.recommendId === id) {
+              return { ...now, isSaved: !now.isSaved };
+            } else {
+              return now;
+            }
+          });
+        });
         Swal.fire({
           icon: "success",
           title: "성공적으로 처리되었습니다.",
@@ -72,13 +84,12 @@ const Chat = (props: Props) => {
     <div className="overflow-scroll w-100 h-100 ms-3 mt-3 pt-3">
       {!isLoading && products.length > 0 ? (
         <Swiper
-          modules={[Mousewheel, Pagination, Scrollbar]}
+          modules={[Mousewheel, Scrollbar]}
           mousewheel={true}
           scrollbar={{ draggable: true }}
-          pagination
           slidesPerView={4}
           spaceBetween={50}
-          className="h-100 "
+          className="h-100 ps-3"
         >
           {products.map((now, index) => {
             return (
@@ -153,17 +164,19 @@ const Chat = (props: Props) => {
           </div>
         </Card>
       ) : (
-        <Skeleton
-          variant="rectangular"
-          width={"80%"}
-          height={"80%"}
-          className="rounded p-5 m-5 fw-bold"
-        >
-          Loading...
-        </Skeleton>
+        <Loading className="">
+          <BounceLoader size={70}></BounceLoader>
+          <div className="mt-5 pt-5">Loading...</div>
+        </Loading>
       )}
     </div>
   );
 };
+
+const Loading = styled.div`
+  position: absolute;
+  top: 40%;
+  left: 40%;
+`;
 
 export default Chat;

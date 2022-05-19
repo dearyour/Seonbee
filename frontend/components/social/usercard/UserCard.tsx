@@ -35,7 +35,7 @@ const UserCard = ({
 }: CardMember) => {
   const router = useRouter();
   const [price, setPrice] = useState<number>();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
@@ -60,14 +60,32 @@ const UserCard = ({
               onChange={(e) => {
                 setPrice(Number(e.target.value));
               }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  router.push(
+                    {
+                      pathname: "/recommend",
+                      query: {
+                        friendId: friendId,
+                        price: price,
+                        name: nickname,
+                      },
+                    },
+                    { pathname: "/recommend" }
+                  );
+                }
+              }}
             />
             <Btn
               className="my-auto ms-2"
               onClick={() => {
-                router.push({
-                  pathname: "/recommend",
-                  query: { friendId: friendId, price: price },
-                });
+                router.push(
+                  {
+                    pathname: "/recommend",
+                    query: { friendId: friendId, price: price, name: nickname },
+                  },
+                  { pathname: "/recommend" }
+                );
               }}
             >
               추천
