@@ -1,18 +1,18 @@
-import { Stack } from "@mui/material";
-import Image from "next/image";
-import React from "react";
+import { Stack } from '@mui/material';
+import Image from 'next/image';
+import React from 'react';
 import {
   ProductsContent,
   Card,
   CardImg,
   CardContent,
   Price,
-} from "styles/chat/ProductsElements";
-import EllipsisText from "react-ellipsis-text";
-import Btn from "components/commons/Btn";
-import { useRouter } from "next/router";
-import useProfile from "store/hook/profileHooks";
-import axiosConnector from "utils/axios-connector";
+} from 'styles/chat/ProductsElements';
+import EllipsisText from 'react-ellipsis-text';
+import Btn from 'components/commons/Btn';
+import { useRouter } from 'next/router';
+import useProfile from 'store/hook/profileHooks';
+import axiosConnector from 'utils/axios-connector';
 
 interface Props {
   name: string;
@@ -31,8 +31,8 @@ const ProductCard = (props: Props) => {
   const router = useRouter();
   const wishReserve = () => {
     axiosConnector({
-      method: "POST",
-      url: "profile/wish/reserve",
+      method: 'POST',
+      url: 'profile/wish/reserve',
       data: { receiverId: memberId, wishlistId: props.wishlistId },
     })
       .then((res) => {
@@ -46,8 +46,8 @@ const ProductCard = (props: Props) => {
   const ProductDelete = () => {
     if (props.wishlistId) {
       axiosConnector({
-        method: "DELETE",
-        url: "profile/wish/" + String(props.wishlistId),
+        method: 'DELETE',
+        url: 'profile/wish/' + String(props.wishlistId),
       })
         .then((res) => {
           // console.log(res);
@@ -62,17 +62,17 @@ const ProductCard = (props: Props) => {
       <CardImg>
         <Image
           src={
-            props.imageUrl ? props.imageUrl : "https://picsum.photos/250/250"
+            props.imageUrl ? props.imageUrl : 'https://picsum.photos/250/250'
           }
           alt="item-imageUrl"
           width={150}
           height={150}
-          style={{ borderRadius: "5px" }}
+          style={{ borderRadius: '5px' }}
         />
       </CardImg>
       <CardContent>
         <h2>
-          <EllipsisText text={props.name} length={"15"} />
+          <EllipsisText text={props.name} length={'14'} />
         </h2>
         {/* <p>{item.name}</p> */}
         <Price>{props.price} 원</Price>
@@ -80,7 +80,7 @@ const ProductCard = (props: Props) => {
           <a href={props.buyUrl}>
             <Btn>상품 구경하기</Btn>
           </a>
-          {sessionStorage.getItem("Token") && <Btn>추천 내역 저장하기</Btn>}
+          {sessionStorage.getItem('Token') && <Btn>추천 내역 저장하기</Btn>}
         </Stack>
       </CardContent>
     </Card>
