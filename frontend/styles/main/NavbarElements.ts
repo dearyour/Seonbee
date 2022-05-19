@@ -13,7 +13,7 @@ export const Nav = styled.nav`
   top: 0;
   z-index: 10;
   margin-bottom: 2rem;
-  background-color: #fbf8f4;
+  /* background-color: #fbf8f4; */
 
   @media screen and (max-width: 960px) {
     transition: 0.8s all ease;
@@ -27,7 +27,7 @@ export const NavbarContainer = styled.div`
   z-index: 1;
   width: 100%;
   padding: 0 24px;
-  /* max-width: 1100px; */
+  max-width: 1100px;
   /* .isMain {
     margin-top: 22px;
   } */
