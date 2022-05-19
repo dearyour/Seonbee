@@ -141,7 +141,7 @@ public class RecommendServiceImpl implements RecommendService {
             list1.add(req.getPurpose());
         }
 
-//        if (list1.size()==0) // 현재 요청값으로 받은 관심사가 다 db에 없는 단어들이라면 기본값으로 음식을 준다.
+        if (list1.size()==0) // 현재 요청값으로 받은 관심사가 다 db에 없는 단어들이라면 기본값으로 음식을 준다.
             list1.add("음식");
 
         System.out.println("list1: "+list1);
