@@ -113,33 +113,32 @@ function Recommend() {
         .catch((err) => {
           console.log(err.response);
         });
-      return;
-    }
+    } else {
+      // 추천 상품 뿌려주기
+      const { age, name, price, gender, mbti, interest, relation, purpose } =
+        router.query;
 
-    // 추천 상품 뿌려주기
-    const { age, name, price, gender, mbti, interest, relation, purpose } =
-      router.query;
-
-    axiosConnector({
-      method: 'POST',
-      url: 'recommend/receiver',
-      data: {
-        age: Number(age),
-        name: name,
-        price: Number(price),
-        gender: gender,
-        mbti: mbti,
-        interest: interest,
-        relation: relation,
-        purpose: purpose,
-      },
-    })
-      .then((res) => {
-        setProductList(res.data.productList);
+      axiosConnector({
+        method: 'POST',
+        url: 'recommend/receiver',
+        data: {
+          age: Number(age),
+          name: name,
+          price: Number(price),
+          gender: gender,
+          mbti: mbti,
+          interest: interest,
+          relation: relation,
+          purpose: purpose,
+        },
       })
-      .catch((err) => {
-        console.log(err.response);
-      });
+        .then((res) => {
+          setProductList(res.data.productList);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
 
     setIsPrepared(true);
 
@@ -290,37 +289,6 @@ function Recommend() {
     return <ProductsContent>{listItems}</ProductsContent>;
   };
 
-  // const renderProducts = (dummyProductList: any[]) => {
-  //   const result = [];
-
-  //   for (let i = 0; i < dummyProductList.length; i++) {
-  //     result.push(
-  //       <Card key={dummyProductList[i].productId}>
-  //         <CardImg>
-  //           <Image
-  //             src={dummyProductList[i].imageUrl}
-  //             alt="item-imageUrl"
-  //             width={200}
-  //           />
-  //         </CardImg>
-  //         <CardHeader>
-  //           <h2>{dummyProductList[i].name}</h2>
-  //           <p>{dummyProductList[i].name}</p>
-  //           <Price>
-  //             {dummyProductList[i].price}
-  //             <span>
-  //               <BiWon />
-  //             </span>
-  //           </Price>
-  //           <Btn>상품 보러가기</Btn>
-  //         </CardHeader>
-  //       </Card>
-  //     );
-  //   }
-
-  //   return result;
-  // };
-
   return (
     <>
       <Head>
@@ -345,16 +313,6 @@ function Recommend() {
             {router.query.name}님이 기뻐할 것이오.
           </LeftSpeechBubble>
         </Stack>
-        {/* {sessionStorage.getItem('Token') ? (
-        <Btn filled={true}>
-          <AiOutlineSave /> &nbsp; 추천 내역 전체 저장하기
-        </Btn>
-      ) : (
-        <Btn filled={true}>
-          <AiOutlineLogin />
-          &nbsp; 로그인하고 추천 내역 저장하기
-        </Btn>
-      )} */}
         <Stack
           direction="row"
           justifyContent="center"
