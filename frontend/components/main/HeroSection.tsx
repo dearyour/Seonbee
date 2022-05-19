@@ -1,20 +1,20 @@
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { HeroContainer, HeroBg, ImageBg } from "styles/main/HeroElements";
-import TraditionPattern from "public/images/1.jpg";
-import Btn from "components/commons/Btn";
-import HobeeTobee from "public/characters/hobeetobee.png";
-import { useRouter } from "next/router";
-import TitleOnly from "public/logowop2.png";
-import MainBg from "public/mainbg2.png";
-import styled from "@emotion/styled";
-import { Container, MainHeading } from "styles/main/MainGlobalElements";
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import { HeroContainer, HeroBg, ImageBg } from 'styles/main/HeroElements';
+import TraditionPattern from 'public/images/1.jpg';
+import Btn from 'components/commons/Btn';
+import HobeeTobee from 'public/characters/hobeetobee.png';
+import { useRouter } from 'next/router';
+import TitleOnly from 'public/logowop2.png';
+import MainBg from 'public/mainbg2.png';
+import styled from '@emotion/styled';
+import { Container, MainHeading } from 'styles/main/MainGlobalElements';
 
 function HeroSection() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState<boolean>(false);
   useEffect(() => {
-    if (sessionStorage.getItem("Token")) {
+    if (sessionStorage.getItem('Token')) {
       setIsLogin(true);
     }
   }, []);
@@ -69,7 +69,7 @@ function HeroSection() {
       <HeroImage src={MainBg.src} />
       <StyledContainer>
         <ReverseDiv className="row">
-          <div className="col-md-1" />
+          {/* <div className="col-md-1" /> */}
           <div className="col-md-7 col-sm-8">
             <div className="h-100 d-flex align-items-center">
               <div>
@@ -80,7 +80,7 @@ function HeroSection() {
                     alt="seonbee"
                     width={102}
                     height={60}
-                    style={{ marginBottom: "-0.7rem" }}
+                    style={{ margin: '0.75rem 0 0 0 !important' }}
                   />
                   가<br />
                   선물을 추천 해드립니다.
@@ -90,30 +90,28 @@ function HeroSection() {
                   당신의 소중한 사람만을 위한 맞춤형 선물을 추천 받으세요!
                 </HeroText>
                 <ButtonWrapper>
-                  <Btn
-                    filled={true}
-                    className="me-2"
+                  <Btn1
                     onClick={() => {
-                      router.push("/chat");
+                      router.push('/chat');
                     }}
                   >
-                    지금 추천받기
-                  </Btn>
+                    🎁 지금 추천받기
+                  </Btn1>
                   {!isLogin && (
-                    <Btn
+                    <Btn2
                       onClick={() => {
-                        router.push("/login");
+                        router.push('/login');
                       }}
                     >
                       선비에 가입하기
-                    </Btn>
+                    </Btn2>
                   )}
                 </ButtonWrapper>
               </div>
             </div>
           </div>
 
-          <div className="col-md-4 col-sm-8">
+          <div className="col-md-5 col-sm-8">
             <Image src={HobeeTobee} alt="hobeetobee" layout="responsive" />
           </div>
         </ReverseDiv>
@@ -167,7 +165,46 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: start;
   flex-flow: wrap;
-  gap: 0.5rem;
+  gap: 1rem;
+`;
+
+const Btn1 = styled.div`
+  text-decoration: none;
+  padding: 16px 40px;
+  font-size: 1rem;
+  position: relative;
+  /* margin-right: 32px; */
+
+  background: #ff6464;
+  color: #fff;
+  border-radius: 24px;
+  transition: transform 0.3s ease;
+
+  cursor: pointer;
+
+  &:hover {
+    transform: translate(0, -6px);
+  }
+`;
+
+const Btn2 = styled.div`
+  text-decoration: none;
+  padding: 16px 40px;
+  font-size: 1rem;
+  position: relative;
+  /* margin-right: 32px; */
+
+  background: #fff;
+  color: #ff6464;
+  border-radius: 24px;
+  transition: transform 0.3s ease;
+
+  cursor: pointer;
+  border: 1px solid #ff6464;
+
+  &:hover {
+    transform: translate(0, -6px);
+  }
 `;
 
 export default HeroSection;
