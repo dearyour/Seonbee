@@ -1,8 +1,5 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { HeroContainer, HeroBg, ImageBg } from 'styles/main/HeroElements';
-import TraditionPattern from 'public/images/1.jpg';
-import Btn from 'components/commons/Btn';
+import React from 'react';
 import HobeeTobee from 'public/characters/hobeetobee.png';
 import { useRouter } from 'next/router';
 import TitleOnly from 'public/logowop2.png';
@@ -12,64 +9,12 @@ import { Container, MainHeading } from 'styles/main/MainGlobalElements';
 
 function HeroSection() {
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState<boolean>(false);
-  useEffect(() => {
-    if (sessionStorage.getItem('Token')) {
-      setIsLogin(true);
-    }
-  }, []);
-  // return (
-  //   <div className="">
-  //     <div className="container">
-  //       <div className="row">
-  //         <div className="col-1"></div>
-  //         <div className="col-7">
-  //           <div className="h-100 d-flex align-items-center">
-  //             <div style={{}}>
-  //               <h3>
-  //                 당신의 선물비서,{' '}
-  //                 <Image src={TitleOnly} width={85} height={50} />가
-  //               </h3>
-  //               <h3>선물을 추천 해드립니다.</h3>
-  //               <h5>
-  //                 당신의 소중한 사람만을 위한 맞춤형 선물을 추천 받으세요!
-  //               </h5>
-  //               <div>
-  //                 <Btn
-  //                   filled={true}
-  //                   className="me-2"
-  //                   onClick={() => {
-  //                     router.push('/chat');
-  //                   }}
-  //                 >
-  //                   지금 추천받기
-  //                 </Btn>
-  //                 <Btn
-  //                   onClick={() => {
-  //                     router.push('/login');
-  //                   }}
-  //                 >
-  //                   선비에 가입하기
-  //                 </Btn>
-  //               </div>
-  //             </div>
-  //           </div>
-  //         </div>
-
-  //         <div className="col-4">
-  //           <Image src={MacinChar} alt="tiger"></Image>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 
   return (
     <Hero>
       <HeroImage src={MainBg.src} />
       <StyledContainer>
         <ReverseDiv className="row">
-          {/* <div className="col-md-1" /> */}
           <div className="col-md-7 col-sm-8">
             <div className="h-100 d-flex align-items-center">
               <div>
@@ -97,7 +42,7 @@ function HeroSection() {
                   >
                     🎁 지금 추천받기
                   </Btn1>
-                  {!isLogin && (
+                  {!sessionStorage.getItem('Token') && (
                     <Btn2
                       onClick={() => {
                         router.push('/login');

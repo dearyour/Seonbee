@@ -77,6 +77,8 @@ public class RecommendServiceImpl implements RecommendService {
         //음식 (default)
         // 추가할 subejct 코딩,독서
 
+
+
         List<String> list1 = new ArrayList<>(); //관심사 ,용도 넣는 곳 ( 교집합)
         List<String> list2 = new ArrayList<>(); //  나머지 (mbti,성별,나이대,관계)
         Set<String> set= new HashSet<>();
@@ -417,125 +419,59 @@ public class RecommendServiceImpl implements RecommendService {
 //        3. 검색된 상품에서 싫어하는거 키워드 또는 상품이름에 들어가면 제외
 //        4. 관심사, 좋아하는거 아예없으면 그냥 음식으로
 
+        if(price==null) price=50000l;
 
         List<String> list= new ArrayList<>(); // 관심사와 좋아하는거 저장하는 리스트
         List<RecommendProductDto> productDtos = new ArrayList<>(); //  상품 저장하는 곳
         List<String> banList=new ArrayList<>();
 
-
-
-
-
-
         friend.getInterest(); //관심사   둘 다 , 로 되어있다고 가정
-
         friend.getLikelist(); // 좋아하는거
+        if (friend.getInterest()!=null)    stringSplit(list,friend.getInterest());
+        if (friend.getLikelist()!=null)    stringSplit(list,friend.getLikelist());
+        if (friend.getBanlist()!=null)    stringSplit(banList,friend.getBanlist());
 
-
-        if(friend.getInterest()!=null)
-        {
-            stringSplit(list,friend.getInterest());
-        }
-
-        if(friend.getLikelist()!=null)
-        {
-            stringSplit(list,friend.getLikelist());
-        }
-
-
-        if(friend.getBanlist()!=null)
-        {
-            stringSplit(banList,friend.getBanlist());
-        }
-
-
-
-        for(int i=0; i<list.size(); i++) // 관심사 , 좋아하는거에서 나온 키워드들이 subject나 상품 이름 안에 포함되어 있는지 확인
-        {
-            List<RecommendProductDto> result= modelMapper.map(productRepository.findAllByKeywordContains(list.get(i)), new TypeToken<List<RecommendProductDto>>() {
-        }.getType());
-
-            if(result!=null) //해당 단어가 키워드에 포함된 상품들이 있다면 추가
-            {
+        for(int i=0; i<list.size(); i++) { // 관심사 , 좋아하는거에서 나온 키워드들이 subject나 상품 이름 안에 포함되어 있는지 확인
+            List<RecommendProductDto> result= modelMapper.map(
+                    productRepository.findAllByKeywordContains(list.get(i)), new TypeToken<List<RecommendProductDto>>() {}.getType());
+            if (result!=null) //해당 단어가 키워드에 포함된 상품들이 있다면 추가
                productDtos.addAll(result);
-            }
-
-            result= modelMapper.map(productRepository.findAllByNameContains(list.get(i)), new TypeToken<List<RecommendProductDto>>() {
-            }.getType());
-
+            result= modelMapper.map(productRepository.findAllByNameContains(list.get(i)), new TypeToken<List<RecommendProductDto>>() {}.getType());
             List<Product> productList= productRepository.findAllByNameContains(list.get(i));
-
-            if(result!=null) // 해당 단어가  이름에 포함되어 있다면?
-            {
+            if(result!=null) {  // 해당 단어가  이름에 포함되어 있다면?
                 // 조회 결과에  상품 이름과 상품 keyword에 banlist가 포함되어 있는지?
-
                 if(banList.size()==0)
-                {
                     productDtos.addAll(result);
-                }
-
                 else {
-
-                    for(int j=0; j<productList.size(); j++)
-                    {
+                    for(int j=0; j<productList.size(); j++) {
                         Product product=productList.get(j);
                         boolean flag=true;
-                        for(int k=0; k<banList.size(); k++)
-                        {
-                            if(product.getName().contains(banList.get(k))||product.getKeyword().contains(banList.get(k)))
-                            {
+                        for(int k=0; k<banList.size(); k++) {
+                            if(product.getName().contains(banList.get(k))||product.getKeyword().contains(banList.get(k))) {
                                 flag=false;
                                 break;
                             }
                         }
-                        if(flag) // keyword와 name에 포함되지 않으면 dto에 추가
-                        {
-                            productDtos.add(modelMapper.map(
-                                    product, RecommendProductDto.class));
+                        if(flag) // keyword와 name에 포함되지 않으면 dto에 추가 {
+                            productDtos.add(modelMapper.map(product, RecommendProductDto.class));
                         }
-                    }
-
-
                 }
-
-
             }
         }
-
-
         // 3개가 없다면?  keyword  음식으로 다시 조회
-        if(productDtos.size()<3)
-        {
-
-
+        if(productDtos.size()<3) {
             List<Word> food = wordRepository.findAllBySubject("음식");
-
-
             Collections.sort(food, new Comparator<Word>() {
                 @Override
                 public int compare(Word o1, Word o2) {
                     return (int) (o2.getAmount()-o1.getAmount()); // 오름차순?
                 }
             });
-
-
-
-            for(Word word: food)
-            {
-                System.out.println("키워드 ="+word.getKeyword()+"  양="+word.getAmount());
-
-            }
-
-
-
-            System.out.println("음식으로 조회");
             int count = 0;
             long upPrice= (long) (price*1.2);
             long downPrice= (long) (price*0.8);
 
-
             while(count<3) {    // 3개 이상 나올때 까지
-                System.out.println("여긴가..?");
                 productDtos=modelMapper.map(productRepositorySupport.findAllByKeyword(
                         food.get(0).getKeyword(), upPrice, downPrice), new TypeToken<List<RecommendProductDto>>() {
                 }.getType());
@@ -544,45 +480,26 @@ public class RecommendServiceImpl implements RecommendService {
                 downPrice=(long)(downPrice*0.8);
             }
         }
-
-
         // 3개 이상이라면 ?
-        else
-        {
+        else {
             int count = 0;
             long upPrice= (long) (price*1.2);
             long downPrice= (long) (price*0.8);
-
             List<RecommendProductDto> tmp =new ArrayList<>();
-
-
-            while(tmp.size()<3)
-            {
+            while(tmp.size()<3){
                 tmp.clear();
-
-                for(int i=0; i<productDtos.size(); i++)
-                {
-                    if(downPrice<=productDtos.get(i).getPrice()&&productDtos.get(i).getPrice()<=upPrice)
-                    {
+                for(int i=0; i<productDtos.size(); i++){
+                    if (downPrice<=productDtos.get(i).getPrice()&&productDtos.get(i).getPrice()<=upPrice){
                         tmp.add(productDtos.get(i));
                     }
                 }
-
                 upPrice=(long)(upPrice*1.2);
                 downPrice=(long)(downPrice*0.8);
-
-
             }
             productDtos = tmp; // 3개 이상의 결과가 나오면 넣어주기
-
         }
 
-
-
         // productDtos 에서 보내줄 상품 3개를 랜덤으로 뽑기
-
-
-
         List<RecommendProductDto> result = new ArrayList<>();
         String num = "";
         Random random = new Random();
@@ -601,8 +518,6 @@ public class RecommendServiceImpl implements RecommendService {
             }
         }
 
-
-
         //recommend에 저장
 
         // 전부다 recommend 테이블에 저장
@@ -610,34 +525,35 @@ public class RecommendServiceImpl implements RecommendService {
             Long receiverId=friend.getMemberId(); // 친구 기본키
             Long productId=result.get(i).getProductId(); // 상품 기본키
 
-
-            if (recommendRepository.existsRecommendByProductIdAndMemberIdAndReceiverIdAndIsDeleted(
-                    productId, memberId, receiverId, false))    continue;
-
-
             Recommend recommend = new Recommend();
-            recommend.setReceiverId(receiverId); // 받는사람 번호
-            recommend.setProductId(productId); //상품 번호
-            recommend.setMemberId(memberId); // 회원 번호
-            recommend.setIsFriend(true); // 친구인지
-            Recommend newRecommend = recommendRepository.save(recommend);
-            result.get(i).setRecommendId(newRecommend.getRecommendId()); // 생성된 추천 기본키를 dto에 넣기
+
+            // 이미 recommend에 같은 row가 존재한다면? 기존의 recommend 키를 가져온다?
+            if (recommendRepository.existsRecommendByProductIdAndMemberIdAndReceiverIdAndIsDeleted(
+                    productId, memberId, receiverId, false))    {
+
+                recommend = recommendRepository.findByProductIdAndMemberIdAndReceiverIdAndIsDeleted(productId, memberId, receiverId, false);
+
+            }
+
+
+            else {
+                recommend.setReceiverId(receiverId); // 받는사람 번호
+                recommend.setProductId(productId); //상품 번호
+                recommend.setMemberId(memberId); // 회원 번호
+                recommend.setIsFriend(true); // 친구인지
+                recommend = recommendRepository.save(recommend);
+            }
+            result.get(i).setRecommendId(recommend.getRecommendId()); // 생성된 추천 기본키를 dto에 넣기
         }
-
-
-
         return result;
     }
 
-    void stringSplit(List<String> list, String s)
-    {
+    void stringSplit(List<String> list, String s) {
         StringTokenizer st = new StringTokenizer(s, ",");
         while (st.hasMoreTokens()) {
             String interest = st.nextToken().trim(); //공백처리
             list.add(interest);
         }
     }
-
-
 
 }

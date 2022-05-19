@@ -53,6 +53,10 @@ public class NaverSearchServiceImpl implements NaverSearchService {
                 product.setKeyword(keyword.get(i));
                 set.add(product);
             }
+            if(set.size()%100!=0)
+            {
+                System.out.println(set.size());
+            }
         }
 
         List<Product> products = new ArrayList(set);
@@ -91,7 +95,7 @@ public class NaverSearchServiceImpl implements NaverSearchService {
     @Override
     public List<String> txtRead() {
         List<String> keywordList = new ArrayList<>();
-        File csv = new File("C:\\ssafy\\project3\\database\\sometrend\\썸트렌드 데이터\\seonbee_keyword.txt");
+        File csv = new File("C:\\Users\\multicampus\\Desktop\\썸트렌드 데이터\\seonbee_keyword.txt");
         String line = "";
 
         try {
