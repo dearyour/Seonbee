@@ -84,13 +84,16 @@ public class RecommendController {
     @PostMapping("/recommend/friend")
     public ResponseEntity<? extends BaseResponseBody> recommendFriend(
             @RequestBody ReceiverFriendInfoReq receiverFriendInfoReq, @ApiIgnore Authentication authentication) {
+
+
         Member member = memberAuthService.memberAuthorize(authentication);
+        System.out.println("멤버 =="+member);
         if (member==null)   return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
         Member friend=memberRepository.findByMemberIdAndIsDeleted(receiverFriendInfoReq.getFriendId(), false);
         if (friend==null)   return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 사용자입니다."));
         if (!friendService.isFriend(member.getMemberId(), friend.getMemberId()))
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
-        List<RecommendProductDto> productDtos = recommendService.FriendProductRecommend(member.getMemberId(), friend);
+        List<RecommendProductDto> productDtos = recommendService.FriendProductRecommend(member.getMemberId(), friend, receiverFriendInfoReq.getPrice());
         return ResponseEntity.status(200).body(RecommendProductAllRes.of(200, "Success", productDtos));
     }
 
