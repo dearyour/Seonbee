@@ -1,13 +1,8 @@
 package com.seonbi.api.controller;
 
-import com.seonbi.api.model.ReceiverDto;
 import com.seonbi.api.model.RecommendDto;
 import com.seonbi.api.model.RecommendProductDto;
-
-import com.seonbi.api.model.RecommendReceiverDto;
-
 import com.seonbi.api.request.ReceiverFriendInfoReq;
-
 import com.seonbi.api.request.ReceiverInfoReq;
 import com.seonbi.api.response.BaseResponseBody;
 import com.seonbi.api.response.RecommendAllRes;
