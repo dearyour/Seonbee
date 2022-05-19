@@ -63,7 +63,7 @@ const Alarm = (props: Props) => {
     });
   };
   const Nick = styled.div`
-    /* white-space: normal; */
+    white-space: nowrap;
     /* position: absolute; */
   `;
 
