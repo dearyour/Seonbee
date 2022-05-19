@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffectOnce } from 'store/hook/useEffectOnce';
 import Image from 'next/image';
 import Hobee from 'public/characters/hobee_body.png';
+import Gift from 'public/gif/gift.gif';
 import {
   LeftSpeechBubble,
   RecommendContainer,
@@ -67,7 +68,7 @@ function Recommend() {
   const router = useRouter();
 
   const [productList, setProductList] = useState<ProductType[]>([]);
-  const [isMember, setIsMember] = useState<boolean>(false);
+  const [isPrepared, setIsPrepared] = useState<boolean>(false);
 
   const [isSaved, setIsSaved] = useState<{ rid: number; state: boolean }[]>([
     {
@@ -85,6 +86,8 @@ function Recommend() {
   ]);
 
   useEffectOnce(() => {
+    setIsPrepared(false);
+
     // 챗봇을 통한 접근이 아니면 404로
     if (Object.keys(router.query).length === 0) {
       router.push('/404');
@@ -137,6 +140,8 @@ function Recommend() {
       .catch((err) => {
         console.log(err.response);
       });
+
+    setIsPrepared(true);
 
     // 카카오톡 공유하기를 위한
     const script = document.createElement('script');
@@ -250,7 +255,7 @@ function Recommend() {
         </CardImg>
         <CardContent>
           <h2>
-            <EllipsisText text={item.name} length={'30'} />
+            <EllipsisText text={item.name} length={'29'} />
           </h2>
           {/* <p>{item.name}</p> */}
           <Price>
@@ -282,14 +287,7 @@ function Recommend() {
       </Card>
     ));
 
-    return (
-      <>
-        <Head>
-          <title>선비 | {router.query.name}님을 위한 선물 추천 결과</title>
-        </Head>
-        <ProductsContent>{listItems}</ProductsContent>
-      </>
-    );
+    return <ProductsContent>{listItems}</ProductsContent>;
   };
 
   // const renderProducts = (dummyProductList: any[]) => {
@@ -324,26 +322,30 @@ function Recommend() {
   // };
 
   return (
-    <Stack
-      direction="column"
-      justifyContent="flex-start"
-      alignItems="center"
-      spacing={3}
-    >
+    <>
+      <Head>
+        <title>선비 | {router.query.name}님을 위한 선물 추천 결과</title>
+      </Head>
       <Stack
-        direction="row"
-        justifyContent="center"
+        direction="column"
+        justifyContent="flex-start"
         alignItems="center"
-        spacing={4}
+        spacing={3}
       >
-        <Image src={Hobee} alt="hobee" width={86} height={149} />
-        <LeftSpeechBubble>
-          엣헴, 오다 주웠소.
-          <br />
-          {router.query.name}님이 기뻐할 것이오.
-        </LeftSpeechBubble>
-      </Stack>
-      {/* {sessionStorage.getItem('Token') ? (
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={4}
+        >
+          <Image src={Hobee} alt="hobee" width={86} height={149} />
+          <LeftSpeechBubble>
+            엣헴, 오다 주웠소.
+            <br />
+            {router.query.name}님이 기뻐할 것이오.
+          </LeftSpeechBubble>
+        </Stack>
+        {/* {sessionStorage.getItem('Token') ? (
         <Btn filled={true}>
           <AiOutlineSave /> &nbsp; 추천 내역 전체 저장하기
         </Btn>
@@ -353,23 +355,36 @@ function Recommend() {
           &nbsp; 로그인하고 추천 내역 저장하기
         </Btn>
       )} */}
-      <Stack
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        spacing={2}
-      >
-        <Btn filled={true} onClick={kakaoShare}>
-          <RiKakaoTalkFill />
-          &nbsp; 카카오톡 공유하기
-        </Btn>
-        <Btn filled={true} onClick={() => history.go(-1)}>
-          <RiArrowGoBackFill />
-          &nbsp;다시 추천받기
-        </Btn>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+        >
+          <Btn filled={true} onClick={kakaoShare}>
+            <RiKakaoTalkFill />
+            &nbsp; 카카오톡 공유하기
+          </Btn>
+          <Btn filled={true} onClick={() => history.go(-1)}>
+            <RiArrowGoBackFill />
+            &nbsp;다시 추천받기
+          </Btn>
+        </Stack>
+        {isPrepared ? (
+          <>{renderProducts(productList)}</>
+        ) : (
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+          >
+            <Image src={Gift} alt="preparing" height={313} width={313} />
+            <p>선물을 준비 중이오..</p>
+          </Stack>
+        )}
       </Stack>
-      <>{renderProducts(productList)}</>
-    </Stack>
+    </>
   );
 }
 
