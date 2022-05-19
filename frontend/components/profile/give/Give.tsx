@@ -284,15 +284,11 @@ const Give = (props: Props) => {
         </ProductWrap> */}
         {products.length > 0 ? (
           <Swiper
-            modules={[Pagination, Navigation]}
+            modules={[Scrollbar]}
             slidesPerView={3}
             spaceBetween={50}
-            navigation={{
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            }}
+            scrollbar={{ draggable: true }}
             className="h-100 "
-            pagination
           >
             {products.map((now, index) => {
               return (

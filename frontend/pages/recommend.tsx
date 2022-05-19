@@ -91,6 +91,7 @@ function Recommend() {
     }
 
     if (router.query.friendId) {
+      console.log(router.query.friendId);
       axiosConnector({
         method: "POST",
         url: "recommend/friend",
@@ -99,6 +100,11 @@ function Recommend() {
         .then((res) => {
           console.log(res.data);
           setProductList(res.data.productList);
+          setIsSaved(
+            res.data.productList.map((now: any) => {
+              return { rid: now.recommendId, state: false };
+            })
+          );
         })
         .catch((err) => {
           console.log(err.response);
@@ -209,8 +215,20 @@ function Recommend() {
       )
     );
     console.log(rid, "saved");
+    console.log(isSaved);
 
     // TODO: 주고싶소 저장 api
+    axiosConnector({
+      method: "GET",
+      url: "profile/recommend/give/" + String(rid),
+    })
+      .then((res) => {
+        console.log(res);
+        // setReset(!reset);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   const renderProducts = (list: any) => {

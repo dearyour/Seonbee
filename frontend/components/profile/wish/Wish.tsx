@@ -39,15 +39,22 @@ const Wish = ({ props }: { props: any }) => {
   const [products, setProducts] = useState<WishResponse[]>([]);
   const { hostId, memberId } = useProfile();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [reset, setReset] = useState<boolean>(false);
   const router = useRouter();
   const wishReserve = (id: number) => {
     axiosConnector({
       method: "POST",
-      url: "profile/wish/reverse",
-      data: { receiverId: memberId, wishlistId: id },
+      url: "profile/wish/reserve",
+      data: { receiverId: hostId, wishlistId: id },
     })
       .then((res) => {
-        console.log(res);
+        setReset(!reset);
+        Swal.fire({
+          title: "정상적으로 처리되었습니다.",
+          text: "",
+          icon: "success",
+          showConfirmButton: false,
+        });
       })
       .catch((err) => {
         console.log(err.response);
@@ -92,17 +99,16 @@ const Wish = ({ props }: { props: any }) => {
         console.log(err.response);
       });
     setIsLoading(false);
-  }, []);
+  }, [reset]);
   return (
     <div className="w-100 h-100 ms-5 overflow-hidden mt-3 pt-3">
       {!isLoading && products.length > 0 ? (
         <Swiper
-          modules={[Mousewheel, Pagination, Scrollbar]}
+          modules={[Mousewheel, Scrollbar]}
           mousewheel={true}
           slidesPerView={3.3}
-          pagination
           spaceBetween={50}
-          className="h-100 "
+          className="h-100 ps-3"
           scrollbar={{ draggable: true }}
         >
           {products.map((now, index) => {
@@ -158,6 +164,7 @@ const Wish = ({ props }: { props: any }) => {
                           onClick={() => {
                             wishReserve(now.wishlistId);
                           }}
+                          className="mb-4"
                         >
                           예약
                         </Btn>
