@@ -6,7 +6,7 @@ export const ProductsContent = styled.div`
   align-items: center;
 
   position: relative;
-  width: 60%;
+  width: 65%;
   height: 100%;
   margin: 50px auto;
   /* padding: 25px 0 0; */
