@@ -1,24 +1,25 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { useEffectOnce } from "store/hook/useEffectOnce";
-import Image from "next/image";
-import Hobee from "public/characters/hobee_body.png";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffectOnce } from 'store/hook/useEffectOnce';
+import Image from 'next/image';
+import Hobee from 'public/characters/hobee_body.png';
 import {
   LeftSpeechBubble,
   RecommendContainer,
-} from "styles/chat/RecommendElements";
+} from 'styles/chat/RecommendElements';
 import {
   ProductsContent,
   Card,
   CardImg,
   CardContent,
   Price,
-} from "styles/chat/ProductsElements";
-import { Button, Stack } from "@mui/material";
-import Btn from "components/commons/Btn";
-import { RiKakaoTalkFill, RiArrowGoBackFill } from "react-icons/ri";
-import EllipsisText from "react-ellipsis-text";
-import axiosConnector from "utils/axios-connector";
+} from 'styles/chat/ProductsElements';
+import { Button, Stack } from '@mui/material';
+import Btn from 'components/commons/Btn';
+import { RiKakaoTalkFill, RiArrowGoBackFill } from 'react-icons/ri';
+import EllipsisText from 'react-ellipsis-text';
+import axiosConnector from 'utils/axios-connector';
+import Head from 'next/head';
 
 declare global {
   interface Window {
@@ -30,26 +31,26 @@ const dummyProductList = [
   {
     recommendId: 10,
     productId: 1,
-    name: "상품 이름 1 그런데 상품 이름이 너무 길어요!! 너무너무너무너무 너무너무너무 길어요",
+    name: '상품 이름 1 그런데 상품 이름이 너무 길어요!! 너무너무너무너무 너무너무너무 길어요',
     price: 10000,
-    buyUrl: "https://www.naver.com",
-    imageUrl: "https://picsum.photos/200/300",
+    buyUrl: 'https://www.naver.com',
+    imageUrl: 'https://picsum.photos/200/300',
   },
   {
     recommendId: 20,
     productId: 2,
-    name: "상품 이름 2 상품 이름이 조금 길어요.. 조금",
+    name: '상품 이름 2 상품 이름이 조금 길어요.. 조금',
     price: 20000,
-    buyUrl: "https://www.naver.com",
-    imageUrl: "https://picsum.photos/200/300",
+    buyUrl: 'https://www.naver.com',
+    imageUrl: 'https://picsum.photos/200/300',
   },
   {
     recommendId: 30,
     productId: 3,
-    name: "상품 이름이 짧아요",
+    name: '상품 이름이 짧아요',
     price: 30000,
-    buyUrl: "https://www.naver.com",
-    imageUrl: "https://picsum.photos/200/300",
+    buyUrl: 'https://www.naver.com',
+    imageUrl: 'https://picsum.photos/200/300',
   },
 ];
 
@@ -86,15 +87,15 @@ function Recommend() {
   useEffectOnce(() => {
     // 챗봇을 통한 접근이 아니면 404로
     if (Object.keys(router.query).length === 0) {
-      router.push("/404");
+      router.push('/404');
       return;
     }
 
     if (router.query.friendId) {
       console.log(router.query.friendId);
       axiosConnector({
-        method: "POST",
-        url: "recommend/friend",
+        method: 'POST',
+        url: 'recommend/friend',
         data: { friendId: router.query.friendId, price: router.query.price },
       })
         .then((res) => {
@@ -117,8 +118,8 @@ function Recommend() {
       router.query;
 
     axiosConnector({
-      method: "POST",
-      url: "recommend/receiver",
+      method: 'POST',
+      url: 'recommend/receiver',
       data: {
         age: Number(age),
         name: name,
@@ -138,8 +139,8 @@ function Recommend() {
       });
 
     // 카카오톡 공유하기를 위한
-    const script = document.createElement("script");
-    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    const script = document.createElement('script');
+    script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
     script.async = true;
 
     document.body.appendChild(script);
@@ -158,7 +159,7 @@ function Recommend() {
       // 중복 initialization 방지
       if (!kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
-        kakao.init("29238b0c437e1bd13d1681903254534f");
+        kakao.init('29238b0c437e1bd13d1681903254534f');
       }
 
       kakao.Link.sendCustom({
@@ -167,21 +168,21 @@ function Recommend() {
           product1_name: productList[0].name,
           product1_price: productList[0].price
             .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
           product1_image: productList[0].imageUrl,
           product1_buy: productList[0].buyUrl.slice(34),
 
           product2_name: productList[1].name,
           product2_price: productList[1].price
             .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
           product2_image: productList[1].imageUrl,
           product2_buy: productList[1].buyUrl.slice(34),
 
           product3_name: productList[2].name,
           product3_price: productList[2].price
             .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
           product3_image: productList[2].imageUrl,
           product3_buy: productList[2].buyUrl.slice(34),
         },
@@ -190,7 +191,7 @@ function Recommend() {
   };
 
   const saveAll = () => {
-    console.log("saved all");
+    console.log('saved all');
 
     for (let i = 0; i < productList.length; i++) {
       const rid = productList[i].recommendId;
@@ -214,13 +215,13 @@ function Recommend() {
         v.rid === rid ? { ...v, state: !v.state } : v
       )
     );
-    console.log(rid, "saved");
+    console.log(rid, 'saved');
     console.log(isSaved);
 
     // TODO: 주고싶소 저장 api
     axiosConnector({
-      method: "GET",
-      url: "profile/recommend/give/" + String(rid),
+      method: 'GET',
+      url: 'profile/recommend/give/' + String(rid),
     })
       .then((res) => {
         console.log(res);
@@ -244,29 +245,29 @@ function Recommend() {
             alt="item-imageUrl"
             width={150}
             height={150}
-            style={{ borderRadius: "5px" }}
+            style={{ borderRadius: '5px' }}
           />
         </CardImg>
         <CardContent>
           <h2>
-            <EllipsisText text={item.name} length={"30"} />
+            <EllipsisText text={item.name} length={'30'} />
           </h2>
           {/* <p>{item.name}</p> */}
           <Price>
-            {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원
+            {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
           </Price>
           <Stack direction="row" spacing={2}>
             <a href={item.buyUrl} target="_blank" rel="noopener noreferrer">
               <Btn>상품 구경하기</Btn>
             </a>
-            {sessionStorage.getItem("Token") &&
+            {sessionStorage.getItem('Token') &&
               (isSaved[i].state ? (
                 <Button
                   disabled
                   style={{
-                    fontSize: "1rem",
-                    fontWeight: "bold",
-                    color: "rgba(0,0,0,0.4)",
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    color: 'rgba(0,0,0,0.4)',
                   }}
                 >
                   저장되었소
@@ -281,7 +282,14 @@ function Recommend() {
       </Card>
     ));
 
-    return <ProductsContent>{listItems}</ProductsContent>;
+    return (
+      <>
+        <Head>
+          <title>선비 | 추천 결과</title>
+        </Head>
+        <ProductsContent>{listItems}</ProductsContent>
+      </>
+    );
   };
 
   // const renderProducts = (dummyProductList: any[]) => {
