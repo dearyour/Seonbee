@@ -61,7 +61,9 @@ public class WishController {
         Long receiverId=reserveProductReq.getReceiverId();
         if (!memberService.isMemberValid(receiverId))  // receiverId가 없는 경우
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 사용자입니다."));
-
+        System.out.println(friendService.isFriend(receiverId, member.getMemberId()));
+        System.out.println(receiverId);
+        System.out.println(member.getMemberId());
         if (!friendService.isFriend(receiverId, member.getMemberId()))    // 친구가 아닌 경우
             return ResponseEntity.status(403).body(BaseResponseBody.of(403, "사용자 권한이 없습니다."));
 

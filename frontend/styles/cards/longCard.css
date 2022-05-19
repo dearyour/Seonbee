@@ -177,15 +177,7 @@
     max-width: 30rem;
   }
 } */
-@media screen and (max-width: 2000px) {
-  .post__img {
-    /* width: 0%; */
-    width: 50px;
-    /* height: 80%; */
-    /* max-width: 100%; */
-    transform: translate(0, -1rem);
-  }
-}
+
 @media screen and (max-width: 1500px) {
   .postCard {
     /* padding: 70rem; */

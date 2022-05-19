@@ -27,8 +27,8 @@ const ProductCard = (props: Props) => {
   const wishReserve = () => {
     axiosConnector({
       method: "POST",
-      url: "profile/wish/reverse",
-      data: { receiverId: memberId, wishlistId: props.wishlistId },
+      url: "profile/wish/reserve",
+      data: { receiverId: hostId, wishlistId: props.wishlistId },
     })
       .then((res) => {
         console.log(res);
