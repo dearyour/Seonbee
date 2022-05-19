@@ -66,7 +66,7 @@ const UserCard = ({
               onClick={() => {
                 router.push({
                   pathname: "/recommend",
-                  query: { isMember: true },
+                  query: { friendId: friendId, price: price },
                 });
               }}
             >
