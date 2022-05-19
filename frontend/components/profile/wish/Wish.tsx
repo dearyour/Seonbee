@@ -166,13 +166,13 @@ const Wish = ({ props }: { props: any }) => {
                           }}
                           className="mb-4"
                         >
-                          예약
+                          약속
                         </Btn>
                       )}
                     </Stack>
-                    {now.giverId ? (
+                    {now.giverName ? (
                       <div className="text-white">
-                        {now.giverName}님이 예약하셨습니다.
+                        {now.giverName}님이 약속하셨습니다.
                       </div>
                     ) : null}
                   </CardContent>
