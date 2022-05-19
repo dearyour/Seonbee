@@ -74,7 +74,7 @@ public class WishlistServiceImpl implements WishlistService{
 
     @Override
     public int addWishlist(Long memberId, Long productId) {
-        if (wishlistRepository.existsWishlistByProductIdAndIsDeleted(productId, false)) return 402;     // 상품 중복
+        if (wishlistRepository.existsWishlistByMemberIdAndProductIdAndIsDeleted(memberId, productId, false)) return 402;     // 상품 중복
         Wishlist wishlist=new Wishlist(productId, memberId);
         wishlistRepository.save(wishlist);
         return 200;

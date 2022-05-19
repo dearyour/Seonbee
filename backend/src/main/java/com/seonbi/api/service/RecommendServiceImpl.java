@@ -79,7 +79,7 @@ public class RecommendServiceImpl implements RecommendService {
 
 
 
-        List<String> list1 = new ArrayList<>(); //관심사 ,용도 넣는 곳 ( 교집합)
+        List<String> list1 = new ArrayList<>(); //  관심사 ,용도 넣는 곳 ( 교집합)
         List<String> list2 = new ArrayList<>(); //  나머지 (mbti,성별,나이대,관계)
         Set<String> set= new HashSet<>();
         String keywords[]={"코로나","밥","간식","핸드폰","술","밥상","코치","컨디션","배","닭","리그","세종","성원","좋은사람들","회","클릭","테이블","야채","냉장고"
@@ -141,7 +141,7 @@ public class RecommendServiceImpl implements RecommendService {
             list1.add(req.getPurpose());
         }
 
-//        if (list1.size()==0) // 현재 요청값으로 받은 관심사가 다 db에 없는 단어들이라면 기본값으로 음식을 준다.
+        if (list1.size()==0) // 현재 요청값으로 받은 관심사가 다 db에 없는 단어들이라면 기본값으로 음식을 준다.
             list1.add("음식");
 
         System.out.println("list1: "+list1);
@@ -155,7 +155,7 @@ public class RecommendServiceImpl implements RecommendService {
         Map<String, Long> map = new HashMap<>(); // 키워드 , 누적 값
         HashSet<String> keyword[] = new HashSet[list1.size()]; // 관심사,용도 키워드 교집합
 
-        List<String> list = new ArrayList<>(); // 키워드 교집합 (관심사 , 용도)
+//        List<String> list = new ArrayList<>(); // 키워드 교집합 (관심사 , 용도)
         for (int i = 0; i < list1.size(); i++) {  // 관심사 용도
             keyword[i] = new HashSet<>(); // set생성
             List<Word> result = wordRepository.findAllBySubject(list1.get(i)); //현재 500개
@@ -176,7 +176,6 @@ public class RecommendServiceImpl implements RecommendService {
                 }
             }
         }
-        System.out.println("list: "+list);
 
         for (int i = 1; i < list1.size(); i++) {
             keyword[0].retainAll(keyword[i]); //교집합
@@ -240,6 +239,7 @@ public class RecommendServiceImpl implements RecommendService {
              }
              if(i==4) break;
          }
+        System.out.println("entry:  "+entries);
 
         System.out.println("상품 개수="+productDtoList.size());
 
