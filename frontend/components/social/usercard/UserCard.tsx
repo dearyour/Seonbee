@@ -61,7 +61,17 @@ const UserCard = ({
                 setPrice(Number(e.target.value));
               }}
             />
-            <Btn className="my-auto ms-2">추천</Btn>
+            <Btn
+              className="my-auto ms-2"
+              onClick={() => {
+                router.push({
+                  pathname: "/recommend",
+                  query: { friendId: friendId, price: price },
+                });
+              }}
+            >
+              추천
+            </Btn>
           </Typography>
         </Box>
       </Modal>

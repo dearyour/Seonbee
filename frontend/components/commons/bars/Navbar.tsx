@@ -58,9 +58,7 @@ function Navbar() {
             <FaBars />
           </MobileIcon>
           <NavMenu className={isMain ? "isMain" : ""}>
-            <NavItem>
-              <AudioPlayer />
-            </NavItem>
+            <NavItem>{/* <AudioPlayer /> */}</NavItem>
             <NavItem>
               <NavLinksChat onClick={() => Router.push("/chat")}>
                 선물 추천

@@ -265,6 +265,12 @@ function Chatbot() {
     return query;
   };
 
+  const retry = () => {
+    dispatch(chatbotActions.resetMessage());
+    eventQuery('WelcomeToSeonbee');
+    setCompleted(false);
+  };
+
   const override = css`
     display: block;
     margin-left: 10rem;
@@ -285,7 +291,7 @@ function Chatbot() {
               <AiOutlineGift />
               &nbsp; 추천 결과 보러가기
             </Btn>
-            <Btn>
+            <Btn onClick={retry}>
               <AiOutlineRedo />
               &nbsp; 다시 입력하기
             </Btn>

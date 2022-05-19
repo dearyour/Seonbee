@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const ProductsContent = styled.div`
   display: flex;
@@ -6,7 +6,7 @@ export const ProductsContent = styled.div`
   align-items: center;
 
   position: relative;
-  width: 70%;
+  width: 60%;
   height: 100%;
   margin: 50px auto;
   /* padding: 25px 0 0; */
@@ -29,12 +29,13 @@ export const Card = styled.div`
   /* margin-bottom: 50px; */
 
   padding: 10px 10px 0 10px;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); */
+  box-shadow: 0 0 16px 4px #d0d0d0;
   overflow: hidden;
 
   &:hover {
     background-color: #edbaba;
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 `;
 

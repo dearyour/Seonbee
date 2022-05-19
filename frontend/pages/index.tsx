@@ -10,6 +10,7 @@ import Router from 'next/router';
 import styled from '@emotion/styled';
 import Features from 'components/main/Features';
 import Content from 'components/main/Content';
+import Footer from 'components/main/Footer';
 import { heroOne, heroTwo, heroThree } from 'components/main/data/HeroData';
 
 const Home: NextPage = () => {
@@ -24,6 +25,7 @@ const Home: NextPage = () => {
       <Content {...heroOne} />
       <Content {...heroTwo} />
       <Content {...heroThree} />
+      <Footer />
     </>
     // </Asd>
   );

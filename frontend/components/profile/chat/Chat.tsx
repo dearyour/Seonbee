@@ -69,7 +69,7 @@ const Chat = (props: Props) => {
       });
   };
   return (
-    <div className="overflow-scroll w-100 h-100 ms-3">
+    <div className="overflow-scroll w-100 h-100 ms-3 mt-3 pt-3">
       {!isLoading && products.length > 0 ? (
         <Swiper
           modules={[Mousewheel, Pagination, Scrollbar]}
