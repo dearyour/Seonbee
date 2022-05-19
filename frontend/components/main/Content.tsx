@@ -32,40 +32,40 @@ function Content({
 
   const { ref, inView } = useInView({ threshold: 0.1 });
 
-  useEffect(() => {
-    if (inView) {
-      animation.start({
-        opacity: 1,
-        y: 0,
-      });
-    }
-  }, [inView, animation]);
+  // useEffect(() => {
+  //   if (inView) {
+  //     animation.start({
+  //       opacity: 1,
+  //       y: 0,
+  //     });
+  //   }
+  // }, [inView, animation]);
 
   return (
-    <Section inverse={inverse} ref={ref}>
+    <Section inverse={inverse}>
       <Container>
         <ContentRow reverse={reverse}>
           <ContentColumn>
             <TextWrapper>
               <TopLine
-                initial={initial}
-                transition={{ delay: 0.3, duration: 0.6 }}
-                animate={animation}
+              // initial={initial}
+              // transition={{ delay: 0.3, duration: 0.6 }}
+              // animate={animation}
               >
                 {topLine.text}
               </TopLine>
               <Heading
-                initial={initial}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                animate={animation}
+                // initial={initial}
+                // transition={{ delay: 0.5, duration: 0.6 }}
+                // animate={animation}
                 inverse={inverse}
               >
                 {headline}
               </Heading>
               <Subtitle
-                initial={initial}
-                transition={{ delay: 0.7, duration: 0.6 }}
-                animate={animation}
+                // initial={initial}
+                // transition={{ delay: 0.7, duration: 0.6 }}
+                // animate={animation}
                 inverse={inverse}
               >
                 {description}
@@ -82,16 +82,16 @@ function Content({
             </TextWrapper>
           </ContentColumn>
           <ContentColumn
-            initial={initial}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            animate={animation}
+          // initial={initial}
+          // transition={{ delay: 0.5, duration: 0.6 }}
+          // animate={animation}
           >
             <ImgWrapper>
               <Img
                 src={img}
                 alt={alt}
-                whileHover={{ rotate: 2, scale: 1.02 }}
-                transition={{ duration: 0.5 }}
+                // whileHover={{ rotate: 2, scale: 1.02 }}
+                // transition={{ duration: 0.5 }}
               />
             </ImgWrapper>
           </ContentColumn>

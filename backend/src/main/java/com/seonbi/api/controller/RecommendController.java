@@ -3,7 +3,11 @@ package com.seonbi.api.controller;
 import com.seonbi.api.model.ReceiverDto;
 import com.seonbi.api.model.RecommendDto;
 import com.seonbi.api.model.RecommendProductDto;
+<<<<<<< HEAD
+import com.seonbi.api.model.RecommendReceiverDto;
+=======
 import com.seonbi.api.request.ReceiverFriendInfoReq;
+>>>>>>> e8637a387441b19133a1dce691cfc163c54ca73f
 import com.seonbi.api.request.ReceiverInfoReq;
 import com.seonbi.api.response.BaseResponseBody;
 import com.seonbi.api.response.RecommendAllRes;
