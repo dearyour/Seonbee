@@ -22,7 +22,7 @@ export const categoryRadio = [
   {
     category_id: 4,
     category_img: process.env.PUBLIC_URL + `/assets/category4.png`,
-    category_descript: "생활/건강",
+    category_descript: "생활",
     value: "생활/건강",
   },
   {
@@ -34,7 +34,7 @@ export const categoryRadio = [
   {
     category_id: 6,
     category_img: process.env.PUBLIC_URL + `/assets/category6.png`,
-    category_descript: "화장품/미용",
+    category_descript: "화장품",
     value: "화장품/미용",
   },
   {
@@ -46,31 +46,31 @@ export const categoryRadio = [
   {
     category_id: 8,
     category_img: process.env.PUBLIC_URL + `/assets/category8.png`,
-    category_descript: "여가/생활편의",
+    category_descript: "여가",
     value: "여가/생활편의",
   },
   {
     category_id: 9,
     category_img: process.env.PUBLIC_URL + `/assets/category9.png`,
-    category_descript: "디지털/가전",
+    category_descript: "디지털",
     value: "디지털/가전",
   },
   {
     category_id: 10,
     category_img: process.env.PUBLIC_URL + `/assets/category10.png`,
-    category_descript: "가구/인테리어",
+    category_descript: "가구",
     value: "가구/인테리어",
   },
   {
     category_id: 11,
     category_img: process.env.PUBLIC_URL + `/assets/category11.png`,
-    category_descript: "출산/육아",
+    category_descript: "육아",
     value: "출산/육아",
   },
   {
     category_id: 12,
     category_img: process.env.PUBLIC_URL + `/assets/category12.png`,
-    category_descript: "스포츠/레저",
+    category_descript: "스포츠",
     value: "스포츠/레저",
   },
   // {
