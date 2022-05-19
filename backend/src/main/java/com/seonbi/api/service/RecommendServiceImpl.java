@@ -77,6 +77,8 @@ public class RecommendServiceImpl implements RecommendService {
         //음식 (default)
         // 추가할 subejct 코딩,독서
 
+
+
         List<String> list1 = new ArrayList<>(); //관심사 ,용도 넣는 곳 ( 교집합)
         List<String> list2 = new ArrayList<>(); //  나머지 (mbti,성별,나이대,관계)
         Set<String> set= new HashSet<>();
@@ -416,6 +418,9 @@ public class RecommendServiceImpl implements RecommendService {
 //        2. 관심사, 좋아하는거 받아서 상품 이름이 들어가는지 검색
 //        3. 검색된 상품에서 싫어하는거 키워드 또는 상품이름에 들어가면 제외
 //        4. 관심사, 좋아하는거 아예없으면 그냥 음식으로
+
+        if(price==null) price=50000l;
+
         List<String> list= new ArrayList<>(); // 관심사와 좋아하는거 저장하는 리스트
         List<RecommendProductDto> productDtos = new ArrayList<>(); //  상품 저장하는 곳
         List<String> banList=new ArrayList<>();
@@ -519,16 +524,26 @@ public class RecommendServiceImpl implements RecommendService {
         for (int i = 0; i < result.size(); i++) {
             Long receiverId=friend.getMemberId(); // 친구 기본키
             Long productId=result.get(i).getProductId(); // 상품 기본키
-            if (recommendRepository.existsRecommendByProductIdAndMemberIdAndReceiverIdAndIsDeleted(
-                    productId, memberId, receiverId, false))    continue;
 
             Recommend recommend = new Recommend();
-            recommend.setReceiverId(receiverId); // 받는사람 번호
-            recommend.setProductId(productId); //상품 번호
-            recommend.setMemberId(memberId); // 회원 번호
-            recommend.setIsFriend(true); // 친구인지
-            Recommend newRecommend = recommendRepository.save(recommend);
-            result.get(i).setRecommendId(newRecommend.getRecommendId()); // 생성된 추천 기본키를 dto에 넣기
+
+            // 이미 recommend에 같은 row가 존재한다면? 기존의 recommend 키를 가져온다?
+            if (recommendRepository.existsRecommendByProductIdAndMemberIdAndReceiverIdAndIsDeleted(
+                    productId, memberId, receiverId, false))    {
+
+                recommend = recommendRepository.findByProductIdAndMemberIdAndReceiverIdAndIsDeleted(productId, memberId, receiverId, false);
+
+            }
+
+
+            else {
+                recommend.setReceiverId(receiverId); // 받는사람 번호
+                recommend.setProductId(productId); //상품 번호
+                recommend.setMemberId(memberId); // 회원 번호
+                recommend.setIsFriend(true); // 친구인지
+                recommend = recommendRepository.save(recommend);
+            }
+            result.get(i).setRecommendId(recommend.getRecommendId()); // 생성된 추천 기본키를 dto에 넣기
         }
         return result;
     }

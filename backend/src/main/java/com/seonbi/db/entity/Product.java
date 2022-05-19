@@ -39,11 +39,11 @@ public class Product extends BaseEntity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(productId, product.productId) && Objects.equals(naverId, product.naverId) && Objects.equals(name, product.name) && Objects.equals(buyUrl, product.buyUrl) && Objects.equals(price, product.price) && Objects.equals(imageUrl, product.imageUrl) && Objects.equals(category1, product.category1) && Objects.equals(category2, product.category2) && Objects.equals(category3, product.category3) && Objects.equals(keyword, product.keyword) && Objects.equals(brand, product.brand) && Objects.equals(hit, product.hit) && Objects.equals(wish, product.wish) && Objects.equals(give, product.give) && Objects.equals(recommend, product.recommend);
+        return Objects.equals(productId, product.productId) && Objects.equals(naverId, product.naverId) && Objects.equals(name, product.name) && Objects.equals(buyUrl, product.buyUrl) && Objects.equals(price, product.price) && Objects.equals(imageUrl, product.imageUrl) && Objects.equals(category1, product.category1) && Objects.equals(category2, product.category2) && Objects.equals(category3, product.category3)  && Objects.equals(brand, product.brand) && Objects.equals(hit, product.hit) && Objects.equals(wish, product.wish) && Objects.equals(give, product.give) && Objects.equals(recommend, product.recommend);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productId, naverId, name, buyUrl, price, imageUrl, category1, category2, category3, keyword, brand, hit, wish, give, recommend);
+        return Objects.hash(productId, naverId, name, buyUrl, price, imageUrl, category1, category2, category3, brand, hit, wish, give, recommend);
     }
 }
