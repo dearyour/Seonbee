@@ -88,7 +88,7 @@ function Recommend() {
   useEffectOnce(() => {
     setIsPrepared(false);
 
-    // 챗봇을 통한 접근이 아니면 404로
+    // url을 통한 접근이 아니면 404로
     if (Object.keys(router.query).length === 0) {
       router.push('/404');
       return;
@@ -109,6 +109,7 @@ function Recommend() {
               return { rid: now.recommendId, state: false };
             })
           );
+          setIsPrepared(true);
         })
         .catch((err) => {
           console.log(err.response);
@@ -134,13 +135,12 @@ function Recommend() {
       })
         .then((res) => {
           setProductList(res.data.productList);
+          setIsPrepared(true);
         })
         .catch((err) => {
           console.log(err.response);
         });
     }
-
-    setIsPrepared(true);
 
     // 카카오톡 공유하기를 위한
     const script = document.createElement('script');
@@ -254,7 +254,7 @@ function Recommend() {
         </CardImg>
         <CardContent>
           <h2>
-            <EllipsisText text={item.name} length={'29'} />
+            <EllipsisText text={item.name} length={'24'} />
           </h2>
           {/* <p>{item.name}</p> */}
           <Price>
@@ -323,10 +323,17 @@ function Recommend() {
             <RiKakaoTalkFill />
             &nbsp; 카카오톡 공유하기
           </Btn>
-          <Btn filled={true} onClick={() => history.go(-1)}>
-            <RiArrowGoBackFill />
-            &nbsp;다시 추천받기
-          </Btn>
+          {router.query.friendId ? (
+            <Btn filled={true} onClick={() => history.go(-1)}>
+              <RiArrowGoBackFill />
+              &nbsp;사랑방으로 돌아가기
+            </Btn>
+          ) : (
+            <Btn filled={true} onClick={() => history.go(-1)}>
+              <RiArrowGoBackFill />
+              &nbsp;다시 추천받기
+            </Btn>
+          )}
         </Stack>
         {isPrepared ? (
           <>{renderProducts(productList)}</>
