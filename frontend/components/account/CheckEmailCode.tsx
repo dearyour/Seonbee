@@ -151,7 +151,7 @@ export default function CheckEmailCode(props: any) {
             Swal.showLoading();
 
             checkEmailPWAPI(inputValue).then((res) => {
-              console.log(res);
+              // console.log(res);
               if (res.status == 200) {
                 Swal.fire({
                   title: "인증에 성공했습니다",
@@ -219,7 +219,7 @@ export default function CheckEmailCode(props: any) {
       email: inputValue.email,
       password: inputValue.newPassword,
     };
-    console.log(data);
+    // console.log(data);
     axios({
       method: "POST",
       url: process.env.NEXT_PUBLIC_BACK + "member/login",
@@ -231,7 +231,7 @@ export default function CheckEmailCode(props: any) {
         Router.push(`/`);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -261,7 +261,7 @@ export default function CheckEmailCode(props: any) {
           Swal.showLoading();
 
           newpassAPI(inputValue).then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.status == 200) {
               Swal.fire({
                 title: "비밀번호 변경을 성공했습니다",

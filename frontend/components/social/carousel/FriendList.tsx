@@ -7,18 +7,21 @@ import { Navigation, Pagination, Scrollbar, A11y, Mousewheel } from "swiper";
 import Image from "next/image";
 import { Card, Skeleton } from "@mui/material";
 import hobeetobee from "public/characters/hobeetobee.png";
+import { Router, useRouter } from "next/router";
 type Props = {};
 class DdayFriends {
   nickname: string;
   dday: string;
   imageString: string;
   title: string;
+  friendId: number;
 
   constructor(data: any) {
     this.imageString = data.imageString || "";
     this.nickname = data.nickname || "";
     this.dday = data.dday || "";
     this.title = data.title || "";
+    this.friendId = data.friendId || 0;
   }
 }
 function DdayList(data: Array<DdayFriends>): DdayFriends[] {
@@ -30,6 +33,7 @@ function DdayList(data: Array<DdayFriends>): DdayFriends[] {
 const FriendList = (props: Props) => {
   const [members, setMembers] = useState<DdayFriends[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   useEffect(() => {
     setIsLoading(true);
@@ -38,6 +42,7 @@ const FriendList = (props: Props) => {
       url: "friend/dday",
     })
       .then((res) => {
+        // console.log(res);
         setMembers(DdayList(res.data.friends));
       })
       .catch((err) => {
@@ -73,7 +78,13 @@ const FriendList = (props: Props) => {
             return (
               <SwiperSlide key={index}>
                 <ImgWrap className="mx-2 ">
-                  <FriendImg src={GetImage(member.imageString)} alt="" />
+                  <FriendImg
+                    src={GetImage(member.imageString)}
+                    onClick={() => {
+                      router.push("/profile/" + String(member.friendId));
+                    }}
+                    alt=""
+                  />
                   <Content>{member.dday}</Content>
                   <Dday>{member.title}</Dday>
                 </ImgWrap>
@@ -111,6 +122,7 @@ const ImgWrap = styled.div`
   overflow: hidden;
   position: relative;
   border-radius: 10px;
+  cursor: pointer;
   &:hover {
     background-color: black;
     opacity: 60%;
@@ -135,7 +147,7 @@ const Content = styled.div`
   left: 30%;
   /* right: 40%; */
   z-index: 2;
-  color: #ffffff;
+  color: white;
   font-weight: bold;
 `;
 const Dday = styled.div`
@@ -145,7 +157,7 @@ const Dday = styled.div`
   /* right: 40%; */
   z-index: 2;
   color: white;
-  font-weight: bold;
+  font-weight: 700;
 `;
 
 export default FriendList;

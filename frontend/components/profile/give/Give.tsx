@@ -72,7 +72,7 @@ const Give = (props: Props) => {
       url: "profile/give/",
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setMembers(res.data.receiverList.memberList);
         setNonMembers(res.data.receiverList.noneMemberList);
         setSearchMembers(res.data.receiverList.memberList);
@@ -80,7 +80,7 @@ const Give = (props: Props) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
         setIsLoading(false);
       });
     // setMembers([temp, temp]);
@@ -108,11 +108,11 @@ const Give = (props: Props) => {
       data: selected,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setProducts(res.data.productList);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
   }, [selected]);
 
@@ -288,7 +288,7 @@ const Give = (props: Props) => {
             slidesPerView={3}
             spaceBetween={50}
             scrollbar={{ draggable: true }}
-            className="h-100 "
+            className="h-100 ps-3"
           >
             {products.map((now, index) => {
               return (

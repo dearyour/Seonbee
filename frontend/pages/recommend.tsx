@@ -91,14 +91,14 @@ function Recommend() {
     }
 
     if (router.query.friendId) {
-      console.log(router.query.friendId);
+      // console.log(router.query.friendId);
       axiosConnector({
         method: "POST",
         url: "recommend/friend",
         data: { friendId: router.query.friendId, price: router.query.price },
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setProductList(res.data.productList);
           setIsSaved(
             res.data.productList.map((now: any) => {
@@ -150,7 +150,7 @@ function Recommend() {
   });
 
   const kakaoShare = () => {
-    console.log(window.Kakao);
+    // console.log(window.Kakao);
 
     if (window.Kakao) {
       const kakao = window.Kakao;
@@ -190,7 +190,7 @@ function Recommend() {
   };
 
   const saveAll = () => {
-    console.log("saved all");
+    // console.log("saved all");
 
     for (let i = 0; i < productList.length; i++) {
       const rid = productList[i].recommendId;
@@ -214,8 +214,8 @@ function Recommend() {
         v.rid === rid ? { ...v, state: !v.state } : v
       )
     );
-    console.log(rid, "saved");
-    console.log(isSaved);
+    // console.log(rid, "saved");
+    // console.log(isSaved);
 
     // TODO: 주고싶소 저장 api
     axiosConnector({
@@ -223,7 +223,7 @@ function Recommend() {
       url: "profile/recommend/give/" + String(rid),
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // setReset(!reset);
       })
       .catch((err) => {

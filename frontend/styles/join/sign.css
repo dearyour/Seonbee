@@ -25,6 +25,7 @@
 }
 .signinBtn {
   /* background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%); */
+
   background-color: #e2d3be;
 }
 .signupBtn {
@@ -148,7 +149,7 @@
   background: #03a9f4;
   border: none;
   color: #fff;
-  max-width: 100px;
+  max-width: 100%;
   cursor: pointer;
   margin-top: -15px;
 }

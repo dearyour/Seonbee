@@ -50,7 +50,7 @@ const Social = (props: Props) => {
       url: "friend",
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setMembers(res.data.friends);
       })
       .catch((err) => {

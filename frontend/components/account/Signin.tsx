@@ -114,14 +114,14 @@ const Signin = (props: Props) => {
         email: inputState.email,
         password: inputState.password,
       };
-      console.log(data);
+      // console.log(data);
       axios({
         method: "POST",
         url: process.env.NEXT_PUBLIC_BACK + "member/login",
         data: data,
       })
         .then((res: any) => {
-          console.log(res);
+          // console.log(res);
           switch (res.status) {
             case 200:
               sessionStorage.setItem("Token", res.data.jwt);
@@ -258,16 +258,16 @@ const Signin = (props: Props) => {
             ? ERROR_MSG[errorData["password"]]
             : ""}
         </div> */}
-        <input type="submit" name="" value="로그인" className="mx-auto" />
-        <LoginWrapper className="mx-auto my-1">
+        <input type="submit" name="" value="로그인" className="" />
+        <LoginWrapper className="mx-auto">
           <Login />
         </LoginWrapper>
-        <Btn
-          className="toggle-signin mt-1"
+        <PasswordFindBtn
+          className="toggle-signin mt-1 border-0"
           onClick={() => setPromotion((prevCheck) => !prevCheck)}
         >
           비밀번호 찾기
-        </Btn>
+        </PasswordFindBtn>
       </form>
       <div className="promotion_signinWrp">
         {promotion && (
@@ -324,6 +324,10 @@ const LoginWrapper = styled.div`
 `;
 const EmailWrp = styled.div`
   display: flex;
+`;
+
+const PasswordFindBtn = styled(Btn)`
+  background-color: none;
 `;
 
 export default Signin;

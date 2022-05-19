@@ -36,10 +36,10 @@ const ProductCard = (props: Props) => {
       data: { receiverId: memberId, wishlistId: props.wishlistId },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
   };
 
@@ -50,10 +50,10 @@ const ProductCard = (props: Props) => {
         url: "profile/wish/" + String(props.wishlistId),
       })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => {
-          console.log(err.response);
+          // console.log(err.response);
         });
     }
   };

@@ -13,6 +13,7 @@ export const Nav = styled.nav`
   top: 0;
   z-index: 10;
   margin-bottom: 2rem;
+  padding-bottom: 10px;
   /* background-color: #fbf8f4; */
 
   @media screen and (max-width: 960px) {

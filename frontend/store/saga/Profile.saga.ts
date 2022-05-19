@@ -46,17 +46,17 @@ function* watchLanternFestivalsState() {
 }
 
 function* getLanternFestivalsState(hostId: any) {
-  console.log("getLanternFestivalsState hostId", hostId);
+  // console.log("getLanternFestivalsState hostId", hostId);
   try {
-    console.log("getLanternFestivalsState 전");
+    // console.log("getLanternFestivalsState 전");
     const lanternData: AxiosResponse = yield call(
       GetLanternFestivalsState,
       hostId.payload
     );
-    console.log("getLanternFestivalsState 후");
+    // console.log("getLanternFestivalsState 후");
     yield put(profileActions.setLanternFestivals(lanternData));
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     yield put(profileActions.setLanternFestivalsFail(err));
   }
 }

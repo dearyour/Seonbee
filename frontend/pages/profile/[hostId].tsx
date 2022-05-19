@@ -28,11 +28,11 @@ const Profile = (props: Props) => {
       router.push("/login");
       return;
     }
-    console.log("router.isReady", router.isReady);
+    // console.log("router.isReady", router.isReady);
     if (!router.isReady) {
       return;
     }
-    console.log("hostId", hostId);
+    // console.log("hostId", hostId);
     dispatch(profileActions.setHostId(hostId));
     dispatch(profileActions.getProfile(hostId));
   }, [router.isReady, hostId]);
@@ -47,7 +47,7 @@ const Profile = (props: Props) => {
   const [selectedBtn, setSelectedBtn] = useState<string>("호패");
   const [sideBtnNames, setsideBtnNames] = useState<string[]>([]);
   useEffect(() => {
-    console.log(hostId, memberId, hostId === String(memberId));
+    // console.log(hostId, memberId, hostId === String(memberId));
     if (hostId === String(memberId)) {
       setsideBtnNames([
         "호패",

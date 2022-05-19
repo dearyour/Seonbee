@@ -51,7 +51,7 @@ const SearchUser = (props: any) => {
       url: "shop/friend",
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setMembers(SearchList(res.data.friends));
         setMemberSearch(SearchList(res.data.friends));
         // console.log(members);
