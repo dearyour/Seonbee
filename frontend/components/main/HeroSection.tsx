@@ -90,23 +90,21 @@ function HeroSection() {
                   당신의 소중한 사람만을 위한 맞춤형 선물을 추천 받으세요!
                 </HeroText>
                 <ButtonWrapper>
-                  <Btn
-                    filled={true}
-                    className="me-2"
+                  <Btn1
                     onClick={() => {
                       router.push('/chat');
                     }}
                   >
-                    지금 추천받기
-                  </Btn>
+                    🎁 지금 추천받기
+                  </Btn1>
                   {!isLogin && (
-                    <Btn
+                    <Btn2
                       onClick={() => {
                         router.push('/login');
                       }}
                     >
                       선비에 가입하기
-                    </Btn>
+                    </Btn2>
                   )}
                 </ButtonWrapper>
               </div>
@@ -167,7 +165,46 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: start;
   flex-flow: wrap;
-  gap: 0.5rem;
+  gap: 1rem;
+`;
+
+const Btn1 = styled.div`
+  text-decoration: none;
+  padding: 16px 40px;
+  font-size: 1rem;
+  position: relative;
+  /* margin-right: 32px; */
+
+  background: #ff6464;
+  color: #fff;
+  border-radius: 24px;
+  transition: transform 0.3s ease;
+
+  cursor: pointer;
+
+  &:hover {
+    transform: translate(0, -6px);
+  }
+`;
+
+const Btn2 = styled.div`
+  text-decoration: none;
+  padding: 16px 40px;
+  font-size: 1rem;
+  position: relative;
+  /* margin-right: 32px; */
+
+  background: #fff;
+  color: #ff6464;
+  border-radius: 24px;
+  transition: transform 0.3s ease;
+
+  cursor: pointer;
+  border: 1px solid #ff6464;
+
+  &:hover {
+    transform: translate(0, -6px);
+  }
 `;
 
 export default HeroSection;

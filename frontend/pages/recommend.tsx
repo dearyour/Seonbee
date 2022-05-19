@@ -126,7 +126,7 @@ function Recommend() {
   });
 
   const kakaoShare = () => {
-    console.log('카카오톡 공유하기');
+    console.log(window.Kakao);
 
     if (window.Kakao) {
       const kakao = window.Kakao;
@@ -135,32 +135,33 @@ function Recommend() {
       if (!kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
         kakao.init('29238b0c437e1bd13d1681903254534f');
-        kakao.Link.sendCustom({
-          templateId: 76817,
-          templateArgs: {
-            product1_name: productList[0].name,
-            product1_price: productList[0].price
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-            product1_image: productList[0].imageUrl,
-            product1_buy: productList[0].buyUrl.slice(34),
-
-            product2_name: productList[1].name,
-            product2_price: productList[1].price
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-            product2_image: productList[1].imageUrl,
-            product2_buy: productList[1].buyUrl.slice(34),
-
-            product3_name: productList[2].name,
-            product3_price: productList[2].price
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-            product3_image: productList[2].imageUrl,
-            product3_buy: productList[2].buyUrl.slice(34),
-          },
-        });
       }
+
+      kakao.Link.sendCustom({
+        templateId: 76817,
+        templateArgs: {
+          product1_name: productList[0].name,
+          product1_price: productList[0].price
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+          product1_image: productList[0].imageUrl,
+          product1_buy: productList[0].buyUrl.slice(34),
+
+          product2_name: productList[1].name,
+          product2_price: productList[1].price
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+          product2_image: productList[1].imageUrl,
+          product2_buy: productList[1].buyUrl.slice(34),
+
+          product3_name: productList[2].name,
+          product3_price: productList[2].price
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+          product3_image: productList[2].imageUrl,
+          product3_buy: productList[2].buyUrl.slice(34),
+        },
+      });
     }
   };
 
