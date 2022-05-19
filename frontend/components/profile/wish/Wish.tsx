@@ -92,7 +92,7 @@ const Wish = ({ props }: { props: any }) => {
       url: "profile/wish/" + props,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setProducts(res.data.wishes);
       })
       .catch((err) => {

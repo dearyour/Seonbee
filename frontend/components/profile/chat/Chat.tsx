@@ -44,12 +44,12 @@ const Chat = (props: Props) => {
       url: "profile/recommend",
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setProducts(res.data.recommendList.reverse());
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
         setIsLoading(false);
       });
   }, [reset]);
@@ -77,7 +77,7 @@ const Chat = (props: Props) => {
         });
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
   };
   return (

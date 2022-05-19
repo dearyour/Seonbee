@@ -40,7 +40,7 @@ function AudioPlayer() {
   // }, [isPlaying]);
 
   useEffect(() => {
-    console.log("audioPlayer.current", audioPlayer.current);
+    // console.log("audioPlayer.current", audioPlayer.current);
     if (audioPlayer.current) {
       audioPlayer.current.volume = 0.1;
 
@@ -95,7 +95,7 @@ function AudioPlayer() {
   const changeRange = () => {
     if (audioPlayer.current) {
       audioPlayer.current.currentTime = Number(progressBar.current?.value);
-      console.log(audioPlayer.current.currentTime, duration);
+      // console.log(audioPlayer.current.currentTime, duration);
 
       changePlayerCurrentTime();
     }

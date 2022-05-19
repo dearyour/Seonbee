@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, TextField } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import CardMember from "store/interface/social/cardmember";
@@ -34,10 +34,19 @@ const UserCard = ({
   friendId,
 }: CardMember) => {
   const router = useRouter();
-  const [price, setPrice] = useState<number>();
+  const [price, setPrice] = useState<number>(0);
+  const [error, setError] = useState<string>();
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  useEffect(() => {
+    // console.log(error);
+    if (isNaN(price)) {
+      setError("숫자만 입력해주세요.");
+    } else {
+      setError("");
+    }
+  }, [price]);
   return (
     <ProfileCard className="shadow-none">
       {/* 선물 추천받기 모달 */}
@@ -61,7 +70,7 @@ const UserCard = ({
                 setPrice(Number(e.target.value));
               }}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && !error) {
                   router.push(
                     {
                       pathname: "/recommend",
@@ -79,6 +88,9 @@ const UserCard = ({
             <Btn
               className="my-auto ms-2"
               onClick={() => {
+                if (error) {
+                  return;
+                }
                 router.push(
                   {
                     pathname: "/recommend",
@@ -91,6 +103,7 @@ const UserCard = ({
               추천
             </Btn>
           </Typography>
+          <div className="p-1 text-danger">{error}</div>
         </Box>
       </Modal>
       {/* 본문 */}
@@ -101,7 +114,7 @@ const UserCard = ({
             <div className="text-center">{nickname}</div>
           </div>
           <div className="col-8">
-            {scheduleList.length > 0 ? (
+            {/* {scheduleList.length > 0 ? (
               <Swiper
                 modules={[Navigation, A11y]}
                 spaceBetween={20}
@@ -119,7 +132,7 @@ const UserCard = ({
               </Swiper>
             ) : (
               <div className="m-4"></div>
-            )}
+            )} */}
             {verse ? (
               <Card className="my-1">
                 <div className="my-1 fw-bold p-1">&quot;{verse}&quot;</div>
