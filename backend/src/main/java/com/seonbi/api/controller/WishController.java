@@ -73,6 +73,7 @@ public class WishController {
         if (reserveWishlistCode==401)   return ResponseEntity.status(401).body(BaseResponseBody.of(401, "유효하지 않은 상품입니다."));
         if (reserveWishlistCode==402)   return ResponseEntity.status(402).body(BaseResponseBody.of(402, "이미 예약된 상품입니다."));
 
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "success"));
     }
 
