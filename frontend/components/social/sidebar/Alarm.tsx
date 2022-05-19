@@ -65,12 +65,14 @@ const Alarm = (props: Props) => {
   const Nick = styled.div`
     /* white-space: nowrap; */
     /* position: absolute; */
-    font-size: 12px;
+    /* font-size: 12px; */
   `;
 
-  // const Wrap = styled.div`
-  //   max-width: 60px;
-  // `;
+  const Blank = styled.div`
+    width: 70px;
+  `;
+
+  const Wrap = styled.div``;
   return (
     <div className="px-2">
       <Card>
@@ -79,7 +81,7 @@ const Alarm = (props: Props) => {
             {members.map((now, index) => {
               return (
                 <div key={index} className="d-flex align-items-center">
-                  <div className="d-flex flex-column  align-items-center me-4 mb-4">
+                  <Wrap className="d-flex flex-column  align-items-center me-4 py-1">
                     <Image
                       src={GetImage(now.imageString)}
                       className="rounded-circle"
@@ -88,7 +90,8 @@ const Alarm = (props: Props) => {
                       height={"100%"}
                     ></Image>
                     <Nick className="">{now.nickname}</Nick>
-                  </div>
+                    <Blank></Blank>
+                  </Wrap>
 
                   <div className=" mx-3 d-flex">
                     <Btn
