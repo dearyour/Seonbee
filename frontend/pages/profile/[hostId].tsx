@@ -25,8 +25,9 @@ const Profile = (props: Props) => {
   const profile = useSelector((state: RootState) => state.profile.profile);
 
   useEffect(() => {
-    if (!sessionStorage.getItem('Token')) {
-      router.push('/login');
+    localStorage.removeItem("persist:root");
+    if (!sessionStorage.getItem("Token")) {
+      router.push("/login");
       return;
     }
     // console.log("router.isReady", router.isReady);
