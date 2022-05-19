@@ -285,7 +285,7 @@ function Recommend() {
     return (
       <>
         <Head>
-          <title>선비 | 추천 결과</title>
+          <title>선비 | {router.query.name}님을 위한 선물 추천 결과</title>
         </Head>
         <ProductsContent>{listItems}</ProductsContent>
       </>
