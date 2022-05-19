@@ -39,7 +39,11 @@ public class WishlistServiceImpl implements WishlistService{
             if (product==null)  continue;
             WishlistDto wishlistDto=modelMapper.map(product , WishlistDto.class);
             wishlistDto.setWishlistId(wish.getWishlistId());
-            if (giver!=null)    wishlistDto.setGiverName(giver.getNickname());
+            if (giver!=null)    {
+                wishlistDto.setGiverId(giver.getMemberId());
+                wishlistDto.setGiverName(giver.getNickname());
+            }
+
             wishlistDtoList.add(wishlistDto);
         }
         return wishlistDtoList;
