@@ -22,6 +22,7 @@ import { IoMdGitMerge } from "react-icons/io";
 import CartList from "components/ShopContainer/List/CartList";
 import Swal from "sweetalert2";
 import ControlMenus from "components/Shop/ControlMenus";
+import { BsArrowUpSquareFill } from "react-icons/bs";
 const sortOptionList = [
   { value: "recommendMany", name: "최다 추천수 순" },
   { value: "hitMany", name: "최다 조회수 순" },
@@ -372,8 +373,21 @@ const Home = () => {
     categoryTagDatas,
   ]);
 
+  const GoToTop = styled(BsArrowUpSquareFill)`
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    font-size: 36px;
+    cursor: pointer;
+  `;
+
+  const GoTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className="home">
+      <GoToTop onClick={GoTop}></GoToTop>
       {/* Search Bar */}
       <SearchBar
         value={searchInput}

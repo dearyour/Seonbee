@@ -71,7 +71,7 @@
   outline: none;
   border: none;
   width: 40%;
-  margin-left: -150px;
+  margin-left: -120px;
 }
 
 .searchBar-wrap input::placeholder {
@@ -171,7 +171,8 @@
 .category_list_wrapper {
   margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(12, auto);
+  grid-template-columns: repeat(12, 7.7%);
+
   gap: 0.7%;
 }
 .CategoryItem {
@@ -183,7 +184,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* white-space: nowrap; */
+  white-space: nowrap;
 }
 
 .CategoryItem img {

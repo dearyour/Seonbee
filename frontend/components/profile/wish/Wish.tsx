@@ -94,7 +94,7 @@ const Wish = ({ props }: { props: any }) => {
     setIsLoading(false);
   }, []);
   return (
-    <div className="w-100 h-100 ms-5 overflow-hidden">
+    <div className="w-100 h-100 ms-5 overflow-hidden mt-3 pt-3">
       {!isLoading && products.length > 0 ? (
         <Swiper
           modules={[Mousewheel, Pagination, Scrollbar]}
@@ -107,7 +107,7 @@ const Wish = ({ props }: { props: any }) => {
         >
           {products.map((now, index) => {
             return (
-              <SwiperSlide className="h-100 mt-3" key={index}>
+              <SwiperSlide className="mt-3" key={index}>
                 <CardP className="background-image-1 w-100 mt-5">
                   {String(memberId) === hostId && (
                     <Xicon
