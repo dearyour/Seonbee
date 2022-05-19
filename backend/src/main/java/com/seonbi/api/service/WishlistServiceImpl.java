@@ -35,8 +35,9 @@ public class WishlistServiceImpl implements WishlistService{
         List<WishlistDto> wishlistDtoList=new ArrayList<>();
         for (Wishlist wish: wishlists){
             Member giver=memberRepository.findByMemberIdAndIsDeleted(wish.getGiverId(), false);
-            WishlistDto wishlistDto=modelMapper.map(
-                    productRepository.findByProductIdAndIsDeleted(wish.getProductId(), false), WishlistDto.class);
+            Product product=productRepository.findByProductIdAndIsDeleted(wish.getProductId(), false);
+            if (product==null)  continue;
+            WishlistDto wishlistDto=modelMapper.map(product , WishlistDto.class);
             wishlistDto.setWishlistId(wish.getWishlistId());
             if (giver!=null)    wishlistDto.setGiverName(giver.getNickname());
             wishlistDtoList.add(wishlistDto);

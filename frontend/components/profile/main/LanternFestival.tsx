@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Btn from "components/commons/Btn";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import styles from "styles/profile/profileMain.module.css";
 import LanternCreateModal from "./LanternCreateModal";
 import LanternList from "./LanternList";
@@ -14,6 +14,7 @@ import axiosConnector from "utils/axios-connector";
 import { profileActions } from "store/slice/profile";
 import LanternReadModal from "./LanternReadModal";
 import { LanternType } from "store/interface/lantern";
+import { Skeleton } from "@mui/material";
 
 type Props = {
   lanternFestival: LanternFestivalType;
@@ -76,6 +77,7 @@ const LanternFestival = (props: Props) => {
       position,
       lanternType,
     };
+    console.log(formData);
     axiosConnector({
       method: "POST",
       url: `profile/lantern`,

@@ -27,7 +27,9 @@ const SideCalendarDate = ({ props }: { props: FriendSchedule[] }) => {
                       });
                     }}
                   >
-                    <div className="me-4">{schedule.nickname}</div>
+                    <div className="me-4 text-success fw-bold">
+                      {schedule.nickname}
+                    </div>
                     <div className="">{schedule.title}</div>
                   </CardWrap>
                 );

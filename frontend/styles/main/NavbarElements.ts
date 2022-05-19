@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import Link from 'next/link';
+import styled from "@emotion/styled";
+import Link from "next/link";
 
 export const Nav = styled.nav`
   background: transparent;
@@ -13,6 +13,7 @@ export const Nav = styled.nav`
   top: 0;
   z-index: 10;
   margin-bottom: 2rem;
+  /* background-color: #e9e5e1; */
 
   @media screen and (max-width: 960px) {
     transition: 0.8s all ease;
@@ -67,6 +68,7 @@ export const NavItem = styled.li`
 export const NavLinks = styled.div`
   cursor: pointer;
   padding: 0 10px;
+  font-weight: bold;
   text-align: center;
   text-decoration: none;
   color: black;
@@ -74,5 +76,19 @@ export const NavLinks = styled.div`
 
   &:hover {
     color: #baa68b;
+  }
+`;
+
+export const NavLinksChat = styled.div`
+  cursor: pointer;
+  padding: 0 10px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #baa68b;
+  transition: all 0.3s ease-in;
+
+  &:hover {
+    color: #64543e;
   }
 `;

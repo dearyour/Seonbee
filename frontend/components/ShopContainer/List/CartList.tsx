@@ -67,7 +67,7 @@ const List = ({}) => {
         <div className="post__imgs" onClick={__getHitCount}>
           <a href={CartData.buyUrl} target="_blank" rel="noopener noreferrer">
             <div
-              className="ImagecardWrp"
+              className="ImagecardWrps"
               onClick={() => {
                 // Router.replace(`${list.buyUrl}`);
                 // Router.push(`${CartData.buyUrl}`);
@@ -86,7 +86,7 @@ const List = ({}) => {
             </div>
           </a>
         </div>
-        <div className="post__info">
+        <div className="post__infos">
           <div className="post__date">
             <span>
               카테고리 : {CartData.category1} &gt; {CartData.category2} &gt;{" "}

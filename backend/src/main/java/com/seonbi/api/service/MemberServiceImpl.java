@@ -1,6 +1,7 @@
 package com.seonbi.api.service;
 
 import com.seonbi.api.model.MemberSearchDto;
+import com.seonbi.common.util.DdayUtil;
 import com.seonbi.db.entity.Schedule;
 import com.seonbi.db.repository.*;
 import org.json.simple.JSONObject;
@@ -79,6 +80,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member createMember(Member member) {
         Member newMember = memberRepository.save(member);
+        Random random=new Random();
+        int backgroundSize=8;     // 배경번호 0~7
         // 생일 일정에 추가
         if (member.getBirthday() != null) {
             String[] birthday = member.getBirthday().split("\\.");
@@ -88,10 +91,18 @@ public class MemberServiceImpl implements MemberService {
                 schedule.setTitle("생일");
                 schedule.setBirthday(true);
                 schedule.setScheduleDate("2022." + birthday[1] + "." + birthday[2]);
-                schedule.setBackground(1);
+                schedule.setBackground(random.nextInt(backgroundSize));
                 scheduleRepository.save(schedule);
             }
         }
+
+        // 생성일 일정에 추가
+        Schedule schedule = new Schedule();
+        schedule.setMemberId(newMember.getMemberId());
+        schedule.setTitle("가입일");
+        schedule.setScheduleDate(DdayUtil.Date(member.getCreatedDate().toString()));
+        schedule.setBackground(random.nextInt(backgroundSize));
+        scheduleRepository.save(schedule);
 
         return newMember;
     }
@@ -306,11 +317,16 @@ public class MemberServiceImpl implements MemberService {
                 email = kakao_account.get("email").toString();
             }
 
+
+
+
             if (hasBirthday) {
 
                 birthday = kakao_account.get("birthday").toString();
 
                 birthday = birthday.substring(0, 2) + "." + birthday.substring(2, 4);
+
+                birthday= "1995."+birthday; // 임의로 출생년도 1995
             }
 
 
@@ -401,7 +417,7 @@ public class MemberServiceImpl implements MemberService {
                 System.out.println(member.getMemberId());
             }
 
-            token = JwtTokenProvider.getToken(email);
+            token = JwtTokenProvider.getToken(email,true);
             System.out.println("access token=" + token);
 
 

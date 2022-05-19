@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import axiosConnector from "utils/axios-connector";
 import GetImage from "utils/GetImage";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-
+import { Navigation, Pagination, Scrollbar, A11y, Mousewheel } from "swiper";
+import Image from "next/image";
+import { Card, Skeleton } from "@mui/material";
+import hobeetobee from "public/characters/hobeetobee.png";
 type Props = {};
 class DdayFriends {
   nickname: string;
@@ -27,8 +29,10 @@ function DdayList(data: Array<DdayFriends>): DdayFriends[] {
 
 const FriendList = (props: Props) => {
   const [members, setMembers] = useState<DdayFriends[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    setIsLoading(true);
     axiosConnector({
       method: "GET",
       url: "friend/dday",
@@ -39,26 +43,29 @@ const FriendList = (props: Props) => {
       .catch((err) => {
         console.log(err.response);
       });
+    setIsLoading(false);
   }, []);
 
   return (
     <div>
-      {members.length > 0 ? (
+      {!isLoading && members.length > 0 ? (
         <Swiper
-          modules={[A11y]}
+          modules={[A11y, Mousewheel, Scrollbar]}
           spaceBetween={30}
+          mousewheel={true}
+          scrollbar={{ draggable: true }}
           slidesPerView={3}
           breakpoints={{
             // when window width is >= 640px
             // when window width is >= 768px
             768: {
-              width: 768,
+              // width: 768,
               slidesPerView: 4,
             },
             1280: {
-              width: 1280,
+              // width: 1280,
               spaceBetween: 50,
-              slidesPerView: 6,
+              slidesPerView: 5,
             },
           }}
         >
@@ -74,8 +81,27 @@ const FriendList = (props: Props) => {
             );
           })}
         </Swiper>
+      ) : !isLoading ? (
+        <Card>
+          <div className="m-4 p-5">
+            <Image
+              src={hobeetobee}
+              width={83 * 2}
+              height={50 * 2}
+              alt="sad"
+            ></Image>
+            <div>등록된 친구들의 기념일이 없어요</div>
+          </div>
+        </Card>
       ) : (
-        <div className="m-4 p-5">비어있어요</div>
+        <Skeleton
+          variant="rectangular"
+          width={"80%"}
+          height={"80%"}
+          className="rounded p-5 fw-bold"
+        >
+          Loading...
+        </Skeleton>
       )}
     </div>
   );
@@ -87,7 +113,7 @@ const ImgWrap = styled.div`
   border-radius: 10px;
   &:hover {
     background-color: black;
-    opacity: 50%;
+    opacity: 60%;
   }
 `;
 const FriendImg = styled.img`
@@ -97,6 +123,9 @@ const FriendImg = styled.img`
   /* height: 150px; */
   opacity: 70%;
   border: 1.6px solid #64543e;
+  ${ImgWrap} &:hover {
+    opacity: 50%;
+  }
 `;
 
 const Content = styled.div`
@@ -106,7 +135,7 @@ const Content = styled.div`
   left: 30%;
   /* right: 40%; */
   z-index: 2;
-  color: white;
+  color: #ffffff;
   font-weight: bold;
 `;
 const Dday = styled.div`

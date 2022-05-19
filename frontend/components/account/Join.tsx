@@ -35,7 +35,7 @@ const Join: any = () => {
                 __signInBtn();
               }}
             >
-              납시오
+              로그인
             </button>
           </div>
           <div className="box signup">
@@ -46,7 +46,7 @@ const Join: any = () => {
                 __signUpBtn();
               }}
             >
-              처음오시오?
+              회원가입
             </button>
           </div>
         </div>

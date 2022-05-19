@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Container, Section } from 'styles/main/MainGlobalElements';
+import React, { useEffect } from "react";
+import { Container, Section } from "styles/main/MainGlobalElements";
 import {
   ContentRow,
   TextWrapper,
@@ -10,9 +10,9 @@ import {
   ImgWrapper,
   Img,
   ContentColumn,
-} from 'styles/main/introduce/ContentElements';
-import { useInView } from 'react-intersection-observer';
-import { useAnimation } from 'framer-motion';
+} from "styles/main/introduce/ContentElements";
+import { useInView } from "react-intersection-observer";
+import { useAnimation } from "framer-motion";
 
 type Props = {};
 
@@ -49,14 +49,14 @@ function Content({
             <TextWrapper>
               <TopLine
                 initial={initial}
-                transition={{ delay: 0.1, duration: 0.6 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
                 animate={animation}
               >
                 {topLine.text}
               </TopLine>
               <Heading
                 initial={initial}
-                transition={{ delay: 0.3, duration: 0.6 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
                 animate={animation}
                 inverse={inverse}
               >
@@ -64,7 +64,7 @@ function Content({
               </Heading>
               <Subtitle
                 initial={initial}
-                transition={{ delay: 0.5, duration: 0.6 }}
+                transition={{ delay: 0.7, duration: 0.6 }}
                 animate={animation}
                 inverse={inverse}
               >

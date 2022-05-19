@@ -7,8 +7,12 @@ import GetImage from "utils/GetImage";
 import Image from "next/image";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Modal, Skeleton, TextField, Typography } from "@mui/material";
 import seonbee from "public/seonbee.png";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import moment from "moment";
 
 type Props = {};
 
@@ -79,6 +83,7 @@ const Setting = (props: Props) => {
   const [originimage, setOriginImage] = useState();
   const [image, setImage] = useState<any>();
   const [showmodal, setShowModal] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const cropperRef = useRef<HTMLImageElement | null>(null);
 
   const onCrop = () => {
@@ -102,6 +107,7 @@ const Setting = (props: Props) => {
   const handleClose = () => setShowModal(false);
   const { hostId } = useProfile();
   useEffect(() => {
+    setIsLoading(true);
     axiosConnector({
       method: "GET",
       url: "profile/" + String(hostId),
@@ -113,6 +119,7 @@ const Setting = (props: Props) => {
       .catch((err) => {
         console.log(err.response);
       });
+    setIsLoading(false);
   }, []);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -131,6 +138,17 @@ const Setting = (props: Props) => {
     };
     setMydata(new Data(now));
   };
+  const onChangeDate = (e: any) => {
+    console.log(e);
+    const value = moment(e).format("YYYY.MM.DD");
+    // const { value } = e.target;
+    const now = {
+      ...mydata,
+      birthday: value,
+    };
+    setMydata(new Data(now));
+  };
+
   // 이미지 input change
   const ImageChange = (e: any) => {
     const now = {
@@ -148,7 +166,10 @@ const Setting = (props: Props) => {
   const EditRequest = () => {
     const data = new FormData();
     for (const key in mydata) {
-      data.append(key, (mydata as any)[key]);
+      const now = (mydata as any)[key];
+      if (now) {
+        data.append(key, now);
+      }
     }
     // data.append("password", "aaa123123");
     axiosConnector({
@@ -240,13 +261,12 @@ const Setting = (props: Props) => {
         {/* 프로필 이미지, verse */}
         <div className="row my-2 w-100 ps-3">
           {viewimage ? (
-            <Image
-              src={viewimage}
-              className="rounded-circle col"
-              alt="profile"
-              width={"100%"}
-              height={"100%"}
-            ></Image>
+            <Skeleton
+              variant="rectangular"
+              width={"80%"}
+              height={"80%"}
+              className="rounded-circle p-5fw-bold"
+            ></Skeleton>
           ) : (
             <Image
               src={GetImage(mydata.imageString)}
@@ -319,6 +339,7 @@ const Setting = (props: Props) => {
             <option value="F">여성</option>
           </select>
         </div>
+
         <div className="d-flex my-2">
           <Btn className="me-2">mbti</Btn>
           <select
@@ -369,6 +390,27 @@ const Setting = (props: Props) => {
             className="form-control"
             aria-describedby="basic-addon1"
           />
+        </div>
+        <div className="d-flex my-2">
+          <Btn className="me-2 my-auto">생일</Btn>
+          {/* <input
+            type="text"
+            name="birthday"
+            className="form-control"
+            aria-describedby="basic-addon1"
+            value={mydata.birthday}
+            onChange={onChange}
+          /> */}
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="생년월일"
+              inputFormat="yyyy.MM.dd"
+              value={mydata.birthday}
+              onChange={onChangeDate}
+              renderInput={(params) => <TextField {...params} />}
+              className="border"
+            />
+          </LocalizationProvider>
         </div>
         <EditBtn onClick={EditRequest}>수정</EditBtn>
       </SettingWrap>

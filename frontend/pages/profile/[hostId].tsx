@@ -24,6 +24,10 @@ const Profile = (props: Props) => {
   const profile = useSelector((state: RootState) => state.profile.profile);
 
   useEffect(() => {
+    if (!sessionStorage.getItem("Token")) {
+      router.push("/login");
+      return;
+    }
     console.log("router.isReady", router.isReady);
     if (!router.isReady) {
       return;
@@ -31,7 +35,7 @@ const Profile = (props: Props) => {
     console.log("hostId", hostId);
     dispatch(profileActions.setHostId(hostId));
     dispatch(profileActions.getProfile(hostId));
-  }, [router.isReady]);
+  }, [router.isReady, hostId]);
 
   // useEffect(() => {
   //   return function cleanup() {
@@ -48,13 +52,13 @@ const Profile = (props: Props) => {
       setsideBtnNames([
         "호패",
         "연등회 모음",
-        "갖고 싶소",
-        "주고 싶소",
+        "갖고 싶은",
+        "주고 싶은",
         "추천 내역",
         "설정",
       ]);
     } else {
-      setsideBtnNames(["호패", "갖고 싶소"]);
+      setsideBtnNames(["호패", "갖고 싶은"]);
     }
   }, [hostId, memberId]);
 
@@ -106,8 +110,8 @@ const Profile = (props: Props) => {
                 >
                   <ProfileInfo />
                 </div>
-              ) : selectedBtn === "주고 싶소" ? null : selectedBtn ===
-                "갖고 싶소" ? null : selectedBtn ===
+              ) : selectedBtn === "주고 싶은" ? null : selectedBtn ===
+                "갖고 싶은" ? null : selectedBtn ===
                 "추천 내역" ? null : selectedBtn === "설정" ? null : null}
               {/* 콘텐츠 영역 */}
               <div className={styles.content + " center_flex"}>
@@ -115,9 +119,9 @@ const Profile = (props: Props) => {
                   <ProfileMain />
                 ) : selectedBtn === "연등회 모음" ? (
                   <Lantern />
-                ) : selectedBtn === "주고 싶소" ? (
+                ) : selectedBtn === "주고 싶은" ? (
                   <Give />
-                ) : selectedBtn === "갖고 싶소" ? (
+                ) : selectedBtn === "갖고 싶은" ? (
                   <Wish props={hostId} />
                 ) : selectedBtn === "추천 내역" ? (
                   <Chat />

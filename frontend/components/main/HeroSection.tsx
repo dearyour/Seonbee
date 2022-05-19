@@ -1,17 +1,23 @@
-import Image from 'next/image';
-import React from 'react';
-import { HeroContainer, HeroBg, ImageBg } from 'styles/main/HeroElements';
-import TraditionPattern from 'public/images/1.jpg';
-import Btn from 'components/commons/Btn';
-import HobeeTobee from 'public/characters/hobeetobee.png';
-import { useRouter } from 'next/router';
-import TitleOnly from 'public/logowop2.png';
-import MainBg from 'public/mainbg2.png';
-import styled from '@emotion/styled';
-import { Container, MainHeading } from 'styles/main/MainGlobalElements';
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import { HeroContainer, HeroBg, ImageBg } from "styles/main/HeroElements";
+import TraditionPattern from "public/images/1.jpg";
+import Btn from "components/commons/Btn";
+import HobeeTobee from "public/characters/hobeetobee.png";
+import { useRouter } from "next/router";
+import TitleOnly from "public/logowop2.png";
+import MainBg from "public/mainbg2.png";
+import styled from "@emotion/styled";
+import { Container, MainHeading } from "styles/main/MainGlobalElements";
 
 function HeroSection() {
   const router = useRouter();
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+  useEffect(() => {
+    if (sessionStorage.getItem("Token")) {
+      setIsLogin(true);
+    }
+  }, []);
   // return (
   //   <div className="">
   //     <div className="container">
@@ -74,7 +80,7 @@ function HeroSection() {
                     alt="seonbee"
                     width={102}
                     height={60}
-                    style={{ marginBottom: '-0.7rem' }}
+                    style={{ marginBottom: "-0.7rem" }}
                   />
                   가<br />
                   선물을 추천 해드립니다.
@@ -88,18 +94,20 @@ function HeroSection() {
                     filled={true}
                     className="me-2"
                     onClick={() => {
-                      router.push('/chat');
+                      router.push("/chat");
                     }}
                   >
                     지금 추천받기
                   </Btn>
-                  <Btn
-                    onClick={() => {
-                      router.push('/login');
-                    }}
-                  >
-                    선비에 가입하기
-                  </Btn>
+                  {!isLogin && (
+                    <Btn
+                      onClick={() => {
+                        router.push("/login");
+                      }}
+                    >
+                      선비에 가입하기
+                    </Btn>
+                  )}
                 </ButtonWrapper>
               </div>
             </div>

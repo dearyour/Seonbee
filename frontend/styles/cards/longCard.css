@@ -49,6 +49,7 @@
     rgba(0, 242, 254, 8)
   ); */
   background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
+
   box-shadow: 0.5rem 0.5rem 3rem 1px rgba(0, 0, 0, 0.5);
   border-radius: 0.8rem;
 }
@@ -88,8 +89,9 @@
   font-size: 1rem;
   color: #fff;
   font-weight: 600;
-  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-  background-image: linear-gradient(to right, #c0b4a5 0%, #c0b4a5 100%);
+  /* background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  background-image: linear-gradient(to right, #c0b4a5 0%, #c0b4a5 100%); */
+  background-color: #c0b4a5;
   border-radius: 0.8rem;
   text-decoration: none;
   margin-right: 10px;
@@ -104,9 +106,10 @@
   font-size: 1rem;
   color: balck;
   font-weight: 600;
-  background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  /* background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
   background-image: linear-gradient(to right, #03a9f4 0%, #4facfe 100%);
-  background-image: linear-gradient(to right, #f88e8e 0%, #ff7979 100%);
+  background-image: linear-gradient(to right, #f88e8e 0%, #ff7979 100%); */
+  background-color: #f88e8e;
   border-radius: 0.8rem;
   text-decoration: none;
   margin-right: 10px;
@@ -115,13 +118,15 @@
 }
 
 .post_cta:hover {
-  background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
-  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
+  /* background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
+  background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%); */
+  background-color: #c2c2c2;
 }
 .post_ctas:hover {
-  background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
+  /* background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
   background-image: linear-gradient(to right, #c2c2c2 0%, #e9e5e1 100%);
-  background-image: linear-gradient(to right, #f88e8e 0%, #ff7979 100%);
+  background-image: linear-gradient(to right, #f88e8e 0%, #ff7979 100%); */
+  background-color: #ff7979;
   color: #fff;
 }
 
