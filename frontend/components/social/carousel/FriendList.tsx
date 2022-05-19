@@ -148,6 +148,7 @@ const Content = styled.div`
   /* right: 40%; */
   z-index: 2;
   color: white;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
   font-weight: bold;
 `;
 const Dday = styled.div`
@@ -157,6 +158,7 @@ const Dday = styled.div`
   /* right: 40%; */
   z-index: 2;
   color: white;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
   font-weight: 700;
 `;
 
