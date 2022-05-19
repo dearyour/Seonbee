@@ -138,7 +138,7 @@ const UserCard = ({
                 <div className="my-1 fw-bold p-1">&quot;{verse}&quot;</div>
               </Card>
             ) : (
-              <br></br>
+              <Card className="my-1 p-2">아직 등록된 문구가 없습니다</Card>
             )}
             {wishlist.length > 0 ? (
               <Card className="">
@@ -166,7 +166,9 @@ const UserCard = ({
                 </Swiper>
               </Card>
             ) : (
-              <div className="my-3 py-2"></div>
+              <Card className="my-3 p-4 ps-2">
+                아직 갖고싶은 선물이 없습니다.
+              </Card>
             )}
             <div className="mt-1">
               <Btn
@@ -178,7 +180,7 @@ const UserCard = ({
                   });
                 }}
               >
-                연등회
+                둘러보기
               </Btn>
               <Btn filled={true} onClick={handleOpen}>
                 선물 추천받기

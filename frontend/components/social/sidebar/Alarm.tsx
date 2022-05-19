@@ -6,6 +6,7 @@ import Image from "next/image";
 import GetImage from "utils/GetImage";
 import Btn from "components/commons/Btn";
 import Swal from "sweetalert2";
+import styled from "@emotion/styled";
 
 type Props = {};
 
@@ -61,6 +62,14 @@ const Alarm = (props: Props) => {
       setReset(!reset);
     });
   };
+  const Nick = styled.div`
+    /* white-space: normal; */
+    /* position: absolute; */
+  `;
+
+  const Wrap = styled.div`
+    max-width: 60px;
+  `;
   return (
     <div className="px-2">
       <Card>
@@ -69,7 +78,7 @@ const Alarm = (props: Props) => {
             {members.map((now, index) => {
               return (
                 <div key={index} className="d-flex align-items-center">
-                  <div className="d-flex flex-column justify-content-center align-items-center me-4">
+                  <Wrap className="d-flex flex-column  align-items-center me-4 mb-4">
                     <Image
                       src={GetImage(now.imageString)}
                       className="rounded-circle"
@@ -77,18 +86,19 @@ const Alarm = (props: Props) => {
                       width={"100%"}
                       height={"100%"}
                     ></Image>
-                    <div className="">{now.nickname}</div>
-                  </div>
+                    <Nick className="">{now.nickname}</Nick>
+                  </Wrap>
 
-                  <div className=" mx-3">
+                  <div className=" mx-3 d-flex">
                     <Btn
                       onClick={FriendRes}
                       param={{ id: now.friendId, allow: "OK" }}
+                      className="me-3"
                     >
                       수락
                     </Btn>
-                  </div>
-                  <div className="">
+                    {/* </div>
+                  <div className=""> */}
                     <Btn
                       onClick={FriendRes}
                       param={{ id: now.friendId, allow: "NO" }}
