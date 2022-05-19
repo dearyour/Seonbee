@@ -12,7 +12,7 @@ import {
   ContentColumn,
 } from "styles/main/introduce/ContentElements";
 import { useInView } from "react-intersection-observer";
-import { useAnimation } from "framer-motion";
+// import { useAnimation } from "framer-motion";
 
 type Props = {};
 
@@ -28,9 +28,9 @@ function Content({
   reverse,
 }: any) {
   const initial = { opacity: 0, y: 30 };
-  const animation = useAnimation();
+  // const animation = useAnimation();
 
-  const { ref, inView } = useInView({ threshold: 0.1 });
+  // const { ref, inView } = useInView({ threshold: 0.1 });
 
   // useEffect(() => {
   //   if (inView) {
