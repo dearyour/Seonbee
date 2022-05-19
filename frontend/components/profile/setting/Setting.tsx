@@ -244,7 +244,7 @@ const Setting = (props: Props) => {
                 guides={true}
                 ref={cropperRef}
               />
-              <div className="d-flex flex-column">
+              <div className="d-flex flex-column ms-2">
                 {image ? (
                   <Image
                     src={image}
