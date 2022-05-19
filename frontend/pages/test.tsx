@@ -26,7 +26,7 @@ const Asd: NextPage = () => {
   const [imgfile, setimgfile] = useState<any>();
   const [check, setCheck] = useState<boolean>(false);
   useEffect(() => {
-    console.log(check);
+    // console.log(check);
   }, [check]);
   // const image = (id: number) => {
   //   axios({
@@ -48,7 +48,7 @@ const Asd: NextPage = () => {
     });
   };
   function base64ToArrayBuffer(base64: any) {
-    console.log(base64);
+    // console.log(base64);
     const binaryString = window.atob(base64); // Comment this if not using base64
     const bytes = new Uint8Array(binaryString.length);
     return bytes.map((byte, i) => binaryString.charCodeAt(i));
@@ -69,7 +69,7 @@ const Asd: NextPage = () => {
       // url: baseurl + 'member/image/test',
       data: data,
     }).then((res) => {
-      console.log(res);
+      // console.log(res);
     });
   };
 
@@ -96,7 +96,7 @@ const Asd: NextPage = () => {
     return new fruit(now);
   });
 
-  console.log(f);
+  // console.log(f);
 
   return (
     <div className="m-5 rainbow">
@@ -127,9 +127,9 @@ const Asd: NextPage = () => {
       {/* <div>{check ? "asd" : "zxc"}</div> */}
       <Button
         onClick={() => {
-          console.log(check);
+          // console.log(check);
           setCheck((check) => !check);
-          console.log(check);
+          // console.log(check);
         }}
       >
         체크체크

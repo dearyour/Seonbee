@@ -1,25 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Avatar from '@mui/material/Avatar';
-import { InputBase } from '@mui/material';
-import { FiSend } from 'react-icons/fi';
-import { AiOutlineGift, AiOutlineRedo } from 'react-icons/ai';
-import BeatLoader from 'react-spinners/BeatLoader';
-import { css } from '@emotion/react';
-import axios from 'axios';
-import Messages from './Messages';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Avatar from "@mui/material/Avatar";
+import { InputBase } from "@mui/material";
+import { FiSend } from "react-icons/fi";
+import { AiOutlineGift, AiOutlineRedo } from "react-icons/ai";
+import BeatLoader from "react-spinners/BeatLoader";
+import { css } from "@emotion/react";
+import axios from "axios";
+import Messages from "./Messages";
 import {
   ChatbotWidget,
   ChatbotHeader,
   ChatbotBody,
   ChatbotFooter,
   SendBtn,
-} from 'styles/chat/ChatbotElements';
-import { useEffectOnce } from 'store/hook/useEffectOnce';
-import { chatbotActions } from 'store/slice/chatbot';
-import Btn from 'components/commons/Btn';
-import Router from 'next/router';
-import { RootState } from 'store/slice';
+} from "styles/chat/ChatbotElements";
+import { useEffectOnce } from "store/hook/useEffectOnce";
+import { chatbotActions } from "store/slice/chatbot";
+import Btn from "components/commons/Btn";
+import Router from "next/router";
+import { RootState } from "store/slice";
 
 function Chatbot() {
   // const textQuery = async () => {
@@ -31,7 +31,7 @@ function Chatbot() {
   // };
   const baseUrl = process.env.NEXT_PUBLIC_CHAT;
 
-  const [currInput, setCurrInput] = useState<string>('');
+  const [currInput, setCurrInput] = useState<string>("");
   const [isCompleted, setCompleted] = useState<boolean>(false);
   const [characterTyping, setCharacterTyping] = useState<boolean>(false);
 
@@ -44,11 +44,11 @@ function Chatbot() {
 
   useEffectOnce(() => {
     dispatch(chatbotActions.resetMessage());
-    eventQuery('WelcomeToSeonbee');
+    eventQuery("WelcomeToSeonbee");
   });
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
   }, [messages]);
 
   const textQuery = async (text: string) => {
@@ -56,15 +56,15 @@ function Chatbot() {
 
     // 1. 유저가 입력한 메시지 처리
     let conversation = {
-      who: 'user',
+      who: "user",
       content: {
         text: {
           text: text,
         },
       },
       quick_replies: [],
-      question: '',
-      answer: '',
+      question: "",
+      answer: "",
     };
 
     dispatch(chatbotActions.saveMessage(conversation));
@@ -78,7 +78,7 @@ function Chatbot() {
     try {
       // textQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        baseUrl + 'dialogflow/textQuery',
+        baseUrl + "dialogflow/textQuery",
         textQueryVariables
       );
       // const content = response.data.fulfillmentMessages[0];
@@ -111,7 +111,7 @@ function Chatbot() {
       //   };
       // }
       conversation = {
-        who: 'bot',
+        who: "bot",
         content: content[0],
         quick_replies: content[1].payload.fields.quick_replies.listValue.values,
         question: content[1].payload.fields.qna.listValue.values[0].stringValue,
@@ -119,21 +119,21 @@ function Chatbot() {
       };
       dispatch(chatbotActions.saveMessage(conversation));
 
-      if (conversation.question === 'price') {
-        console.log('done');
+      if (conversation.question === "price") {
+        // console.log('done');
         setCompleted(true);
       }
     } catch (error) {
       conversation = {
-        who: 'bot',
+        who: "bot",
         content: {
           text: {
-            text: '에러가 발생했습니다. 관리자에게 문의해주세요.',
+            text: "에러가 발생했습니다. 관리자에게 문의해주세요.",
           },
         },
         quick_replies: [],
-        question: '',
-        answer: '',
+        question: "",
+        answer: "",
       };
 
       dispatch(chatbotActions.saveMessage(conversation));
@@ -150,14 +150,14 @@ function Chatbot() {
     try {
       // eventQuery Route에 리퀘스트를 보낸다.
       const response = await axios.post(
-        baseUrl + 'dialogflow/eventQuery',
+        baseUrl + "dialogflow/eventQuery",
         eventQueryVariables
       );
 
       // const content = response.data.fulfillmentMessages[0];
       for (let content of response.data.fulfillmentMessages) {
         let conversation = {
-          who: 'bot',
+          who: "bot",
           content: content,
         };
 
@@ -165,10 +165,10 @@ function Chatbot() {
       }
     } catch (error) {
       let conversation = {
-        who: 'bot',
+        who: "bot",
         content: {
           text: {
-            text: '에러가 발생했습니다. 관리자에게 문의해주세요.',
+            text: "에러가 발생했습니다. 관리자에게 문의해주세요.",
           },
         },
       };
@@ -178,13 +178,13 @@ function Chatbot() {
   };
 
   const keyUpHandler = (e: any) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       if (e.target.value) {
         // we will send text query route
         textQuery(e.target.value);
 
-        e.target.value = '';
-        setCurrInput('');
+        e.target.value = "";
+        setCurrInput("");
 
         // console.log(scrollRef == null);
 
@@ -199,7 +199,7 @@ function Chatbot() {
     if (currInput) {
       textQuery(currInput);
 
-      setCurrInput('');
+      setCurrInput("");
 
       // if (inputRef.current) {
       //   inputRef.current.value = '';
@@ -212,48 +212,48 @@ function Chatbot() {
     const query = setRouterQueries();
 
     Router.push(
-      { pathname: '/recommend', query: query },
-      { pathname: '/recommend' }
+      { pathname: "/recommend", query: query },
+      { pathname: "/recommend" }
     );
   };
 
   const setRouterQueries = () => {
     const query = {
-      name: '',
-      gender: '',
+      name: "",
+      gender: "",
       age: 0,
-      mbti: '',
-      interest: '',
-      relation: '',
-      purpose: '',
+      mbti: "",
+      interest: "",
+      relation: "",
+      purpose: "",
       price: 0,
     };
 
     for (let i = 2; i < messages.length; i++) {
-      if (messages[i].who === 'bot') {
+      if (messages[i].who === "bot") {
         switch (messages[i].question) {
-          case 'name':
+          case "name":
             query.name = messages[i].answer;
             break;
-          case 'gender':
-            query.gender = messages[i].answer === '사내' ? 'M' : 'F';
+          case "gender":
+            query.gender = messages[i].answer === "사내" ? "M" : "F";
             break;
-          case 'age':
+          case "age":
             query.age = messages[i].answer.slice(0, 2);
             break;
-          case 'mbti':
+          case "mbti":
             query.mbti = messages[i].answer;
             break;
-          case 'interest':
+          case "interest":
             query.interest = messages[i].answer;
             break;
-          case 'relation':
+          case "relation":
             query.relation = messages[i].answer;
             break;
-          case 'purpose':
+          case "purpose":
             query.purpose = messages[i].answer;
             break;
-          case 'price':
+          case "price":
             query.price = messages[i].answer;
             break;
           default:
@@ -267,7 +267,7 @@ function Chatbot() {
 
   const retry = () => {
     dispatch(chatbotActions.resetMessage());
-    eventQuery('WelcomeToSeonbee');
+    eventQuery("WelcomeToSeonbee");
     setCompleted(false);
   };
 
@@ -304,7 +304,7 @@ function Chatbot() {
               sx={{ width: 24, height: 24 }}
             />
             <InputBase
-              style={{ borderBottom: '1px solid black' }}
+              style={{ borderBottom: "1px solid black" }}
               sx={{ ml: 1, flex: 0.8 }}
               placeholder="대답해 주시오"
               value={currInput}

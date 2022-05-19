@@ -45,7 +45,7 @@ const Signup = () => {
     verse: "",
     code: false,
   });
-  console.log(inputState.email);
+  // console.log(inputState.email);
   // const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [date, setDate] = useState("");
   const [sortType, setSortType] = useState("성별");
@@ -179,7 +179,7 @@ const Signup = () => {
   const checkRegex = (inputId: any) => {
     let result: any;
     const value: any = inputState[inputId];
-    console.log(value);
+    // console.log(value);
     if (value.length === 0) {
       result = "required";
     } else {
@@ -212,7 +212,7 @@ const Signup = () => {
       url: process.env.NEXT_PUBLIC_BACK + "member/check/" + value,
     })
       .then((res) => {
-        console.log(res.status);
+        // console.log(res.status);
         setNicknameCheckRes({ code: res.data.status, msg: res.data.message });
         return res.status;
       })
@@ -229,14 +229,14 @@ const Signup = () => {
       email: inputState.email,
       password: inputState.password,
     };
-    console.log(data);
+    // console.log(data);
     axios({
       method: "POST",
       url: process.env.NEXT_PUBLIC_BACK + "member/login",
       data: data,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         sessionStorage.setItem("Token", res.data.jwt);
         dispatch(memberActions.getMember());
         Router.push("/");
@@ -248,7 +248,7 @@ const Signup = () => {
         });
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
   };
   const __SignUp = () => {
@@ -264,7 +264,7 @@ const Signup = () => {
       mbti: inputState.mbti,
       verse: inputState.verse,
     };
-    console.log(data);
+    // console.log(data);
     axios({
       method: "POST",
       url: process.env.NEXT_PUBLIC_BACK + "member",
@@ -339,13 +339,16 @@ const Signup = () => {
             onChange={handleChange}
             onBlur={() => checkRegex("email")}
           />
-          <Button
+          <EmailBtn
             onClick={sendEmailCodeClick}
             disabled={authFin ? true : false}
-            sx={{ width: 100, height: 47 }}
+            sx={{
+              width: 100,
+              height: 47,
+            }}
           >
             인증받기
-          </Button>
+          </EmailBtn>
         </EmailWrp>
 
         <div className="text-red-500">
@@ -565,6 +568,15 @@ const SpanWrp = styled.span`
 
 const EmailWrp = styled.div`
   display: flex;
+`;
+
+const EmailBtn = styled(Button)`
+  background-color: #d4c5b3;
+  font-weight: 600;
+  margin-left: 1px;
+  &:hover {
+    background-color: #c4b5a2;
+  }
 `;
 
 export default Signup;

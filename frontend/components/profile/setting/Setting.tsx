@@ -13,6 +13,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 type Props = {};
 
@@ -85,6 +86,7 @@ const Setting = (props: Props) => {
   const [showmodal, setShowModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>();
+  const [reset, setReset] = useState<boolean>(false);
   const cropperRef = useRef<HTMLImageElement | null>(null);
 
   const onCrop = () => {
@@ -114,14 +116,14 @@ const Setting = (props: Props) => {
       url: "profile/" + String(hostId),
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setMydata(res.data.member);
       })
       .catch((err) => {
         console.log(err.response);
       });
     setIsLoading(false);
-  }, []);
+  }, [reset]);
   useEffect(() => {
     if (!mydata.nickname) {
       setError("");
@@ -156,7 +158,7 @@ const Setting = (props: Props) => {
     setMydata(new Data(now));
   };
   const onChangeDate = (e: any) => {
-    console.log(e);
+    // console.log(e);
     const value = moment(e).format("YYYY.MM.DD");
     // const { value } = e.target;
     const now = {
@@ -195,7 +197,12 @@ const Setting = (props: Props) => {
       data: data,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
+        Swal.fire({
+          icon: "success",
+          title: "성공적으로 처리되었습니다.",
+        });
+        setReset(!reset);
       })
       .catch((err) => {
         console.log(err.response);

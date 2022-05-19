@@ -15,7 +15,7 @@ export const KakaoLogin = (code: string | null) => {
     },
   })
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       // sessionStorage.setItem("jwt", response.data.jwt);
       return response.data;
     })
@@ -32,7 +32,7 @@ export const GetLoginState = (token: string | null) => {
     headers: { Authorization: "Bearer " + token },
   })
     .then((res) => {
-      console.log(res.data.memberAuthDto);
+      // console.log(res.data.memberAuthDto);
       return res.data.memberAuthDto;
     })
     .catch((err) => {
@@ -50,7 +50,7 @@ export const GetMypageState = (
     headers: { Authorization: "Bearer " + token },
   })
     .then((res) => {
-      console.log(res.data.member);
+      // console.log(res.data.member);
       return res.data.member;
     })
     .catch((err) => {

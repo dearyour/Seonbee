@@ -42,8 +42,8 @@ function Navbar() {
   const uid = useSelector((state: RootState) => state.member.info?.memberId);
 
   return (
-    <>
-      <Nav>
+    <div className="">
+      <Nav className="">
         <NavbarContainer>
           {!isMain ? (
             <Link href="/">
@@ -104,7 +104,7 @@ function Navbar() {
         </NavbarContainer>
       </Nav>
       <Sidebar isOpen={isOpen} toggle={toggle} />
-    </>
+    </div>
   );
 }
 

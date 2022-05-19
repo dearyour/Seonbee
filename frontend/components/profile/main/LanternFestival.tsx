@@ -77,7 +77,7 @@ const LanternFestival = (props: Props) => {
       position,
       lanternType,
     };
-    console.log(formData);
+    // console.log(formData);
     axiosConnector({
       method: "POST",
       url: `profile/lantern`,

@@ -19,7 +19,7 @@ const List = ({ list, toggleCart, isCartOpen }) => {
       // headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -33,7 +33,7 @@ const List = ({ list, toggleCart, isCartOpen }) => {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status == 200) {
           Swal.fire({
             title: "갖고싶소에 추가 되었습니다.",

@@ -124,7 +124,7 @@ const Home = () => {
       },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status == 200) {
           Swal.fire({
             title: "주고싶소에 추가 되었습니다.",
@@ -171,7 +171,7 @@ const Home = () => {
       url: process.env.NEXT_PUBLIC_BACK + "shop/" + searchInput,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setShopItem(res.data.productList);
         dispatch(layoutAction.updateDetailData(res.data.productList));
         SearchRef.current.value = "";
@@ -204,7 +204,7 @@ const Home = () => {
       url: process.env.NEXT_PUBLIC_BACK + "shop",
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setShopItem(res.data.productList);
         dispatch(layoutAction.updateDetailData(res.data.productList));
         return res.data;

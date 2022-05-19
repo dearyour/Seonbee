@@ -53,7 +53,7 @@ const SearchUser = (props: Props) => {
       url: "member/search/" + keyword,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setMembers(SearchList(res.data.members));
         //console.log(members);
       })
@@ -72,7 +72,7 @@ const SearchUser = (props: Props) => {
       url: "member/search/" + keyword,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setMembers(SearchList(res.data.members));
         //console.log(members);
       })

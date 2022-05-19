@@ -70,7 +70,7 @@ export const profileSlice = createSlice({
       }
       state.ddays = ddays;
       let flag = false;
-      console.log("testestsetssdfsd");
+      // console.log("testestsetssdfsd");
       // if (state.lanternFestival) {
       //   for (let i = 0; i < payload.length; i++) {
       //     if (payload[i].scheduleId === state.lanternFestival.scheduleId) {
@@ -85,7 +85,7 @@ export const profileSlice = createSlice({
       if (ddays.length) {
         for (let i = 0; i < ddays.length; i++) {
           if (payload[i].scheduleId === state.lanternFestival.scheduleId) {
-            console.log("state.lanternFestival", payload[i].title);
+            // console.log("state.lanternFestival", payload[i].title);
             state.lanternFestival = payload[i];
             flag = true;
             break;
@@ -94,14 +94,14 @@ export const profileSlice = createSlice({
       } else {
         state.lanternFestival = initialState.lanternFestival;
       }
-      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       if (!flag) {
         for (let i = 0; i < payload.length; i++) {
           if (
             ddays.length > 0 &&
             payload[i].scheduleId === ddays[0].scheduleId
           ) {
-            console.log("state.lanternFestival X", payload[i].title);
+            // console.log("state.lanternFestival X", payload[i].title);
             state.lanternFestival = payload[i];
             break;
           }
