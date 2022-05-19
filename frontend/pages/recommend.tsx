@@ -90,6 +90,22 @@ function Recommend() {
       return;
     }
 
+    if (router.query.friendId) {
+      axiosConnector({
+        method: "POST",
+        url: "recommend/friend",
+        data: { friendId: router.query.friendId, price: router.query.price },
+      })
+        .then((res) => {
+          console.log(res.data);
+          setProductList(res.data.productList);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+      return;
+    }
+
     // 추천 상품 뿌려주기
     const { age, name, price, gender, mbti, interest, relation, purpose } =
       router.query;
@@ -199,7 +215,9 @@ function Recommend() {
 
   const renderProducts = (list: any) => {
     // console.log(dummyProductList);
-
+    if (!list) {
+      return;
+    }
     const listItems = list.map((item: any, i: number) => (
       <Card key={item.productId} className="background-image-1">
         <CardImg>

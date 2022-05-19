@@ -84,6 +84,7 @@ const Setting = (props: Props) => {
   const [image, setImage] = useState<any>();
   const [showmodal, setShowModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>();
   const cropperRef = useRef<HTMLImageElement | null>(null);
 
   const onCrop = () => {
@@ -121,6 +122,22 @@ const Setting = (props: Props) => {
       });
     setIsLoading(false);
   }, []);
+  useEffect(() => {
+    if (!mydata.nickname) {
+      setError("");
+      return;
+    }
+    axiosConnector({
+      method: "get",
+      url: "profile/check/" + mydata.nickname,
+    })
+      .then((res) => {
+        setError("");
+      })
+      .catch((err) => {
+        setError("중복된 닉네임입니다.");
+      });
+  }, [mydata.nickname]);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
@@ -315,7 +332,7 @@ const Setting = (props: Props) => {
             disabled
           />
         </div>
-        <div className="d-flex my-2">
+        <div className="d-flex my-2 align-items-center">
           <Btn className="me-2">닉네임</Btn>
           <input
             type="text"
@@ -326,6 +343,7 @@ const Setting = (props: Props) => {
             onChange={onChange}
           />
         </div>
+        <div className="mx-3 text-danger">{error}</div>
         <div className="d-flex my-2">
           <Btn className="me-2">성별</Btn>
           <select
@@ -366,6 +384,7 @@ const Setting = (props: Props) => {
             value={mydata.interest}
             onChange={onChange}
             className="form-control"
+            placeholder="ex) 운동, 캠핑"
             aria-describedby="basic-addon1"
           />
         </div>
@@ -377,6 +396,7 @@ const Setting = (props: Props) => {
             value={mydata.likelist}
             onChange={onChange}
             className="form-control"
+            placeholder="ex) 커피, 꽃"
             aria-describedby="basic-addon1"
           />
         </div>
@@ -388,6 +408,7 @@ const Setting = (props: Props) => {
             value={mydata.banlist}
             onChange={onChange}
             className="form-control"
+            placeholder="ex) 책, 핸드크림"
             aria-describedby="basic-addon1"
           />
         </div>
