@@ -96,7 +96,7 @@ const Chat = (props: Props) => {
               <SwiperSlide className="h-100 mt-3 mx-" key={index}>
                 <CardP className="background-image-1 w-100 mt-5">
                   <div>
-                    <span className="fw-bold">For</span> {now.receiverName}
+                    <span className="fw-bold">For.</span> {now.receiverName}
                   </div>
                   <CardImg>
                     <Image
