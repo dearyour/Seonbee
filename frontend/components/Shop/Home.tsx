@@ -43,7 +43,7 @@ const Home = () => {
   );
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedRating, setSelectedRating] = useState(null);
-  const [selectedPrice, setSelectedPrice] = useState([100, 10000000]);
+  const [selectedPrice, setSelectedPrice] = useState([100, 1000000]);
   //카테고리 상태
   const [categoryTag, setCategoryTag] = useState(1); // 카테고리 숫자 찍힘
   const [categoryTagData, setCategoryTagData] = useState(""); // 카테고리 value 찍힘
