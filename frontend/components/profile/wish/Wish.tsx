@@ -171,7 +171,7 @@ const Wish = ({ props }: { props: any }) => {
                       )}
                     </Stack>
                     {now.giverName ? (
-                      <div className="text-white">
+                      <div className="">
                         {now.giverName}님이 약속하셨습니다.
                       </div>
                     ) : null}
