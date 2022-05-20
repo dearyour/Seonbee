@@ -1,19 +1,19 @@
-import styled from "@emotion/styled";
-import Btn from "components/commons/Btn";
-import React, { useEffect, useRef, useState } from "react";
-import useProfile from "store/hook/profileHooks";
-import axiosConnector from "utils/axios-connector";
-import GetImage from "utils/GetImage";
-import Image from "next/image";
-import Cropper from "react-cropper";
-import "cropperjs/dist/cropper.css";
-import { Box, Modal, Skeleton, TextField, Typography } from "@mui/material";
-import seonbee from "public/seonbee.png";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import moment from "moment";
-import Swal from "sweetalert2";
+import styled from '@emotion/styled';
+import Btn from 'components/commons/Btn';
+import React, { useEffect, useRef, useState } from 'react';
+import useProfile from 'store/hook/profileHooks';
+import axiosConnector from 'utils/axios-connector';
+import GetImage from 'utils/GetImage';
+import Image from 'next/image';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
+import { Box, Modal, Skeleton, TextField, Typography } from '@mui/material';
+import seonbee from 'public/characters/hobee_face.png';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import moment from 'moment';
+import Swal from 'sweetalert2';
 
 type Props = {};
 
@@ -37,45 +37,45 @@ class Data {
   image?: File;
   verse: string;
   constructor(data: any) {
-    this.banlist = data.banlist || "";
-    this.birthday = data.birthday || "";
-    this.email = data.email || "";
-    this.gender = data.gender || "";
-    this.imageString = data.imageString || "";
-    this.interest = data.interest || "";
-    this.likelist = data.likelist || "";
+    this.banlist = data.banlist || '';
+    this.birthday = data.birthday || '';
+    this.email = data.email || '';
+    this.gender = data.gender || '';
+    this.imageString = data.imageString || '';
+    this.interest = data.interest || '';
+    this.likelist = data.likelist || '';
     this.memberId = data.memberId || 0;
-    this.mbti = data.mbti || "";
-    this.nickname = data.nickname || "";
+    this.mbti = data.mbti || '';
+    this.nickname = data.nickname || '';
     this.isAdmin = data.isAdmin || false;
     this.isKakao = data.isKakao || false;
-    this.verse = data.verse || "";
+    this.verse = data.verse || '';
     this.image = data.image;
   }
 }
 
 function getBase64(img: Blob, callback: any) {
   const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
+  reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
 const mbti = [
-  "ISTJ",
-  "ISFJ",
-  "INFJ",
-  "INTJ",
-  "ISTP",
-  "ISFP",
-  "INFP",
-  "INTP",
-  "ESTP",
-  "ESFP",
-  "ENFP",
-  "ENTP",
-  "ESTJ",
-  "ESFJ",
-  "ENFJ",
-  "ENTJ",
+  'ISTJ',
+  'ISFJ',
+  'INFJ',
+  'INTJ',
+  'ISTP',
+  'ISFP',
+  'INFP',
+  'INTP',
+  'ESTP',
+  'ESFP',
+  'ENFP',
+  'ENTP',
+  'ESTJ',
+  'ESFJ',
+  'ENFJ',
+  'ENTJ',
 ];
 
 const Setting = (props: Props) => {
@@ -95,7 +95,7 @@ const Setting = (props: Props) => {
     cropper.getCroppedCanvas().toBlob((blob: any) => {
       const now = {
         ...mydata,
-        image: new File([blob], "profileimage.png"),
+        image: new File([blob], 'profileimage.png'),
       };
       setMydata(now);
     });
@@ -112,8 +112,8 @@ const Setting = (props: Props) => {
   useEffect(() => {
     setIsLoading(true);
     axiosConnector({
-      method: "GET",
-      url: "profile/" + String(hostId),
+      method: 'GET',
+      url: 'profile/' + String(hostId),
     })
       .then((res) => {
         // console.log(res);
@@ -126,18 +126,18 @@ const Setting = (props: Props) => {
   }, [reset]);
   useEffect(() => {
     if (!mydata.nickname) {
-      setError("");
+      setError('');
       return;
     }
     axiosConnector({
-      method: "get",
-      url: "profile/check/" + mydata.nickname,
+      method: 'get',
+      url: 'profile/check/' + mydata.nickname,
     })
       .then((res) => {
-        setError("");
+        setError('');
       })
       .catch((err) => {
-        setError("중복된 닉네임입니다.");
+        setError('중복된 닉네임입니다.');
       });
   }, [mydata.nickname]);
 
@@ -159,7 +159,7 @@ const Setting = (props: Props) => {
   };
   const onChangeDate = (e: any) => {
     // console.log(e);
-    const value = moment(e).format("YYYY.MM.DD");
+    const value = moment(e).format('YYYY.MM.DD');
     // const { value } = e.target;
     const now = {
       ...mydata,
@@ -192,15 +192,15 @@ const Setting = (props: Props) => {
     }
     // data.append("password", "aaa123123");
     axiosConnector({
-      method: "POST",
-      url: "profile/update",
+      method: 'POST',
+      url: 'profile/update',
       data: data,
     })
       .then((res) => {
         // console.log(res);
         Swal.fire({
-          icon: "success",
-          title: "성공적으로 처리되었습니다.",
+          icon: 'success',
+          title: '성공적으로 처리되었습니다.',
         });
         setReset(!reset);
       })
@@ -209,14 +209,14 @@ const Setting = (props: Props) => {
       });
   };
   const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     // width: 400,
-    bgcolor: "background.paper",
-    borderRadius: "10px",
-    border: "2px solid #000",
+    bgcolor: 'background.paper',
+    borderRadius: '10px',
+    border: '2px solid #000',
     boxShadow: 24,
     p: 4,
   };
@@ -238,7 +238,7 @@ const Setting = (props: Props) => {
             <div className="d-flex">
               <Cropper
                 src={originimage}
-                style={{ height: 400, width: "100%" }}
+                style={{ height: 400, width: '100%' }}
                 // Cropper.js options
                 aspectRatio={1 / 1}
                 guides={true}
@@ -287,8 +287,8 @@ const Setting = (props: Props) => {
           {viewimage ? (
             <Skeleton
               variant="rectangular"
-              width={"80%"}
-              height={"80%"}
+              width={'80%'}
+              height={'80%'}
               className="rounded-circle p-5fw-bold"
             ></Skeleton>
           ) : (
@@ -296,8 +296,8 @@ const Setting = (props: Props) => {
               src={GetImage(mydata.imageString)}
               className="rounded-circle col"
               alt="profile"
-              width={"100%"}
-              height={"100%"}
+              width={'100%'}
+              height={'100%'}
             ></Image>
           )}
           <input
