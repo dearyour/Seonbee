@@ -1,0 +1,196 @@
+.containerRapper {
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #131313;
+  overflow: hidden; */
+}
+.containerc {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.containerc .card {
+  position: relative;
+  width: 320px;
+  height: 450px;
+  background: #232323;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.containerc .card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #e9e5e1;
+  clip-path: circle(150px at 80% 20%);
+  transition: 0.5s ease-in-out;
+}
+.containerc .card:hover:before {
+  clip-path: circle(300px at 80% -20%);
+}
+.containerc .card:after {
+  /* content: "선비"; */
+  position: absolute;
+  top: 30%;
+  left: -20%;
+  font-size: 11em;
+  /* color: rgba(255, 255, 255, 0.02); */
+  color: #e9e5e1;
+  font-weight: 800;
+  font-style: italic;
+  z-index: 1;
+}
+.containerc .card .imgBx {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 100%;
+  height: 160px;
+  transition: 0.5s;
+}
+.containerc .card:hover .imgBx {
+  top: 0;
+  transform: translateY(0);
+}
+.containerc .card .imgBx Image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-25deg);
+  width: 270px;
+}
+.containerc .card .contentBx {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  transition: 1s;
+  z-index: 10;
+}
+.containerc .card:hover .contentBx {
+  height: 210px;
+}
+.containerc .card .contentBx h2 {
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #fff;
+}
+.containerc .card .contentBx .size,
+.containerc .card .contentBx .color {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s;
+}
+.containerc .card:hover .contentBx .size {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.5s;
+}
+.containerc .card:hover .contentBx .color {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.6s;
+}
+.containerc .card .contentBx .size h3,
+.containerc .card .contentBx .color h3 {
+  color: #fff;
+  font-weight: 300;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-right: 10px;
+}
+.containerc .card .contentBx .size span {
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  line-height: 24px;
+  font-size: 14px;
+  display: inline-block;
+  color: #111;
+  background: #fff;
+  border-radius: 4px;
+  margin: 0 5px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+/* .containerc .card .contentBx .size span:hover {
+  color: #111;
+  background: #9bdc28;
+}
+.containerc .card .contentBx .color span {
+  width: 20px;
+  height: 20px;
+  background: #f00;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.containerc .card .contentBx .color span:nth-child(2) {
+  background: #9bdc28;
+}
+.containerc .card .contentBx .color span:nth-child(3) {
+  background: #03a9f4;
+}
+.containerc .card .contentBx .color span:nth-child(4) {
+  background: #e91e63;
+} */
+.containerc .card .contentBx a {
+  display: inline-block;
+  padding: 10px 30px;
+  background: #fff;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #111;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 0.5s;
+}
+.containerc .card:hover .contentBx a {
+  opacity: 1;
+  transform: translateY(0px);
+  transition-delay: 0.75s;
+}
+
+@media (max-width: 991px) {
+  .containerc .card {
+    position: relative;
+    width: 160px;
+    height: 225px;
+    background: #232323;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .containerc .card .imgBx {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    width: 100%;
+    height: 80px;
+    transition: 0.5s;
+  }
+  .containerc .card .imgBx Image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    width: 150px;
+  }
+  .contentBx .mx-2 {
+  }
+}

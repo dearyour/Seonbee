@@ -1,0 +1,15 @@
+module.exports = {
+  // googleProjectID: process.env.GOOGLE_PROJECT_ID,
+  // dialogFlowSessionID: process.env.DIALOGFLOW_SESSION_ID,
+  // dialogFlowSessionLanguageCode: process.env.DIALOGFLOW_LANGUAGE_CODE,
+  // googleClientEmail: process.env.GOOGLE_CLIENT_EMAIL,
+  // googlePrivateKey: JSON.parse(process.env.GOOGLE_PRIVATE_KEY),
+
+  googleProjectID: 'seonbee-348514',
+  googlePrivateKeyId: '6d6eb2bedcbfdd692b1cfb4fe60495cb549cb92b',
+  googlePrivateKey:
+    '-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCIowSwhOu3Rn++\nYTxLd6LijSSxT/7xphannj+Qk79kJo3OiQWZ3qcaDDw/5wsr9H6RJSNxrWRzAO1c\n5g5FJbVndOzmJtO3bqb4ndLQFPB48W/uUxy6Vw7eDPMt7mc2dVxtcjVlBNZYH5kT\nXLoKqiQvjokBBQuV3YWSBWdUnXczqFMRV6gkSIEQU8GlD2TtpvJ01eEHbc/FYSMd\nrqBGqq5UKWQXwK4PryzYFHocAbQXNulEafRGqoTiOM//mjRFLc20XkTp7Zk8zVFn\ngA30fdDBpiy8mAhdKp2n3YSrj1DgM1bfT5NuKjLfJc9mN8orWoguc8svVJZQbjRy\nuzG4Tg2bAgMBAAECggEABXZlI44Ad1qvN4h2cn2+y884F9BB3O82lr0uRUkAqe/s\ndpZJf3I+n4MxExKTVBR8h2pUXKbY5W7XdzBD39+566L1XFMMPAyFeP115ijoJSFK\nPFGXqUnPQfE9aZe4CfsXbf/LGgpIDuPvxfOG1obDnMNKs+H1+wUNHGQfXgKVwxLT\nYLJcvzw5s/IerfXjfxN906/H/ksBwp9LPN3gR1q1Y3TqbbbTvapGB7zWWu1hDuRl\nAAj/+LqwSZ5q4ogKnb82vCYmv6uKg6k0u7bmBKy9wxqH4NSLk9JQWtfmN9qEbIts\nwLVrB1doGrAJNZCPAtPTO/A+uf71lkNS1Ml+LPUTQQKBgQC+ORtD7TpFO5lFttoD\n2fRhc0+jUOUNH0KTFlivm7GuuAkreEl7n/TU4mx/gt4UhjkSqwDuO1enjZtll1Nj\nPuGgkfp2Q5wA8Whx4TbEm+Ktht/n9V8gWEWoMzrLMdA5X9Mlm93Ufbbd/DCcY3jy\nsQ2uzIpGagwesc6PJnDv9yEcwQKBgQC34ls5UgxH+XdfeepticZQHoGqrnkoSK/w\ngjuO2SnJ9NL3pupRyKU6eQrRyJo6rIOtkHF7zNvxcROqGa6XJhHAxGEHMPuZHBcy\nUV5sCwtzVHhDhGNx8Dw54oYQNzzIuY3lMGImyoPTzyh/TVifZBnUn099/Moyq0/t\nxNkeam0VWwKBgQCq8oceNEL5lOXZUMn8TBLiwM4A5uHxOPaLWLm6lyDG83zKI/9l\nqgpMhm8a6HDL4RPJQwRDE/FiElBkq+m0dv4tXwLG5Vt9PXWvYcXmSnEboOn3evtS\nBgITdnaPxORrq0IFul1QaOm99LV61aoL8DFrtUVOol7h9si6vMEh5eVMAQKBgGqM\n8B0zzMf75s7dHxjfx5jvRGV5edz82W38mLQ6Y7uRcJluD8LaB9vs/Xb3zV6ITjjJ\nROjemOe7hRCAlykgNxNC95IqMO/UViCjA5qJf9YRMSq2UMVZ1hwYhWRqDX+l/XG7\nanRdzqtyE15InDynzUvmEDLJwwQ/Pi5hbQnx00mXAoGASw00oXxgpYVMV+PteMSS\nPgTshRRrcWXv//64KCBWO/k+q0S5w84oYg9Oz7ygxA88xs4FCbn1EiqDL/iBFtfz\nzfMxKPG7H0sCdX7Rm8brvTmDXxnbpE2nlO4piSUfbUSiYYWlIXiwEQXMK641t8aH\naYUtfBVRwvYFlq8OC3KRkFs=\n-----END PRIVATE KEY-----\n',
+  googleClientEmail: 'seonbee406@seonbee-348514.iam.gserviceaccount.com',
+  dialogFlowSessionID: 'seonbee-session',
+  dialogFlowSessionLanguageCode: 'ko',
+};
