@@ -1,0 +1,286 @@
+@keyframes comeUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 3;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes blink1 {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.lantern_blink1 {
+  animation: blink1 2.6s ease infinite;
+  -moz-animation: blink1 2.6s ease infinite;
+  -webkit-animation: blink1 2.6s ease infinite;
+  border-radius: 100px;
+}
+
+@keyframes blink2 {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.lantern_blink2 {
+  animation: blink2 1.9s ease infinite;
+  -moz-animation: blink2 1.9s ease infinite;
+  -webkit-animation: blink2 1.9s ease infinite;
+  border-radius: 100px;
+}
+
+@keyframes blink3 {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.lantern_blink3 {
+  animation: blink3 3.6s ease infinite;
+  -moz-animation: blink3 3.6s ease infinite;
+  -webkit-animation: blink3 3.6s ease infinite;
+  border-radius: 100px;
+}
+
+.lantern_bg {
+  object-fit: cover;
+  height: 58vh;
+  width: 47vw;
+  border-radius: 10px;
+  z-index: 1;
+  position: relative;
+  overflow: auto;
+}
+
+.lantern_festival {
+  height: 58vh;
+  width: 47vw;
+  position: relative;
+}
+
+.lantern_container {
+  height: 58vh;
+  width: 47vw;
+}
+
+.line1 {
+  top: 8vh;
+  height: 1.4px;
+  width: 47vw;
+  background-color: #e9e5e1;
+  transform: rotate(2.5deg);
+  z-index: 3;
+  position: absolute;
+}
+
+.line2 {
+  top: 21vh;
+  height: 1.4px;
+  width: 47vw;
+  background-color: #e9e5e1;
+  transform: rotate(2.5deg);
+  z-index: 3;
+  position: absolute;
+}
+
+.line3 {
+  top: 33vh;
+  height: 1.4px;
+  width: 47vw;
+  background-color: #e9e5e1;
+  transform: rotate(2.5deg);
+  z-index: 3;
+  position: absolute;
+}
+
+.lantern_list {
+  top: 20vh;
+  height: 10vh;
+  width: 47vw;
+  transform: rotate(2.5deg);
+  position: absolute;
+  z-index: 4;
+}
+
+.create_lantern {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 9vh;
+  width: 11vh;
+  border-radius: 25px;
+  border: 1.5px dashed white;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin: 1.5vh;
+  padding: 2px;
+  z-index: 5;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.create_lantern:hover {
+  background-color: #ff6464;
+  color: white;
+  border-color: #ff6464;
+}
+
+.blank_lantern {
+  height: 11vh;
+  width: 11vh;
+  z-index: 5;
+  margin: 1.5vh;
+}
+
+.read_lantern {
+  object-fit: contain;
+  height: 15vh;
+  width: 9vh;
+  z-index: 5;
+  cursor: pointer;
+  margin-left: 1.5vh;
+  margin-right: 1.5vh;
+}
+
+.read_lantern:hover {
+  object-fit: contain;
+  height: 16vh;
+  width: 10vh;
+  margin-left: 1vh;
+  z-index: 10;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.create_btn {
+  bottom: 3vh;
+  right: 3vh;
+  z-index: 7;
+  position: absolute;
+  border-radius: 20px;
+}
+
+.create_lantern_modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 64vh;
+  width: 56vh;
+  background-color: #e9e5e1;
+  z-index: 8;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  box-shadow: 10px 10px 8px 1px rgba(0, 0, 0, 0.2);
+  animation: comeUp 0.4s ease-in-out;
+}
+
+.lantern_box {
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+}
+
+.lantern_choices {
+  display: flex;
+  min-width: 50em;
+  height: 14vh;
+}
+
+.icon {
+  top: 1vh;
+  right: 1vh;
+  position: absolute;
+}
+
+.delete_btn_white {
+  bottom: 3vh;
+  right: 3vh;
+  position: absolute;
+  z-index: 13;
+}
+
+.selected_lantern {
+  background-color: #c0b4a5;
+  border-radius: 20px;
+  width: 11vh;
+  height: 13vh;
+  position: relative;
+}
+
+.unselected_lantern {
+  border-radius: 20px;
+  width: 11vh;
+  height: 13vh;
+  position: relative;
+}
+
+.read_lantern_modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 64vh;
+  width: 69vh;
+  z-index: 15;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  box-shadow: 10px 10px 8px 1px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: comeUp 0.4s ease-in-out;
+}
+
+.letter {
+  position: absolute;
+  z-index: 16;
+}
+
+.letter_text_container {
+  z-index: 17;
+  height: 32vh;
+  width: 69vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #64543e;
+  border-radius: 20px;
+  position: absolute;
+}
+
+.letter_text {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow: scroll;
+  height: 28vh;
+  width: 50vh;
+  word-break: break-all;
+}
+
+.read_title {
+  margin-top: 10vh;
+}
+
+.ddays_container {
+  width: 47vw;
+}

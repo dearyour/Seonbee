@@ -1,0 +1,69 @@
+.modal {
+  background-color: #e9e5e1;
+  width: 80vw;
+  height: 80vh;
+  padding: 4vh;
+  border-radius: 10px;
+}
+
+.main_content {
+  background-color: white;
+  width: 90%;
+  height: 72vh;
+  border-radius: 10px;
+}
+
+.side_btns {
+  height: 70vh;
+  width: 10%;
+  text-align: center;
+}
+
+.side_btn {
+  height: 7.6vh;
+  width: 95%;
+  padding: 0.8vh;
+  margin-top: 1.3vh;
+  margin-bottom: 1.3vh;
+  background-color: #c0b4a5;
+  border-radius: 0px 10px 10px 0px;
+  color: white;
+  box-shadow: 10px 10px 8px 1px rgba(0, 0, 0, 0.01);
+  font-weight: 500;
+}
+
+.side_btn:hover {
+  /* height: 8vh; */
+  /* width: 100%; */
+  padding: 0.8vh;
+  margin-top: 1.3vh;
+  margin-bottom: 1.3vh;
+  background-color: #a39788;
+  border-radius: 0px 10px 10px 0px;
+  color: white;
+  box-shadow: 10px 10px 8px 1px rgba(0, 0, 0, 0.01);
+}
+
+.selected_btn {
+  height: 8vh;
+  padding: 0.8vh;
+  margin-top: 1.3vh;
+  margin-bottom: 1.3vh;
+  background-color: white;
+  border-radius: 0px 10px 10px 0px;
+  color: #64543e;
+  box-shadow: 10px 10px 8px 1px rgba(0, 0, 0, 0.01);
+  font-weight: 600;
+}
+
+.profile_info {
+  width: 25%;
+  height: 72vh;
+  border-radius: 10px;
+}
+
+.content {
+  width: 99%;
+  height: 72vh;
+  border-radius: 10px;
+}

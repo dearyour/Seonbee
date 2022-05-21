@@ -1,0 +1,37 @@
+.profile_img {
+  width: 26vh;
+  height: 26vh;
+  border-radius: 100%;
+}
+
+.name {
+  text-align: center;
+  background-color: #c0b4a5;
+  color: white;
+  padding: 5px 8px 5px 8px;
+  margin-right: 5px;
+  border-radius: 10px;
+  font-size: 14px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  max-height: 4vh;
+}
+
+.content {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  color: #64543e;
+}
+
+.info {
+  display: flex;
+  margin: 3px;
+}
+
+.infos {
+  height: 26vh;
+  overflow-y: auto;
+}
